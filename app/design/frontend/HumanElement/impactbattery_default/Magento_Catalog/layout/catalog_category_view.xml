@@ -1,0 +1,9 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="category.description" destination="content.bottom" />
+
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="parts.finder.text" before="category.products" template="Amasty_Finder::amfinder_title.phtml" />
+        </referenceContainer>
+    </body>
+</page>

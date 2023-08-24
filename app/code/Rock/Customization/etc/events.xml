@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright ©  MageWorx. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- <event name="sales_order_place_before">
+        <observer name="rock_get_address_before_place_order" instance="Rock\Customization\Observer\AddressBeforePlace" />
+    </event> -->
+    <!-- <event name="sales_order_place_after">
+        <observer name="rock_get_address_after_place_order" instance="Rock\Customization\Observer\AddressAfterPlace" />
+    </event> -->
+</config>

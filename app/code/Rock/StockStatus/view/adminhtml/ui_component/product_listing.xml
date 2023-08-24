@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <filters name="listing_filters">
+            <filterSelect name="stock_status" provider="${ $.parentName }">
+                <settings>
+                    <options class="Rock\StockStatus\Ui\Component\Listing\Columns\StockStatus\Options"/>
+                    <label translate="true">Stock Status</label>
+                    <dataScope>stock_status</dataScope>
+                </settings>
+            </filterSelect>
+        </filters>
+    </listingToolbar>
+    <columns name="product_columns">
+        <column name="stock_status" class="Rock\StockStatus\Ui\Component\Listing\Columns\StockStatus" sortOrder="100">
+            <settings>
+                <addField>true</addField>
+                <filter>select</filter>
+                <options class="Rock\StockStatus\Ui\Component\Listing\Columns\StockStatus\Options"/>
+                <label translate="true">Stock Status</label>
+                <dataType>select</dataType>
+            </settings>
+        </column>
+    </columns>
+
+</listing>

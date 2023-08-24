@@ -1,0 +1,53 @@
+//
+//  Common UI styles, all devices
+//  _____________________________________________
+& when (@media-common = true) {
+  input[type="text"],
+  input[type="password"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="search"],
+  input[type="number"],
+  input[type="datetime"],
+  input[type="email"],
+  select {
+    .lib-css(border, @_border);
+    .lib-css(background, @general-components__white);
+    .lib-css(border-radius, @_border-radius);
+    .lib-css(font-size, @_font-size);
+    .lib-css(height, @_height);
+
+    &.mage-error {
+      .lib-css(border, 1px solid @link__color);
+    }
+
+    &[disabled] {
+      .lib-css(background, @disabled_input_background);
+    }
+
+    &:focus {
+      .lib-css(box-shadow, 0 0 6px @primary__color);
+    }
+  }
+
+  .fieldset,
+  .fields {
+    .field {
+      .label {
+        .lib-form-field(
+          @_label-color: @primary__color,
+          @_label-font-size: @font-size__l,
+          @_label-font-weight: @font-weight__bold
+        );
+      }
+    }
+  }
+
+  label {
+    .lib-form-field(
+      @_label-color: @primary__color,
+      @_label-font-size: @font-size__l,
+      @_label-font-weight: @font-weight__bold
+    );
+  }
+}

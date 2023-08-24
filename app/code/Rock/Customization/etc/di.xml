@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="MageWorx\SeoMarkup\Block\Head\Json\Product" type="Rock\Customization\Block\Head\Json\Product" />
+	
+	<preference for="IWD\CheckoutConnector\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" type="Rock\Customization\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" />
+</config>

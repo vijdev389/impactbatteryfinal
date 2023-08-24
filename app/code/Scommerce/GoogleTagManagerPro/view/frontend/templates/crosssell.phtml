@@ -1,0 +1,83 @@
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+$helper = $this->helper('\Scommerce\GoogleTagManagerPro\Helper\Data');
+if (!$helper->isEnhancedEcommerceEnabled() || $helper->isCategoryAjaxEnabled()) return;
+$cross = $block->getLayout()->getBlock('checkout.cart.crosssell');
+if (!$cross) return '';
+$items = $cross->getItems();
+if (!$items || !count($items)) return '';
+
+$_impressionList = 'Crossell Products';
+?>
+
+<?php
+$_loop = 1;
+foreach ($items as $_product){
+    $_productUrls[] = $_product->getProductUrl();
+
+    $_products[] = array(
+        'id' => $this->escapeJsQuote($_product->getSku()),
+        'name'  => $this->escapeJsQuote($_product->getName()),
+        'category' => $helper->getProductCategoryName($_product),
+        'brand' => $this->escapeJsQuote($helper->getBrand($_product)),
+        'list'  => $_impressionList,
+        'price' => $helper->productPrice($_product),
+        'position' => $_loop
+    );
+    $_loop++;
+}
+
+$_JsProducts = json_encode($_products);
+$_JsProductUrls = json_encode($_productUrls);
+?>
+<script type='text/javascript'>
+    //<![CDATA[
+    require(['jquery', 'mage/cookies'], function($) {
+        $(window).load(function () {
+            var jsProducts = <?php echo $_JsProducts ?>;
+            var jsProductUrls = <?php echo $_JsProductUrls ?>;
+            jQuery('a').on('click', function(e) {
+                var product;
+                var href = jQuery(this).attr('href');
+                var index = jsProductUrls.indexOf(href);
+
+                if (index != -1) {
+                    //event.preventDefault();
+                    product = jsProducts[index];
+                    //console.log(product.name + ' - clicked');
+                    scGtmSaveImpression(product.id, product.list, product.category);
+                    dataLayer.push({
+                        'event': 'productClick',
+                        'ecommerce': {
+                            'click': {
+                                'actionField': {'list': product.list},      // Optional list property.
+                                'products': [{
+                                    'name': product.name,                      // Name or ID is required.
+                                    'id': product.id,
+                                    'price': product.price,
+                                    'brand': product.brand,
+                                    'category': product.category,
+                                    'position': product.position,
+                                    'list': product.list
+                                }]
+                            }
+                        },
+                        'eventCallback': function() {
+                            if (!(e.ctrlKey || e.which==2)){
+                                document.location = href;
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $('form[data-role=tocart-form]').each(function () {
+            var elCat = $(this).find('input[name=sc_category]');
+            if (elCat.length == 0) {
+                $(this).append("<input type='hidden' name='sc_list' value='<?php echo $this->escapeHtmlAttr($_impressionList) ?>'/>");
+            }
+        });
+    });
+    //]]>
+</script>

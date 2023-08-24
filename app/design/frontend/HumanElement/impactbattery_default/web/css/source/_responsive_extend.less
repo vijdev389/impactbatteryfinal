@@ -1,0 +1,13 @@
+//
+//  Style groups for 'mobile' devices
+//  ---------------------------------------------
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: @screen__l) {
+        .media-width('max', (@screen__l + 1));
+    }
+
+    @media only screen and (max-width: (@screen__l - 1)) {
+        .media-width('max', @screen__l);
+    }
+}

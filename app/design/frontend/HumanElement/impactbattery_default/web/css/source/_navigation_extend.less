@@ -1,0 +1,85 @@
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .nav-sections {
+        .lib-css(box-shadow, inset 0px 2px 10px @primary__color);
+        .lib-css(background, @navigation-desktop__background);
+        margin-bottom: 0;
+
+        .navigation {
+            background: transparent;
+
+            .level-top {
+                .lib-css(font-size, @navigation-desktop__font-size);
+
+                & > a {
+                    .lib-css(color, @color-white);
+                    .lib-css(font-weight, @font-weight__bold);
+
+                    &:hover {
+                        .lib-css(color, @color-white);
+                        .lib-css(font-weight, @font-weight__bold);
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .nav-sections {
+        .header.links {
+            li {
+                &.greet.welcome {
+                    .lib-css(padding, @navigation-level0-item__padding);
+                    .lib-css(font-weight, @font-weight__regular);
+                    .lib-css(font-size, @font-size__l);
+                }
+
+                a {
+                    .lib-css(padding, @navigation-level0-item__padding);
+                    .lib-css(font-size, @font-size__l);
+
+                    &:hover {
+                        .lib-css(padding, @navigation-level0-item__padding);
+                        .lib-css(font-size, @font-size__l);
+                    }
+                }
+            }
+        }
+
+        .navigation {
+            .category-item {
+                a {
+                    .lib-css(font-size, @navigation-level0-item__font-size);
+                }
+            }
+
+            .parent {
+                .level-top {
+                    &:after {
+                        top: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Tablets
+//  _____________________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+    .nav-sections {
+        .navigation {
+            .level0 {
+                .lib-css(margin, @navigation-desktop-s-level0-item__margin);
+            }
+        }
+    }
+}

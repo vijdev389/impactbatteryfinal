@@ -1,0 +1,47 @@
+<?php
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+?>
+
+<div class="query-info">
+    <h3>Batteries for </h3>
+</div>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        var finderText = $('.query-info');
+
+        if (finderText.length > 0) {
+            var options = [];
+            $('.amfinder-toggle .am-item').each(function () {
+                var label = $(this).find('.amfinder-select').children('option:selected').text();
+                if ($(this).find('.amfinder-select').children('option:selected').val() != 0 && !label.includes('0-All Years')) {
+                    var titleText = $(this).find('.dropdown-title').text();
+                    // filter to set custom order for elements
+                    if(titleText === 'Year') {
+                        options[0] = label;
+                    } else if(titleText === 'Make') {
+                        options[1] = label;
+                    } else if(titleText === 'Model') {
+                        options[2] = label;
+                    } else if(titleText === 'Vehicle Type') {
+                        options[3] = label;
+                    }
+
+                }
+            });
+
+            if (options.length >= 2) {
+                if(typeof options[3] === 'undefined') {
+                    options[3] = $('.amfinder-title').text().replace('Battery Finder', '');
+                }
+
+                options = options.join(' ');
+
+                $('.query-info h3').html(finderText.text() + options);
+                finderText.show();
+            }
+        }
+    });
+</script>

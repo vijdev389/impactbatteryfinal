@@ -1,0 +1,38 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+                <argument name="logo_width" xsi:type="number">140</argument>
+                <argument name="logo_height" xsi:type="number">65</argument>
+                <argument name="logo_alt" xsi:type="string">ImpactBattery Logo</argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="footer_links" remove="true" />
+        <referenceBlock name="form.subscribe" remove="true" />
+
+        <referenceContainer name="footer">
+            <block class="Magento\Cms\Block\Block" name="footer_col_1_inner" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer-col-1</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Block" name="footer_col_2_inner" after="footer_col_1_inner">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer-col-2</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Block" name="footer_col_3_inner" after="footer_col_2_inner">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer-col-3</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Block" name="footer_col_4_inner" after="footer_col_3_inner">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer-col-4</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,13 @@
+diff --git a/SearchAdapter/Query/Builder/Aggregation.php b/SearchAdapter/Query/Builder/Aggregation.php
+index 7ba2ef4..0218cf7 100644
+--- a/SearchAdapter/Query/Builder/Aggregation.php
++++ b/SearchAdapter/Query/Builder/Aggregation.php
+@@ -21,7 +21,7 @@ class Aggregation
+      *
+      * @var int
+      */
+-    private static $maxTermBacketSize = 500;
++    private static $maxTermBacketSize = 2000;
+
+     /**
+      * @var FieldMapperInterface

@@ -1,0 +1,14 @@
+
+/* Blog title and image changes dt.29-4-22 */
+.post-list .post-header .post-title a {
+    font-weight: inherit;
+    font-size: inherit;
+    color: #104577;
+}
+.post-content .post-description .post-ftimg-hld {
+    text-align: center;
+}
+.post-content .post-description .post-ftimg-hld img {
+    width: auto;
+
+}

@@ -1,0 +1,603 @@
+//
+//  Common UI styles, all devices
+//  _____________________________________________
+& when (@media-common = true) {
+    a {
+        .lib-css(font-weight, @font-weight__regular);
+        .lib-css(font-size, @font-size__s);
+        .lib-css(color, @link__color);
+
+        &:hover {
+            .lib-css(color, @link__hover__color);
+        }
+
+        &:focus {
+            .lib-css(box-shadow, 0 0 6px @primary__color);
+        }
+    }
+
+    .logo {
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .modal-popup.modal-slide {
+        text-align: center;
+
+        .modal-title {
+            border-bottom: 0;
+        }
+
+        .modal-footer {
+            border-top: 0;
+            text-align: center;
+
+            button {
+                .lib-button-primary();
+
+                span {
+                    .lib-css(color, @button-primary__color);
+                }
+            }
+        }
+    }
+
+    p {
+        .lib-css(font-weight, @font-weight__regular);
+        .lib-css(color, @primary__color);
+        .lib-css(font-size, @font-size__l);
+
+        &.large {
+            .lib-css(font-size, @font-size__xl);
+        }
+
+        &.regular {
+            .lib-css(font-size, @font-size__l);
+        }
+
+        &.small {
+            .lib-css(font-size, @font-size__s);
+        }
+    }
+
+    .page-header {
+        .header.content {
+            .minicart-wrapper {
+                .showcart {
+                    &:before {
+                        .lib-css(color, @primary__color);
+                    }
+                }
+
+                .product.actions {
+                    .primary {
+                        background: 0;
+                        border: 0;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+  .block-search {
+    .search,
+    .search[disabled] {
+      .lib-css(opacity, 1);
+
+      &:before {
+        .lib-css(color, @primary__color);
+        .lib-css(line-height, 38px);
+      }
+    }
+
+  }
+
+  .page-footer {
+    padding-right: 20px;
+    padding-left: 20px;
+    .lib-css(border-top, 5px solid @footer__border-color);
+    .lib-css(box-shadow, 0px 2px 10px @color-gray43);
+
+    .footer-col {
+      display: inline-block;
+      padding: 0 10px 0 0;
+      box-sizing: border-box;
+      vertical-align: top;
+
+      &.footer-col-4 {
+        padding-right: 0;
+        padding-top: 20px;
+      }
+
+      ul {
+        & > li {
+          margin-bottom: 20px;
+
+          a {
+            .lib-css(color, @primary__color);
+          }
+        }
+      }
+
+      .footer-reviews {
+        width: 120px;
+        margin-top: 10px;
+      }
+
+      .socials {
+        margin-top: 10px;
+        margin-bottom: 30px;
+
+        a {
+          display: inline-block;
+          margin-right: 25px;
+          position: relative;
+          .lib-css(color, @heading__color__base);
+
+          &:before {
+            position: absolute;
+            width: 20px;
+          }
+
+          &.fb {
+            .lib-icon-font(
+                    @icon-fa-facebook,
+              @_icon-font: @icons__font-name-fa,
+              @_icon-font-size: 18px
+            );
+          }
+
+          &.twitter {
+            .lib-icon-font(
+                    @icon-fa-twitter,
+              @_icon-font: @icons__font-name-fa,
+              @_icon-font-size: 18px
+            );
+          }
+
+          &.instagram {
+            .lib-icon-font(
+                    @icon-fa-instagram,
+              @_icon-font: @icons__font-name-fa,
+              @_icon-font-size: 18px
+            );
+          }
+
+          &.linkedin {
+            .lib-icon-font(
+                    @icon-fa-linkedin,
+              @_icon-font: @icons__font-name-fa,
+              @_icon-font-size: 18px
+            );
+          }
+        }
+      }
+    }
+  }
+
+  .copyright {
+    .lib-css(box-shadow, inset 0px 3px 7px @color-gray64);
+    .lib-css(color, @primary__color);
+  }
+
+    // Homepage UI styles
+    .cms-index-index {
+        #maincontent {
+            max-width: none;
+            padding: 0;
+
+            .column.main {
+                padding-bottom: 0;
+            }
+
+            .features {
+                a:not(.action) {
+                    .lib-icon-font(@icon-next, @_icon-font-size: 18px);
+                    position: relative;
+
+                    &:before {
+                        margin: 0 auto;
+                        display: block;
+                        position: absolute;
+                        right: -20px;
+                    }
+                }
+            }
+
+            .banner {
+                .page-main {
+                    & > div {
+                        .lib-css(background, @color-white-transparent);
+                        padding-left: 20px;
+                    }
+                }
+            }
+
+            .pb-large {
+                a:not(.action) {
+                    .lib-icon-font('', @_icon-font-size: 18px);
+                    position: relative;
+
+                    &:before {
+                        content: @icon-next;
+                        margin: 0 auto;
+                        display: block;
+                        position: absolute;
+                        right: -20px;
+                    }
+                }
+            }
+
+            .gray-bg {
+                .lib-css(background, @color-gray92);
+                text-align: center;
+
+                a:not(.action) {
+                    .lib-icon-font('', @_icon-font-size: 18px);
+                    position: relative;
+
+                    &:before {
+                        content: @icon-next;
+                        margin: 0 auto;
+                        display: block;
+                        position: absolute;
+                        right: -20px;
+                    }
+                }
+            }
+        }
+    }
+	table .odd{
+		background-color: #dedede;
+	}
+	table .even{
+		background-color: #fff;
+	}
+	table .header{
+		background-color: #ff7;
+  		font-size: 18px;
+	}
+
+
+	.additional-attributes-wrapper table tr:nth-child(even){
+   		background-color: #dedede;
+	}
+
+	.blog-page table  tr:first-child{
+   		background-color: #ff7;
+  		font-size: 18px;
+	}
+	.blog-page table tr:nth-child(odd):not(:first-child)
+	{
+   		background-color: #dedede;
+	}
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .page-footer {
+    .footer-col {
+      width: 25%;
+    }
+  }
+}
+
+//
+//  Mobile UI styles
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+  .page-footer {
+    padding-bottom: 20px;
+
+    .footer-col {
+      width: 100%;
+    }
+  }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .logo {
+        &:focus {
+            box-shadow: none;
+        }
+
+        img {
+            .lib-css(width, @logo__width__mobile);
+            .lib-css(height, @logo__height__mobile);
+        }
+    }
+
+    .header.content {
+        .action.nav-toggle {
+            &:before {
+                .lib-css(color, @primary__color);
+            }
+        }
+    }
+
+    .page-header {
+        margin-bottom: 0;
+    }
+
+    .page-footer {
+        margin-top: 0;
+
+        .footer-col {
+            width: 50%;
+        }
+    }
+
+  // Homepage UI styles
+
+    .cms-index-index {
+        #maincontent {
+            .col-3 {
+                .lib-css(width, @homepage-section-col__width);
+                display: inline-block;
+                margin-bottom: 10px;
+                vertical-align: top;
+                box-sizing: border-box;
+
+                .white-bg-content {
+                    p.description {
+                        min-height: 100px;
+                    }
+                }
+            }
+
+            .banner {
+                padding-top: 80px;
+                padding-bottom: 80px;
+
+                .page-main {
+                    padding: 0;
+
+                    & > div {
+                        padding-top: 20px;
+                        padding-bottom: 20px;
+                        width: 100%;
+                        max-width: 100%;
+                    }
+                }
+
+                h1 {
+                    .lib-css(font-size, @h1__font-size);
+                }
+            }
+
+            .features {
+                .container {
+                    display: inline-block;
+                    .lib-css(padding, @homepage-section__padding);
+                }
+
+                .col-3 {
+                    p,
+                    a {
+                        .lib-css(font-size, @font-size__xl);
+                    }
+                }
+            }
+
+            .gray-bg {
+                .lib-css(padding, @homepage-section__padding);
+
+                .col-3 {
+                    .lib-css(width, @homepage-section-col__width);
+                    .lib-css(margin, @homepage-section-col__margin);
+                    .lib-css(background, @color-white);
+                    padding-right: 0;
+                    margin-bottom: 10px;
+                }
+
+                .action.primary {
+                    margin-top: 20px;
+                }
+            }
+
+            .pb-large {
+                .lib-css(padding, @homepage-section__padding 100px 0);
+                text-align: center;
+
+                &.bottom {
+                    .col-3 {
+                        background: transparent;
+                    }
+                }
+
+                .col-3 {
+                    .lib-css(background, @color-white);
+                }
+
+                .text-center {
+                    clear: both;
+
+                    .action.primary {
+                        margin-top: 20px;
+                    }
+                }
+
+                p {
+                    .lib-css(font-size, @font-size__xl);
+                }
+            }
+
+            .brands {
+                .lib-css(padding, @homepage-section__padding);
+                text-align: center;
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        .lib-css(width, @homepage-section-col__width);
+                        list-style: none;
+                        float: left;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop UI styles
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .page-header {
+    .panel.wrapper {
+      background-color: transparent;
+      border-bottom: none;
+      .lib-css(box-shadow, inset 0px -1px 7px @color-gray60);
+
+
+      .header {
+        .links {
+          li {
+            .lib-css(color, @heading__color__base);
+
+            a {
+              .lib-css(color, @link__color);
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .header.content {
+      .minicart-wrapper {
+        margin-top: 15px;
+      }
+    }
+
+    .page-footer {
+      .footer-col {
+        width: 100%;
+
+        &.footer-col-4 {
+          padding-bottom: 20px;
+        }
+      }
+    }
+  }
+
+    // Homepage UI styles
+
+    .cms-index-index {
+        #maincontent {
+            .col-3 {
+                float: left;
+                .lib-css(width, @homepage-section-col-desktop__width);
+                padding-right: 10px;
+                box-sizing: border-box;
+
+                .white-bg-content {
+                    p.description {
+                        min-height: 75px;
+                    }
+                }
+            }
+
+            .banner {
+                h1 {
+                    .lib-css(font-size, @h1__font-size-desktop-xxl);
+                }
+
+                p {
+                    .lib-css(font-size, @font-size__xl);
+                }
+
+                .page-main {
+                    & > div {
+                        max-width: 400px;
+                        padding-top: 150px;
+                        padding-bottom: 140px;
+                    }
+                }
+            }
+
+            .features {
+                .container {
+                    display: inline-block;
+                    .lib-css(padding, @homepage-section__padding);
+                }
+
+                p,
+                a {
+                    .lib-css(font-size, @font-size__xl);
+                }
+            }
+
+            .gray-bg {
+                .lib-css(padding, @homepage-section__padding);
+
+                .col-3 {
+                    .lib-css(width, @homepage-section-col-desktop__width);
+                    .lib-css(margin, @homepage-section-col__margin);
+                    .lib-css(background, @color-white);
+                    padding-right: 0;
+
+                    a,
+                    p {
+                        .lib-css(font-size, @font-size__l);
+                    }
+                }
+
+                .action.primary {
+                    margin-top: 20px;
+                }
+            }
+
+            .pb-large {
+                .lib-css(padding, @homepage-section__padding 300px 0);
+                text-align: center;
+
+                .col-3 {
+                    .lib-css(background, @color-white);
+                    .lib-css(width, @homepage-section-col-desktop__width);
+                    .lib-css(margin, @homepage-section-col__margin);
+                    padding-right: 0;
+
+                    a,
+                    p {
+                        .lib-css(font-size, @font-size__l);
+                    }
+                }
+
+                .col-12 {
+                    p {
+                        .lib-css(font-size, @font-size__xl);
+                        text-align: left;
+                    }
+                }
+
+                .text-center {
+                    clear: both;
+
+                    .action.primary {
+                        margin-top: 20px;
+                    }
+                }
+            }
+
+            .brands {
+                text-align: center;
+                .lib-css(padding, @homepage-section__padding);
+
+                ul {
+                    li {
+                        list-style: none;
+                        float: left;
+                        width: 12%;
+                        margin-right: 0.5%;
+                    }
+                }
+            }
+        }
+    }
+}

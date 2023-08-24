@@ -1,0 +1,167 @@
+//
+//  Common UI styles, all devices
+//  _____________________________________________
+& when (@media-common = true) {
+
+    .primary,
+    .actions-primary,
+    .actions {
+        .primary {
+            .lib-button(
+                @_button-font-size: @button__font-size,
+                @_button-font-weight: @button__font-weight
+            );
+
+            .lib-css(border-radius, @button__border-radius);
+            .lib-css(border-width, @border-width__base);
+
+            .lib-button-primary(
+                @_button-background: @button-primary__background,
+                @_button-border: @button-primary__border,
+                @_button-color: @button-primary__color,
+                @_button-gradient: @button-primary__gradient,
+                @_button-gradient-color-start: @button-primary__gradient-color-start,
+                @_button-gradient-color-end: @button-primary__gradient-color-end,
+                @_button-gradient-direction: @button-primary__gradient-direction,
+                @_button-padding: @button-primary__padding
+            );
+
+            &:hover {
+                .lib-button-primary(
+                    @_button-background: @button-primary__hover__background,
+                    @_button-border: @button-primary__hover__border,
+                    @_button-color: @button-primary__hover__color    ,
+                    @_button-gradient-color-start: @button-primary__hover__gradient-color-start,
+                    @_button-gradient-color-end: @button-primary__hover__gradient-color-end,
+                    @_button-padding: @button-primary__padding
+                );
+            }
+
+            &:focus {
+                .lib-button-primary(
+                    @_button-background: @button-primary__focus__background,
+                    @_button-border: @button-primary__focus__border,
+                    @_button-color: @button-primary__focus__color    ,
+                    @_button-gradient-color-start: @button-primary__focus__gradient-color-start,
+                    @_button-gradient-color-end: @button-primary__focus__gradient-color-end,
+                    @_button-padding: @button-primary__padding
+                );
+
+                .lib-css(box-shadow, 0px 0px 6px @color-black);
+            }
+
+            &:active {
+                .lib-button-primary(
+                    @_button-background: @button-primary__active__background,
+                    @_button-border: @button-primary__active__border,
+                    @_button-color: @button-primary__active__color    ,
+                    @_button-gradient-color-start: @button-primary__active__gradient-color-start,
+                    @_button-gradient-color-end: @button-primary__active__gradient-color-end,
+                    @_button-padding: @button-primary__padding
+                );
+            }
+
+            span {
+                .lib-css(color, @button-primary__color);
+            }
+
+          #top-cart-btn-checkout {
+            padding: 0;
+            background: 0;
+            border: 0;
+          }
+        }
+    }
+
+    .secondary,
+    .actions-secondary,
+    .actions {
+        button.secondary {
+            .lib-css(border-radius, @button__border-radius);
+            .lib-css(border-width, @border-width__base);
+
+            .lib-button(
+                @_button-background: @button-secondary__background,
+                @_button-border: @button-secondary__border,
+                @_button-color: @button-secondary__color,
+                @_button-gradient: @button-secondary__gradient,
+                @_button-gradient-color-start: @button-secondary__gradient-color-start,
+                @_button-gradient-color-end: @button-secondary__gradient-color-end,
+                @_button-gradient-direction: @button-secondary__gradient-direction,
+                @_button-padding: @button-primary__padding,
+                @_button-font-size: @button__font-size,
+                @_button-font-weight: @button__font-weight
+            );
+
+            &:hover {
+
+                .lib-button(
+                    @_button-gradient: @button-secondary__gradient,
+                    @_button-gradient-direction: @button-secondary__gradient-direction,
+                    @_button-padding: @button-primary__padding,
+                    @_button-gradient-color-start: @button-secondary__hover__gradient-color-start,
+                    @_button-gradient-color-end: @button-secondary__hover__gradient-color-end
+                );
+
+                .lib-button-revert-secondary-color(
+                    @_button-color-hover: @button-secondary__hover__color,
+                    @_button-background-hover: @button-secondary__hover__background,
+                    @_button-border-hover: @button-secondary__hover__border
+                );
+
+                span {
+                    .lib-css(color, @button-secondary__color);
+                }
+            }
+
+            &:focus,
+            &:focus:hover {
+                .lib-button(
+                    @_button-background: @button-secondary__focus__background,
+                    @_button-border: @button-secondary__focus__border,
+                    @_button-color: @button-secondary__focus__color,
+                    @_button-padding: @button-primary__padding,
+                    @_button-gradient-color-start: @button-secondary__focus__gradient-color-start,
+                    @_button-gradient-color-end: @button-secondary__focus__gradient-color-end
+                );
+
+                .lib-css(color, @button-secondary__focus__color);
+                .lib-css(background, @button-secondary__focus__background);
+                .lib-css(border, @button-secondary__focus__border);
+                .lib-css(box-shadow, 0px 0px 6px @color-black);
+
+                span {
+                    .lib-css(color, @button-secondary__color);
+                }
+            }
+
+            &:active {
+                .lib-button(
+                    @_button-gradient-color-start: @button-secondary__active__gradient-color-start,
+                    @_button-gradient-color-end: @button-secondary__active__gradient-color-end,
+                    @_button-padding: @button-primary__padding
+                );
+
+                .lib-button-revert-secondary-color(
+                    @_button-color-active: @button-secondary__active__color,
+                    @_button-background-active: @button-secondary__active__background,
+                    @_button-border-active: @button-secondary__active__border
+                );
+
+                span {
+                    .lib-css(color, @button-secondary__color);
+                }
+            }
+
+            span {
+                .lib-css(color, @button-secondary__color);
+            }
+        }
+    }
+
+    .box-tocart {
+        .action.tocart {
+          .lib-css(padding, @button-primary__padding);
+        }
+    }
+}

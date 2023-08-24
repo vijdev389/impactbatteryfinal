@@ -1,0 +1,22 @@
+//
+//  Common UI styles, all devices
+//  _____________________________________________
+& when (@media-common = true) {
+  .block.newsletter {
+    .form.subscribe {
+      .field.newsletter {
+        max-width: 245px;
+
+        input {
+          .lib-css(border-radius, @button__border-radius);
+        }
+
+        .control {
+          &:before {
+            line-height: 37px;
+          }
+        }
+      }
+    }
+  }
+}

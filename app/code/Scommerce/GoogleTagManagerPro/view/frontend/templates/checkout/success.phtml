@@ -1,0 +1,80 @@
+<?php
+/**
+ * @var $this Scommerce_GoogleTagManagerPro_Block_Checkout_Success
+ */
+?>
+<?php $helper = $this->getHelper();
+if (!$helper->isEnhancedEcommerceEnabled()) return;
+$order = $this->getOrder();
+if ($helper->sendBaseData()):
+    $orderCurrency 		= $order->getBaseCurrencyCode();
+    $orderGrandTotal 	= $helper->isOrderTotalIncludedVAT() ? $order->getBaseGrandTotal() : $order->getBaseGrandTotal() - $order->getBaseTaxAmount();
+    $orderShippingTotal	= $order->getBaseShippingAmount();
+    $orderTax			= $order->getBaseTaxAmount();
+else:
+    $orderCurrency 		= $order->getOrderCurrencyCode();
+    $orderGrandTotal 	= $helper->isOrderTotalIncludedVAT() ? $order->getGrandTotal() : $order->getGrandTotal() - $order->getTaxAmount();
+    $orderShippingTotal	= $order->getShippingAmount();
+    $orderTax			= $order->getTaxAmount();
+endif;
+$orderItems = $order->getAllItems();?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    window.dataLayer = window.dataLayer || [];
+    <?php $intCtr=0;?>
+    dataLayer.push({
+        'event': 'purchase',
+        'ecommerce': {
+            'currencyCode': '<?php echo $orderCurrency?>',
+            'purchase': {
+                'actionField': {
+                    'id': '<?php echo $order->getIncrementId()?>',                         // Transaction ID. Required for purchases and refunds.
+                    'affiliation': '<?php echo $order->getAffiliation() ?>',
+                    'revenue': '<?php echo $orderGrandTotal?>',                     // Total transaction value (incl. tax and shipping)
+                    'tax': '<?php echo $orderTax?>',
+                    'shipping': '<?php echo $orderShippingTotal?>',
+                    'coupon': '<?php echo $order->getCouponCode() ?>'
+                },
+                'products': [
+                    <?php foreach($orderItems as $item): ?>
+                    <?php
+                    $quoteItem = $block->getQuoteItem($item->getQuoteItemId());
+                    $trackingData = $quoteItem->getScTrackingData();
+                    if (!$trackingData) {
+                        $impressionList = 'Category - ' . $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()));
+                    } else {
+                        $trackingData = json_decode($trackingData, true);
+                        $impressionList = $trackingData['list'];
+                    }
+                    ?>
+                    <?php $intCtr++;?>
+                    <?php if ($item->getProductType() != \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
+                    && $item->getProductType() != \Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL) continue; ?>
+                    <?php if ($item->getParentItemId()){
+                    $parentItem = $item->getParentItem();
+                    $price = ($helper->sendBaseData()==true ? $parentItem->getBasePrice() : $parentItem->getPrice());
+                }
+                else{
+                    $price = ($helper->sendBaseData()==true ? $item->getBasePrice() : $item->getPrice());
+                }?>
+                    {
+                        'name': '<?php echo $this->escapeJsQuote($item->getName()) ?>',     // Name or ID is required.
+                        'id': '<?php echo $this->escapeJsQuote($helper->getParentSKU($item)) ?>',
+                        'price': '<?php echo $price ?>',
+                        'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($item->getProduct())) ?>',
+                        'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()))?>',
+                        'list': scGetProductImpression('<?php echo $helper->getParentSKU($quoteItem) ?>') == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()))?>' : scGetProductImpression('<?php echo $helper->getParentSKU($quoteItem) ?>').list,
+                        'quantity': <?php echo $item->getQtyOrdered()?>
+                        <?php if ($intCtr==count($orderItems)):?>
+                    }]
+                <?php else:?>
+            },
+            <?php endif;?>
+            <?php endforeach;?>
+        }
+    }
+        });
+    //]]>
+    scClearProductImpressions();
+</script>

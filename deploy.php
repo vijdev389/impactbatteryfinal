@@ -1,0 +1,104 @@
+<?php
+namespace Deployer;
+use \HumanElement\DeployerRecipes\RecipeLoader;
+require __DIR__.'/dep/vendor/autoload.php';
+RecipeLoader::load(RecipeLoader::MAGENTO_2);
+
+Deployer::setDefault('default_timeout', 600);
+
+set('repository', 'git@github.com:humanelement/impactbatt2.git');
+
+//if you are running snowdog, this setting will improve deployment time by skipping frontend less compiling
+//set('frontend_static_content_skip_less', true);
+
+//if you need more shared files
+//add('shared_files', [
+//]);
+
+//if you need more shared dirs
+//add('shared_dirs', [
+//]);
+
+// If you need to only enable specific caches:
+// if you use this option you must also attach the m2:cache:cache_state_enforcement to your deployment pipe see example below
+//set('cache_state_enforcement',
+//    [
+//        'config' => 1,
+//        'layout' => 1,
+//        'block_html' => 1,
+//        'collections' => 1,
+//        'reflection' => 1,
+//        'db_ddl' => 1,
+//        'compiled_config' => 1,
+//        'eav' => 1,
+//        'customer_notification' => 1,
+//        'config_integration' => 1,
+//        'config_integration_api' => 1,
+//        'google_product' => 1,
+//        'full_page' => 1,
+//        'config_webservice' => 1,
+//        'translate' => 1,
+//        'vertex' => 1,
+//        'target_rule' => 1
+//    ]
+//);
+
+host('10.6.0.54')
+    ->stage('sand')
+    ->user('sand')
+    ->set('deploy_path', '/home/sand/deploy')
+    ->set('domain', 'https://impactbatt2.hedev.io')
+    ->set('keep_releases', 3)
+    ->set('aws_instance_id', 'i-01dd7cd791c830649')
+;
+
+host('3.224.60.249')
+    ->stage('staging-nexcess')
+    ->user('impactbatt')
+    ->forwardAgent(false)
+    ->set('deploy_path', '/usr/share/nginx/impactbatt2.hestage.com/deploy')
+    ->set('domain', 'https://impactbatt2.hestage.com')
+;
+
+host('ssh.hestage.cluster')
+    ->stage('staging')
+    ->user('web')
+    ->forwardAgent(false)
+    ->port('32291')
+    ->addSshOption('ProxyCommand', '"ssh -A jump@34.205.36.107 -W %h:%p"')
+    ->set('deploy_path', '/home/web/deploy')
+    ->set('domain', 'https://impactbattm2.hestage.com')
+    ->set('keep_releases', 3)
+;
+
+host('e595220221.nxcli.net')
+    ->stage('production')
+    ->user('a245ed97_6')
+    ->forwardAgent(false)
+    ->set('deploy_path', '/home/a245ed97/deploy')
+    ->set('keep_releases', 5)
+    ->set('domain', 'e595220221.nxcli.net')
+;
+
+// Don't remove git repo from sand.
+task('deploy:remove_git')->onStage('production');
+
+task('restart_services', function () {
+    run("sudo systemctl restart php-fpm");
+})->onStage('staging_aws');
+
+after('deploy', 'restart_services');
+
+// Nexcess cloud will not reload the apache symlinks if we don't run clear cache after the symlink release update is made
+after('deploy:jiggle_release', 'm2:cache:flush');
+
+// If you need to ensure that caches are enabled
+// after('m2:setup:upgrade', 'm2:cache:enable');
+
+// If you need to enforce a specific cache state
+// after('m2:setup:upgrade', 'm2:cache:cache_state_enforcement');
+
+//if you need to reset the op cache or apc cache every deploy
+//after('deploy:jiggle_release', 'deploy:opcache_reset');
+//after('deploy:jiggle_release', 'deploy:apc_clear_cache');
+

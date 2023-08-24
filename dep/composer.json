@@ -1,0 +1,20 @@
+{
+    "name": "human-element/deployer-project",
+    "description": "deployer subproject for deployment recipe installation",
+    "version": "1.1.1",
+    "authors": [
+        {
+            "name": "Nathan Erickson",
+            "email": "nerickson@human-element.com"
+        }
+    ],
+    "require": {
+	    "human-element/deployer-recipes": "^2.1"
+    },
+    "repositories": {
+        "humanelement": {
+            "type": "composer",
+            "url": "https://repo.human-element.com"
+        }
+    }
+}

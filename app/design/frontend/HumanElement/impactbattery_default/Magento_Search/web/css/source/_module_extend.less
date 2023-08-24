@@ -1,0 +1,33 @@
+//
+//  Desktop UI styles
+//  _____________________________________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .block-search {
+        margin-top: 10px;
+
+        .action.search,
+        .action.search[disabled] {
+            opacity: 1;
+
+            &:before {
+                .lib-css(color, @heading__color__base);
+                line-height: 38px;
+            }
+        }
+    }
+}
+
+//
+//  Mobile UI styles
+//  _____________________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .block-search {
+        .search {
+            .label {
+                &:before {
+                    .lib-css(color, @primary__color);
+                }
+            }
+        }
+    }
+}
