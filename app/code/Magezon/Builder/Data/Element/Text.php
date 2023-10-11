@@ -17,25 +17,25 @@ namespace Magezon\Builder\Data\Element;
 class Text extends AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-	    	$general->addChildren(
-	            'content',
-	            'editor',
-	            [
-					'sortOrder'       => 10,
-					'key'             => 'content',
-					'defaultValue'    => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
-					'templateOptions' => [
-						'label' => __('Content')
-	                ]
-	            ]
-	        );
+            $general->addChildren(
+                'content',
+                'editor',
+                [
+                    'sortOrder'       => 10,
+                    'key'             => 'content',
+                    'defaultValue'    => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.',
+                    'templateOptions' => [
+                        'label' => __('Content')
+                    ]
+                ]
+            );
 
-    	return $general;
+        return $general;
     }
 }

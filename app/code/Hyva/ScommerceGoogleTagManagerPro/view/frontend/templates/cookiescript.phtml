@@ -1,0 +1,18 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Scommerce\GoogleTagManagerPro\Block\CookieScript $viewModel */
+$viewModel = $block->getData('view_model');
+$cookiesToSet = $viewModel->cookiesToSet();
+if (!$viewModel->isEnabled() || !count($cookiesToSet)) {
+    return;
+}
+?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var lifetime = <?php echo $viewModel->cookieLifeTime(); ?>;
+        <?php foreach ($cookiesToSet as $cookie => $value) : ?>
+        window.hyva.setCookie('<?php echo $cookie ?>', '<?php echo $value ?>', lifetime); // Set Cookie Expiry Time
+        <?php endforeach; ?>
+    });
+</script>

@@ -27,7 +27,7 @@ class Groups
     protected $sortableElements;
 
     /**
-     * @param array $groups        
+     * @param array $groups
      */
     public function __construct(
         array $groups = []
@@ -42,21 +42,26 @@ class Groups
     {
         if ($this->sortableElements == null && $this->groups) {
             $sortableElements = [];
-            $groups           = [];
             foreach ($this->groups as $type => $group) {
-                if (!isset($group['name'])) continue;
-                if (!isset($group['sortOrder'])) $group['sortOrder'] = 0;
+                if (!isset($group['name'])) {
+                    continue;
+                }
+                if (!isset($group['sortOrder'])) {
+                    $group['sortOrder'] = 0;
+                }
                 $sortableElements[] = [
                     'name'      => $group['name'],
                     'type'      => $type,
                     'sortOrder' => $group['sortOrder']
                 ];
             }
-            usort($sortableElements, function($firstLink, $secondLink) {
-                return ($firstLink['sortOrder'] > $secondLink['sortOrder']);
+
+            usort($sortableElements, function ($firstLink, $secondLink) {
+                return strlen($firstLink['sortOrder']) <=> strlen($secondLink['sortOrder']);
             });
             $this->sortableElements = $sortableElements;
         }
+
         return $this->sortableElements;
     }
 }

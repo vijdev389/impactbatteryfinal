@@ -37,8 +37,8 @@ class Save extends \Magento\Backend\App\Action
     protected $cacheTypeList;
 
     /**
-     * @param \Magento\Backend\App\Action\Context                   $context       
-     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor 
+     * @param \Magento\Backend\App\Action\Context                   $context
+     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -91,7 +91,11 @@ class Save extends \Magento\Backend\App\Action
                     $duplicate->setId(null);
                     $duplicate->save();
                     $this->messageManager->addSuccessMessage(__('You duplicated the template'));
-                    return $resultRedirect->setPath('*/*/edit', ['template_id' => $duplicate->getId(), '_current' => true]);
+                    return $resultRedirect->setPath(
+                        '*/*/edit',
+                        ['template_id' => $duplicate->getId(),
+                            '_current' => true]
+                    );
                 }
 
                 if ($redirectBack === 'save_and_close') {
@@ -106,7 +110,10 @@ class Save extends \Magento\Backend\App\Action
             }
 
             $this->dataPersistor->set('current_template', $data);
-            return $resultRedirect->setPath('*/*/edit', ['template_id' => $this->getRequest()->getParam('template_id')]);
+            return $resultRedirect->setPath(
+                '*/*/edit',
+                ['template_id' => $this->getRequest()->getParam('template_id')]
+            );
         }
         return $resultRedirect->setPath('*/*/');
     }

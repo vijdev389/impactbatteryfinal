@@ -42,7 +42,7 @@ class General extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abs
      */
     public function modifyData(array $data)
     {
-    	return $data;
+        return $data;
     }
 
     /**
@@ -52,9 +52,14 @@ class General extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abs
      */
     public function modifyMeta(array $meta)
     {
-    	$path = $this->arrayManager->findPath(ProductAttributeInterface::CODE_SEO_FIELD_META_DESCRIPTION, $meta, null, 'children');
+        $path = $this->arrayManager->findPath(
+            ProductAttributeInterface::CODE_SEO_FIELD_META_DESCRIPTION,
+            $meta,
+            null,
+            'children'
+        );
         $meta = $this->arrayManager->merge($path . static::META_CONFIG_PATH, $meta, [
-        	'component' => 'Magezon_PageBuilder/js/components/import-handler'
+            'component' => 'Magezon_PageBuilder/js/components/import-handler'
         ]);
 
         return $meta;

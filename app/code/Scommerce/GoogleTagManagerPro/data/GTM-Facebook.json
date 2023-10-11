@@ -274,7 +274,7 @@
         "type": "PAGEVIEW",
         "filter": [
           {
-            "type": "CONTAINS",
+            "type": "ENDS_WITH",
             "parameter": [
               {
                 "type": "TEMPLATE",
@@ -284,7 +284,7 @@
               {
                 "type": "TEMPLATE",
                 "key": "arg1",
-                "value": "checkout"
+                "value": "checkout/"
               }
             ]
           }

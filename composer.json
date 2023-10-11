@@ -8,37 +8,47 @@
     ],
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "magento/magento-composer-installer": true,
+            "cweagans/composer-patches": true,
+            "magento/composer-root-update-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "magento/composer-dependency-version-audit-plugin": true,
+            "magento/inventory-composer-installer": true
+        }
     },
-    "version": "2.4.1",
+    "version": "2.4.6-p1",
     "require": {
-        "amasty/base": "1.14.4",
-        "amasty/cron-schedule-list": "1.0.5",
-        "amasty/feed": "2.6.8",
-        "amasty/finder": "1.11.17",
-        "amasty/preorder": "^1.4",
+        "amasty/base": "1.14.7",
+        "amasty/cron-schedule-list": "1.0.7",
+        "amasty/feed": "2.8.0",
+        "amasty/finder": "1.12.1",
+        "amasty/preorder": "^2.0.6",
         "aws/aws-crt-php": "^1.0",
         "cweagans/composer-patches": "^1.7",
         "doctrine/deprecations": "^1.0",
         "extend/module-warranty": "dev-master",
-        "iwd/dominate-saas": "4.2.9",
+        "iwd/dominate-saas": "4.4.2",
         "magefan/module-admin-user-guide": "^2.0",
-        "magefan/module-blog": "^2.9",
+        "magefan/module-blog": "2.11.0",
         "magefan/module-blog-comments-recaptcha": "^2.1",
         "magefan/module-blog-graph-ql": "^2.1",
-        "magento/composer-root-update-plugin": "~1.0",
-        "magento/product-community-edition": "2.4.1",
+        "magento/composer-dependency-version-audit-plugin": "~0.1",
+        "magento/composer-root-update-plugin": "^2.0",
+        "magento/product-community-edition": "2.4.6-p1",
         "magento/quality-patches": "^1.1",
         "mageworx/module-seosuiteultimate": "^2.33",
         "markshust/magento2-module-disabletwofactorauth": "^1.0",
         "nikic/php-parser": "^4.15",
         "olegkoval/magento2-regenerate-url-rewrites": "^1.6",
         "paradoxlabs/authnetcim": "^4.3",
+        "paradoxlabs/tokenbase": "^4.5",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "scommerce/core": "^2.0",
-        "signifyd/module-connect": "^4.2",
-        "signifyd/signifyd-php": "^3.1",
+        "signifyd/module-connect": "^5.4.1",
+        "signifyd/signifyd-php": "^4.1.2",
         "symfony/polyfill-php81": "^1.27"
     },
     "autoload": {
@@ -59,24 +69,23 @@
         "psr-4": {
             "Magento\\": "app/code/Magento/",
             "Magento\\Framework\\": "lib/internal/Magento/Framework/",
-            "Magento\\Setup\\": "setup/src/Magento/Setup/",
-            "Zend\\Mvc\\Controller\\": "setup/src/Zend/Mvc/Controller/"
+            "Magento\\Setup\\": "setup/src/Magento/Setup/"
         }
     },
     "require-dev": {
-        "allure-framework/allure-phpunit": "~1.2.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-        "friendsofphp/php-cs-fixer": "~2.16.0",
-        "lusitanian/oauth": "~0.8.10",
+        "allure-framework/allure-phpunit": "^2",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+        "dg/bypass-finals": "^1.4",
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "lusitanian/oauth": "^0.8",
         "magento/magento-coding-standard": "*",
-        "magento/magento2-functional-testing-framework": "^3.0",
-        "pdepend/pdepend": "~2.7.1",
-        "phpcompatibility/php-compatibility": "^9.3",
-        "phpmd/phpmd": "^2.8.0",
-        "phpstan/phpstan": ">=0.12.3 <=0.12.23",
-        "phpunit/phpunit": "^9",
-        "sebastian/phpcpd": "~5.0.0",
-        "squizlabs/php_codesniffer": "~3.5.4"
+        "magento/magento2-functional-testing-framework": "^4.2.1",
+        "pdepend/pdepend": "^2.10",
+        "phpmd/phpmd": "^2.12",
+        "phpstan/phpstan": "^1.9",
+        "phpunit/phpunit": "^9.5",
+        "sebastian/phpcpd": "^6.0",
+        "symfony/finder": "^5.4"
     },
     "conflict": {
         "gene/bluefoot": "*"
@@ -102,7 +111,7 @@
             "type": "composer",
             "url": "https://repo.human-element.com"
         },
-	"amasty": {
+        "amasty": {
             "type": "composer",
             "url": "https://composer.amasty.com/community/"
         },

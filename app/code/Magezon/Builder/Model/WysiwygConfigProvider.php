@@ -29,12 +29,12 @@ class WysiwygConfigProvider
     /**
      * @var array
      */
-    protected $additionalSettings;
+    protected $settings;
 
     /**
-     * @param \Magento\Cms\Model\Wysiwyg\Config        $wysiwygConfig 
-     * @param \Magento\Framework\View\Asset\Repository $assetRepo     
-     * @param array                                    $settings      
+     * @param \Magento\Cms\Model\Wysiwyg\Config        $wysiwygConfig
+     * @param \Magento\Framework\View\Asset\Repository $assetRepo
+     * @param array                                    $settings
      */
     public function __construct(
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
@@ -42,29 +42,37 @@ class WysiwygConfigProvider
         array $settings
     ) {
         $this->wysiwygConfig = $wysiwygConfig;
-        $this->assetRepo      = $assetRepo;
-        $this->settings       = $settings;
+        $this->assetRepo = $assetRepo;
+        $this->settings = $settings;
     }
 
     /**
      * Returns configuration data
      *
      * @param \Magento\Framework\DataObject $config
-     * @return \Magento\Framework\DataObject
+     * @return \Magento\Framework\DataObject|array
      */
     public function getConfig($config = '')
     {
         $isTinymce4 = true;
         $settings = array_replace_recursive($this->wysiwygConfig->getConfig()->getData(), [
-            'height' => '260px'
+            'height' => '260px',
         ]);
-        if (!isset($settings['plugins'])) $settings['plugins'] = [];
-        if (isset($settings['tinymce4'])) {
+        if (isset($settings['tinymce'])) {
+            $settings['tinymce']['toolbar'] .= ' code';
+        }
+        if (!isset($settings['plugins'])) {
+            $settings['plugins'] = [];
+        }
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $productMetadata = $objectManager->get('Magento\Framework\App\ProductMetadataInterface');
+        if ($productMetadata->getVersion() >= '2.4.0') {
             //fontselect
             $settings['toolbar'] = 'fullscreen | undo redo | formatselect | fontsizeselect | lineheightselect | forecolor backcolor ' .
-                    '| bold italic underline strikethrough | alignleft aligncenter alignright | numlist bullist ' .
-                    '| link image media table | searchreplace charmap code hr removeformat | help | magentowidget | magentovariable';
-            array_push($settings['plugins'], 
+                '| bold italic underline strikethrough | alignleft aligncenter alignright | numlist bullist ' .
+                '| link image media table | searchreplace charmap code hr removeformat | help | magentowidget | magentovariable';
+            array_push(
+                $settings['plugins'],
                 'advlist',
                 'autolink',
                 'lists',
@@ -96,11 +104,16 @@ class WysiwygConfigProvider
                 }
                 $settings = array_replace_recursive($settings, $this->settings);
             }
-            $settings['tinymce4'] = true;
+                      
+            if ($productMetadata->getVersion() >= '2.4.4') {
+                $settings['tinymce5'] = true;
+            } else if ($productMetadata->getVersion() > '2.4.0') {
+                $settings['tinymce4'] = true;
+            }
         }
         if (is_array($config)) {
             $settings = array_replace_recursive($settings, $config);
-        } 
+        }
         return $settings;
     }
 }

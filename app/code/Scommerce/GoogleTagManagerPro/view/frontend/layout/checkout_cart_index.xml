@@ -16,7 +16,7 @@
 			<referenceBlock name="scommerce.gtm.other" remove="true"/>
         </referenceContainer>
         <referenceContainer name="before.body.end">
-            <block name="scommerce.gtm.cart.crosssell" template="Scommerce_GoogleTagManagerPro::crosssell.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="scommerce.gtm.cart.crosssell" template="Scommerce_GoogleTagManagerPro::crosssell.phtml" />
         </referenceContainer>
     </body>
 </page>

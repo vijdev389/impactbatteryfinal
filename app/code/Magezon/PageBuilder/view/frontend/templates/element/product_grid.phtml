@@ -5,6 +5,7 @@ $coreHelper           = $this->helper('\Magezon\Core\Helper\Data');
 $compareHelper        = $this->helper('Magento\Catalog\Helper\Product\Compare');
 $element              = $this->getElement();
 $title                = $coreHelper->filter($element->getData('title'));
+$titleColor           = $element->getData('title_color');
 $titleAlign           = $element->getData('title_align');
 $titleTag             = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
 $description          = $coreHelper->filter($element->getData('description'));
@@ -39,7 +40,7 @@ $htmlId               = $element->getHtmlId();
 	<?php if ($title || $description) { ?>
 	<div class="mgz-block-heading mgz-block-heading-align-<?= $titleAlign ?><?= $showLine ? ' mgz-block-heading-line' : '' ?> mgz-block-heading-line-position-<?= $linePosition ?>">
 		<?php if ($title) { ?>
-			<<?= $titleTag ?> class="title"><?= $title ?></<?= $titleTag ?>>
+			<<?= $titleTag ?> class="title" style="color: <?= $titleColor ?>" ><?= $title ?></<?= $titleTag ?>>
 		<?php } ?>
 		<?php if ($description) { ?>
 			<div class="info"><?= $description ?></div>

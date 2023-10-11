@@ -78,6 +78,11 @@ class ConditionsProcessor
     protected $scopeConfig;
 
     /**
+     * @var \Magento\Store\Model\App\Emulation
+     */
+    protected $_appEmulation;
+
+    /**
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
      * @param \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility
@@ -197,6 +202,10 @@ class ConditionsProcessor
         if ($ruleStockLower = $model->getRuleStockLower()) {
             $collection->addFieldToFilter('qty', ['lteq' => $ruleStockLower]);
         }
+
+        $collection->setVisibility(
+            $this->catalogProductVisibility->getVisibleInSiteIds()
+        );
 
         return $collection;
     }

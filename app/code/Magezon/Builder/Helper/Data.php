@@ -59,6 +59,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     ];
 
     /**
+     * @var ClientInterface
+     */
+    protected $client;
+
+    /**
      * @var \Magento\Framework\View\Asset\Repository
      */
     protected $_assetRepo;
@@ -82,6 +87,26 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var \Magento\Framework\App\State
      */
     protected $appState;
+
+    /**
+     * @var \Magento\Cms\Model\ResourceModel\Page\CollectionFactory
+     */
+    protected $pageCollectionFactory;
+
+    /**
+     * @var \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory
+     */
+    protected $categoryCollectionFactory;
+
+    /**
+     * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
+     */
+    protected $productCollectionFactory;
+
+    /**
+     * @var \Magento\Framework\Filter\Template\Tokenizer\ParameterFactory
+     */
+    protected $parameterFactory;
 
     /**
      * @var \Magento\Framework\View\LayoutInterface
@@ -114,21 +139,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $_flatElements = [];
 
     /**
-     * @param ClientInterface                                                 $client                    
-     * @param \Magento\Framework\App\Helper\Context                           $context                   
-     * @param \Magento\Framework\View\Asset\Repository                        $assetRepo                 
-     * @param \Magento\Store\Model\StoreManagerInterface                      $storeManager              
-     * @param \Magento\Backend\Model\UrlInterface                             $backendUrl                
-     * @param \Magento\Framework\Stdlib\ArrayManager                          $arrayManager              
-     * @param \Magento\Framework\App\State                                    $appState                  
-     * @param \Magento\Framework\View\LayoutInterface                         $layout                    
-     * @param \Magento\Framework\Filter\Template\Tokenizer\ParameterFactory   $parameterFactory          
-     * @param \Magento\Cms\Model\ResourceModel\Page\CollectionFactory         $pageCollectionFactory     
-     * @param \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory 
-     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory  $productCollectionFactory  
-     * @param \Magezon\Core\Helper\Data                                       $coreHelper                
-     * @param \Magezon\Builder\Model\Source\ResizableSizes                    $resizableSizes            
-     * @param \Magezon\Builder\Model\CacheManager                             $cacheManager              
+     * @param ClientInterface $client
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param \Magento\Framework\View\Asset\Repository $assetRepo
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Backend\Model\UrlInterface $backendUrl
+     * @param \Magento\Framework\Stdlib\ArrayManager $arrayManager
+     * @param \Magento\Framework\App\State $appState
+     * @param \Magento\Framework\View\LayoutInterface $layout
+     * @param \Magento\Framework\Filter\Template\Tokenizer\ParameterFactory $parameterFactory
+     * @param \Magento\Cms\Model\ResourceModel\Page\CollectionFactory $pageCollectionFactory
+     * @param \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
+     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
+     * @param \Magezon\Core\Helper\Data $coreHelper
+     * @param \Magezon\Builder\Model\Source\ResizableSizes $resizableSizes
+     * @param \Magezon\Builder\Model\CacheManager $cacheManager
      */
     public function __construct(
         ClientInterface $client,
@@ -148,21 +173,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magezon\Builder\Model\CacheManager $cacheManager
     ) {
         parent::__construct($context);
-        $this->client                    = $client;
-        $this->_assetRepo                = $assetRepo;
-        $this->_storeManager             = $storeManager;
-        $this->_backendUrl               = $backendUrl;
-        $this->arrayManager              = $arrayManager;
-        $this->appState                  = $appState;
-        $this->layout                    = $layout;
-        $this->parameterFactory          = $parameterFactory;
-        $this->pageCollectionFactory     = $pageCollectionFactory;
+        $this->client = $client;
+        $this->_assetRepo = $assetRepo;
+        $this->_storeManager = $storeManager;
+        $this->_backendUrl = $backendUrl;
+        $this->arrayManager = $arrayManager;
+        $this->appState = $appState;
+        $this->layout = $layout;
+        $this->parameterFactory = $parameterFactory;
+        $this->pageCollectionFactory = $pageCollectionFactory;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
-        $this->productCollectionFactory  = $productCollectionFactory;
-        $this->urlBuilder                = $context->getUrlBuilder();
-        $this->coreHelper                = $coreHelper;
-        $this->resizableSizes            = $resizableSizes;
-        $this->cacheManager              = $cacheManager;
+        $this->productCollectionFactory = $productCollectionFactory;
+        $this->urlBuilder = $context->getUrlBuilder();
+        $this->coreHelper = $coreHelper;
+        $this->resizableSizes = $resizableSizes;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -172,9 +197,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getConfig($key, $store = null)
     {
-        $store     = $this->_storeManager->getStore($store);
+        $store = $this->_storeManager->getStore($store);
         $websiteId = $store->getWebsiteId();
-        $result    = $this->scopeConfig->getValue(
+        $result = $this->scopeConfig->getValue(
             'mgzbuilder/' . $key,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $store
@@ -190,7 +215,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @return string
      */
     public function getViewFileUrl()
-    { 
+    {
         try {
             $fileId = '/';
             $params = array_merge(['_secure' => $this->_request->isSecure()], []);
@@ -208,21 +233,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * @param  string $string
-     * @return string         
+     * @return string
      */
     public function getImageUrl($string)
     {
         if ($string && is_string($string) && strpos($string, 'http') === false && (strpos($string, '<div') === false)) {
             $mediaUrl = $this->coreHelper->getMediaUrl();
-            $string   = $mediaUrl . $string;
+            $string = $mediaUrl . $string;
         }
         return $string;
     }
 
     /**
-     * @param  string $haystack 
-     * @param  string $needle   
-     * @return boolean           
+     * @param  string $haystack
+     * @param  string $needle
+     * @return boolean
      */
     public function startsWith($haystack, $needle)
     {
@@ -231,22 +256,22 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param  string $haystack 
-     * @param  string $needle   
-     * @return boolean           
+     * @param  string $haystack
+     * @param  string $needle
+     * @return boolean
      */
     public function endsWith($haystack, $needle)
     {
         $length = strlen($needle);
 
         return $length === 0 ||
-        (substr($haystack, -$length) === $needle);
+            (substr($haystack, -$length) === $needle);
     }
 
     /**
-     * @param  string $path   
-     * @param  array $params 
-     * @return string         
+     * @param  string $path
+     * @param  array $params
+     * @return string
      */
     public function getUrl($path = null, $params = null)
     {
@@ -254,8 +279,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param  string $value 
-     * @return string        
+     * @param  string $value
+     * @return string
      */
     public function getStyleColor($value, $isImportant = false)
     {
@@ -272,7 +297,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * @param  string $value
-     * @return string       
+     * @return string
      */
     public function getStyleProperty($value, $isImportant = false, $unit = '')
     {
@@ -283,7 +308,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 $value .= 'px';
             }
         }
-        if ($value == '-') $value = '';
+        if ($value == '-') {
+            $value = '';
+        }
+
         if ($value && $isImportant) {
             $value .= ' !important';
         }
@@ -291,10 +319,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param  string|array $target 
-     * @param  array $styles 
-     * @param  string $suffix 
-     * @return string         
+     * @param  string|array $target
+     * @param  array $styles
+     * @param  string $suffix
+     * @return string
      */
     public function getStyles($target, $styles, $suffix = '')
     {
@@ -309,7 +337,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $count = count($target);
             foreach ($target as $_selector) {
                 $html .= $_selector . $suffix;
-                if ($i!=$count-1)  {
+                if ($i != $count - 1) {
                     $html .= ',';
                 }
                 $i++;
@@ -318,7 +346,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $html = $target . $suffix;
         }
         $stylesHtml = $this->parseStyles($styles);
-        if (!$stylesHtml) return;
+        if (!$stylesHtml) {
+            return;
+        }
+
         if ($styles) {
             $html .= '{';
             $html .= $stylesHtml;
@@ -328,42 +359,51 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param  array $styles 
-     * @return string       
+     * @param  array $styles
+     * @return string
      */
     public function parseStyles($styles)
     {
         $result = '';
         foreach ($styles as $k => $v) {
-            if ($v=='') continue;
+            if ($v == '') {
+                continue;
+            }
+
             $result .= $k . ':' . $v . ';';
         }
         return $result;
     }
 
     /**
-     * @param  array $classes 
-     * @return string       
+     * @param  array $classes
+     * @return string
      */
     public function parseClasses($_classes)
     {
         $classes = [];
         foreach ($_classes as $k => $v) {
-            if ($v=='') continue;
+            if ($v == '') {
+                continue;
+            }
+
             $classes[] = $v;
         }
         return implode(' ', $classes);
     }
 
     /**
-     * @param  array $attrs 
-     * @return string       
+     * @param  array $attrs
+     * @return string
      */
     public function parseAttrs($attrs)
     {
         $result = '';
         foreach ($attrs as $k => $v) {
-            if ($v=='') continue;
+            if ($v == '') {
+                continue;
+            }
+
             $result .= $k . '="' . $v . '" ';
         }
         return substr($result, 0, -1);
@@ -385,28 +425,28 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return [
             [
                 'label' => 6,
-                'value' => 2
+                'value' => 2,
             ],
             [
                 'label' => 5,
-                'value' => 15
+                'value' => 15,
             ],
             [
                 'label' => 4,
-                'value' => 3
+                'value' => 3,
             ],
             [
                 'label' => 3,
-                'value' => 4
+                'value' => 4,
             ],
             [
                 'label' => 2,
-                'value' => 6
+                'value' => 6,
             ],
             [
                 'label' => 1,
-                'value' => 12
-            ]
+                'value' => 12,
+            ],
         ];
     }
 
@@ -436,7 +476,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->getConfig('general/google_api_key');
     }
 
-    public function findElement($_elements, $elemName, $convertJobject = false) {
+    public function findElement($_elements, $elemName, $convertJobject = false)
+    {
         foreach ($_elements as $_element) {
             if (isset($_element['id']) && $_element['id'] == $elemName) {
                 if ($convertJobject) {
@@ -484,19 +525,19 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                     } else {
                         $params['url'] = 'mgzlink_' . $params['type'] . '_' . $params['id'];
                     }
-                    $search[]  = '"{{mgzlink' . $match[2] . '}}"';
+                    $search[] = '"{{mgzlink' . $match[2] . '}}"';
                     $replace[] = $this->coreHelper->serialize($params);
                 }
             }
             $profile = str_replace($search, $replace, $profile);
-            $search  = $replace = [];
+            $search = $replace = [];
             if (!empty($catIds)) {
                 $categoryCollection = $this->categoryCollectionFactory->create();
                 $categoryCollection->addFieldToFilter('entity_id', ['in' => $catIds]);
                 $categoryCollection->setStoreId($storeId);
                 $categoryCollection->addUrlRewriteToResult();
                 foreach ($categoryCollection as $category) {
-                    $search[]  = 'mgzlink_category_' . $category->getId();
+                    $search[] = 'mgzlink_category_' . $category->getId();
                     $replace[] = $category->getUrl();
                 }
             }
@@ -506,7 +547,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 $productCollection->setStoreId($storeId);
                 $productCollection->addUrlRewrite();
                 foreach ($productCollection as $product) {
-                    $search[]  = 'mgzlink_product_' . $product->getId();
+                    $search[] = 'mgzlink_product_' . $product->getId();
                     $replace[] = $product->getProductUrl();
                 }
             }
@@ -514,7 +555,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 $pageCollection = $this->pageCollectionFactory->create();
                 $pageCollection->addFieldToFilter('page_id', ['in' => $pageIds]);
                 foreach ($pageCollection as $page) {
-                    $search[]  = 'mgzlink_page_' . $page->getId();
+                    $search[] = 'mgzlink_page_' . $page->getId();
                     $replace[] = $this->_urlBuilder->getUrl(null, ['_direct' => $page->getIdentifier()]);
                 }
             }
@@ -539,14 +580,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $profile['elements'] = [];
         }
         $block = $this->layout->createBlock($block, '', [
-            'data' => $profile
+            'data' => $profile,
         ]);
         return $block;
     }
 
     /**
-     * @param  array $elements 
-     * @return array           
+     * @param  array $elements
+     * @return array
      */
     public function prepareProfile($profile, $suffixId = '')
     {
@@ -561,13 +602,19 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $profile;
     }
 
-    private function prepareElements($elements, $suffixId = '') {
+    /**
+     * @param $elements
+     * @param $suffixId
+     * @return mixed
+     */
+    private function prepareElements($elements, $suffixId = '')
+    {
         foreach ($elements as &$element) {
             $element['id'] .= $suffixId;
             $this->_flatElements[] = (new \Magento\Framework\DataObject($element));
             foreach ($element as $key => &$value) {
                 if (!is_array($value)) {
-                    $value = str_replace('&quot;', '"', $value);
+                    $value = isset($value) ? str_replace('&quot;', '"', $value) : '';
                 }
             }
             if (isset($element['elements'])) {
@@ -591,7 +638,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function minify($content)
     {
-        $result =  preg_replace(
+        $result = preg_replace(
             '#((?:<\?php\s+(?!echo|print|if|elseif|else)[^\?]*)\?>)\s+#',
             '$1 ',
             preg_replace(
@@ -628,73 +675,73 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return [
             [
                 'label' => __('Facebook'),
-                'value' => 'fab mgz-fa-facebook-f'
+                'value' => 'fab mgz-fa-facebook-f',
             ],
             [
                 'label' => __('Twitter'),
-                'value' => 'fab mgz-fa-twitter'
+                'value' => 'fab mgz-fa-twitter',
             ],
             [
                 'label' => __('Pinterest'),
-                'value' => 'fab mgz-fa-pinterest-p'
+                'value' => 'fab mgz-fa-pinterest-p',
             ],
             [
                 'label' => __('LinkedIn'),
-                'value' => 'fab mgz-fa-linkedin-in'
+                'value' => 'fab mgz-fa-linkedin-in',
             ],
             [
                 'label' => __('Tumblr'),
-                'value' => 'fab mgz-fa-tumblr'
+                'value' => 'fab mgz-fa-tumblr',
             ],
             [
                 'label' => __('Instagram'),
-                'value' => 'fab mgz-fa-instagram'
+                'value' => 'fab mgz-fa-instagram',
             ],
             [
                 'label' => __('Skype'),
-                'value' => 'fab mgz-fa-skype'
+                'value' => 'fab mgz-fa-skype',
             ],
             [
                 'label' => __('Flickr'),
-                'value' => 'fab mgz-fa-flickr'
+                'value' => 'fab mgz-fa-flickr',
             ],
             [
                 'label' => __('Dribbble'),
-                'value' => 'fab mgz-fa-dribbble'
+                'value' => 'fab mgz-fa-dribbble',
             ],
             [
                 'label' => __('Youtube'),
-                'value' => 'fab mgz-fa-youtube'
+                'value' => 'fab mgz-fa-youtube',
             ],
             [
                 'label' => __('Vimeo'),
-                'value' => 'fab mgz-fa-vimeo-v'
+                'value' => 'fab mgz-fa-vimeo-v',
             ],
             [
                 'label' => __('RSS'),
-                'value' => 'fas mgz-fa-rss'
+                'value' => 'fas mgz-fa-rss',
             ],
             [
                 'label' => __('Behance'),
-                'value' => 'fab mgz-fa-behance'
-            ]
+                'value' => 'fab mgz-fa-behance',
+            ],
         ];
     }
 
     /**
      * $attributes = [
-            'row_width' => [
-                'type'     => 'unit',
-                'property' => 'width',
-                'value'    => '100%' //Default value
-            ]
-        ];
-     * @param  string                         $target     
-     * @param  string                         $type       
-     * @param  \Magezon\Builder\Model\Element $element    
-     * @param  array                          $attributes 
-     * @param  string                         $prefix 
-     * @return string                                     
+    'row_width' => [
+    'type'     => 'unit',
+    'property' => 'width',
+    'value'    => '100%' //Default value
+    ]
+    ];
+     * @param  string                         $target
+     * @param  string                         $type
+     * @param  \Magezon\Builder\Model\Element $element
+     * @param  array                          $attributes
+     * @param  string                         $prefix
+     * @return string
      */
     public function getStylesHtml(string $target, string $type, \Magezon\Builder\Model\Element $element, array $attributes, $prefix = '')
     {
@@ -704,7 +751,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             case 'custom':
                 $prefixes = ['', 'lg_', 'md_', 'sm_', 'xs_'];
                 break;
-            
+
             default:
                 $prefixes = [''];
                 break;
@@ -713,13 +760,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         foreach ($prefixes as $_k => $_prefix) {
             $styles = [];
             foreach ($attributes as $_attr => $options) {
-                if (!isset($options['property'])) continue;
-                $_property    = $options['property'];
+                if (!isset($options['property'])) {
+                    continue;
+                }
+
+                $_property = $options['property'];
                 $_suffixField = (isset($options['suffix_field'])) ? $options['suffix_field'] : '';
-                $_type        = (isset($options['type'])) ? $options['type'] : '';
-                $_important   = (isset($options['important'])) ? $options['important'] : false;
-                $_value       = (isset($options['value'])) ? $options['value'] : $element->getData($prefix . $_prefix . $_attr);
-                $_unit        = (isset($options['unit'])) ? $options['unit'] : '';
+                $_type = (isset($options['type'])) ? $options['type'] : '';
+                $_important = (isset($options['important'])) ? $options['important'] : false;
+                $_value = (isset($options['value'])) ? $options['value'] : $element->getData($prefix . $_prefix . $_attr);
+                $_unit = (isset($options['unit'])) ? $options['unit'] : '';
 
                 switch ($_type) {
                     case 'color':
@@ -732,7 +782,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
                     default:
                         $styles[$_property] = $_value;
-                        if ($_important) $styles[$_property] .= ' !important';
+                        if ($_important) {
+                            $styles[$_property] .= ' !important';
+                        }
+
                         break;
                 }
 

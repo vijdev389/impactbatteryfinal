@@ -45,17 +45,17 @@ $cartItems = $this->getCartItems();
 
             function steps(value, pos) {
                 if (value != undefined) {
-                    console.log(value, pos);
+                    //console.log(value, pos);
                     if (stepSent(pos) === false) {
                         sentSteps.push(pos);
-                        <?php $intCtr=0;?>
+                        <?php $intCtr=0; $hasItems = false;?>
                         dataLayer.push({
-                                'event': 'checkout',
-                                'ecommerce': {
-                                    'checkout': {
-                                        'actionField': {'step': pos, 'option': value},
-                                        'products': [
-                                            <?php foreach($cartItems as $_quoteItem) : ?>
+                            'event': 'checkout',
+                            'ecommerce': {
+                                'checkout': {
+                                    'actionField': {'step': pos, 'option': value},
+                                    'products': [
+                                        <?php foreach($cartItems as $_quoteItem) : ?>
                                             <?php
                                             $trackingData = $_quoteItem->getScTrackingData();
                                             if (!$trackingData) {
@@ -66,41 +66,39 @@ $cartItems = $this->getCartItems();
                                             }
                                             ?>
                                             <?php $intCtr++;?>
-                                            <?php if ($_quoteItem->getProductType() != \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
-                                                && $_quoteItem->getProductType() != \Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL) continue; ?>
-                                            <?php if ($_quoteItem->getParentItemId()){
-                                                $parentItem = $_quoteItem->getParentItem();
-                                                $price = $parentItem->getBasePrice();
-                                            }
-                                            else{
-                                                $price = $_quoteItem->getBasePrice();
-                                            }?>
-                                            {
-                                                'name': '<?php echo $this->escapeJsQuote($_quoteItem->getName()) ?>',
-                                                'id': '<?php echo $this->escapeJsQuote($helper->getParentSKU($_quoteItem)) ?>',
-                                                'price': '<?php echo $price ?>',
-                                                'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($_quoteItem->getProduct())) ?>',
-                                                'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct())) ?>',
-                                                'quantity': '<?php echo $_quoteItem->getQty() ?>',
-                                                'list': scGetProductImpression('<?php echo $helper->getParentSKU($_quoteItem) ?>') == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct())) ?>' : scGetProductImpression('<?php echo $helper->getParentSKU($_quoteItem) ?>').list
-                                                <?php if ($intCtr==count($cartItems)):?>
-                                            }]
-                                        <?php else:?>
-                                    },
-                                    <?php endif;?>
-                                    <?php endforeach; ?>
-                                    }
-                                },
-                                'eventCallback': function() {
-                                //document.location = 'checkout.html';
+                                            <?php if (!($_quoteItem->getProductType() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE
+                                                || ($_quoteItem->getParentItemId() && $_quoteItem->getParentItem()->getProductType() != \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE))): ?>
+                                                <?php if ($hasItems): ?>,<?php endif; $hasItems = true; ?>
+                                                <?php if ($_quoteItem->getParentItemId()) {
+                                                    $parentItem = $_quoteItem->getParentItem();
+                                                    $price = $helper->productPrice($parentItem);
+                                                } else {
+                                                    $price = $helper->productPrice($_quoteItem);
+                                                }?>
+                                                {
+                                                    'name': '<?php echo $this->escapeJsQuote($_quoteItem->getName()) ?>',
+                                                    'id': '<?php echo $this->escapeJsQuote($helper->getParentSKU($_quoteItem)) ?>',
+                                                    'price': '<?php echo $price ?>',
+                                                    'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($_quoteItem->getProduct())) ?>',
+                                                    'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct())) ?>',
+                                                    'quantity': '<?php echo $_quoteItem->getQty() ?>',
+                                                    'list': scGetProductImpression('<?php echo $helper->getParentSKU($_quoteItem) ?>') == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct())) ?>' : scGetProductImpression('<?php echo $helper->getParentSKU($_quoteItem) ?>').list
+                                                }
+                                            <?php endif;?>
+                                        <?php endforeach; ?>
+                                    ]
+                                }
+                            },
+                            'eventCallback': function() {
+                            //document.location = 'checkout.html';
                             }
                         });
                     } else {
                         dataLayer.push({
-                                'event': 'checkoutOption',
-                                'ecommerce': {
-                                    'checkout_option': {
-                                        'actionField': {'step': pos, 'option': value},
+                            'event': 'checkoutOption',
+                            'ecommerce': {
+                                'checkout_option': {
+                                    'actionField': {'step': pos, 'option': value},
                                 }
                             },
                             'eventCallback': function() {
@@ -112,10 +110,12 @@ $cartItems = $this->getCartItems();
             }
 
             quote.shippingMethod.subscribe(function(newVal) {
-                var shipping = newVal.carrier_code;
-                if (shipping != undefined && old_shipping != shipping) {
-                    old_shipping = shipping;
-                    steps(shipping, 1);
+                if (newVal && newVal.hasOwnProperty('carrier_code')) {
+                    var shipping = newVal.carrier_code;
+                    if (shipping != undefined && old_shipping != shipping) {
+                        old_shipping = shipping;
+                        steps(shipping, 1);
+                    }
                 }
             });
         });

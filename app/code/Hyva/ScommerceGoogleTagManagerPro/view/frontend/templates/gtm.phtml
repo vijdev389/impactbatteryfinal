@@ -1,0 +1,535 @@
+<?php
+/**
+ * @var $block \Scommerce\GoogleTagManagerPro\Block\Gtm
+ */
+?>
+<?php
+/** @var \Scommerce\GoogleTagManagerPro\Helper\Data $helper */
+$helper = $block->getHelper();
+/** @var \Scommerce\GoogleTagManagerPro\ViewModel\Gtm $viewModel */
+
+if (!$helper->isEnabled()) return;
+
+$viewModel = $block->getViewModel();
+$pageType = $viewModel->getPageType($block);
+$useUa = $helper->useUaEvents();
+$useGa4 = $helper->getAddGa4Events();
+?>
+<?php echo $block->getChildHtml('scom_gtm_ga4'); ?>
+
+<!-- Scommerce Mage Google Tag Manager -->
+<script>
+    window.dataLayer = window.dataLayer || [];
+    let affiliation = '<?= $helper->getAffiliation() ?>';
+    window.scTrackingContainer.setData('affiliation', affiliation);
+
+    window.scTrackingContainer.subscribe('page_view', function(data) {
+        // Page view implementation goes here
+    });
+
+    window.scTrackingContainer.subscribe('home_page', function(data) {
+        // Home page view implementation goes here
+    });
+
+    window.scTrackingContainer.subscribe('page_ready', function(pageType) {
+        <?php if ($helper->getDynamicRemarketingEnabled()): ?>
+        let rdata = Remarketing(window.scTrackingContainer, pageType, <?php echo $block->getRemarketingType() ?>, <?php echo $block->sendEcommCategoryPath() ?>);
+        let event = 'fireRemarketingTag_' + pageType;
+        dataLayer.push({
+            'event': event,
+            'google_tag_params': rdata
+        });
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('promo_view', function(data) {
+        <?php if ($useGa4): ?>
+        dataLayer.push({
+            'event': 'view_promotion',
+            'ecommerce': {
+                'items': convertPromotions(window.scTrackingContainer, data)
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'ecommerce': {
+                'promoView': {
+                    'promotions': data
+                }
+            }
+        });
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('promo_click', function(data) {
+        <?php if ($useUa): ?>
+        dataLayer.push({
+            'event': 'promotionClick',
+            'ecommerce': {
+                'promoClick': {
+                    'promotions': [{
+                        'id': data.id,
+                        'name': data.name,
+                        'creative': data.creative,
+                        'position': data.position
+                    }]
+                }
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'select_promotion',
+            'ecommerce': {
+                'items': [{
+                    'item_id': data.id,
+                    'item_name': data.name,
+                    'creative_name': data.creative,
+                    'index': data.position
+                }]
+            }
+        });
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('view_list', function(data) {
+        let impr = [];
+        for (let i = 0; i < data.length; i++) {
+            let product = data[i];
+            impr.push({
+                id: product.id,
+                name: product.name,
+                price: window.scTrackingContainer.formatPrice(product.price, false),
+                category: product.category,
+                brand: product.brand,
+                list: product.list,
+                position: product.position
+            });
+        }
+        <?php if ($useGa4): ?>
+        dataLayer.push({
+            'event': 'view_item_list',
+            'ecommerce': {
+                'items': convertItemList(window.scTrackingContainer, data)
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'ecommerce': {
+                'currencyCode': window.scTrackingContainer.getCurrency(),
+                'impressions': impr
+            }
+        });
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('listing_scroll', function(data) {
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'listingScroll',
+            'ecommerce': {
+                'impressions': data
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'view_item_list',
+            'ecommerce': {
+                'items': convertItemList(window.scTrackingContainer, data)
+            }
+        });
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('item_click', function(data) {
+        <?php if ($useUa): ?>
+        dataLayer.push({
+            'event': 'productClick',
+            'ecommerce': {
+                'click': {
+                    'actionField': {'list': data.list},
+                    'products': [{
+                        'name': data.name,
+                        'id': data.id,
+                        'price': window.scTrackingContainer.formatPrice(data.price, false),
+                        'brand': data.brand,
+                        'category': data.category,
+                        'position': data.position
+                    }]
+                }
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        dataLayer.push({ ecommerce: null });
+        let items = {
+            'item_name': data.name,
+            'item_id': data.id,
+            'price': window.scTrackingContainer.formatPrice(data.price, false),
+            'item_brand': data.brand,
+            'item_list_name': data.list,
+            'item_list_id': window.scTrackingContainer.getListId(data.list),
+            'index': data.position,
+            'affiliation': affiliation,
+            'currency': window.scTrackingContainer.getData('currency')
+        };
+        let categories = data.category.split('->');
+        items['item_category'] = categories[0];
+        for (let j = 1; j < categories.length; j++) {
+            key = 'item_category' + (j + 1);
+            items[key] = categories[j];
+        }
+        let content = {
+            'event': 'select_item',
+            'ecommerce': {
+                'items': [items]
+            }
+        };
+        dataLayer.push(content);
+        <?php endif; ?>
+    });
+
+    <?php if ($pageType === "product"): ?>
+        let product = window.scTrackingContainer.getProductData();
+        <?php if ($useGa4): ?>
+        let items = {
+            item_name: product.name,
+            item_id: product.id,
+            price: window.scTrackingContainer.formatPrice(product.price, false),
+            item_brand: product.brand,
+            item_list_name: product.list,
+            item_list_id: window.scTrackingContainer.getListId(product.list),
+            affiliation: window.scTrackingContainer.getData('affiliation'),
+            currency: window.scTrackingContainer.getData('currency')
+        };
+        let categories = product.category.split('->');
+        items['item_category'] = categories[0];
+        for (let j = 1; j < categories.length; j++) {
+            key = 'item_category' + (j + 1);
+            items[key] = categories[j];
+        }
+        let content = {
+            'event': 'view_item',
+            'ecommerce': {
+                'items': [items]
+            }
+        };
+        dataLayer.push(content);
+        <?php endif; ?>
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'ecommerce': {
+                'detail': {
+                    'actionField': {'list': product.list},
+                    'products': [{
+                        name: product.name,
+                        id: product.id,
+                        price: window.scTrackingContainer.formatPrice(product.price, false),
+                        brand: product.brand,
+                        category: product.category
+                    }]
+                }
+            }
+        });
+        <?php endif; ?>
+    <?php endif; ?>
+
+    window.scTrackingContainer.subscribe('add_to_cart', function(data) {
+        let prods = [];
+        for (let i = 0; i < data.length; i++) {
+            prods.push({
+                'name': data[i].name,
+                'id': data[i].id,
+                'price': window.scTrackingContainer.formatPrice(data[i].price, false),
+                'brand': data[i].brand,
+                'category': data[i].category,
+                'quantity': data[i].qty,
+                'list': data[i].list
+            });
+        }
+        <?php if ($useUa): ?>
+        dataLayer.push({
+            'event': 'addToCart',
+            'ecommerce': {
+                'currencyCode': window.scTrackingContainer.getCurrency(),
+                'add': {
+                    'products': prods
+                }
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'add_to_cart',
+            'ecommerce': {
+                'items': convertAddToCartItem(window.scTrackingContainer, prods)
+            }
+        });
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('remove_from_cart', function(data) {
+        <?php if ($useUa): ?>
+        dataLayer.push({
+            'event': 'removeFromCart',
+            'ecommerce': {
+                'currencyCode': window.scTrackingContainer.getCurrency(),
+                'remove': {
+                    'products': [{
+                        'name': data.name,
+                        'id': data.id,
+                        'price': window.scTrackingContainer.formatPrice(data.price, false),
+                        'brand': data.brand,
+                        'category': data.category,
+                        'quantity': data.qty,
+                        'list': data.list
+                    }]
+                }
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        dataLayer.push({ ecommerce: null });
+        let items = {
+            item_name: data.name,
+            item_id: data.id,
+            price: window.scTrackingContainer.formatPrice(data.price, false),
+            item_brand: data.brand,
+            quantity: data.qty,
+            item_list_name: data.list,
+            affiliation: window.scTrackingContainer.getData('affiliation'),
+            currency: window.scTrackingContainer.getData('currency')
+        };
+        let categories = data.category.split('->');
+        items['item_category'] = categories[0];
+        for (let j = 1; j < categories.length; j++) {
+            key = 'item_category' + (j + 1);
+            items[key] = categories[j];
+        }
+        let content = {
+            'event': 'remove_from_cart',
+            'ecommerce': {
+                'items': [items]
+            }
+        }
+        dataLayer.push(content);
+        <?php endif; ?>
+    });
+
+    <?php if ($helper->getAddGa4Events()): ?>
+    window.scTrackingContainer.subscribe('view_cart', function(data) {
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'view_cart',
+            'ecommerce': {
+                'currency': window.scTrackingContainer.getData('currency'),
+                'value': window.scTrackingContainer.getData('total'),
+                'items': convertCheckoutItems(window.scTrackingContainer, data)
+            }
+        });
+    });
+    <?php endif; ?>
+
+    <?php if ($helper->getAddGa4Events()): ?>
+    window.scTrackingContainer.subscribe('add_to_wishlist', function(data) {
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'add_to_wishlist',
+            'ecommerce': {
+                'currency': window.scTrackingContainer.getData('currency'),
+                'value': window.scTrackingContainer.formatPrice(data.value, false),
+                'items': convertWishlistItems(window.scTrackingContainer, data)
+            }
+        });
+    });
+    <?php endif; ?>
+
+    <?php if ($helper->getAddGa4Events()): ?>
+    window.scTrackingContainer.subscribe('begin_checkout', function(data) {
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'begin_checkout',
+            'ecommerce': {
+                'items': convertCheckoutItems(window.scTrackingContainer, data)
+            }
+        });
+    });
+    <?php endif; ?>
+
+    window.scTrackingContainer.subscribe('checkout_step', function(data) {
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'checkout',
+            'ecommerce': {
+                'checkout': {
+                    'actionField': {step: data.step, option: data.option},
+                    'products': data.products
+                }
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        if (data.stepType == 'shipment') {
+            dataLayer.push({ecommerce: null});
+            dataLayer.push({
+                'event': 'add_shipping_info',
+                'ecommerce': {
+                    'currency': window.scTrackingContainer.getData('currency'),
+                    'value': window.scTrackingContainer.getData('total'),
+                    'coupon': window.scTrackingContainer.getData('coupon'),
+                    'shipping_tier': data.option,
+                    'items': convertPurchaseItems(window.scTrackingContainer, data.products)
+                }
+            });
+        }
+        if (data.stepType == 'payment') {
+            dataLayer.push({ecommerce: null});
+            dataLayer.push({
+                'event': 'add_payment_info',
+                'ecommerce': {
+                    'currency': window.scTrackingContainer.getData('currency'),
+                    'value': window.scTrackingContainer.getData('total'),
+                    'coupon': window.scTrackingContainer.getData('coupon'),
+                    'payment_type': data.option,
+                    'items': convertPurchaseItems(window.scTrackingContainer, data.products)
+                }
+            });
+        }
+        <?php endif; ?>
+    });
+
+    window.scTrackingContainer.subscribe('checkout_option', function(data) {
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'event': 'checkoutOption',
+            'ecommerce': {
+                'checkout_option': {
+                    'actionField': {step: data.step, option: data.option},
+                }
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useGa4): ?>
+        if (data.stepType == 'shipping') {
+            dataLayer.push({ecommerce: null});
+            dataLayer.push({
+                'event': 'add_shipping_info',
+                'ecommerce': {
+                    'currency': window.scTrackingContainer.getData('currency'),
+                    'value': window.scTrackingContainer.getData('total'),
+                    'coupon': window.scTrackingContainer.getData('coupon'),
+                    'shipping_tier': data.option,
+                    'items': convertPurchaseItems(window.scTrackingContainer, data.products)
+                }
+            });
+        }
+        if (data.stepType == 'payment') {
+            dataLayer.push({ecommerce: null});
+            dataLayer.push({
+                'event': 'add_payment_info',
+                'ecommerce': {
+                    'currency': window.scTrackingContainer.getData('currency'),
+                    'value': window.scTrackingContainer.getData('total'),
+                    'coupon': window.scTrackingContainer.getData('coupon'),
+                    'payment_type': data.option,
+                    'items': convertPurchaseItems(window.scTrackingContainer, data.products)
+                }
+            });
+        }
+        <?php endif; ?>
+    });
+
+    <?php if ($pageType === "purchase"): ?>
+        let purchaseData = window.scTrackingContainer.getPurchaseData();
+        <?php if ($useGa4): ?>
+        dataLayer.push({
+            'event': 'purchase',
+            'ecommerce': {
+                transaction_id: purchaseData.id,
+                affiliation: window.scTrackingContainer.getData('affiliation'),
+                value: window.scTrackingContainer.formatPrice(purchaseData.revenue, false),
+                tax: window.scTrackingContainer.formatPrice(purchaseData.tax, false),
+                shipping: window.scTrackingContainer.formatPrice(purchaseData.shipping, false),
+                coupon: purchaseData.coupon,
+                currency: window.scTrackingContainer.getCurrency(),
+                items: convertPurchaseItems(window.scTrackingContainer, purchaseData.products)
+            }
+        });
+        <?php endif; ?>
+        <?php if ($useUa): ?>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            'ecommerce': {
+                'currencyCode': window.scTrackingContainer.getCurrency(),
+                'purchase': {
+                    'actionField': {
+                        'id': purchaseData.id,
+                        'affiliation': window.scTrackingContainer.getData('affiliation'),
+                        'revenue': window.scTrackingContainer.formatPrice(purchaseData.revenue, false),
+                        'tax': window.scTrackingContainer.formatPrice(purchaseData.tax, false),
+                        'shipping': window.scTrackingContainer.formatPrice(purchaseData.shipping, false),
+                        'coupon': purchaseData.coupon
+                    },
+                    'products': purchaseData.products
+                }
+            }
+        });
+        <?php endif; ?>
+    <?php endif; ?>
+
+
+    window.scStartGTM = function () {
+            window.scTrackingContainer.startEvents();
+            <?php if ($helper->isGDPRCookieEnabled()): ?>
+            let cookieKey = '<?php echo $helper->getCookieKey(); ?>';
+            let isGDPRCookieForceDeclined = !!'<?php echo $helper->isGDPRCookieForceDeclined() ?>';
+
+            function needShowTag() {
+                if (cookieKey.length == 0) return true;
+                var cookie = window.hyva.getCookie('<?php echo $helper->getCookieKey() ?>');
+                if (!isGDPRCookieForceDeclined) {
+                    return !(cookie == null || cookie == "0");
+                } else {
+                    return cookie == "1";
+                }
+            }
+
+            var startGtm = true;
+            if (typeof window.scCookieChoices != 'undefined' && typeof window.scCookieChoices.enableGtmOrMarketing != 'undefined') {
+                window.scCookieChoices.enableGtmOrMarketing()
+                startGtm = window.ifEnableGtm;
+                if (window.ifEnableGtm){
+                    let date = new Date();
+                    let minutes = 60 * 24 * 365;
+                    date.setTime(date.getTime() + (minutes * 60 * 1000));
+                    window.hyva.setCookie('<?php echo $helper->getCookieKey() ?>', 1, 365);
+                }
+            }
+            if (needShowTag() == true && startGtm) {
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','<?php echo $helper->getAccountId() ?>');
+            }
+            <?php else: ?>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','<?php echo $helper->getAccountId() ?>');
+            <?php endif; ?>
+    }
+    setTimeout(function () {
+        window.scStartGTM();
+    },1050);
+</script>
+<!-- Scommerce Mage End Google Tag Manager -->

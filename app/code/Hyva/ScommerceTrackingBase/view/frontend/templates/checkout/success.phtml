@@ -1,0 +1,21 @@
+<?php
+/** @var $block Magento\Framework\View\Element\Template */
+/** @var $viewModel Scommerce\TrackingBase\ViewModel\Checkout\Success */
+$viewModel = $block->getData('view_model');
+$viewModel->setBlock($block);
+
+$helper = $viewModel->getHelper();
+if (!($helper->isEnabled() && $helper->isEnhancedEcommerceEnabled())) return;
+?>
+
+<script>
+    let data = <?php echo json_encode($viewModel->getPurchaseData())?>;
+    window.scTrackingContainer.setPurchaseData(data);
+    window.scTrackingContainer.fire('page_ready', window.scTrackingContainer.getPageType().toLowerCase());
+</script>
+
+<?php if ($helper->isEnhancedConversionEnabled()):?>
+    <script>
+        var conversionData = <?php echo json_encode($viewModel->getConversionData())?>;
+    </script>
+<?php endif;?>

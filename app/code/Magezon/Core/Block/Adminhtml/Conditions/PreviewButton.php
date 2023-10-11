@@ -26,7 +26,7 @@ class PreviewButton extends \Magento\Backend\Block\Template
     /**
      * Constructor
      *
-     * @param Template\Context $context
+     * @param \Magento\Backend\Block\Template\Context $context
      * @param array $data
      */
     public function __construct(
@@ -38,17 +38,21 @@ class PreviewButton extends \Magento\Backend\Block\Template
         $this->registry = $registry;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function getFormName()
     {
         return $this->registry->registry('mgz_conditions_form_name');
     }
+
     /**
      * @return string
      */
     public function getButtonHtml()
     {
         $button = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Widget\Button'
+            \Magento\Backend\Block\Widget\Button::class
         )->setData(
             [
                 'id' => 'mgz_conditions_preview_btn',

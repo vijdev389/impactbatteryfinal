@@ -8,6 +8,8 @@
 
 namespace Scommerce\GoogleTagManagerPro\Block\Checkout;
 
+use Magento\Sales\Model\Order\Item;
+
 /**
  * Order Confirmation Block
  */
@@ -92,5 +94,19 @@ class Success extends \Magento\Framework\View\Element\Template
         $this->_itemResourceModel->load($quoteItem, $quoteItemId, 'item_id');
 
         return $quoteItem;
+    }
+
+    /**
+     * @param $item Item
+     */
+    public function needSkipItem($item)
+    {
+        $productType = $item->getProductType();
+        if ($productType == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE
+            || ($item->getParentItemId() && $item->getParentItem()->getProductType() != \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE)
+        ) {
+            return true;
+        }
+        return false;
     }
 }

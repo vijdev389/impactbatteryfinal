@@ -15,6 +15,7 @@
 namespace Magezon\Core\Block\Adminhtml\Conditions;
 
 use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Block\Widget\Grid;
 use Magento\Backend\Block\Widget\Grid\Extended;
 use Magento\Backend\Helper\Data;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
@@ -67,6 +68,26 @@ class Product extends Extended
     protected $coreHelper;
 
     /**
+     * @var Status
+     */
+    protected $_status;
+
+    /**
+     * @var Visibility
+     */
+    protected $_visibility;
+
+    /**
+     * @var ProductFactory
+     */
+    protected $_productFactory;
+
+    /**
+     * @var \Magento\Framework\App\Cache\StateInterface
+     */
+    protected $cacheState;
+
+    /**
      * Product constructor.
      * @param Context $context
      * @param Data $backendHelper
@@ -76,6 +97,7 @@ class Product extends Extended
      * @param Registry $coreRegistry
      * @param ResourceConnection $resource
      * @param \Magento\Store\Model\System\Store $systemStore
+     * @param \Magento\Framework\App\Cache\StateInterface $cacheState
      * @param \Magezon\Core\Helper\Data $coreHelper
      * @param ConditionsProcessor $processor
      * @param array $data
@@ -89,6 +111,7 @@ class Product extends Extended
         Registry $coreRegistry,
         ResourceConnection $resource,
         \Magento\Store\Model\System\Store $systemStore,
+        \Magento\Framework\App\Cache\StateInterface $cacheState,
         \Magezon\Core\Helper\Data $coreHelper,
         ConditionsProcessor $processor,
         array $data = []
@@ -99,7 +122,7 @@ class Product extends Extended
         $this->_productFactory = $productFactory;
         $this->_coreRegistry = $coreRegistry;
         $this->systemStore = $systemStore;
-        $this->cacheState = $context->getCacheState();
+        $this->cacheState = $cacheState;
         $this->coreHelper = $coreHelper;
         $this->prosessor = $processor;
         parent::__construct($context, $backendHelper, $data);
@@ -123,6 +146,7 @@ class Product extends Extended
     {
         return $this->_coreRegistry->registry('mgz_conditions_model');
     }
+
     /**
      * @return int
      */
@@ -138,12 +162,48 @@ class Product extends Extended
     {
         $productIds = $this->getProductIds();
         $collection = $this->_productFactory->create()->getCollection();
-        $collection->addAttributeToSelect(['name', 'url_key', 'visibility', 'status']);
+        $collection->addAttributeToSelect(
+            ['name', 'url_key', 'visibility', 'status', 'price', 'small_image', 'created_at']
+        );
+        $tableName = $collection->getTable('cataloginventory_stock_item');
+        $collection->getSelect()->joinLeft(
+            ['_inventory_table' => $tableName],
+            "_inventory_table.product_id = e.entity_id",
+            ['is_in_stock']
+        );
+        $collection->getSelect()->group('e.entity_id');
+
         $this->setCollection($collection);
         if (empty($productIds)) {
             $productIds = 0;
         }
         $this->getCollection()->addFieldToFilter('entity_id', ['in' => $productIds]);
+        $sortOrder = $this->getModel()->getSortOrder();
+        if ($sortOrder != null) {
+            switch ($sortOrder) {
+                case '0':
+                    $this->getCollection()->addAttributeToSort('entity_id', 'ASC');
+                    break;
+                case '1':
+                    $this->getCollection()->getSelect()->order('created_at DESC');
+                    break;
+                case '2':
+                    $this->getCollection()->getSelect()->order(['is_in_stock DESC']);
+                    break;
+                case '3':
+                    $this->getCollection()->addAttributeToSort('name', 'ASC');
+                    break;
+                case '4':
+                    $this->getCollection()->addAttributeToSort('name', 'DESC');
+                    break;
+                case '5':
+                    $this->getCollection()->addAttributeToSort('price', 'ASC');
+                    break;
+                case '6':
+                    $this->getCollection()->addAttributeToSort('price', 'DESC');
+                    break;
+            }
+        }
         return parent::_prepareCollection();
     }
 
@@ -154,12 +214,18 @@ class Product extends Extended
      */
     protected function getProductIds()
     {
-        $productIds = $this->getFromCache();
-        if ($productIds) {
-            return $productIds;
+        $model = $this->getModel();
+        $formRegistry = $this->_coreRegistry->registry('mgz_conditions_form_name');
+        $formName = $model->getFormName() ? $model->getFormName() : $formRegistry;
+        if ($formName != 'mgz_landing_page_form') {
+            $productIds = $this->getFromCache();
+            if (!empty($productIds)) {
+                return $productIds;
+            }
         }
-        $collections = [];
-        $storeIds = (array)$this->getModel()->getStoreId();
+
+        $storeIds = $model->getStoreId();
+        $productIds = [];
         if (!empty($storeIds)) {
             if (in_array(0, $storeIds)) {
                 $stores = $this->systemStore->getStoreValuesForForm();
@@ -167,25 +233,20 @@ class Product extends Extended
                     if (is_array($store['value']) && !empty($store['value'])) {
                         foreach ($store['value'] as $_store) {
                             $store = $this->_storeManager->getStore($_store['value']);
-                            $collections[] = $this->prosessor->getProductByConditions($this->getModel(), $store);
+                            $productIds = $this->prosessor->getProductByConditions($model, $store)->getAllIds();
                         }
                     }
                 }
             } else {
                 foreach ($storeIds as $storeId) {
                     $store = $this->_storeManager->getStore($storeId);
-                    $collections[] = $this->prosessor->getProductByConditions($this->getModel(), $store);
+                    $productIds = $this->prosessor->getProductByConditions($model, $store)->getAllIds();
                 }
             }
         }
-        $productIds = [];
-        foreach ($collections as $collection) {
-            foreach ($collection->getItems() as $item) {
-                $productIds[] = $item->getId();
-            }
+        if ($formName!= 'mgz_landing_page_form') {
+            $this->saveToCache($productIds);
         }
-        $this->saveToCache($productIds);
-
         return $productIds;
     }
 
@@ -253,7 +314,10 @@ class Product extends Extended
      */
     public function getGridUrl()
     {
-        return $this->getUrl('mgzcore/conditions/productlist', ['current' => true, 'mgz_conditions_grid_id' => $this->getGridId()]);
+        return $this->getUrl(
+            'mgzcore/conditions/productlist',
+            ['current' => true, 'mgz_conditions_grid_id' => $this->getGridId()]
+        );
     }
 
     /**
@@ -265,6 +329,9 @@ class Product extends Extended
         return $this->getGridId();
     }
 
+    /**
+     * @return mixed|void
+     */
     public function getFromCache()
     {
         if (!$this->getRequest()->getParam('current') || !$this->getGridId()) return;
@@ -277,6 +344,9 @@ class Product extends Extended
         }
     }
 
+    /**
+     * @param $value
+     */
     public function saveToCache($value)
     {
         if ($this->cacheState->isEnabled(self::CACHE_GROUP)) {

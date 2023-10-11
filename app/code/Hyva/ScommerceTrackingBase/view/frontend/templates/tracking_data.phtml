@@ -1,0 +1,163 @@
+<?php
+/** @var $block Magento\Framework\View\Element\Template */
+/** @var Scommerce\TrackingBase\ViewModel\TrackingDataContainer $viewModel */
+$viewModel = $block->getData('view_model');
+if (!$viewModel->isEnabled()) {
+    return;
+}
+$productToWishlist = $viewModel->getProductToWishlist();
+$skipPageReady = $block->getSkipPageReady();
+?>
+<script>
+    let scUpdating = false, scClicked = false;
+    let ready = function (fn) {
+        if (document.readyState !== 'loading') {
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
+    };
+
+    function _gaAddToCart() {
+        if (scClicked === false) return;
+        if (scUpdating === true) return;
+        scUpdating = true;
+        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/addtocart')
+            .then((response) => response.json())
+            .then((product) => {
+                if (product == null) return;
+                for (let i = 0; i < product.length; i++) {
+                    product[i].list = window.scTrackingContainer.getProductImpression(product[i].allSkus);
+                }
+                window.scTrackingContainer.setAddToCart(product);
+                fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/unsaddtocart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({product})
+                }).then((response) => response.json());
+            }).catch(function (error) {
+
+            }).then(function () {
+                scUpdating = false;
+                scClicked = false;
+            });
+    }
+
+
+
+    window.scTrackingContainer.setPageType('<?php echo $viewModel->getPageType($block) ?>');
+    window.scTrackingContainer.setDefaultList('<?php echo $viewModel->getDefaultList() ?>');
+    window.scTrackingContainer.setCurrency('<?php echo $viewModel->getCurrency() ?>');
+    window.scTrackingContainer.setData('isGuest', <?php echo $viewModel->isGuest() ?>);
+
+
+
+    let promotions = [];
+    let intCtr = 0;
+    ready(function () {
+        document.addEventListener('ajax:addToCart', function () {
+            scClicked = true;
+            _gaAddToCart();
+        });
+
+        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/addtocart')
+            .then((response) => response.json())
+            .then((products) => {
+                if (products) {
+                    let cartData = products;
+                    if (cartData.length > 0 && Array.isArray(cartData)) {
+                        for (let i = 0; i < cartData.length; i++) {
+                            let impression = window.scTrackingContainer.getProductImpression(cartData[i].allSkus);
+                            cartData[i].list = impression;
+                            window.scTrackingContainer.sendQuoteImpression(cartData[i]['_realProductId'], impression);
+                        }
+                        window.scTrackingContainer.setAddToCart(cartData);
+                        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/unsaddtocart')
+                            .then((result) => {});
+                    }
+                }
+            });
+
+        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/removefromcart')
+            .then((response) => response.json())
+            .then((product) => {
+                if (product) {
+                    let cartData = product;
+                    if (typeof cartData === 'object' && cartData.hasOwnProperty('id')) {
+                        window.scTrackingContainer.setRemoveFromCart(cartData);
+                        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/unsremovefromcart')
+                            .then((result) => {});
+                    }
+                }
+            });
+
+        <?php if ($productToWishlist): ?>
+        let wishlistData = <?php echo json_encode($productToWishlist) ?>;
+        wishlistData.item.list = window.scTrackingContainer.getProductImpression(wishlistData.item.allSkus);
+        window.scTrackingContainer.setAddToWishlist(wishlistData);
+        <?php else: ?>
+        document.querySelectorAll('a.towishlist').forEach(element => {
+            element.addEventListener('click', function () {
+                var wishlistData = element.dataset.post;
+                var itemId = wishlistData.data.product;
+                setTimeout(function () {
+                    fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/addtowishlist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({itemId: itemId})
+                    }).then((response) => response.json())
+                        .then((product) => {
+                            if (product == null) return;
+                            window.scTrackingContainer.setAddToWishlist(product);
+                        });
+                }, 1000);
+            });
+        });
+        <?php endif; ?>
+
+        document.querySelectorAll('a').forEach(element => {
+            element.addEventListener('click', function () {
+                let href = element.getAttribute("href");
+                let product = window.scTrackingContainer.findProductByUrl(href);
+                if (product !== undefined && product != false) {
+                    window.scTrackingContainer.setProductImpression(product.id, product.list);
+                    window.scTrackingContainer.fire('item_click', product);
+                }
+            });
+        });
+
+        document.querySelectorAll('a[data-promotion]').forEach(element => {
+            if (element.dataset.promotion == !0) {
+                let id = element.dataset.id;
+                let name = element.dataset.name;
+                let creative = element.dataset.creative;
+                let position = element.dataset.position;
+                let promotion = {
+                    'id': id,                         // Name or ID is required.
+                    'name': name,
+                    'creative': creative,
+                    'position': position
+                }
+                promotions.push(promotion);
+                intCtr++;
+                element.addEventListener('click', function () {
+                    promotion.href = element.getAttribute("href");
+                    window.scTrackingContainer.fire('promo_click', promotion);
+                });
+            }
+            if (intCtr > 0) {
+                window.scTrackingContainer.setPromotions(promotions);
+            }
+        });
+    });
+
+    <?php if (!$skipPageReady): ?>
+    ready(function() {
+        window.scTrackingContainer.fire('page_ready', window.scTrackingContainer.getPageType().toLowerCase());
+    });
+    <?php endif; ?>
+</script>

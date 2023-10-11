@@ -5,6 +5,7 @@
  */
 namespace Scommerce\GoogleTagManagerPro\Model\Observer;
 
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
@@ -46,6 +47,9 @@ class CheckoutCartAddAfter implements ObserverInterface
      */
     protected $_gtmSession;
 
+
+    protected $_productRepository;
+
     /**
      * @param ObjectManagerInterface $objectManager
      * @param SessionManagerInterface $coreSession
@@ -59,7 +63,8 @@ class CheckoutCartAddAfter implements ObserverInterface
         Http $request,
         Data $helper,
         Registry $coreRegistry,
-        GtmSession $gtmSession
+        GtmSession $gtmSession,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->_objectManager = $objectManager;
         $this->_coreSession = $coreSession;
@@ -67,6 +72,7 @@ class CheckoutCartAddAfter implements ObserverInterface
         $this->_helper = $helper;
         $this->_coreRegistry = $coreRegistry;
         $this->_gtmSession = $gtmSession;
+        $this->_productRepository = $productRepository;
     }
 
     /**
@@ -86,6 +92,8 @@ class CheckoutCartAddAfter implements ObserverInterface
                     }
                 }
             }
+
+            $group = $this->_request->getParam('super_group');
 
             $quoteItem = $observer->getEvent()->getQuoteItem();
             $product = null;
@@ -127,17 +135,39 @@ class CheckoutCartAddAfter implements ObserverInterface
             $cat = $this->_helper->getProductCategoryName($product);
             $this->setGoogleCategory($quoteItem, $cat);
 
+            if ($quoteItem->getProductType() == 'bundle') {
+                $price = $quoteItem->getPrice();
+            } else {
+                $price = $product->getFinalPrice();
+            }
+            if ($price == 0) {
+                $price = $product->getPriceInfo()->getPrice('final_price')->getValue();
+            }
+            $price = number_format($price, 2);
+            if (!$quoteItem->getPriceInclTax()) {
+                $quoteItem->setData('sc_need_price_update', true);
+            } else {
+                $price = $quoteItem->getPriceInclTax();
+            }
+
             $productToBasket = array(
                 'id' => $sku,
                 'name' => $product->getName(),
                 'category' => $cat,
                 'brand' => $brand,
-                'price' => number_format($product->getFinalPrice(),2),
+                'price' => $price,
                 'qty'=> $qty,
                 'currency' => $this->_helper->getCurrencyCode(),
                 'list' => $list,
                 'allSkus' => $allSkus
             );
+            $productToBasket = [$productToBasket];
+            if ($group) {
+                $additionalItems = $this->getGroupedItems($group, $quoteItem, $list, $product->getSku());
+                if ($additionalItems) {
+                    $productToBasket = array_merge($productToBasket, $additionalItems);
+                }
+            }
 
             $this->_coreSession->setProductToBasket(json_encode($productToBasket));
         }
@@ -200,5 +230,36 @@ class CheckoutCartAddAfter implements ObserverInterface
             return $this->_helper->getCategoryPath($currentCategory);
         }
         return $this->_helper->getProductCategoryName($product);
+    }
+
+    /**
+     * @param $group
+     * @param $quoteItem
+     * @param $list
+     * @return array
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    protected function getGroupedItems($group, $quoteItem, $list, $mainSku)
+    {
+        $products = [];
+        foreach ($group as $id => $qty) {
+            if ($id == $quoteItem->getProductId() || !$qty) continue;
+
+            $_pr = $this->_productRepository->getById($id);
+            $cat = $this->_helper->getProductCategoryName($_pr);
+            $brand = $this->_helper->getBrand($_pr);
+            $products[] = [
+                'id' => $_pr->getSku(),
+                'name' => $_pr->getName(),
+                'category' => $cat,
+                'brand' => $brand,
+                'price' => $this->_helper->productPrice($_pr),
+                'qty'=> $qty,
+                'currency' => $this->_helper->getCurrencyCode(),
+                'list' => $list,
+                'allSkus' => [$_pr->getSku(), $mainSku]
+            ];
+        }
+        return $products;
     }
 }

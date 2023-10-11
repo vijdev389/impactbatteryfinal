@@ -6,13 +6,14 @@ define([
 	var magezonBuilderUrl = function($rootScope, elementManager) {
 
 	    this.getTemplateUrl = function(elem, defaultTemplate) {
+			const localName = elem[0].localName;
 	    	var templateUrl;
-	    	var matches = elem.context.localName.match("mgz-element-navigator-(.*)-mgz");
+	    	var matches = localName.match("mgz-element-navigator-(.*)-mgz");
 	    	if (matches) {
 	    		var name = matches[1];
 				templateUrl = elementManager.getElement(name).navigatorTemplateUrl;
 	    	} else {
-				var matches2 = elem.context.localName.match("mgz-element-(.*)-mgz");
+				var matches2 = localName.match("mgz-element-(.*)-mgz");
 				if (matches2) {
 					var name = matches2[1];
 					templateUrl = elementManager.getElement(name).templateUrl;

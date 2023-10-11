@@ -184,7 +184,7 @@ define([
             stageOuterClass: 'owl-stage-outer',
             grabClass: 'owl-grab',
             autoHeight: true,
-            navText: ['<i class="fas mgz-fa-angle-left"/>','<i class="fas mgz-fa-angle-right"/>'],
+            // navText: ['<i class="fas mgz-fa-angle-left"/>','<i class="fas mgz-fa-angle-right"/>'],
             animateOut: '',
             animateIn: ''
         },
@@ -201,6 +201,10 @@ define([
                 992: {'items': parseInt(options.item_lg)},
                 1200: {'items': parseInt(options.item_xl)}
             };
+            
+            if (options.rtl) {
+                options['navText'] = ['<i class="fas mgz-fa-angle-right"/>','<i class="fas mgz-fa-angle-left"/>']
+            } else options['navText'] = ['<i class="fas mgz-fa-angle-left"/>','<i class="fas mgz-fa-angle-right"/>'];
             
             function setAnimation ( _elem, _InOut ) {
                 var animationEndEvent = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';

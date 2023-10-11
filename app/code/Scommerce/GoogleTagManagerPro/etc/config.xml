@@ -19,7 +19,11 @@
 				<send_parent_sku>0</send_parent_sku>
 				<send_parent_category>0</send_parent_category>
 				<scroll_threshold>50</scroll_threshold>
+                <price_including_tax>0</price_including_tax>
 			</general>
+            <cookies>
+                <lifetime>7</lifetime>
+            </cookies>
 		</googletagmanagerpro>
 	</default>
 </config>

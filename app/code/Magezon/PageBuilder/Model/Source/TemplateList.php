@@ -16,62 +16,77 @@ namespace Magezon\PageBuilder\Model\Source;
 
 class TemplateList implements \Magezon\Builder\Model\Source\ListInterface
 {
-	/**
-	 * @var \Magezon\PageBuilder\Model\TemplateFactory
-	 */
-	protected $templateFactory;
+    /**
+     * @var \Magezon\PageBuilder\Model\TemplateFactory
+     */
+    protected $templateFactory;
 
-	/**
-	 * @var \Magento\PageBuilder\Model\ResourceModel\Template\CollectionFactory
-	 */
-	protected $collectionFactory;
+    /**
+     * @var \Magento\PageBuilder\Model\ResourceModel\Template\CollectionFactory
+     */
+    protected $collectionFactory;
 
-	/**
-	 * @param \Magezon\PageBuilder\Model\TemplateFactory                          $templateFactory   
-	 * @param \Magezon\PageBuilder\Model\ResourceModel\Template\CollectionFactory $collectionFactory 
-	 */
-	public function __construct(
-		\Magezon\PageBuilder\Model\TemplateFactory $templateFactory,
-		\Magezon\PageBuilder\Model\ResourceModel\Template\CollectionFactory $collectionFactory
-	) {
-		$this->templateFactory   = $templateFactory;
-		$this->collectionFactory = $collectionFactory;
-	}
+    /**
+     * @param \Magezon\PageBuilder\Model\TemplateFactory                          $templateFactory
+     * @param \Magezon\PageBuilder\Model\ResourceModel\Template\CollectionFactory $collectionFactory
+     */
+    public function __construct(
+        \Magezon\PageBuilder\Model\TemplateFactory $templateFactory,
+        \Magezon\PageBuilder\Model\ResourceModel\Template\CollectionFactory $collectionFactory
+    ) {
+        $this->templateFactory   = $templateFactory;
+        $this->collectionFactory = $collectionFactory;
+    }
 
-	public function getItem($id) {
-		$data = [];
-		$template = $this->templateFactory->create();
-		$template->load($id);
-		if ($template->getId()) {
-			$data = [
-				'label'   => $template->getName(),
-				'value'   => $template->getId(),
-				'profile' => $template->getProfile()
-			];
-		}
-		return $data;
-	}
+    /**
+     * Get Item
+     *
+     * @param string $id
+     * @return array
+     */
+    public function getItem($id)
+    {
+        $data = [];
+        $template = $this->templateFactory->create();
+        $template->load($id);
+        if ($template->getId()) {
+            $data = [
+                'label'   => $template->getName(),
+                'value'   => $template->getId(),
+                'profile' => $template->getProfile()
+            ];
+        }
+        return $data;
+    }
 
-	public function getList($q = '', $field = '') {
-		$list = [];
-		$collection = $this->collectionFactory->create();
-		$collection->setOrder('name', 'ASC');
-		if ($q) {
-			if (is_array($q)) {
-				$collection->addFieldToFilter('template_id', ['in' => $q]);
-			} else if (is_numeric($q)) {
-	            $collection->addFieldToFilter('template_id', $q);
-	        } else {
-				$collection->addFieldToFilter('name', ['like' => '%' . $q . '%']);
-	        }
-	    }
-		foreach ($collection as $item) {
+    /**
+     * Get list
+     *
+     * @param string $q
+     * @param string $field
+     * @return array
+     */
+    public function getList($q = '', $field = '')
+    {
+        $list = [];
+        $collection = $this->collectionFactory->create();
+        $collection->setOrder('name', 'ASC');
+        if ($q) {
+            if (is_array($q)) {
+                $collection->addFieldToFilter('template_id', ['in' => $q]);
+            } elseif (is_numeric($q)) {
+                $collection->addFieldToFilter('template_id', $q);
+            } else {
+                $collection->addFieldToFilter('name', ['like' => '%' . $q . '%']);
+            }
+        }
+        foreach ($collection as $item) {
             $list[] = [
-				'label'   => $item->getName(),
-				'value'   => $item->getId(),
-				'profile' => $item->getProfile()
+                'label'   => $item->getName(),
+                'value'   => $item->getId(),
+                'profile' => $item->getProfile()
             ];
         }
         return $list;
-	}
+    }
 }

@@ -27,9 +27,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $builderHelper;
 
     /**
-     * @param \Magento\Framework\App\Helper\Context      $context       
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager 
-     * @param \Magezon\Builder\Helper\Data               $builderHelper 
+     * @param \Magento\Framework\App\Helper\Context      $context
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magezon\Builder\Helper\Data               $builderHelper
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -68,15 +68,19 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * @param  string $profile
-     * @return string         
+     * @return string
      */
-    public function getProfileHtml($profile) {
-        return $this->builderHelper->prepareProfileBlock('\Magezon\PageBuilder\Block\Profile', $profile)->toHtml();
+    public function getProfileHtml($profile)
+    {
+        return $this->builderHelper->prepareProfileBlock(
+            \Magezon\PageBuilder\Block\Profile::class,
+            $profile
+        )->toHtml();
     }
 
     /**
      * @param  string $value
-     * @return string       
+     * @return string
      */
     public function filter($value)
     {
@@ -99,7 +103,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @return string
      */
-    public function getKey() {
+    public function getKey()
+    {
         return 'mgz_pagebuilder';
     }
 }

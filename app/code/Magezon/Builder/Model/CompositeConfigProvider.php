@@ -43,17 +43,21 @@ class CompositeConfigProvider implements ConfigProviderInterface
                 $arr[$key] = $configProvider;
                 $config = array_merge_recursive($config, $arr);
             } else {
-                $config = array_merge_recursive($config, $configProvider->getConfig());    
+                $config = array_merge_recursive($config, $configProvider->getConfig());
             }
         }
         if (isset($config['directives'])) {
             foreach ($config['directives'] as $k => &$directive) {
                 $directive['type'] = $k;
             }
-            usort($config['directives'], function($firstLink, $secondLink) {
-                if (!isset($firstLink['sortOrder'])) $firstLink['sortOrder'] = 0;
-                if (!isset($secondLink['sortOrder'])) $secondLink['sortOrder'] = 0;
-                return $firstLink['sortOrder'] > $secondLink['sortOrder'];
+            usort($config['directives'], function ($firstLink, $secondLink) {
+                if (!isset($firstLink['sortOrder'])) {
+                    $firstLink['sortOrder'] = 0;
+                }
+                if (!isset($secondLink['sortOrder'])) {
+                    $secondLink['sortOrder'] = 0;
+                }
+                return $firstLink['sortOrder'] <=> $secondLink['sortOrder'];
             });
         }
         if (isset($config['modals'])) {
@@ -61,7 +65,9 @@ class CompositeConfigProvider implements ConfigProviderInterface
                 if (isset($modal['form']) && $modal['form'] && (!isset($modal['element']) || !$modal['element'])) {
                     $modal['element'] = 'Magezon_Builder/js/modal/form';
                 }
-                if (!isset($modal['disabled'])) $modal['disabled'] = false;
+                if (!isset($modal['disabled'])) {
+                    $modal['disabled'] = false;
+                }
             }
         }
         return $config;

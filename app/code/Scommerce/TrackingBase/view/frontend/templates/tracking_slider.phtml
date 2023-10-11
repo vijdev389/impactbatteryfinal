@@ -1,0 +1,20 @@
+<?php
+/** @var $block Magento\Framework\View\Element\Template */
+/** @var $viewModel Scommerce\TrackingBase\ViewModel\TrackingSliders */
+$viewModel = $block->getData('view_model');
+?>
+<?php
+$collection  = $viewModel->getSlidersCollection();
+    ?>
+<?php if ($collection): ?>
+<script>
+    require([
+        "jquery",
+        "scTrackingData"
+    ], function($, Tracking) {
+        let tracking = Tracking();
+        let relatedData = <?php echo json_encode($collection)?>;
+        tracking.setImpressionListData(relatedData);
+    })
+</script>
+<?php endif; ?>

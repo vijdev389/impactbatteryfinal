@@ -47,7 +47,7 @@ class Product extends \MageWorx\SeoMarkup\Block\Head\Json\Product
      *
      * @return array
      */
-    protected function getJsonProductData()
+    protected function getJsonProductData(): array
     {
         $product = $this->getEntity();
 

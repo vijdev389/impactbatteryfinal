@@ -38,9 +38,9 @@ class Edit extends \Magento\Backend\App\Action
     protected $resultPageFactory;
 
     /**
-     * @param Action\Context                             $context           
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory 
-     * @param \Magento\Framework\Registry                $registry          
+     * @param Action\Context                             $context
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Magento\Framework\Registry                $registry
      */
     public function __construct(
         Action\Context $context,
@@ -76,7 +76,7 @@ class Edit extends \Magento\Backend\App\Action
     {
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('template_id');
-        $model = $this->_objectManager->create('Magezon\PageBuilder\Model\Template');
+        $model = $this->_objectManager->create(\Magezon\PageBuilder\Model\Template::class);
 
         // 2. Initial checking
         if ($id) {

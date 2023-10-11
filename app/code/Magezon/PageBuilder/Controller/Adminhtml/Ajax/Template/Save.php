@@ -35,7 +35,6 @@ class Save extends \Magento\Backend\App\Action
     {
         $result['status'] = false;
         $data             = $this->getRequest()->getPostValue();
-        $resultRedirect   = $this->resultRedirectFactory->create();
         if ($data) {
             /** @var \Magezon\PageBuilder\Model\Template $model */
             $model = $this->_objectManager->create(\Magezon\PageBuilder\Model\Template::class);
@@ -53,5 +52,7 @@ class Save extends \Magento\Backend\App\Action
         $this->getResponse()->representJson(
             $this->_objectManager->get(\Magento\Framework\Json\Helper\Data::class)->jsonEncode($result)
         );
+
+        return $result;
     }
 }

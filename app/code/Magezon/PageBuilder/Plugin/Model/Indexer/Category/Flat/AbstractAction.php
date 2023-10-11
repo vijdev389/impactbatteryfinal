@@ -16,16 +16,16 @@ namespace Magezon\PageBuilder\Plugin\Model\Indexer\Category\Flat;
 
 class AbstractAction
 {
-	public function afterGetColumns(
-		$subject,
-		$result
-	) {
-		$attributes = ['description'];
-		foreach ($attributes as $attr) {
-			if (isset($result[$attr]['type'][1]) && $result[$attr]['type'][1] == '64k') {
-				$result[$attr]['type'][1] = '64M';
-			}
-		}
-		return $result;
-	}
+    public function afterGetColumns(
+        $subject,
+        $result
+    ) {
+        $attributes = ['description'];
+        foreach ($attributes as $attr) {
+            if (isset($result[$attr]['type'][1]) && $result[$attr]['type'][1] == '64k') {
+                $result[$attr]['type'][1] = '64M';
+            }
+        }
+        return $result;
+    }
 }

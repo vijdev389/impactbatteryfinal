@@ -1,0 +1,24 @@
+<?php
+/**
+ * @var $block Magento\Framework\View\Element\Template
+ * @var $viewModel \Scommerce\TrackingBase\ViewModel\ViewProduct
+ */
+$viewModel = $block->getData('view_model');
+$viewModel->setBlock($block);
+$cats = $viewModel->getRemarketingCategories();
+if (!$viewModel->getHelper()->isEnabled()) return;
+?>
+
+<script>
+    window.scTrackingContainer.setData('category_full', '<?php echo $block->escapeJs($cats['full']) ?>');
+    window.scTrackingContainer.setData('category_plain', '<?php echo $block->escapeJs($cats['plain']) ?>');
+
+    let data = <?php echo json_encode($viewModel->getProductData())?>;
+    window.scTrackingContainer.setProductData(data);
+    let relatedData = <?php echo json_encode($viewModel->getRelatedProducts())?>;
+    window.scTrackingContainer.setImpressionListData(relatedData);
+    let upsellData = <?php echo json_encode($viewModel->getUpsellProducts())?>;
+    window.scTrackingContainer.setImpressionListData(upsellData);
+
+    window.scTrackingContainer.fire('page_ready', window.scTrackingContainer.getPageType().toLowerCase());
+</script>

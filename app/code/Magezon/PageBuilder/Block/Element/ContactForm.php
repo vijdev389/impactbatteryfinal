@@ -16,30 +16,51 @@ namespace Magezon\PageBuilder\Block\Element;
 
 class ContactForm extends \Magezon\Builder\Block\Element
 {
-	/**
-	 * @return string
-	 */
-	public function getAdditionalStyleHtml()
-	{
-		$styleHtml = '';
-		$element   = $this->getElement();
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getContactFormHtml()
+    {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $viewModel = $objectManager->get(\Magento\Contact\ViewModel\UserDataProvider::class);
+        $contactForm = $this->getLayout()->createBlock(
+            \Magento\Contact\Block\ContactForm::class,
+            'contactForm',
+            [
+                'data' => [
+                    'view_model' => $viewModel
+                ]
+            ]
+        )->setTemplate('Magento_Contact::form.phtml');
 
-		$styles = [];
-		$styles['width'] = $this->getStyleProperty($element->getData('form_width'), true);
-		$styleHtml .= $this->getStyles('.form.contact', $styles);
+        return $contactForm->toHtml();
+    }
 
-		if (!$element->getData('show_title')) {
-			$styles = [];
-			$styles['display'] = 'none';
-			$styleHtml .= $this->getStyles('.form.contact .legend', $styles);
-		}
+    /**
+     * @return string
+     */
+    public function getAdditionalStyleHtml()
+    {
+        $styleHtml = '';
+        $element   = $this->getElement();
 
-		if (!$element->getData('show_description')) {
-			$styles = [];
-			$styles['display'] = 'none';
-			$styleHtml .= $this->getStyles('.field.note', $styles);
-		}
+        $styles = [];
+        $styles['width'] = $this->getStyleProperty($element->getData('form_width'), true);
+        $styleHtml .= $this->getStyles('.form.contact', $styles);
 
-		return $styleHtml;
-	}
+        if (!$element->getData('show_title')) {
+            $styles = [];
+            $styles['display'] = 'none';
+            $styleHtml .= $this->getStyles('.form.contact .legend', $styles);
+        }
+
+        if (!$element->getData('show_description')) {
+            $styles = [];
+            $styles['display'] = 'none';
+            $styleHtml .= $this->getStyles('.field.note', $styles);
+        }
+
+        return $styleHtml;
+    }
 }

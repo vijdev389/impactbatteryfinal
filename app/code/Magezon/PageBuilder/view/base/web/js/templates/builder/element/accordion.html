@@ -23,7 +23,7 @@
 				dnd-dragend="mgz.onDragend(element)"
 				dnd-moved="mgz.onMoved(element)"
 				class="mgz-panel {{ $first ? 'mgz-panel-first' : '' }} {{ $last ? 'mgz-panel-last' : '' }}">
-				<div class="mgz-panel-heading mgz-text-{{ element.section_align }} mgz-icon-position-{{ element.icon_position }}"
+				<div class="mgz-panel-heading mgz-text-{{ mainElem.section_align }} mgz-icon-position-{{ mainElem.icon_position }}"
 				ng-click="activeElement(element)">
 					<h4 class="mgz-panel-heading-title">
 						<a href="#tab-{{ $index }}" ng-class="{'has-icon': mainElem.accordion_icon}">

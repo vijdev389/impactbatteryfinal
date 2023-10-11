@@ -16,29 +16,29 @@ namespace Magezon\PageBuilder\Block\Element;
 
 class Flickr extends \Magezon\Builder\Block\Element
 {
-	/**
-	 * @return string
-	 */
-	public function getAdditionalStyleHtml()
-	{
-		$styleHtml = $this->getLineStyles();
-		$element   = $this->getElement();
-		$gap       = $element->getData('gap');
-		if ($gap) {
-			$gap    = (float) $gap / 2;
-			$styles = [];
-			$styles['padding'] = $this->getStyleProperty($gap);
-			$styleHtml .= $this->getStyles([
-				'.mgz-grid-item',
-				'.error-wrapper'
-			], $styles);
+    /**
+     * @return string
+     */
+    public function getAdditionalStyleHtml()
+    {
+        $styleHtml = $this->getLineStyles();
+        $element   = $this->getElement();
+        $gap       = $element->getData('gap');
+        if ($gap) {
+            $gap    = (float) $gap / 2;
+            $styles = [];
+            $styles['padding'] = $this->getStyleProperty($gap);
+            $styleHtml .= $this->getStyles([
+                '.mgz-grid-item',
+                '.error-wrapper'
+            ], $styles);
 
-			$styles = [];
-			$styles['margin-left'] = '-' . $this->getStyleProperty($gap);
-			$styles['margin-right'] = '-' . $this->getStyleProperty($gap);
-			$styleHtml .= $this->getStyles('.gallery-container', $styles);
-		}
+            $styles = [];
+            $styles['margin-left'] = '-' . $this->getStyleProperty($gap);
+            $styles['margin-right'] = '-' . $this->getStyleProperty($gap);
+            $styleHtml .= $this->getStyles('.gallery-container', $styles);
+        }
 
-		return $styleHtml;
-	}
+        return $styleHtml;
+    }
 }

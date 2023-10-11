@@ -18,19 +18,19 @@ use Magento\Framework\App\ObjectManager;
 
 class DefaultConfigProvider extends \Magezon\Builder\Model\DefaultConfigProvider
 {
-	/**
-	 * @return array
-	 */
-	public function getConfig()
-	{
-		$config = parent::getConfig();
-		$helper = ObjectManager::getInstance()->get(\Magezon\PageBuilder\Helper\Data::class);
-		$config['profile'] = [
-			'builder'     => 'Magezon\PageBuilder\Block\Builder',
-			'key'         => $helper->getKey(),
-			'home'        => 'https://www.magezon.com/magezon-page-builder.html?utm_campaign=mgzbuilder&utm_source=mgz_user&utm_medium=backend',
-			'templateUrl' => 'https://www.magezon.com/productfile/pagebuilder/templates.php'
-		];
-		return $config;
-	}
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        $config = parent::getConfig();
+        $helper = ObjectManager::getInstance()->get(\Magezon\PageBuilder\Helper\Data::class);
+        $config['profile'] = [
+            'builder'     => \Magezon\PageBuilder\Block\Builder::class,
+            'key'         => $helper->getKey(),
+            'home'        => 'https://www.magezon.com/magezon-page-builder.html?utm_campaign=mgzbuilder&utm_source=mgz_user&utm_medium=backend',
+            'templateUrl' => 'https://www.magezon.com/productfile/pagebuilder/templates.php'
+        ];
+        return $config;
+    }
 }

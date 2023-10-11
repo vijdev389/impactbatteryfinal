@@ -39,7 +39,7 @@ define([
 						dotsSpeed: _element.owl_dots_speed ? _element.owl_dots_speed : false,
 						animateIn: _element.owl_animate_in,
 						animateOut: _element.owl_animate_out,
-						navText: ['<i class="fas mgz-fa-angle-left"/>','<i class="fas mgz-fa-angle-right"/>']
+						navText: _element.owl_rtl ? ['<i class="fas mgz-fa-angle-right"/>','<i class="fas mgz-fa-angle-left"/>'] : ['<i class="fas mgz-fa-angle-left"/>','<i class="fas mgz-fa-angle-right"/>']
 					};
 
 					config['responsive'] = {

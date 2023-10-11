@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="scommerce_tracking_data">
+            <arguments>
+                <argument name="page_type" xsi:type="string">purchase</argument>
+                <argument name="skip_page_ready" xsi:type="boolean">true</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="head.additional">
+            <block class="Scommerce\TrackingBase\Block\Checkout\Order"
+                   name="scommerce_tracking_base_purchase"
+                   template="Scommerce_TrackingBase::checkout/order.phtml"
+                   after="scommerce_tracking_data">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Scommerce\TrackingBase\ViewModel\Checkout\Multisuccess</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

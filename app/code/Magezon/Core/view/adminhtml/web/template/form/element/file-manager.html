@@ -7,23 +7,23 @@
 
 <div class="admin__field mgz-filemanager" visible="visible" css="$data.additionalClasses">
     <label class="admin__field-label" if="$data.label" attr="for: uid">
-        <span translate="label" attr="'data-config-scope': $data.scopeLabel" click="$data.chooseImage"/>
+        <span translate="label" attr="'data-config-scope': $data.scopeLabel" click="$data.chooseImage"></span>
     </label>
 
     <div class="admin__field-control" css="'_with-tooltip': $data.tooltip">
         <div class="file-uploader" data-role="drop-zone">
             <div class="file-uploader-area">
                 <input type="hidden" event="change: reloadImage" data-bind="value: value" attr="id: uid, name: inputName" disable="disabled"/>
-                <button class="action-default scalable action-secondary" attr="for: uid" text="chooseBtnLabel" click="$data.chooseImage"/>
+                <button class="action-default scalable action-secondary" attr="for: uid" text="chooseBtnLabel" click="$data.chooseImage"></button>
             </div>
 
-            <render args="tooltipTpl" if="$data.tooltip"/>
+            <render args="tooltipTpl" if="$data.tooltip"></render>
 
             <div class="admin__field-note" if="$data.notice" attr="id: noticeId">
-                <span html="notice"/>
+                <span html="notice"></span>
             </div>
 
-            <label class="admin__field-error" if="error" attr="for: uid" text="error"/>
+            <label class="admin__field-error" if="error" attr="for: uid" text="error"></label>
 
             <div class="file-uploader-summary" visible="showPreview">
                 <div class="file-uploader-preview">
@@ -43,19 +43,19 @@
                             data-role="delete-button"
                             attr="title: $t('Delete image')"
                             click="removeFile">
-                            <span translate="'Delete image'"/>
+                            <span translate="'Delete image'"></span>
                         </button>
                     </div>
                 </div>
 
-                <div text="fileName"/>
+                <div text="fileName">
                     <div class="file-uploader-meta">
-                        <text args="previewWidth"/>x<text args="previewHeight"/>
-                        <text args="fileSize"/>
+                        <text args="previewWidth"></text>x<text args="previewHeight"></text>
+                        <text args="fileSize"></text>
                     </div>
                 </div>
             </div>
 
-        <render args="$data.service.template" if="$data.hasService()"/>
+        <render args="$data.service.template" if="$data.hasService()"></render>
     </div>
 </div>

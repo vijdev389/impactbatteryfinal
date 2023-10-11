@@ -20,6 +20,11 @@ class Subscribe extends \Magento\Framework\View\Element\Template
 
     protected $_template = 'Magezon_Newsletter::subscriber.phtml';
 
+    /**
+     * @var \Magezon\Core\Helper\Data
+     */
+    protected $coreHelper;
+
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\Core\Helper\Data $coreHelper,
@@ -27,16 +32,7 @@ class Subscribe extends \Magento\Framework\View\Element\Template
     ) {
         parent::__construct($context, $data);
         $this->coreHelper = $coreHelper;
-
-        //$this->setData('layout_type', 'inline2');
-        // $this->setData('btn_color', '#FFF');
-        // $this->setData('btn_bg_color', '#FF9900');
-        // $this->setData('btn_fullwidth', 1);
         $this->setData('height', 35);
-        // $this->setData('font_size', 30);
-        //$this->setData('width', 600);
-        // $this->setData('show_firstname', true);
-        // $this->setData('show_lastname', true);
     }
 
     /**
@@ -82,19 +78,27 @@ class Subscribe extends \Magento\Framework\View\Element\Template
         $styles = [];
         $styles['color'] = $this->coreHelper->getStyleColor($this->getData('btn_hover_color'));
         $styles['background'] = $this->coreHelper->getStyleColor($this->getData('btn_hover_bg_color'));
-        $styleHtml .= $this->coreHelper->getStyles('.' . $this->getHtmlId() . ' .mgz-newsletter-btn', $styles, ':hover');
+        $styleHtml .= $this->coreHelper->getStyles(
+            '.' . $this->getHtmlId() . ' .mgz-newsletter-btn',
+            $styles,
+            ':hover'
+        );
 
         $styles = [];
         $styles['height'] = $this->coreHelper->getStyleProperty($this->getData('height'));
         $styles['font-size'] = $this->coreHelper->getStyleProperty($this->getData('font_size'));
-        $styleHtml .= $this->coreHelper->getStyles(['.' . $this->getHtmlId() . ' .mgz-newsletter-btn', '.' . $this->getHtmlId() . ' input'], $styles);
+        $styleHtml .= $this->coreHelper->getStyles(
+            ['.' . $this->getHtmlId() . ' .mgz-newsletter-btn',
+                '.' . $this->getHtmlId() . ' input'],
+            $styles
+        );
         return $styleHtml;
     }
 
     public function getHtmlId()
     {
-        if ($this->_id == NULL) {
-            $this->_id = 'form' . time() . uniqid();   
+        if ($this->_id == null) {
+            $this->_id = 'form' . time() . uniqid();
         }
         return $this->_id;
     }

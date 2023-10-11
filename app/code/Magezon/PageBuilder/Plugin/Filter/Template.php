@@ -16,27 +16,33 @@ namespace Magezon\PageBuilder\Plugin\Filter;
 
 class Template
 {
-	/**
-	 * @var \Magezon\PageBuilder\Helper\Data
-	 */
-	protected $dataHelper;
+    /**
+     * @var \Magezon\PageBuilder\Helper\Data
+     */
+    protected $dataHelper;
 
-	/**
-	 * @param \Magezon\PageBuilder\Helper\Data $dataHelper
-	 */
-	public function __construct(
-		\Magezon\PageBuilder\Helper\Data $dataHelper
-	) {
-		$this->dataHelper = $dataHelper;
-	}
+    /**
+     * @param \Magezon\PageBuilder\Helper\Data $dataHelper
+     */
+    public function __construct(
+        \Magezon\PageBuilder\Helper\Data $dataHelper
+    ) {
+        $this->dataHelper = $dataHelper;
+    }
 
-	public function aroundFilter(
+    /**
+     * @param $subject
+     * @param \Closure $proceed
+     * @param $value
+     * @return mixed
+     */
+    public function aroundFilter(
         $subject,
         \Closure $proceed,
         $value
     ) {
-    	$value = $this->dataHelper->filter($value);
-		$result = $proceed($value);
-		return $result;
+        $value = $this->dataHelper->filter($value);
+        $result = $proceed($value);
+        return $result;
     }
 }

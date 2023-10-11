@@ -1,0 +1,13 @@
+<?php
+/**
+ * @var $block Magento\Framework\View\Element\Template
+ */
+/** @var \Scommerce\TrackingBase\ViewModel\TrackingDataContainer $viewModel */
+
+$viewModel = $block->getData('view_model');
+if (!$viewModel->isEnabled()) return;
+?>
+
+<script>
+    window.scTrackingContainer.fire('home_page', window.scTrackingContainer.getPageType().toLowerCase());
+</script>

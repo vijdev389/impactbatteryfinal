@@ -9,6 +9,7 @@
 					<magezon-builder-modal-element element="element" ng-click="mgz.addElement(element)" class="mgz-gt-{{ element.type }}"></magezon-builder-modal-element>
 				</li>
 			</ul>
+            <div ng-if="!!$root.builderConfig.elementsModalPrefix" ng-bind-html="$root.builderConfig.elementsModalPrefix"></div>
 		</div>
    </uib-tab>
 </uib-tabset>

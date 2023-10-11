@@ -16,16 +16,16 @@ namespace Magezon\PageBuilder\Block;
 
 class Profile extends \Magezon\Builder\Block\Profile
 {
-	/**
-	 * @var \Magezon\PageBuilder\Helper\Data
-	 */
-	protected $dataHelper;
+    /**
+     * @var \Magezon\PageBuilder\Helper\Data
+     */
+    protected $dataHelper;
 
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context       
-     * @param \Magezon\Builder\Helper\Data                     $builderHelper 
-     * @param \Magezon\PageBuilder\Helper\Data                 $dataHelper    
-     * @param array                                            $data          
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magezon\Builder\Helper\Data                     $builderHelper
+     * @param \Magezon\PageBuilder\Helper\Data                 $dataHelper
+     * @param array                                            $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -33,8 +33,8 @@ class Profile extends \Magezon\Builder\Block\Profile
         \Magezon\PageBuilder\Helper\Data $dataHelper,
         array $data = []
     ) {
-		parent::__construct($context, $builderHelper, $data);
-		$this->dataHelper = $dataHelper;
+        parent::__construct($context, $builderHelper, $data);
+        $this->dataHelper = $dataHelper;
     }
 
     /**
@@ -44,7 +44,9 @@ class Profile extends \Magezon\Builder\Block\Profile
      */
     protected function _toHtml()
     {
-    	if (!$this->dataHelper->isEnable()) return;
+        if (!$this->dataHelper->isEnable()) {
+            return;
+        }
         return parent::_toHtml();
     }
 }

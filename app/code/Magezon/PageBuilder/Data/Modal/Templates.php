@@ -22,16 +22,16 @@ class Templates extends \Magezon\Builder\Data\Element\AbstractElement
     /**
      * Prepare modal components
      */
-	public function prepareForm()
+    public function prepareForm()
     {
         $this->prepareGeneralTab();
         $this->prepareTemplatesTab();
         $this->prepareTemplateLibraryTab();
-    	return $this;
+        return $this;
     }
 
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
@@ -65,7 +65,7 @@ class Templates extends \Magezon\Builder\Data\Element\AbstractElement
     }
 
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareTemplatesTab()
     {
@@ -94,7 +94,7 @@ class Templates extends \Magezon\Builder\Data\Element\AbstractElement
     }
 
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareTemplateLibraryTab()
     {

@@ -48,7 +48,7 @@ class Wysiwyg extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $elementId = $this->getRequest()->getParam('element_id', md5(microtime()));
+        $elementId = $this->getRequest()->getParam('element_id', hash('sha256', microtime()));
         $storeId = $this->getRequest()->getParam('store_id', 0);
         $storeMediaUrl = $this->_objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)
             ->getStore($storeId)

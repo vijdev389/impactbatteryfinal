@@ -37,11 +37,11 @@ class LoadConfig extends \Magento\Backend\App\Action
     protected $cacheManager;
 
     /**
-     * @param \Magento\Backend\App\Action\Context            $context        
-     * @param \Magento\Framework\View\LayoutFactory          $layoutFactory  
-     * @param \Magento\Framework\Stdlib\ArrayManager         $arrayManager   
-     * @param \Magezon\Builder\Model\CompositeConfigProvider $configProvider 
-     * @param \Magezon\Builder\Model\CacheManager            $cacheManager   
+     * @param \Magento\Backend\App\Action\Context            $context
+     * @param \Magento\Framework\View\LayoutFactory          $layoutFactory
+     * @param \Magento\Framework\Stdlib\ArrayManager         $arrayManager
+     * @param \Magezon\Builder\Model\CompositeConfigProvider $configProvider
+     * @param \Magezon\Builder\Model\CacheManager            $cacheManager
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -66,15 +66,16 @@ class LoadConfig extends \Magento\Backend\App\Action
             $key   = $this->getRequest()->getPost('key');
             $area  = $this->getRequest()->getPost('area');
             if ($cacheData = $this->cacheManager->getFromCache($key . $area)) {
-                if ($this->_backendUrl->useSecretKey()) {
-                    $path = $this->arrayManager->findPath('files_browser_window_url', $cacheData, null);
+                $path = $this->arrayManager->findPath('files_browser_window_url', $cacheData, null);
+                if ($this->_backendUrl->useSecretKey() && !empty($path)) {
+                    //$path = $this->arrayManager->findPath('files_browser_window_url', $cacheData, null);
                     $filesBrowserWindowUrl = $this->arrayManager->get($path, $cacheData);
                     $pos    = strpos($filesBrowserWindowUrl, '/key/');
                     $oldKey = substr($filesBrowserWindowUrl, $pos + 5);
                     $filesBrowserWindowUrl = str_replace($oldKey, $this->_backendUrl->getSecretKey('cms', 'wysiwyg_images', 'index') . '/', $filesBrowserWindowUrl);
                     $path = str_replace('/files_browser_window_url', '', $path);
                     $cacheData = $this->arrayManager->merge(
-                        $path, 
+                        $path,
                         $cacheData,
                         [
                             'files_browser_window_url' => $filesBrowserWindowUrl
@@ -96,7 +97,7 @@ class LoadConfig extends \Magento\Backend\App\Action
                         $obj->addData($row);
                     }
                     if (method_exists($obj, 'getConfig')) {
-                        $result['config'] = $obj->getConfig();    
+                        $result['config'] = $obj->getConfig();
                     } else if (method_exists($obj, 'getOptions')) {
                         $result['config'] = $obj->getOptions();
                     }

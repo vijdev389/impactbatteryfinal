@@ -38,34 +38,43 @@
   width: 2.5em;
   height: 2.5em;
 }
+
 .mgz-icon-box-size-xs .mgz-icon-box-element {
   font-size: 1.2em;
 }
+
 .mgz-icon-box-size-sm {
   width: 3.15em;
   height: 3.15em;
 }
+
 .mgz-icon-box-size-sm .mgz-icon-box-element {
   font-size: 1.6em;
 }
+
 .mgz-icon-box-size-md {
   width: 4em;
   height: 4em;
 }
+
 .mgz-icon-box-size-md .mgz-icon-box-element {
   font-size: 2.15em;
 }
+
 .mgz-icon-box-size-lg {
   width: 5em;
   height: 5em;
 }
+
 .mgz-icon-box-size-lg .mgz-icon-box-element {
   font-size: 2.85em;
 }
+
 .mgz-icon-box-size-xl {
   width: 7.15em;
   height: 7.15em;
 }
+
 .mgz-icon-box-size-xl .mgz-icon-box-element {
   font-size: 5em;
 }
@@ -75,6 +84,7 @@
   color: inherit;
   margin-bottom: 10px;
 }
+
 .mgz-heading-text > a {
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -83,6 +93,7 @@
   opacity: 1;
   font-weight: inherit;
 }
+
 .mgz-heading-text > a,
 .mgz-heading-text > a:focus,
 .mgz-heading-text > a:hover,
@@ -92,6 +103,7 @@
   color: inherit;
   font-weight: inherit;
 }
+
 .mgz-heading-text > a:hover {
   opacity: 0.85;
 }
@@ -99,14 +111,17 @@
 a.mgz-icon-box-btn {
   color: #333;
 }
+
 .mgz-icon-box-btn:not(.primary) {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
+
 button.mgz-icon-box-btn {
   border: 0;
 }
+
 .mgz-element-icon_box .mgz-icon-box-btn {
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -142,6 +157,7 @@ button.mgz-icon-box-btn {
   max-width: 100%;
   height: auto;
 }
+
 .mgz-element-icon_box .mgz-icon-box-btn:hover {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -150,15 +166,18 @@ button.mgz-icon-box-btn {
   background-color: #dcdcdc;
   text-decoration: none;
 }
+
 .mgz-element-icon_box .mgz-icon-box-btn:focus {
   outline: none;
 }
+
 .mgz-element-icon_box .mgz-btn-style-modern .mgz-icon-box-btn {
   background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.01) 100%);
   background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.01) 100%);
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.01) 100%);
   background-repeat: repeat-x;
 }
+
 .mgz-element-icon_box .mgz-btn-style-gradient .mgz-icon-box-btn {
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -166,35 +185,38 @@ button.mgz-icon-box-btn {
   -o-transition: all 0.2s ease-in-out;
   background-size: 200% 100%;
 }
+
 .mgz-element-icon_box .mgz-btn-style-gradient .mgz-icon-box-btn:hover {
   background-position: 100% 0;
 }
+
 .mgz-element-icon_box .mgz-btn-style-3d .mgz-icon-box-btn:hover {
   top: 2px;
 }
+
 .mgz-element-icon_box .mgz-btn-size-xs .mgz-icon-box-btn {
   font-size: 11px;
   padding: 8px 12px;
 }
+
 .mgz-element-icon_box .mgz-btn-size-sm .mgz-icon-box-btn {
   font-size: 12px;
   padding: 11px 16px;
 }
+
 .mgz-element-icon_box .mgz-btn-size-md .mgz-icon-box-btn {
   font-size: 14px;
   padding: 14px 20px;
 }
+
 .mgz-element-icon_box .mgz-btn-size-lg .mgz-icon-box-btn {
   font-size: 18px;
   padding: 18px 30px;
 }
+
 .mgz-element-icon_box .mgz-btn-size-xl .mgz-icon-box-btn {
   font-size: 22px;
   padding: 22px 35px;
-}
-
-.mgz-element-icon_box .icon-box-btn-right {
-
 }
 
 .btn-position {

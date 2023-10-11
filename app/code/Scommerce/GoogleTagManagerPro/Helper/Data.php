@@ -10,15 +10,16 @@ namespace Scommerce\GoogleTagManagerPro\Helper;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Helper\Product;
+use Magento\Catalog\Model\Product as ProductModel;
 use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\Product as CatalogProduct;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Registry;
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\Session\Config\ConfigInterface;
 use Magento\Framework\Session\Generic;
-use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Quote\Model\Quote\Item;
 use Magento\Store\Model\ScopeInterface;
@@ -26,6 +27,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Scommerce\Core\Helper\Data as CoreData;
 use Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable as ConfigurableProduct;
 use Scommerce\GoogleTagManagerPro\Model\Session;
+use Scommerce\GoogleTagManagerPro\Model\GetProductPrice;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -57,6 +59,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     const XML_PATH_SEND_PARENT_SKU = 'googletagmanagerpro/general/send_parent_sku';
     const XML_PATH_SEND_CATEGORY_PATH = 'googletagmanagerpro/general/send_parent_category';
     const XML_PATH_SCROLL_THRESHOLD = 'googletagmanagerpro/general/scroll_threshold';
+    const XML_PATH_PRICE_INCLUDE_TAX = 'googletagmanagerpro/general/price_including_tax';
+
+    const XML_PATH_COOKIES_ENABLED          = 'googletagmanagerpro/cookies/enabled';
+    const XML_PATH_COOKIES_CONFIGURATION    = 'googletagmanagerpro/cookies/configuration';
+    const XML_PATH_COOKIES_LIFETIME         = 'googletagmanagerpro/cookies/lifetime';
 
     /**
      * @var Registry
@@ -98,10 +105,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $_configurableProduct;
 
-    /** @var ConfigInterface */
+    /**
+     * @var ConfigInterface
+     */
     protected $_sessionConfig;
 
-    /** @var CategoryRepositoryInterface  */
+    /**
+     * @var CategoryRepositoryInterface
+     */
     protected $_categoryRepository;
 
     /**
@@ -110,6 +121,17 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $_gtmSession;
 
     /**
+     * @var GetProductPrice
+     */
+    protected $_getProductPrice;
+
+    /**
+     * @var SerializerInterface
+     */
+    protected $_serializer;
+
+    /**
+     * Data constructor.
      * @param Context $context
      * @param Registry $registry
      * @param CoreData $data
@@ -120,6 +142,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param ProductRepositoryInterface $productRepository
      * @param ConfigurableProduct $configurableProduct
      * @param ConfigInterface $sessionConfig
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param Session $gtmSession
+     * @param GetProductPrice $getProductPrice
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         Context $context,
@@ -133,7 +159,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         ConfigurableProduct $configurableProduct,
         ConfigInterface $sessionConfig,
         CategoryRepositoryInterface $categoryRepository,
-        Session $gtmSession
+        Session $gtmSession,
+        GetProductPrice $getProductPrice,
+        SerializerInterface $serializer
     ) {
         parent::__construct($context);
         $this->_registry = $registry;
@@ -147,6 +175,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_sessionConfig = $sessionConfig;
         $this->_categoryRepository = $categoryRepository;
         $this->_gtmSession = $gtmSession;
+        $this->_getProductPrice = $getProductPrice;
+        $this->_serializer = $serializer;
     }
 
     /**
@@ -189,18 +219,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * returns formatted produce price
-     * @param Magento/Catalog/Model/Product
+     * @param ProductModel
      * @return float
      */
     public function productPrice($product)
     {
-        $price = 0;
-        if ($this->_productHelper->getFinalPrice($product) > 0) {
-            $price = $this->_productHelper->getFinalPrice($product);
-        } elseif ($this->_productHelper->getPrice($product) > 0) {
-            $price = $this->_productHelper->getPrice($product);
-        }
-        return number_format($price, 2);
+        return $this->_getProductPrice->execute($product, $this);
     }
 
     /**
@@ -242,6 +266,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         $_cat = $this->_objectManager->create('\Magento\Catalog\Model\Category')->load($_categoryId);
+        if (!$_cat || !$_cat->getId()) {
+            return '';
+        }
         return $this->getCategoryPath($_cat);
     }
 
@@ -546,21 +573,20 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected function hasCookie()
     {
         $cookieKey = $this->getCookieKey();
-        if (!$this->isGDPRCookieEnabled() || strlen($cookieKey)==0) return true;
-        $cookie = (string)$this->_cookieManager->getCookie($cookieKey);
-        if (!$this->isGDPRCookieForceDeclined()){
-            if ($cookie=="0"){
-                return false;
-            }
-            else{
-                return true;
-            }
+        if (!$this->isGDPRCookieEnabled() || strlen($cookieKey) == 0) {
+            return true;
         }
-        else{
-            if ($cookie=="1"){
+        $cookie = (string)$this->_cookieManager->getCookie($cookieKey);
+        if (!$this->isGDPRCookieForceDeclined()) {
+            if ($cookie=="0") {
+                return false;
+            } else {
                 return true;
             }
-            else{
+        } else {
+            if ($cookie=="1") {
+                return true;
+            } else {
                 return false;
             }
         }
@@ -624,6 +650,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Returns if product price should include tax
+     *
+     * @param null $storeId
+     * @return bool
+     */
+    public function isPriceIncludedTax($storeId = null): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_PRICE_INCLUDE_TAX,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
      * @param null $storeId
      * @return bool
      */
@@ -655,6 +696,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getCategoryPath($category)
     {
         if (!($category instanceof Category)) {
+            if ($category == null) {
+                return '';
+            }
             $category = $this->getCategory($category);
         }
         if (!$this->sendCategoryPath()) {
@@ -688,6 +732,52 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * @param null $storeId
+     * @return bool
+     */
+    public function getCookiesEnabled($storeId = null)
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_COOKIES_ENABLED,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * @param null $storeId
+     * @return array|bool|float|int|string|null
+     */
+    public function getCookiesConfiguration($storeId = null)
+    {
+        $raw = $this->scopeConfig->getValue(
+            self::XML_PATH_COOKIES_CONFIGURATION,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        if (empty($raw)) {
+            return [];
+        }
+        if (!$values = $this->_serializer->unserialize($raw)) {
+            return [];
+        }
+        return $values;
+    }
+
+    /**
+     * @param null $storeId
+     * @return bool
+     */
+    public function getCookiesLifetime($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::XML_PATH_COOKIES_LIFETIME,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
      * returns license key administration configuration option
      *
      * @return string
@@ -707,5 +797,33 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function isLicenseValid(){
         $sku = strtolower(str_replace('\\Helper\\Data','',str_replace('Scommerce\\','',get_class($this))));
         return $this->_data->isLicenseValid($this->getLicenseKey(),$sku);
+    }
+
+    /**
+     * @param $path
+     * @param null $storeId
+     * @return mixed
+     */
+    public function getValue($path, $storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            $path,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * @param $path
+     * @param null $storeId
+     * @return mixed
+     */
+    public function isSetFlag($path, $storeId = null)
+    {
+        return $this->scopeConfig->isSetFlag(
+            $path,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
     }
 }

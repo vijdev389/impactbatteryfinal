@@ -17,58 +17,58 @@ namespace Magezon\PageBuilder\Data\Element;
 class Pinterest extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-    		$container1 = $general->addContainerGroup(
+            $container1 = $general->addContainerGroup(
                 'container1',
                 [
-					'sortOrder' => 10
+                    'sortOrder' => 10
                 ]
             );
 
-		        $container1->addChildren(
-		            'show_pin_counts',
-		            'select',
-		            [
-						'sortOrder'       => 10,
-						'key'             => 'show_pin_counts',
-						'defaultValue'    => 'above',
-						'templateOptions' => [
-							'label'   => __('Show Pin counts'),
-							'options' => $this->getShowPinCounts()
-		                ]
-		            ]
-		        );
+                $container1->addChildren(
+                    'show_pin_counts',
+                    'select',
+                    [
+                        'sortOrder'       => 10,
+                        'key'             => 'show_pin_counts',
+                        'defaultValue'    => 'above',
+                        'templateOptions' => [
+                            'label'   => __('Show Pin counts'),
+                            'options' => $this->getShowPinCounts()
+                        ]
+                    ]
+                );
 
-		        $container1->addChildren(
-		            'button_round',
-		            'toggle',
-		            [
-						'sortOrder'       => 20,
-						'key'             => 'button_round',
-						'templateOptions' => [
-							'label' => __('Button Round')
-		                ]
-		            ]
-		        );
+                $container1->addChildren(
+                    'button_round',
+                    'toggle',
+                    [
+                        'sortOrder'       => 20,
+                        'key'             => 'button_round',
+                        'templateOptions' => [
+                            'label' => __('Button Round')
+                        ]
+                    ]
+                );
 
-		        $container1->addChildren(
-		            'button_large',
-		            'toggle',
-		            [
-						'sortOrder'       => 30,
-						'key'             => 'button_large',
-						'templateOptions' => [
-							'label' => __('Button Large')
-		                ]
-		            ]
-		        );
+                $container1->addChildren(
+                    'button_large',
+                    'toggle',
+                    [
+                        'sortOrder'       => 30,
+                        'key'             => 'button_large',
+                        'templateOptions' => [
+                            'label' => __('Button Large')
+                        ]
+                    ]
+                );
 
-    	return $general;
+        return $general;
     }
 
     /**
