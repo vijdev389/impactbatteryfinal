@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Scommerce Mage. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="scommerce_tracking_data">
+            <arguments>
+                <argument name="page_type" xsi:type="string">product</argument>
+                <argument name="skip_page_ready" xsi:type="boolean">true</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="head.additional">
+            <referenceBlock name="scommerce_tracking_base_product_view">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Hyva_ScommerceTrackingBase::view.phtml</argument>
+                </action>
+            </referenceBlock>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <referenceContainer name="product.info.main">
+                <referenceBlock name="product.detail.page">
+                    <referenceBlock name="product.info">
+                        <referenceBlock name="product.info.addtowishlist">
+                            <action method="setTemplate">
+                                <argument name="template" xsi:type="string">Hyva_ScommerceTrackingBase::product/view/addtowishlist.phtml</argument>
+                            </action>
+                        </referenceBlock>
+                    </referenceBlock>
+                </referenceBlock>
+            </referenceContainer>
+        </referenceContainer>
+    </body>
+</page>

@@ -516,7 +516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  	}
 		  }
 	  });
-	  //console.log(result);
+
 	  return result;
 	}
 
@@ -545,7 +545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  iterateScopes(scope, function (childScope) {
 	    count += getWatchersFromScope(childScope, arrs).length;
 	  });
-	  //console.log(arrs);
+
 	  return count;
 	}
 

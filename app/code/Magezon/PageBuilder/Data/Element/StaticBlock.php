@@ -17,27 +17,27 @@ namespace Magezon\PageBuilder\Data\Element;
 class StaticBlock extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-	    	$general->addChildren(
-				'block_id',
-				'uiSelect',
-	            [
-					'sortOrder'       => 10,
-					'key'             => 'block_id',
-					'templateOptions' => [
-						'label'       => __('Block'),
-						'source'      => 'block',
-						'showValue'   => true,
-						'placeholder' => __('Search block by name or id')
-	                ]
-	            ]
-	        );
+            $general->addChildren(
+                'block_id',
+                'uiSelect',
+                [
+                    'sortOrder'       => 10,
+                    'key'             => 'block_id',
+                    'templateOptions' => [
+                        'label'       => __('Block'),
+                        'source'      => 'block',
+                        'showValue'   => true,
+                        'placeholder' => __('Search block by name or id')
+                    ]
+                ]
+            );
 
-    	return $general;
+        return $general;
     }
 }

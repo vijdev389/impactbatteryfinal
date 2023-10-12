@@ -17,165 +17,151 @@ namespace Magezon\PageBuilder\Data\Element;
 class TwitterTimeline extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-	    	$general->addChildren(
-	    		'page_url',
-	    		'text',
-	    		[
-					'sortOrder'       => 10,
-					'key'             => 'page_url',
-					'defaultValue'    => 'https://twitter.com/magezonvn',
-					'templateOptions' => [
-						'label' => __('Timeline URL')
-	    			]
-	    		]
-	    	);
+            $general->addChildren(
+                'page_url',
+                'text',
+                [
+                    'sortOrder'       => 10,
+                    'key'             => 'page_url',
+                    'defaultValue'    => 'https://twitter.com/magezonvn',
+                    'templateOptions' => [
+                        'label' => __('Timeline URL')
+                    ]
+                ]
+            );
 
-	    	$container1 = $general->addContainerGroup(
-	            'container1',
-	            [
-					'sortOrder' => 20
-	            ]
-	        );
+            $container1 = $general->addContainerGroup(
+                'container1',
+                [
+                    'sortOrder' => 20
+                ]
+            );
 
-		    	$container1->addChildren(
-		    		'box_width',
-		    		'number',
-		    		[
-		    			'sortOrder'       => 10,
-		    			'key'             => 'box_width',
-		    			'templateOptions' => [
-							'label' => __('Width')
-		    			]
-		    		]
-		    	);
+                $container1->addChildren(
+                    'box_width',
+                    'number',
+                    [
+                        'sortOrder'       => 10,
+                        'key'             => 'box_width',
+                        'templateOptions' => [
+                            'label' => __('Width')
+                        ]
+                    ]
+                );
 
-		    	$container1->addChildren(
-		    		'box_height',
-		    		'number',
-		    		[
-						'sortOrder'       => 20,
-						'key'             => 'box_height',
-						'defaultValue'    => 600,
-						'templateOptions' => [
-							'label' => __('Height')
-		    			]
-		    		]
-		    	);
+                $container1->addChildren(
+                    'box_height',
+                    'number',
+                    [
+                        'sortOrder'       => 20,
+                        'key'             => 'box_height',
+                        'defaultValue'    => 600,
+                        'templateOptions' => [
+                            'label' => __('Height')
+                        ]
+                    ]
+                );
 
-		    	$container1->addChildren(
-		    		'limit',
-		    		'number',
-		    		[
-						'sortOrder'       => 30,
-						'key'             => 'limit',
-						'templateOptions' => [
-							'label' => __('Number of Tweets')
-		    			]
-		    		]
-		    	);
+                $container1->addChildren(
+                    'limit',
+                    'number',
+                    [
+                        'sortOrder'       => 30,
+                        'key'             => 'limit',
+                        'templateOptions' => [
+                            'label' => __('Number of Tweets')
+                        ]
+                    ]
+                );
 
-	    	$container2 = $general->addContainerGroup(
-	            'container2',
-	            [
-					'sortOrder' => 30
-	            ]
-	        );
+            $container2 = $general->addContainerGroup(
+                'container2',
+                [
+                    'sortOrder' => 30
+                ]
+            );
 
-		    	$container2->addChildren(
-		    		'show_replies',
-		    		'toggle',
-		    		[
-		    			'sortOrder'       => 10,
-		    			'key'             => 'show_replies',
-		    			'templateOptions' => [
-							'label' => __('Show Replies')
-		    			]
-		    		]
-		    	);
+                $container2->addChildren(
+                    'show_replies',
+                    'toggle',
+                    [
+                        'sortOrder'       => 10,
+                        'key'             => 'show_replies',
+                        'templateOptions' => [
+                            'label' => __('Show Replies')
+                        ]
+                    ]
+                );
 
-		    	$container2->addChildren(
-		    		'chrome',
-		    		'select',
-		    		[
-						'sortOrder'       => 20,
-						'key'             => 'chrome',
-						'templateOptions' => [
-							'label' => __('Chrome'),
-							'options' => $this->getChrome()
-		    			]
-		    		]
-		    	);
+                $container2->addChildren(
+                    'chrome',
+                    'select',
+                    [
+                        'sortOrder'       => 20,
+                        'key'             => 'chrome',
+                        'templateOptions' => [
+                            'label' => __('Chrome'),
+                            'options' => $this->getChrome()
+                        ]
+                    ]
+                );
 
-		    	$container2->addChildren(
-		    		'theme',
-		    		'select',
-		    		[
-						'sortOrder'       => 30,
-						'key'             => 'theme',
-						'defaultValue'    => 'light',
-						'templateOptions' => [
-							'label' => __('Theme'),
-							'options' => $this->getTheme()
-		    			]
-		    		]
-		    	);
+                $container2->addChildren(
+                    'theme',
+                    'select',
+                    [
+                        'sortOrder'       => 30,
+                        'key'             => 'theme',
+                        'defaultValue'    => 'light',
+                        'templateOptions' => [
+                            'label' => __('Theme'),
+                            'options' => $this->getTheme()
+                        ]
+                    ]
+                );
 
-	    	$container3 = $general->addContainerGroup(
-	            'container3',
-	            [
-					'sortOrder' => 40
-	            ]
-	        );
+            $container3 = $general->addContainerGroup(
+                'container3',
+                [
+                    'sortOrder' => 40
+                ]
+            );
 
-		    	$container3->addChildren(
-		    		'link_color',
-		    		'color',
-		    		[
-		    			'sortOrder'       => 10,
-		    			'key'             => 'link_color',
-		    			'templateOptions' => [
-                            'label' => __('Link Color'),
-                            'hex'   => true
-		    			]
-		    		]
-		    	);
-
-		    	$container3->addChildren(
-		    		'border_color',
-		    		'color',
-		    		[
-						'sortOrder'       => 20,
-						'key'             => 'border_color',
-						'templateOptions' => [
+                $container3->addChildren(
+                    'border_color',
+                    'color',
+                    [
+                        'sortOrder'       => 20,
+                        'key'             => 'border_color',
+                        'templateOptions' => [
                             'label' => __('Border Color'),
                             'hex'   => true
-		    			]
-		    		]
-		    	);
+                        ]
+                    ]
+                );
 
-		    	$container3->addChildren(
-		            'lang',
-		            'select',
-		            [
-						'sortOrder'       => 30,
-						'key'             => 'lang',
-						'defaultValue'    => '',
-						'templateOptions' => [
-							'label'   => __('Language'),
-							'options' => $this->getLanguages()
-		                ]
-		            ]
-		        );
+                $container3->addChildren(
+                    'lang',
+                    'select',
+                    [
+                        'sortOrder'       => 30,
+                        'key'             => 'lang',
+                        'defaultValue'    => '',
+                        'templateOptions' => [
+                            'label'   => __('Language'),
+                            'options' => $this->getLanguages()
+                        ]
+                    ]
+                );
 
-
-		return $general;
-	}
+        return $general;
+    }
 
     public function getTheme()
     {

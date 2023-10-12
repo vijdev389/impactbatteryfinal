@@ -17,6 +17,7 @@ $overlayColor    = $element->getData('overlay_color');
 $carouselOptions = $this->getOwlCarouselOptions();
 $classes         = $this->getOwlCarouselClasses();
 $size            = $this->getsize();
+$id              = time() . uniqid();
 $contentPosition = $element->getData('content_position') ? $element->getData('content_position') : 'middle-center';
 if ($contentPosition) $classes[] = 'image-content-' . $contentPosition;
 if ($onclick=='magnific') $classes[] = 'mgz-magnific';
@@ -36,8 +37,8 @@ if ($displayOnHover) $classes[] = 'item-content-hover';
 	<?php } ?>
 	<div class="mgz-block-content">
 	<?php if ($items && count($items)) { ?>
-		<div class="mgz-carousel mgz-image-hovers owl-carousel <?= implode(' ', $classes) ?>"
-			data-type="gallery" data-mage-init='{"Magezon_Builder/js/carousel":<?= $coreHelper->serialize($carouselOptions) ?>}'>
+		<div id="<?= $id ?>" class="mgz-carousel mgz-image-hovers owl-carousel <?= implode(' ', $classes) ?>"
+			data-type="gallery">
 			<?php foreach ($items as $item) { ?>
 				<?php
 				if (!$item['image']) continue;
@@ -98,6 +99,11 @@ if ($displayOnHover) $classes[] = 'item-content-hover';
 				</div>
 			<?php } ?>
 		</div>
+		<script>
+			require(['jquery', 'Magezon_Builder/js/carousel'], function($) {
+				$('#<?= $id ?>').carousel(<?= $coreHelper->serialize($carouselOptions) ?>);
+			});
+		</script>
 	<?php } ?>
 	</div>
 </div>

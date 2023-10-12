@@ -17,27 +17,27 @@ namespace Magezon\PageBuilder\Data\Element;
 class RawHtml extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-	    	$general->addChildren(
-	            'content',
-	            'textarea',
-	            [
-					'sortOrder'       => 10,
-					'key'             => 'content',
-					'defaultValue'    => '<p>I am raw html block.<br/>Click edit button to change this html</p>',
-					'templateOptions' => [
-						'label' => __('Raw HTML'),
-						'rows'  => 16,
-						'note'  => __('Enter your HTML content.')
-	                ]
-	            ]
-	        );
+            $general->addChildren(
+                'content',
+                'textarea',
+                [
+                    'sortOrder'       => 10,
+                    'key'             => 'content',
+                    'defaultValue'    => '<p>I am raw html block.<br/>Click edit button to change this html</p>',
+                    'templateOptions' => [
+                        'label' => __('Raw HTML'),
+                        'rows'  => 16,
+                        'note'  => __('Enter your HTML content.')
+                    ]
+                ]
+            );
 
-    	return $general;
+        return $general;
     }
 }

@@ -21,10 +21,10 @@ class CompositeConfigProvider extends \Magezon\Builder\Model\CompositeConfigProv
      */
     public function getConfig()
     {
-    	$config = parent::getConfig();
-    	if (isset($config['modals']['templates'])) {
-    		$config['modals']['templates']['class'] = 'Magezon\PageBuilder\Data\Modal\Templates';
-    	}
-    	return $config;
+        $config = parent::getConfig();
+        if (isset($config['modals']['templates'])) {
+            $config['modals']['templates']['class'] = \Magezon\PageBuilder\Data\Modal\Templates::class;
+        }
+        return $config;
     }
 }

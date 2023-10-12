@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\Cart">
+        <plugin name="scommerce_trackingbase_reorder" type="Scommerce\TrackingBase\Plugins\CartPlugin"/>
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Cart">
+        <plugin name="scommerce_trackingbase_whishlist_cart" type="Scommerce\TrackingBase\Plugins\WishlistCartPlugin"/>
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Allcart">
+        <plugin name="scommerce_trackingbase_whishlist_allcart" type="Scommerce\TrackingBase\Plugins\WishlistAllcartPlugin"/>
+    </type>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <plugin name="scommerce_slider_tracker" type="Scommerce\TrackingBase\Plugins\ProductListPlugin"/>
+    </type>
+</config>

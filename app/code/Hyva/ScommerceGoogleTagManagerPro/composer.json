@@ -1,0 +1,26 @@
+{
+    "name": "hyva-themes/magento2-scommerce-googletagmanagerpro",
+    "description": "Hyvä Themes Compatibility module for Scommerce_TrackingBase",
+    "require": {
+        "php": ">=7.2.0",
+        "hyva-themes/magento2-scommerce-trackingbase": "2.0.*",
+        "scommerce/googletagmanagerpro": "3.0.*"
+    },
+    "type": "magento2-module",
+    "license": "Commercial",
+    "version": "2.0.0",
+    "authors": [
+        {
+            "name": "Scommerce Mage",
+            "email": "core@scommerce-mage.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Hyva\\ScommerceGoogleTagManagerPro\\": ""
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<?php
+/** @var $block Magento\Framework\View\Element\Template */
+/** @var $viewModel Scommerce\TrackingBase\ViewModel\Cart */
+/** @var $quoteViewModel Scommerce\TrackingBase\ViewModel\Checkout\Onepage */
+$viewModel = $block->getData('view_model');
+$quoteViewModel = $block->getData('quote_view_model');
+
+$_mode = $block->getMode();
+$viewModel->setBlock($block);
+
+$helper = $viewModel->getHelper();
+if (!$helper->isEnhancedEcommerceEnabled()) return;
+?>
+<script>
+    fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/removefromcart').then(async function(removeResponse) {
+        let product = await removeResponse.json();
+        if (typeof product === 'object' && product.hasOwnProperty('id')) {
+            window.scTrackingContainer.setRemoveFromCart(product);
+            fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/unsremovefromcart').then(function (unsremoveResponse) {
+            });
+        }
+    });
+</script>
+<script>
+    window.scTrackingContainer.setPageType('cart');
+
+    let data = <?php echo json_encode($viewModel->getCrosssellProductsData())?>;
+    window.scTrackingContainer.setImpressionListData(data);
+    window.scTrackingContainer.setData('total', <?php echo $quoteViewModel->getTotalValue() ?>);
+    let cartData = <?php echo json_encode($quoteViewModel->getProductsData()) ?>;
+    window.scTrackingContainer.setData('cart', cartData);
+
+    window.scTrackingContainer.fire('page_ready', window.scTrackingContainer.getPageType().toLowerCase());
+    window.scTrackingContainer.fire('view_cart', cartData);
+</script>

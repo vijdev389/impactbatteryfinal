@@ -9,7 +9,7 @@ define([
     var filter = function($rootScope, magezonBuilderUrl, magezonBuilderService) {
         var self     = this;
         var wysiwyg  = this.config = angular.copy($rootScope.builderConfig.wysiwyg);
-        var tinymce4 = wysiwyg.tinymce4;
+        var tinymce4 = !!wysiwyg.tinymce4 || !!wysiwyg.tinymce5;
 
         /**
          * Retrieve directives URL with substituted directive value.
@@ -93,15 +93,15 @@ define([
 
         self.encodeContent = function(content, convert) {
             if (!content) return;
-            //if (convert) {
+            if (convert) {
                 content = self.convertMediaDirectivesToUrls(content);
-            // } else {
-            //  if (tinymce4) {
-            //      content = self.tinymce4EncodeDirectives(content);
-            //  } else {
-            //      content = self.tinymce3EncodeDirectives(content);
-            //  }
-            // }
+            } else {
+                if (tinymce4) {
+                    content = self.tinymce4EncodeDirectives(content);
+                } else {
+                    content = self.tinymce3EncodeDirectives(content);
+                }
+            }
             content = self.encodeWidgets(content);
             return content;
         }

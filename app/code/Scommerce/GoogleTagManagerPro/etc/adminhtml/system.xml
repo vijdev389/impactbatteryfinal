@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <!-- Add new Tab -->
         <tab id="scommerce" translate="label" sortOrder="400">
@@ -191,6 +191,15 @@
                         <field id="*/*/enhanced_ecommerce_enabled">1</field>
                     </depends>
                 </field>
+                <field id="price_including_tax" translate="label" type="select" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Price Include Tax</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[If set to "Yes" then price will include TAX]]></comment>
+                    <depends>
+                        <field id="*/*/active">1</field>
+                        <field id="*/*/enhanced_ecommerce_enabled">1</field>
+                    </depends>
+                </field>
                 <field id="send_parent_sku" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Always Send Parent SKU</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -210,6 +219,24 @@
                     </depends>
                 </field>
 			</group>
+            <group id="cookies" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cookies From Query Params</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set cookies from query parameters</comment>
+                </field>
+                <field id="configuration" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Configuration</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <frontend_model>Scommerce\GoogleTagManagerPro\Block\Adminhtml\Form\Field\CookieOption</frontend_model>
+                    <comment><![CDATA[Add query param and cookies relations here. {{value}} is a placeholder for the cookie value itself]]></comment>
+                </field>
+                <field id="lifetime" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Lifetime</label>
+                    <comment><![CDATA[Cookies lifetime in days]]></comment>
+                </field>
+            </group>
 		</section>
     </system>
 </config>

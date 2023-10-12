@@ -1,0 +1,968 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2021-05-31 18:20:17",
+    "containerVersion": {
+        "path": "accounts/565186682/containers/2739889/versions/0",
+        "accountId": "565186682",
+        "containerId": "2739889",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/565186682/containers/2739889",
+            "accountId": "565186682",
+            "containerId": "2739889",
+            "name": "magento2.scommerce-mage.co.uk",
+            "publicId": "GTM-PTN7FN",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1577705654016",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/565186682/containers/2739889/workspaces?apiLink=container"
+        },
+        "tag": [
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "tagId": "156",
+                "name": "Pinterest Base",
+                "type": "pntr",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Pinterest Tag ID}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "aem_enabled",
+                        "value": "yes"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "md_scraping_enabled",
+                        "value": "true"
+                    }
+                ],
+                "fingerprint": "1622384808683",
+                "firingTriggerId": [
+                    "2147479553"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                }
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "tagId": "158",
+                "name": "Pinterest Checkout",
+                "type": "pntr",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setCustomParams",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Pinterest Tag ID}}"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "values",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "line_items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{Pinterest Checkout products}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "order_quantity",
+                        "value": "{{Pinterest Checkout Order Quantity}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "checkout"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "currency",
+                        "value": "{{Order Currency Code}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "{{Order Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "order_id",
+                        "value": "{{Order Id}}"
+                    }
+                ],
+                "fingerprint": "1622384770551",
+                "firingTriggerId": [
+                    "125"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                }
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "tagId": "166",
+                "name": "Pinterest Add to Basket",
+                "type": "pntr",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setCustomParams",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Pinterest Tag ID}}"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "values",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "line_items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{Pinterest Basket Products}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "order_quantity",
+                        "value": "{{Pinterest basket Order Quantity}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "addtocart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "currency",
+                        "value": "{{currencyCode}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "{{addedPPrice}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "order_id",
+                        "value": "{{addedPID}}"
+                    }
+                ],
+                "fingerprint": "1622384794229",
+                "firingTriggerId": [
+                    "165"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                }
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "tagId": "171",
+                "name": "Pinterest Page Visit",
+                "type": "pntr",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setCustomParams",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Pinterest Tag ID}}"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "values",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "line_items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{Pinterest Page Visit Products}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "pagevisit"
+                    }
+                ],
+                "fingerprint": "1622435805139",
+                "firingTriggerId": [
+                    "177"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                }
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "tagId": "173",
+                "name": "Pinterest Search",
+                "type": "pntr",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setCustomParams",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Pinterest Tag ID}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "search"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "search_query",
+                        "value": "{{Query - Url}}"
+                    }
+                ],
+                "fingerprint": "1622386043130",
+                "firingTriggerId": [
+                    "175"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                }
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "tagId": "176",
+                "name": "Pinterest View Category",
+                "type": "pntr",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setCustomParams",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Pinterest Tag ID}}"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "values",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "line_items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{Pinterest Page Visit Products}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "viewcategory"
+                    }
+                ],
+                "fingerprint": "1622469414036",
+                "firingTriggerId": [
+                    "180"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "triggerId": "19",
+                "name": "Remarketing Tag Category",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "fireRemarketingTag_category"
+                            }
+                        ]
+                    }
+                ],
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "fireRemarketingTag_category"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{marketing_cookie}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "1"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1600438412537"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "triggerId": "125",
+                "name": "Pinterest Purchase",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "purchase"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1622484836004"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "triggerId": "165",
+                "name": "Pinterest Add to Basket",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "addToCart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1622369395809"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "triggerId": "175",
+                "name": "Pinterest Search Page",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Page URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "result"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1622386028666"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "triggerId": "177",
+                "name": "Pinterest GTM Ready",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "gtm.dom"
+                            }
+                        ]
+                    }
+                ],
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "gtm.dom"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1622435798868"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "triggerId": "180",
+                "name": "Pinterest category",
+                "type": "TRIGGER_GROUP",
+                "fingerprint": "1622485061733",
+                "parameter": [
+                    {
+                        "type": "LIST",
+                        "key": "triggerIds",
+                        "list": [
+                            {
+                                "type": "TRIGGER_REFERENCE",
+                                "value": "19"
+                            },
+                            {
+                                "type": "TRIGGER_REFERENCE",
+                                "value": "177"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "3",
+                "name": "currencyCode",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "GBP"
+                    }
+                ],
+                "fingerprint": "1505394327145"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "10",
+                "name": "addedPID",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.add.products.0.id"
+                    }
+                ],
+                "fingerprint": "1521497739185"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "12",
+                "name": "addedPPrice",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.add.products.0.price"
+                    }
+                ],
+                "fingerprint": "1521497739186"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "32",
+                "name": "Query - Url",
+                "type": "u",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "component",
+                        "value": "QUERY"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "queryKey",
+                        "value": "q"
+                    }
+                ],
+                "fingerprint": "1572349283699",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "88",
+                "name": "Order Id",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.actionField.id"
+                    }
+                ],
+                "fingerprint": "1585058304193",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "89",
+                "name": "Order Value",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.actionField.revenue"
+                    }
+                ],
+                "fingerprint": "1585058340516",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "90",
+                "name": "Order Currency Code",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.currencyCode"
+                    }
+                ],
+                "fingerprint": "1585059106317",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "93",
+                "name": "marketing_cookie",
+                "type": "k",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "decodeCookie",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "marketing_cookie"
+                    }
+                ],
+                "fingerprint": "1600438148294",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "116",
+                "name": "ecommerce-add-products",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.add.products"
+                    }
+                ],
+                "fingerprint": "1604929479506",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "131",
+                "name": "ecommerce-impressions",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.impressions"
+                    }
+                ],
+                "fingerprint": "1605074515071",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "134",
+                "name": "ecommerce-purchase-products",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.products"
+                    }
+                ],
+                "fingerprint": "1605077234453",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "157",
+                "name": "Pinterest basket Order Quantity",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n  var totalQuantity = 0;\n  var ecom = {{ecommerce-add-products}};\n  if (ecom) {\n    ecom.forEach(function(product) {\n      totalQuantity += parseInt(product.qty);\n    }); \n  };\nreturn totalQuantity;\n}"
+                    }
+                ],
+                "fingerprint": "1622383554577",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "159",
+                "name": "list_items",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n    return function(products) {\n        if (!Array.isArray(products)) {\n            return products;\n        }\n        var prodsForPinterest = products.map(function(prod) {\n            var prodObj = new Object();\n            if (prod.name) {prodObj.product_name = prod.name};\n            if (prod.id) {prodObj.product_id = prod.id.toString()};\n            if (prod.price) {prodObj.product_price = parseFloat(prod.price)};           \n\t        if (prod.quantity) {prodObj.product_quantity = parseInt(prod.quantity)};\n            if (prod.brand) {prodObj.product_brand = prod.brand};\n            if (prod.category) {prodObj.product_category = prod.category};\n            return prodObj;\n        })\n        return prodsForPinterest;\n    }\n}"
+                    }
+                ],
+                "fingerprint": "1622436604404",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "161",
+                "name": "Pinterest Page Visit Products",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() { \n    var products = {{ecommerce-impressions}};\n    return {{list_items}}(products);\n}"
+                    }
+                ],
+                "fingerprint": "1622436204677",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "163",
+                "name": "dlv-ecommerce",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "1"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce"
+                    }
+                ],
+                "fingerprint": "1622360173313",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "164",
+                "name": "Pinterest Checkout products",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() { \n    var products = {{dlv-ecommerce}}.purchase.products; \n    return {{list_items}}(products);\n}"
+                    }
+                ],
+                "fingerprint": "1622361012122",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "167",
+                "name": "Pinterest Basket Products",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() { \n    var products = {{dlv-ecommerce}}.add.products; \n    return {{list_items}}(products);\n}"
+                    }
+                ],
+                "fingerprint": "1622369467231",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "170",
+                "name": "Pinterest Checkout Order Quantity",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n  var totalQuantity = 0;\n  var ecom = {{ecommerce-purchase-products}};\n  if (ecom) {\n    ecom.forEach(function(product) {\n      totalQuantity += parseInt(product.quantity);\n    }); \n  };\nreturn totalQuantity;\n}"
+                    }
+                ],
+                "fingerprint": "1622384305599",
+                "formatValue": {}
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "172",
+                "name": "Pinterest Tag ID",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "XXXXXXXXXXXX"
+                    }
+                ],
+                "fingerprint": "1622384745123",
+                "formatValue": {}
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "type": "PAGE_URL",
+                "name": "Page URL"
+            },
+            {
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "type": "EVENT",
+                "name": "Event"
+            }
+        ],
+        "fingerprint": "1622485217029",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/565186682/containers/2739889/versions/0?apiLink=version"
+    }
+}

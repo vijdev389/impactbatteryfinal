@@ -27,9 +27,9 @@ class Load extends \Magento\Backend\App\Action
     protected $layoutFactory;
 
     /**
-     * @param \Magento\Backend\App\Action\Context             $context          
-     * @param \Magento\Framework\Controller\Result\RawFactory $resultRawFactory 
-     * @param \Magento\Framework\View\LayoutFactory           $layoutFactory    
+     * @param \Magento\Backend\App\Action\Context             $context
+     * @param \Magento\Framework\Controller\Result\RawFactory $resultRawFactory
+     * @param \Magento\Framework\View\LayoutFactory           $layoutFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -37,11 +37,11 @@ class Load extends \Magento\Backend\App\Action
         \Magento\Framework\View\LayoutFactory $layoutFactory
     ) {
         parent::__construct($context);
-		$this->resultRawFactory = $resultRawFactory;
-		$this->layoutFactory    = $layoutFactory;
+        $this->resultRawFactory = $resultRawFactory;
+        $this->layoutFactory    = $layoutFactory;
     }
 
-	/**
+    /**
      * @return \Magento\Framework\Controller\Result\Raw
      */
     public function execute()

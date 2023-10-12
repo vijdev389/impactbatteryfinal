@@ -1,0 +1,154 @@
+<?php
+/** @var $block Magento\Framework\View\Element\Template */
+/** @var $viewModel Scommerce\TrackingBase\ViewModel\ListProduct */
+$viewModel = $block->getData('view_model');
+
+$_mode = $block->getMode();
+$viewModel->setMode($_mode);
+$viewModel->setBlock($block);
+
+$helper = $viewModel->getHelper();
+if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled() || $helper->isCategoryAjaxEnabled()) return;
+
+$_SIOSEnabled = $helper->isSIOSEnabled();
+$_PICText = $helper->getPICText();
+$cats = $viewModel->getRemarketingCategories();
+?>
+
+<script>
+    let intCtr2 = 0;
+    let lastCtr = 0;
+    let documentReady = function (fn) {
+        if (document.readyState !== 'loading') {
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
+    };
+    let windowReady = function (fn) {
+        if (window.readyState !== 'loading') {
+            fn();
+        } else {
+            window.addEventListener('DOMContentLoaded', fn);
+        }
+    };
+    let offset = function (el) {
+        box = el.getBoundingClientRect();
+        docElem = document.documentElement;
+        return {
+            top: box.top + window.pageYOffset - docElem.clientTop,
+            left: box.left + window.pageXOffset - docElem.clientLeft
+        };
+    };
+    let scrollLeft = function (el, value) {
+        if (value === undefined) {
+            return el.pageXOffset;
+        } else {
+            if (el === window || el.nodeType === 9) {
+                el.scrollTo(value, el.pageYOffset);
+            } else {
+                el.pageXOffset = value;
+            }
+        }
+    };
+    let scrollTop = function (el, value) {
+            if (value === undefined) {
+                return el.pageYOffset;
+            } else {
+                if (el === window || el.nodeType === 9) {
+                    el.scrollTo(el.pageXOffset, value);
+                } else {
+                    el.pageYOffset = value;
+                }
+            }
+        }
+    ;
+
+    let inviewport = function (element) {
+        var threshold = <?php echo $helper->getScrollThreshold(); ?>,
+            changed = false,
+            isVisible = function () {
+                var c = 'in-view',
+                    min = (threshold || 100) / 100,
+                    xMin = element.offsetWidth * min,
+                    yMin = element.offsetHeight * min,
+                    winPosX = scrollLeft(window) + window.innerWidth,
+                    winPosY = scrollTop(window) + window.innerHeight,
+                    elPosX = offset(element).left + xMin,
+                    elPosY = offset(element).top + yMin;
+                if (winPosX > elPosX && winPosY > elPosY) {
+                    element.classList.add(c);
+                }
+            };
+        windowReady(isVisible);
+        window.addEventListener('resize', function () {
+            changed = true;
+        });
+        window.addEventListener('scroll', function () {
+            changed = true;
+        });
+        setInterval(function () {
+            if (changed) {
+                changed = false;
+                isVisible();
+            }
+        }, 250);
+    };
+
+
+    window.scTrackingContainer.setData('category', '<?php echo $block->escapeJs($viewModel->getCategoryName()) ?>');
+    window.scTrackingContainer.setData('category_full', '<?php echo $block->escapeJs($cats['full']) ?>');
+    window.scTrackingContainer.setData('category_plain', '<?php echo $block->escapeJs($cats['plain']) ?>');
+
+    let data = <?php echo json_encode($viewModel->getProductsData())?>;
+    <?php if (($_SIOSEnabled) && strlen($_PICText)):
+    $productItemClass = $_PICText;
+    if (strlen($productItemClass) == 0) $productItemClass = "div.products ol.product-items li.product-item";
+    ?>
+    window.scTrackingContainer.setImpressionListData(data, true);
+
+    documentReady(function () {
+        let productItemsArray = Array.from(document.querySelectorAll('<?php echo $productItemClass?>'));
+        productItemsArray.forEach(element => {
+            inviewport(element);
+        });
+    });
+
+    let updateImpressions = function() {
+        let scrollImpressions = [];
+        intCtr2 = 0;
+        lastCtr = 0;
+        document.querySelectorAll('.in-view').forEach(element => {
+            let classNames = element.getAttribute('class');
+            window.scTrackingContainer.getData('productList').forEach(function (product, index) {
+                let pos = classNames.indexOf('impressionSent');
+                if (pos < 0 && index >= intCtr2) {
+                    element.classList.add('impressionSent');
+                    let impression = {
+                        'id': product.id,
+                        'name': product.name,
+                        'price': product.price,
+                        'category': product.category,
+                        'brand': product.brand,
+                        'list': product.list,
+                        'position': product.position
+                    }
+                    scrollImpressions.push(impression);
+                    intCtr2++;
+                    return false;
+                }
+            });
+        });
+        if (intCtr2 > 0 && lastCtr < intCtr2) {
+            window.scTrackingContainer.fire('listing_scroll', scrollImpressions);
+            lastCtr = intCtr2;
+        }
+    };
+    window.addEventListener('scroll', updateImpressions);
+    window.addEventListener('load', updateImpressions);
+    <?php else: ?>
+    window.scTrackingContainer.setImpressionListData(data);
+    <?php endif; ?>
+
+    window.scTrackingContainer.fire('page_ready', window.scTrackingContainer.getPageType().toLowerCase());
+</script>

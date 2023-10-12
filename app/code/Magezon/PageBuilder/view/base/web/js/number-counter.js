@@ -35,7 +35,7 @@ define([
 
         _initNumber: function() {
             var self = this;
-            if ($('#html-body').length || !this.element.hasClass('mgz-waypoint')) {
+            if (!this.element.hasClass('mgz-waypoint')) {
                 self._initCount();
             } else {
                 this.element.on('mgz:animation:run', function() {

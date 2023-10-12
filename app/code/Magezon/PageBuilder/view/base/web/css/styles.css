@@ -183,8 +183,8 @@ button.mgz-btn {
   right: 0!important;
   bottom: 0!important;
   float: none!important;
-  z-index: 1000!important;
-  background: #ffffff;
+  z-index: 2147483647!important;
+  background: #000;
   width: 100%!important;
   height: 100%!important;
   margin: 0 !important;
@@ -197,7 +197,7 @@ button.mgz-btn {
   display: block;
 }
 .fotorama--fullscreen .fotorama__fullscreen-icon {
-  background-position: -80px 0;
+  background-position: -32px -32px;
 }
 .fotorama--fullscreen .fotorama__nav:after,
 .fotorama--fullscreen .fotorama__nav:before,

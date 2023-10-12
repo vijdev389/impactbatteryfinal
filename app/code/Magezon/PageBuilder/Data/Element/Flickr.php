@@ -27,11 +27,11 @@ class Flickr extends \Magezon\Builder\Data\Element\AbstractElement
     }
 
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
             $container1 = $general->addContainerGroup(
                 'container1',
@@ -174,19 +174,19 @@ class Flickr extends \Magezon\Builder\Data\Element\AbstractElement
                 ]
             );
 
-	    	$general->addChildren(
-	            'flickr_api_key',
-	            'text',
-	            [
-					'sortOrder'       => 50,
-					'key'             => 'flickr_api_key',
-					'defaultValue'    => '59ac8916e80833e67ab731f8c95dfdde',
-					'templateOptions' => [
+            $general->addChildren(
+                'flickr_api_key',
+                'text',
+                [
+                    'sortOrder'       => 50,
+                    'key'             => 'flickr_api_key',
+                    'defaultValue'    => '59ac8916e80833e67ab731f8c95dfdde',
+                    'templateOptions' => [
                         'label' => __('Flickr API Key'),
                         'note'  => __('Your API application key. See <a href="%1" target="_blank">here</a> for more details.', 'https://www.flickr.com/services/api/misc.api_keys.html')
-	                ]
-	            ]
-	        );
+                    ]
+                ]
+            );
 
             $container4 = $general->addContainerGroup(
                 'container4',
@@ -208,18 +208,18 @@ class Flickr extends \Magezon\Builder\Data\Element\AbstractElement
                     ]
                 );
 
-    	    	$container4->addChildren(
-    	            'show_photo_title',
-    	            'toggle',
-    	            [
-    					'sortOrder'       => 20,
-    					'key'             => 'show_photo_title',
-    					'defaultValue'    => true,
-    					'templateOptions' => [
-    						'label' => __('Show Photo Title')
-    	                ]
-    	            ]
-    	        );
+                $container4->addChildren(
+                    'show_photo_title',
+                    'toggle',
+                    [
+                        'sortOrder'       => 20,
+                        'key'             => 'show_photo_title',
+                        'defaultValue'    => true,
+                        'templateOptions' => [
+                            'label' => __('Show Photo Title')
+                        ]
+                    ]
+                );
 
             $general->addChildren(
                 'gap',
@@ -235,31 +235,39 @@ class Flickr extends \Magezon\Builder\Data\Element\AbstractElement
                 ]
             );
 
-    	return $general;
+        return $general;
     }
 
+    /**
+     * Get photo size options
+     *
+     * @return array[]
+     */
     public function getPhotoSizeOptions()
     {
         return [
             [
-				'label' => __('Thumbnail'),
-				'value' => 'thumbnail'
+                'label' => __('Thumbnail'),
+                'value' => 'thumbnail'
             ],
             [
-				'label' => __('Small'),
-				'value' => 'small'
+                'label' => __('Small'),
+                'value' => 'small'
             ],
             [
-				'label' => __('Large'),
-				'value' => 'large'
+                'label' => __('Large'),
+                'value' => 'large'
             ],
             [
-				'label' => __('Original'),
-				'value' => 'original'
+                'label' => __('Original'),
+                'value' => 'original'
             ]
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function getOnclickOptions()
     {
         return [
@@ -334,12 +342,15 @@ class Flickr extends \Magezon\Builder\Data\Element\AbstractElement
                 'value' => 'l'
             ],
             [
-				'label' => __('Original'),
-				'value' => '0'
+                'label' => __('Original'),
+                'value' => '0'
             ]
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getResponsiveColumn()
     {
         return [

@@ -16,30 +16,30 @@ namespace Magezon\PageBuilder\Block\Element;
 
 class PageBuilderTemplate extends \Magezon\Builder\Block\Element
 {
-	/**
-	 * @var string
-	 */
-	protected $_template = "Magezon_PageBuilder::element/pagebuilder_template.phtml";
+    /**
+     * @var string
+     */
+    protected $_template = "Magezon_PageBuilder::element/pagebuilder_template.phtml";
 
-	/**
-	 * @var \Magezon\PageBuilder\Model\TemplateFactory
-	 */
-	protected $templateFactory;
+    /**
+     * @var \Magezon\PageBuilder\Model\TemplateFactory
+     */
+    protected $templateFactory;
 
-	protected $_curentTemplate;
+    protected $_curentTemplate;
 
-	/**
-	 * @param \Magento\Framework\View\Element\Template\Context  $context  
-	 * @param \Magezon\PageBuilder\Model\TemplateFactory        $templateFactory 
-	 * @param array                                             $data            
-	 */
+    /**
+     * @param \Magento\Framework\View\Element\Template\Context  $context
+     * @param \Magezon\PageBuilder\Model\TemplateFactory        $templateFactory
+     * @param array                                             $data
+     */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\PageBuilder\Model\TemplateFactory $templateFactory,
         array $data = []
     ) {
         parent::__construct($context, $data);
-		$this->templateFactory = $templateFactory;
+        $this->templateFactory = $templateFactory;
     }
 
     /**
@@ -47,24 +47,26 @@ class PageBuilderTemplate extends \Magezon\Builder\Block\Element
      */
     public function isEnabled()
     {
-    	if (!$this->getPageBuilderTemplate()->getIsActive()) return false;
-    	return parent::isEnabled();
+        if (!$this->getPageBuilderTemplate()->getIsActive()) {
+            return false;
+        }
+        return parent::isEnabled();
     }
 
     /**
      * @return \Magezon\PageBuilder\Model\Template
      */
-	public function getPageBuilderTemplate()
-	{
-		if ($this->_curentTemplate == null) {
-			$element    = $this->getElement();
-			$templateId = $element->getData('template_id');
-			$template   = $this->templateFactory->create();
-			if ($templateId) {
-				$template->load($templateId);
-			}
-			$this->_curentTemplate = $template;
-		}
-		return $this->_curentTemplate;
-	}
+    public function getPageBuilderTemplate()
+    {
+        if ($this->_curentTemplate == null) {
+            $element    = $this->getElement();
+            $templateId = $element->getData('template_id');
+            $template   = $this->templateFactory->create();
+            if ($templateId) {
+                $template->load($templateId);
+            }
+            $this->_curentTemplate = $template;
+        }
+        return $this->_curentTemplate;
+    }
 }

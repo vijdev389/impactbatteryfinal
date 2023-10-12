@@ -14,9 +14,12 @@
 
 namespace Magezon\Core\Block\Adminhtml\Tab;
 
+use Magento\Backend\Block\Widget\Form\Generic;
+use Magento\Backend\Block\Widget\Form\Renderer\Fieldset;
 use Magento\Framework\App\ObjectManager;
+use Magento\Ui\Component\Layout\Tabs\TabInterface;
 
-class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Ui\Component\Layout\Tabs\TabInterface
+class Conditions extends Generic implements TabInterface
 {
     /**
      * Core registry
@@ -48,6 +51,7 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param \Magento\Rule\Block\Conditions $conditions
      * @param \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset
+     * @param \Magento\SalesRule\Model\RuleFactory $ruleFactory
      * @param array $data
      */
     public function __construct(
@@ -56,10 +60,12 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Rule\Block\Conditions $conditions,
         \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset,
+        \Magento\SalesRule\Model\RuleFactory $ruleFactory,
         array $data = []
     ) {
-        $this->rendererFieldset = $rendererFieldset;
         $this->conditions = $conditions;
+        $this->rendererFieldset = $rendererFieldset;
+        $this->ruleFactory = $ruleFactory;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -73,7 +79,7 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
     private function getRuleFactory()
     {
         if ($this->ruleFactory === null) {
-            $this->ruleFactory = ObjectManager::getInstance()->get('Magento\SalesRule\Model\RuleFactory');
+            $this->ruleFactory = ObjectManager::getInstance()->get(\Magento\SalesRule\Model\RuleFactory::class);
         }
         return $this->ruleFactory;
     }
@@ -158,12 +164,25 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
         return parent::_prepareForm();
     }
 
-    public function toHtml()
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getGridHtml()
     {
         $previewBlock = $this->getLayout()->createBlock(
             \Magezon\Core\Block\Adminhtml\Conditions\AssignProduct::class
         );
-        return parent::toHtml() . $previewBlock->toHtml();
+        return $previewBlock->toHtml();
+    }
+
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function toHtml()
+    {
+        return parent::toHtml() . $this->getGridHtml();
     }
 
     /**
@@ -188,7 +207,8 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('rule_');
-        $renderer = $this->rendererFieldset->setTemplate(
+        $renderer = $this->getLayout()->createBlock(Fieldset::class);
+        $renderer->setTemplate(
             'Magento_CatalogRule::promo/fieldset.phtml'
         )->setNewChildUrl(
             $newChildUrl
@@ -201,7 +221,7 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
             [
                 'legend' => __(
                     'Apply the rule only if the following conditions are met (leave blank for all products).'
-                )
+                ),
             ]
         )->setRenderer(
             $renderer
@@ -214,7 +234,7 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic implements \
                 'label' => __('Conditions'),
                 'title' => __('Conditions'),
                 'required' => true,
-                'data-form-part' => $formName
+                'data-form-part' => $formName,
             ]
         )->setRule(
             $model

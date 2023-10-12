@@ -16,6 +16,11 @@ namespace Magezon\Core\Helper;
 
 class Style extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    /**
+     * @var Data
+     */
+    protected $dataHelper;
+
 	/**
 	 * @param \Magezon\Core\Helper\Data $dataHelper
 	 */

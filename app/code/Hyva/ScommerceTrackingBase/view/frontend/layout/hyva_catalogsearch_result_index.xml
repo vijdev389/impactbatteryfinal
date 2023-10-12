@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="scommerce_tracking_data">
+            <arguments>
+                <argument name="page_type" xsi:type="string">searchresults</argument>
+                <argument name="skip_page_ready" xsi:type="boolean">true</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <referenceBlock name="scommerce_tracking_base_product_list">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Hyva_ScommerceTrackingBase::list_product.phtml</argument>
+                </action>
+            </referenceBlock>
+        </referenceContainer>
+        <referenceContainer name="search.result.list.additional">
+            <referenceBlock name="search.result.list.js.wishlist">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Hyva_ScommerceTrackingBase::product/list/js/wishlist.phtml</argument>
+                </action>
+            </referenceBlock>
+        </referenceContainer>
+    </body>
+</page>

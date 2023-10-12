@@ -75,7 +75,7 @@ define([
 							row[key] = value;
 						});
 					}
-						
+
 					for (var z = 0; z < excludedFields.length; z++) {
 						delete row[excludedFields[z]];
 					}
@@ -124,5 +124,4 @@ define([
 	}
 
 	return form;
-
 })

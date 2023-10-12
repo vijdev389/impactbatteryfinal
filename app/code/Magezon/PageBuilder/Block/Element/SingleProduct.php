@@ -27,12 +27,12 @@ class SingleProduct extends \Magezon\Builder\Block\ListProduct
     protected $_product;
 
     /**
-     * @param \Magento\Catalog\Block\Product\Context            $context        
-     * @param \Magento\Framework\App\Http\Context               $httpContext    
-     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency  
-     * @param \Magento\Framework\Url\Helper\Data                $urlHelper      
-     * @param \Magento\Catalog\Model\ProductFactory             $productFactory 
-     * @param array                                             $data           
+     * @param \Magento\Catalog\Block\Product\Context            $context
+     * @param \Magento\Framework\App\Http\Context               $httpContext
+     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
+     * @param \Magento\Framework\Url\Helper\Data                $urlHelper
+     * @param \Magento\Catalog\Model\ProductFactory             $productFactory
+     * @param array                                             $data
      */
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
@@ -51,22 +51,26 @@ class SingleProduct extends \Magezon\Builder\Block\ListProduct
      */
     public function isEnabled()
     {
-        if (!$this->getProduct()) return;
+        if (!$this->getProduct()) {
+            return;
+        }
 
         return parent::isEnabled();
     }
 
     /**
-     * @return Magento\Catalog\Model\Product
+     * @return \Magento\Catalog\Model\Product
      */
     public function getProduct()
     {
-        if ($this->_product === NULL) {
+        if ($this->_product === null) {
             $element = $this->getElement();
             $sku = $element->getData('product_sku');
             if ($sku) {
                 $product = $this->productFactory->create()->loadByAttribute('sku', $sku);
-                if ($product) $this->_product = $product;
+                if ($product) {
+                    $this->_product = $product;
+                }
             } else {
                 $this->_product = false;
             }
@@ -88,7 +92,7 @@ class SingleProduct extends \Magezon\Builder\Block\ListProduct
             $styleHtml .= '.' . $this->getElement()->getHtmlId() . ' .product-item-info:hover{';
                 $styleHtml .= $_stylesHtml;
             $styleHtml .= '}';
-        }   
+        }
         return $styleHtml;
     }
 }

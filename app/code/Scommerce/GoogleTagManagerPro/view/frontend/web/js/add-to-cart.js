@@ -6,7 +6,7 @@ define([
     'jquery',
     'mage/translate',
 	'mage/url',
-    'jquery/ui',
+    'jquery-ui-modules/widget',
 	'mage/cookies',
     'Magento_Catalog/js/catalog-add-to-cart'
 ], function($, $t, url) {
@@ -66,15 +66,19 @@ define([
 
         },
         ajaxSubmit: function(form) {
-            var self = this;
+            var self = this, formData;
             $(self.options.minicartSelector).trigger('contentLoading');
             self.disableAddToCartButton(form);
+            formData = new FormData(form[0]);
 
             $.ajax({
                 url: form.attr('action'),
-                data: form.serialize(),
+                data: formData,
                 type: 'post',
                 dataType: 'json',
+                contentType: false,
+                processData: false,
+
                 beforeSend: function() {
                     if (self.isLoaderEnabled()) {
                         $('body').trigger(self.options.processStart);

@@ -52,14 +52,18 @@ define([
             var trElement = Event.findElement(event, 'tr'),
                 isInput = Event.element(event).tagName === 'INPUT',
                 checked = false,
-                checkbox = null;
+                checkbox = null,
+                colAction = Event.findElement(event, '.col-action > a');
+
 
             if (trElement) {
-                checkbox = Element.getElementsBySelector(trElement, 'input');
+                if(!colAction){
+                    checkbox = Element.getElementsBySelector(trElement, 'input');
 
-                if (checkbox[0]) {
-                    checked = isInput ? checkbox[0].checked : !checkbox[0].checked;
-                    gridJsObject.setCheckboxChecked(checkbox[0], checked);
+                    if (checkbox[0]) {
+                        checked = isInput ? checkbox[0].checked : !checkbox[0].checked;
+                        gridJsObject.setCheckboxChecked(checkbox[0], checked);
+                    }
                 }
             }
         }

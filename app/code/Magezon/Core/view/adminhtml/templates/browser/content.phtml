@@ -5,6 +5,7 @@
 $options                = json_decode($block->getFilebrowserSetupObject(), true);
 $options['onInsertUrl'] = str_replace("/cms", "/mgzcore", $options['onInsertUrl']);
 $options                = json_encode($options);
+$buttonsHtml = str_replace('MediabrowserUtility', 'MgzMediabrowserUtility', $block->getButtonsHtml());
 ?>
 
 <div data-mage-init='{"mgzmediabrowser": <?php echo $block->escapeHtml($options); ?>}'>
@@ -13,7 +14,7 @@ $options                = json_encode($options);
         <div class="insert-title" id="content_header">
             <div class="insert-title-inner">
                 <div class="insert-actions">
-                    <?php echo $block->getButtonsHtml() ?>
+                    <?= $buttonsHtml ?>
                 </div>
                 <div class="title"><?php /* @escapeNotVerified */ echo $block->getHeaderText() ?></div>
             </div>

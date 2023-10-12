@@ -27,13 +27,13 @@ class ProductList extends \Magezon\Builder\Block\ListProduct
     protected $coreHelper;
 
     /**
-     * @param \Magento\Catalog\Block\Product\Context            $context       
-     * @param \Magento\Framework\App\Http\Context               $httpContext   
-     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency 
-     * @param \Magento\Framework\Url\Helper\Data                $urlHelper     
-     * @param \Magezon\Core\Model\ProductList            $productList   
-     * @param \Magezon\Core\Helper\Data                         $coreHelper    
-     * @param array                                             $data          
+     * @param \Magento\Catalog\Block\Product\Context            $context
+     * @param \Magento\Framework\App\Http\Context               $httpContext
+     * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
+     * @param \Magento\Framework\Url\Helper\Data                $urlHelper
+     * @param \Magezon\Core\Model\ProductList            $productList
+     * @param \Magezon\Core\Helper\Data                         $coreHelper
+     * @param array                                             $data
      */
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
@@ -85,13 +85,14 @@ class ProductList extends \Magezon\Builder\Block\ListProduct
 
     public function getItems()
     {
-        $element = $this->getElement();
+        $element      = $this->getElement();
+        $order        = $element->getData('orer_by');
+        $totalItems   = (int)$element->getData('max_items');
         return $this->productList->getProductCollection(
-            $element->getSource(), 
-            (int)$element->getData('max_items'), 
-            $element->getData('orer_by'), 
-            $element->getData('condition'),
-            $element->getData('show_out_of_stock')
+            $element->getSource(),
+            $totalItems,
+            $order,
+            $element->getData('condition')
         );
     }
 

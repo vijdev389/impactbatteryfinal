@@ -16,20 +16,23 @@ namespace Magezon\PageBuilder\Block\Element;
 
 class ContentSlider extends \Magezon\Builder\Block\Element
 {
-	public function getHtmlId()
-	{
-		return '.mgz-element.' . $this->getElement()->getHtmlId() . ' .owl-carousel';
-	}
+    /**
+     * @return string
+     */
+    public function getHtmlId()
+    {
+        return '.mgz-element.' . $this->getElement()->getHtmlId() . ' .owl-carousel';
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getAdditionalStyleHtml()
-	{
-		$styleHtml = $this->getOwlCarouselStyles();
+    /**
+     * @return string
+     */
+    public function getAdditionalStyleHtml()
+    {
+        $styleHtml = $this->getOwlCarouselStyles();
 
-		$styleHtml .= $this->getLineStyles();
+        $styleHtml .= $this->getLineStyles();
 
-		return $styleHtml;
-	}
+        return $styleHtml;
+    }
 }

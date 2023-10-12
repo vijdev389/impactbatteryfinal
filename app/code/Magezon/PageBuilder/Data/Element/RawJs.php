@@ -17,27 +17,27 @@ namespace Magezon\PageBuilder\Data\Element;
 class RawJs extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-	    	$general->addChildren(
-	            'content',
-	            'textarea',
-	            [
-					'sortOrder'       => 10,
-					'key'             => 'content',
-					'defaultValue'    => '<script> alert("Hello world!" ); </script>',
-					'templateOptions' => [
-						'label' => __('JavaScript Code'),
-						'rows'  => 16,
-						'note'  => __('Enter your JavaScript code.')
-	                ]
-	            ]
-	        );
+            $general->addChildren(
+                'content',
+                'textarea',
+                [
+                    'sortOrder'       => 10,
+                    'key'             => 'content',
+                    'defaultValue'    => '<script> alert("Hello world!" ); </script>',
+                    'templateOptions' => [
+                        'label' => __('JavaScript Code'),
+                        'rows'  => 16,
+                        'note'  => __('Enter your JavaScript code.')
+                    ]
+                ]
+            );
 
-    	return $general;
+        return $general;
     }
 }

@@ -150,7 +150,7 @@ define([
 		}
 
 		this.isVisibleElement = function(elem) {
-			if (elem.hasOwnProperty('modalVisible') && !elem['modalVisible']) return false;
+			if ((elem.hasOwnProperty('modalVisible') && !elem['modalVisible']) || (elem.hasOwnProperty('disabled') && !!elem.disabled)) return false;
 			return true;
 		}
 

@@ -14,6 +14,8 @@
 
 namespace Magezon\PageBuilder\Block\Element;
 
+use Magento\Review\Model\ResourceModel\Review\Collection as ReviewCollection;
+
 class RecentReviews extends \Magezon\Builder\Block\AbstractProduct
 {
     /**
@@ -39,13 +41,13 @@ class RecentReviews extends \Magezon\Builder\Block\AbstractProduct
     protected $productCollectionFactory;
 
     /**
-     * @param \Magento\Catalog\Block\Product\Context                         $context                  
-     * @param \Magento\Framework\App\Http\Context                            $httpContext              
-     * @param \Magezon\Core\Helper\Data                                      $coreHelper               
-     * @param \Magento\Framework\Pricing\PriceCurrencyInterface              $priceCurrency            
-     * @param \Magento\Review\Model\ResourceModel\Review\CollectionFactory   $collectionFactory        
-     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory 
-     * @param array                                                          $data                     
+     * @param \Magento\Catalog\Block\Product\Context                         $context
+     * @param \Magento\Framework\App\Http\Context                            $httpContext
+     * @param \Magezon\Core\Helper\Data                                      $coreHelper
+     * @param \Magento\Framework\Pricing\PriceCurrencyInterface              $priceCurrency
+     * @param \Magento\Review\Model\ResourceModel\Review\CollectionFactory   $collectionFactory
+     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
+     * @param array                                                          $data
      */
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
@@ -104,7 +106,9 @@ class RecentReviews extends \Magezon\Builder\Block\AbstractProduct
         if (null === $this->_reviewsCollection) {
             $element = $this->getElement();
             $reviewsCount = (int) $element->getData('max_items');
-            if (!$reviewsCount) $reviewsCount = 5;
+            if (!$reviewsCount) {
+                $reviewsCount = 5;
+            }
             $collection = $this->reviewsColFactory->create()->addStoreFilter(
                 $this->_storeManager->getStore()->getId()
             )->addStatusFilter(
@@ -145,12 +149,15 @@ class RecentReviews extends \Magezon\Builder\Block\AbstractProduct
     public function getReviewContent(\Magento\Review\Model\Review $review)
     {
         $element = $this->getElement();
-        $content = $review->getDetail();
+        $detail  = $review->getDetail();
+        $content = $detail;
         $reviewContentLenght = $element->getData('review_content_length');
         if ($reviewContentLenght) {
-            $short = $this->coreHelper->substr($content, $reviewContentLenght);
-            if (strlen(trim($short)) + 1 < strlen(trim($content))) {
-                $content = $short . '...';
+            $content = $this->coreHelper->substr($content, $reviewContentLenght);
+            if ((strlen($content) + 1) === strlen($detail)) {
+                $content = $detail;
+            } else {
+                $content .= '...';
             }
         }
         return $content;

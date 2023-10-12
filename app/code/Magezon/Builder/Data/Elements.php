@@ -39,9 +39,9 @@ class Elements
     protected $sortableElements;
 
     /**
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager  
-     * @param \Magezon\Builder\Model\ElementFactory     $elementFactory 
-     * @param array                                     $elements       
+     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Magezon\Builder\Model\ElementFactory     $elementFactory
+     * @param array                                     $elements
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
@@ -62,7 +62,9 @@ class Elements
             $elements = $this->elements;
             $sortableElements = [];
             foreach ($elements as $type => $data) {
-                if (!isset($data['class'])) $data['class'] = 'Magezon\Builder\Data\Element\Element';
+                if (!isset($data['class'])) {
+                    $data['class'] = \Magezon\Builder\Data\Element\Element::class;
+                }
                 $element = $this->objectManager->create(
                     $data['class']
                 )->setType(
@@ -72,17 +74,18 @@ class Elements
                 );
                 $sortableElements[] = $element;
             }
-            usort($sortableElements, function($a, $b) {
-                return ($a['sortOrder'] > $b['sortOrder']);
+            usort($sortableElements, function ($a, $b) {
+                return $a['sortOrder'] <=> $b['sortOrder'];
             });
             $this->sortableElements = $sortableElements;
         }
+
         return $this->sortableElements;
     }
 
     /**
      * @param  string $type
-     * @return Magezon\Builder\Data\Element|null
+     * @return \Magezon\Builder\Data\Elements|null
      */
     public function getElement($type)
     {
@@ -92,6 +95,7 @@ class Elements
                 return $element;
             }
         }
+        return null;
     }
 
     /**

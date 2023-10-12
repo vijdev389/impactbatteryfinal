@@ -50,15 +50,5 @@ module.exports = {
             'css/styles'
         ],
         dsl: 'less'
-    },
-    ib: {
-        area: 'frontend',
-        name: 'HumanElement/impactbattery_default',
-        locale: 'en_US',
-        files: [
-            'css/styles-m',
-            'css/styles-l'
-        ],
-        dsl: 'less'
     }
 };

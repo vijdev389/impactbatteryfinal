@@ -59,6 +59,24 @@ Dot,Dot
 Custom,Custom
 Title,Title
 "Add Icon","Add Icon"
+Text,Text
+Link,Link
+"On Click Code","On Click Code"
+"Element Auto Width","Element Auto Width"
+"Display multiple buttons in same row","Display multiple buttons in same row"
+"Button Design","Button Design"
+"Button Style","Button Style"
+"Button Size","Button Size"
+"Set Full Width Button","Set Full Width Button"
+"Gradient Color 1","Gradient Color 1"
+"Gradient Color 2","Gradient Color 2"
+"BoxShadow Color","BoxShadow Color"
+Colors,Colors
+"Inline CSS","Inline CSS"
+Modern,Modern
+Flat,Flat
+3D,3D
+Gradient,Gradient
 "Title HTML Tag","Title HTML Tag"
 Description,Description
 "Content Position","Content Position"
@@ -84,7 +102,6 @@ Style,Style
 "Title Spacing","Title Spacing"
 "Description Spacing","Description Spacing"
 "Icon Spacing","Icon Spacing"
-Colors,Colors
 "Title Color","Title Color"
 "Description Color","Description Color"
 "Overlay Color","Overlay Color"
@@ -121,15 +138,49 @@ Width,Width
 "Show Description","Show Description"
 Sliders,Sliders
 Content,Content
+"Heading ","Heading "
+"Sub Heading ","Sub Heading "
+Day,Day
+Month,Month
+Year,Year
+Hours,Hours
+Minutes,Minutes
+"Time Zone","Time Zone"
+"Link Text","Link Text"
+"Link Url","Link Url"
+Layout,Layout
+"Number Color","Number Color"
+"Number Size","Number Size"
+"Number Background Color","Number Background Color"
+"Number Border Radius","Number Border Radius"
+"Number Padding","Number Padding"
+"Number Spacing","Number Spacing"
+"Text Size","Text Size"
+"Text Inline","Text Inline"
+"Show Time Separators","Show Time Separators"
+"Separator Type","Separator Type"
+"Separator Color","Separator Color"
+"Separator Size","Separator Size"
+"Circle Size","Circle Size"
+"Circle Stroke Size","Circle Stroke Size"
+"Circle Color1","Circle Color1"
+"Circle Color2","Circle Color2"
+"Circle Background Color","Circle Background Color"
+"Heading Color","Heading Color"
+"Heading Font Size","Heading Font Size"
+"Sub Heading Color","Sub Heading Color"
+"Sub Heading Font Size","Sub Heading Font Size"
+Numbers,Numbers
+"Numbers & Circles","Numbers & Circles"
+Colon,Colon
+Line,Line
 "Facebook Page URL","Facebook Page URL"
 "The absolute URL that comments posted in the plugin will be permanently associated with. All stories shared on Facebook about comments posted using the comments plugin will link to this URL.","The absolute URL that comments posted in the plugin will be permanently associated with. All stories shared on Facebook about comments posted using the comments plugin will link to this URL."
 "Number of Posts","Number of Posts"
 "The number of comments to show by default.","The number of comments to show by default."
 "URL to Like","URL to Like"
 "Leave empty to like the current page url","Leave empty to like the current page url"
-Layout,Layout
 "Action Type","Action Type"
-"Button Size","Button Size"
 "Show Friends' Faces","Show Friends' Faces"
 "Show profile photos when 2 or more friends like this","Show profile photos when 2 or more friends like this"
 "Include Share Button","Include Share Button"
@@ -186,7 +237,6 @@ Flickr,Flickr
 Circle,Circle
 "Circle Boder Width","Circle Boder Width"
 "Circle Border Color","Circle Border Color"
-"Circle Background Color","Circle Background Color"
 "Primary Block","Primary Block"
 "Primary Title","Primary Title"
 "Primary Alignment","Primary Alignment"
@@ -200,18 +250,13 @@ Color,Color
 Up,Up
 Down,Down
 Classic,Classic
-3D,3D
 URL,URL
 "Icon Design","Icon Design"
-"Inline CSS","Inline CSS"
 "Icon & Text Design","Icon & Text Design"
-"Text Size","Text Size"
 "Text Font Weight","Text Font Weight"
 "Icon Colors","Icon Colors"
 "Text Colors","Text Colors"
 "Icon List","Icon List"
-"Link Text","Link Text"
-Link,Link
 Horizontal,Horizontal
 Vertical,Vertical
 Images,Images
@@ -327,7 +372,6 @@ Error,Error
 Linecap,Linecap
 Number,Number
 Max,Max
-Text,Text
 "Text Before Number","Text Before Number"
 "Text to appear above the number. Leave it empty for none.","Text to appear above the number. Leave it empty for none."
 "Text After Number","Text After Number"
@@ -339,16 +383,10 @@ Text,Text
 "Animation Speed(seconds)","Animation Speed(seconds)"
 "Number of seconds to complete the animation.","Number of seconds to complete the animation."
 Delay(seconds),Delay(seconds)
-"Number Color","Number Color"
-"Number Size","Number Size"
 "Before Text Color","Before Text Color"
 "Before Text Size","Before Text Size"
 "After Text Color","After Text Color"
 "After Text Size","After Text Size"
-"Circle Size","Circle Size"
-"Circle Stroke Size","Circle Stroke Size"
-"Circle Color1","Circle Color1"
-"Circle Color2","Circle Color2"
 "Bar Color","Bar Color"
 "Bar Background Color","Bar Background Color"
 "Only Number","Only Number"
@@ -361,7 +399,6 @@ Standard,Standard
 "Below Bar","Below Bar"
 "Select Template","Select Template"
 "Choose which template load for this location.","Choose which template load for this location."
-"Search template by name","Search template by name"
 "Show Pin counts","Show Pin counts"
 "Button Round","Button Round"
 "Button Large","Button Large"
@@ -412,7 +449,7 @@ Below,Below
 "Enter your JavaScript code.","Enter your JavaScript code."
 "Total Items","Total Items"
 Product,Product
-"Search product by name or ID","Search product by name or ID"
+"Search product by name","Search product by name"
 "Review Options","Review Options"
 "Show Date","Show Date"
 "Show Customer","Show Customer"
@@ -614,6 +651,9 @@ Edit,Edit
 "WYSIWYG Editor","WYSIWYG Editor"
 "Active Magezon Page Builder","Active Magezon Page Builder"
 "Deactivate Magezon Page Builder","Deactivate Magezon Page Builder"
+Hour,Hour
+Minute,Minute
+Second,Second
 Facebook,Facebook
 "Pin It","Pin It"
 "Add to Cart","Add to Cart"
@@ -639,10 +679,6 @@ Template,Template
 "Enable for Blocks","Enable for Blocks"
 "Enable for Products","Enable for Products"
 "Enable for Categories","Enable for Categories"
-"Exclude with Namespaces","Exclude with Namespaces"
-"Seperate the namespaces with new line.","Seperate the namespaces with new line."
-Instagrams,Instagrams
-Password,Password
 Accordion,Accordion
 Toggle,Toggle
 Slider,Slider
@@ -659,6 +695,7 @@ Pinterest,Pinterest
 "Message Box","Message Box"
 "Progress Bar","Progress Bar"
 "Number Counter","Number Counter"
+Countdown,Countdown
 "Flip Box","Flip Box"
 "Content Slider","Content Slider"
 "Raw JS","Raw JS"

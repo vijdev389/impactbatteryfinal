@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $block \Magezon\PageBuilderIconBox\Block\Element
+ * @var $block \Magezon\PageBuilderIconBox\Block\Element\IconBox
  */
 ?>
 <?php
@@ -68,7 +68,6 @@ $displayAsLink 		 = $element->getData('display_as_link');
 	<?php if($addButton) {?>
 		<div class="mgz-button mgz-btn-style-<?= $btnStyle ?> mgz-btn-size-<?= $btnSize ?>">
 			<a href="<?= $linkButton['url'] ?>" class="<?= !$displayAsLink ? 'mgz-icon-box-btn' : '' ?>" title="<?= $block->escapeHtml($linkButton['title']) ?>" <?= $onclickCode ? 'onclick="' . $block->escapeHtmlAttr($onclickCode) . '"' : '' ?> <?= $linkButton['blank'] ? 'target="_blank"' : '' ?> <?= $linkButton['nofollow'] ? 'rel="nofollow"' : '' ?>>
-
 				<?php if ($addButtonIcon && $iconButton && $iconButtonPosition == 'left') { ?>
 					<i class="<?= $iconButton ?>"></i>
 				<?php } ?>

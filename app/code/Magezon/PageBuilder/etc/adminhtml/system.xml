@@ -13,7 +13,7 @@
  * @copyright Copyright (C) 2019 Magezon (https://www.magezon.com)
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
 	<system>
 		<section id="mgzpagebuilder" translate="label" sortOrder="100" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
 			<class>separator-top</class>
@@ -47,8 +47,7 @@
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
 				<field id="exclude_namespaces" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-					<label>Exclude with Namespaces</label>
-					<comment>Seperate the namespaces with new line.</comment>
+					<label>Exclude for Namespaces</label>
 				</field>
 			</group>
 			<group id="instagram" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">

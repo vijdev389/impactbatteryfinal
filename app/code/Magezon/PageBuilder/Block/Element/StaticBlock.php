@@ -36,10 +36,10 @@ class StaticBlock extends \Magezon\Builder\Block\Element implements \Magento\Wid
     protected $_blockFactory;
 
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context        
-     * @param \Magento\Cms\Model\Template\FilterProvider       $filterProvider 
-     * @param \Magento\Cms\Model\BlockFactory                  $blockFactory   
-     * @param array                                            $data           
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magento\Cms\Model\Template\FilterProvider       $filterProvider
+     * @param \Magento\Cms\Model\BlockFactory                  $blockFactory
+     * @param array                                            $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -48,8 +48,8 @@ class StaticBlock extends \Magezon\Builder\Block\Element implements \Magento\Wid
         array $data = []
     ) {
         parent::__construct($context, $data);
-		$this->_filterProvider = $filterProvider;
-		$this->_blockFactory   = $blockFactory;
+        $this->_filterProvider = $filterProvider;
+        $this->_blockFactory   = $blockFactory;
     }
 
     /**

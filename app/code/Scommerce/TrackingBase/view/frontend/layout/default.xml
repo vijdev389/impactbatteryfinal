@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Scommerce LazyLoading layout
+
+ * @category   Scommerce
+ * @package    Scommerce_LazyLoading
+ * @author     Scommerce Mage <core@scommerce-mage.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="head.additional">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="scommerce_tracking_data"
+                   template="Scommerce_TrackingBase::tracking_data.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Scommerce\TrackingBase\ViewModel\TrackingDataContainer</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="footer-container">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="scommerce_traking_slider"
+                   template="Scommerce_TrackingBase::tracking_slider.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Scommerce\TrackingBase\ViewModel\TrackingSliders</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

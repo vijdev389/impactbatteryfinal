@@ -11,13 +11,12 @@
  * @package   Magezon_Builder
  * @copyright Copyright (C) 2019 Magezon (https://www.magezon.com)
  */
-
 namespace Magezon\Builder\Data\Form\Element;
 
 use Magezon\Builder\Data\Form;
 use Magezon\Builder\Data\Form\AbstractForm;
 
-class Collection implements \ArrayAccess, \IteratorAggregate
+class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /**
      * Elements storage
@@ -49,6 +48,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate
      *
      * @return \ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->_elements);
@@ -61,6 +61,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate
      * @param mixed $value
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($key, $value)
     {
         $this->_elements[$key] = $value;
@@ -72,6 +73,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate
      * @param mixed $key
      * @return AbstractElement
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
         return $this->_elements[$key];
@@ -83,6 +85,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate
      * @param mixed $key
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($key)
     {
         unset($this->_elements[$key]);
@@ -94,14 +97,10 @@ class Collection implements \ArrayAccess, \IteratorAggregate
      * @param mixed $key
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
         return isset($this->_elements[$key]);
-    }
-
-    public function getContainer()
-    {
-        return $this->_container;
     }
 
     /**
@@ -119,7 +118,6 @@ class Collection implements \ArrayAccess, \IteratorAggregate
             $element->setContainer($this->_container);
             $element->setForm($this->_container->getForm());
         }
-
         if ($after === false) {
             $this->_elements[] = $element;
         } elseif ($after === '^') {
@@ -130,6 +128,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate
                 if ($currElement->getId() == $after) {
                     $newOrderElements[] = $currElement;
                     $newOrderElements[] = $element;
+                    // phpcs:ignore Magento2.Performance.ForeachArrayMerge
                     $this->_elements = array_merge($newOrderElements, array_slice($this->_elements, $index + 1));
                     return $element;
                 }
@@ -137,7 +136,6 @@ class Collection implements \ArrayAccess, \IteratorAggregate
             }
             $this->_elements[] = $element;
         }
-
         return $element;
     }
 
@@ -176,6 +174,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate
      *
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->_elements);

@@ -22,15 +22,7 @@ if ($helper->isEnhancedEcommerceEnabled()):
                         'ecommerce': {
                             'currencyCode': product.currency,
                             'add': {                                // 'add' actionFieldObject measures.
-                                'products': [{                        //  adding a product to a shopping cart.
-                                    'name': product.name,
-                                    'id': product.id,
-                                    'price': product.price,
-                                    'brand': product.brand,
-                                    'category': product.category,
-                                    'quantity': product.qty,
-                                    'list': list
-                                }]
+                                'products': product
                             }
                         }
                     });
@@ -59,21 +51,28 @@ if ($helper->isEnhancedEcommerceEnabled()):
             require(['jquery', 'mage/cookies'], function($){
                 $(window).load(function() {
                     var productToBasket = <?php echo $addedProduct?>;
-                    var impression = scGetProductImpression(productToBasket.allSkus);
-                    var list = '';
-                    if (impression != '') {
-                        list = impression.list;
-                    }
-                    if (list == '') {
-                        if (productToBasket.list == undefined || productToBasket.list == '') {
-                            list = 'Category - ' + productToBasket.category;
-                        } else {
-                            list = productToBasket.list;
+                    var res = [];
+                    for (var i=0; i < productToBasket.length; i++) {
+                        var pr = productToBasket[i];
+                        var impression = scGetProductImpression(pr.allSkus);
+                        var list = '';
+                        if (impression != '') {
+                            list = impression.list;
                         }
+                        if (list == '') {
+                            if (pr.list == undefined || pr.list == '') {
+                                list = 'Category - ' + pr.category;
+                            } else {
+                                list = pr.list;
+                            }
+                        }
+                        pr.list = list;
+                        delete pr.allSkus;
+                        res.push(pr);
                     }
 
                     if (productToBasket != undefined) {
-                        manipulationOfCart(productToBasket, 'add', list);
+                        manipulationOfCart(res, 'add', list);
                     }
                     <?php $this->unsAddToBasketData();?>
                 });

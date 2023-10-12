@@ -22,8 +22,8 @@ class Email extends \Magento\Framework\App\Action\Action
     protected $subscriberFactory;
 
     /**
-     * @param \Magento\Framework\App\Action\Context       $context           
-     * @param \Magento\Newsletter\Model\SubscriberFactory $subscriberFactory 
+     * @param \Magento\Framework\App\Action\Context       $context
+     * @param \Magento\Newsletter\Model\SubscriberFactory $subscriberFactory
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,

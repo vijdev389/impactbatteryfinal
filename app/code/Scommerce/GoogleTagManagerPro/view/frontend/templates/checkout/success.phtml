@@ -22,7 +22,7 @@ $orderItems = $order->getAllItems();?>
 <script type="text/javascript">
     //<![CDATA[
     window.dataLayer = window.dataLayer || [];
-    <?php $intCtr=0;?>
+    <?php $intCtr=0; $hasItems = false;?>
     dataLayer.push({
         'event': 'purchase',
         'ecommerce': {
@@ -46,32 +46,29 @@ $orderItems = $order->getAllItems();?>
                     } else {
                         $trackingData = json_decode($trackingData, true);
                         $impressionList = $trackingData['list'];
-                    }
-                    ?>
+                    } ?>
                     <?php $intCtr++;?>
-                    <?php if ($item->getProductType() != \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE
-                    && $item->getProductType() != \Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL) continue; ?>
-                    <?php if ($item->getParentItemId()){
-                    $parentItem = $item->getParentItem();
-                    $price = ($helper->sendBaseData()==true ? $parentItem->getBasePrice() : $parentItem->getPrice());
-                }
-                else{
-                    $price = ($helper->sendBaseData()==true ? $item->getBasePrice() : $item->getPrice());
-                }?>
-                    {
-                        'name': '<?php echo $this->escapeJsQuote($item->getName()) ?>',     // Name or ID is required.
-                        'id': '<?php echo $this->escapeJsQuote($helper->getParentSKU($item)) ?>',
-                        'price': '<?php echo $price ?>',
-                        'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($item->getProduct())) ?>',
-                        'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()))?>',
-                        'list': scGetProductImpression('<?php echo $helper->getParentSKU($quoteItem) ?>') == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()))?>' : scGetProductImpression('<?php echo $helper->getParentSKU($quoteItem) ?>').list,
-                        'quantity': <?php echo $item->getQtyOrdered()?>
-                        <?php if ($intCtr==count($orderItems)):?>
-                    }]
-                <?php else:?>
-            },
-            <?php endif;?>
+                    <?php if (!$block->needSkipItem($item)): ?>
+                        <?php if ($hasItems): ?>,<?php endif; $hasItems = true; ?>
+                        <?php if ($item->getParentItemId()) {
+                            $parentItem = $item->getParentItem();
+                            $price = $helper->productPrice($parentItem);
+                            } else {
+                                $price = $helper->productPrice($item);
+                            }?>
+                        {
+                            'name': '<?php echo $this->escapeJsQuote($item->getName()) ?>',     // Name or ID is required.
+                            'id': '<?php echo $this->escapeJsQuote($helper->getParentSKU($item)) ?>',
+                            'price': '<?php echo $price ?>',
+                            'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($item->getProduct())) ?>',
+                            'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()))?>',
+                            'list': scGetProductImpression('<?php echo $helper->getParentSKU($quoteItem) ?>') == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($item->getProduct()))?>' : scGetProductImpression('<?php echo $helper->getParentSKU($quoteItem) ?>').list,
+                            'quantity': <?php echo $item->getQtyOrdered()?>
+
+                        }
+                <?php endif; ?>
             <?php endforeach;?>
+            ]
         }
     }
         });

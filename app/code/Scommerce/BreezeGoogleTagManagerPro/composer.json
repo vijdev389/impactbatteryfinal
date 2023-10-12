@@ -1,0 +1,26 @@
+{
+  "name": "scommerce/breeze-googletagmanagerpro",
+  "description": "Google Tag Manager Pro Module for Magento 2.0",
+  "require": {
+    "php": ">=7.2.0",
+    "scommerce/breeze-tracking-base": "2.0.*",
+    "scommerce/googletagmanagerpro": "3.0.*"
+  },
+  "type": "magento2-module",
+  "license": "Commercial",
+  "version": "2.0.0",
+  "authors": [
+    {
+      "name": "Scommerce Mage",
+      "email": "core@scommerce-mage.com"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Scommerce\\BreezeGoogleTagManagerPro\\": ""
+    }
+  }
+}

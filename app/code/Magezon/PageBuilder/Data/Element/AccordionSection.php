@@ -17,26 +17,26 @@ namespace Magezon\PageBuilder\Data\Element;
 class AccordionSection extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
-	    	$general->addChildren(
-	            'title',
-	            'text',
-	            [
-					'sortOrder'       => 10,
-					'key'             => 'title',
-					'defaultValue'    => 'Section',
-					'templateOptions' => [
-						'label' => __('Title')
-	                ]
-	            ]
-	        );
+            $general->addChildren(
+                'title',
+                'text',
+                [
+                    'sortOrder'       => 10,
+                    'key'             => 'title',
+                    'defaultValue'    => 'Section',
+                    'templateOptions' => [
+                        'label' => __('Title')
+                    ]
+                ]
+            );
 
-	        $general->addChildren(
+            $general->addChildren(
                 'add_icon',
                 'toggle',
                 [
@@ -82,6 +82,6 @@ class AccordionSection extends \Magezon\Builder\Data\Element\AbstractElement
                     ]
                 );
 
-    	return $general;
+        return $general;
     }
 }

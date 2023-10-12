@@ -37,13 +37,13 @@ $helper = $block->getHelper();
             }
         }
         return '';
-    }
+    };
 
     window.scSetProductImpression = function(productId, list, category) {
         var tmpList = JSON.parse(localStorage.getItem('sc-gtm-data'));
         if (tmpList == null) {
             tmpList = [];
-            tmpList.push({'id': productId, 'list': list, 'category': category})
+            tmpList.push({'id': productId, 'list': list, 'category': category});
             localStorage.setItem('sc-gtm-data', JSON.stringify({"product_list": tmpList}));
         } else {
             var tmp = tmpList['product_list'];
@@ -56,11 +56,11 @@ $helper = $block->getHelper();
             }
             localStorage.setItem('sc-gtm-data', JSON.stringify({'product_list': tmp}));
         }
-    }
+    };
 
     window.scClearProductImpressions = function () {
         localStorage.setItem('sc-gtm-data', null);
-    }
+    };
 
     require(['jquery'], function($) {
         window.scGtmSaveImpression = function(productId, list, category) {
@@ -68,7 +68,7 @@ $helper = $block->getHelper();
             $.cookie('sc_list', list, {expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24))});
             $.cookie('sc_category', category, {expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24))});
             scSetProductImpression(productId, list, category);
-        }
+        };
 
         $(document).on('click', 'a', function(e) {
             var product;

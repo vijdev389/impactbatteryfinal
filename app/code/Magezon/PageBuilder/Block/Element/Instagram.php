@@ -14,10 +14,6 @@
 
 namespace Magezon\PageBuilder\Block\Element;
 
-/**
- * Class Instagram
- * @package Magezon\PageBuilder\Block\Element
- */
 class Instagram extends \Magezon\Builder\Block\Element
 {
     /**
@@ -25,10 +21,10 @@ class Instagram extends \Magezon\Builder\Block\Element
      */
     protected $coreHelper;
 
-	/**
-	 * @var \Magezon\PageBuilder\Helper\Data
-	 */
-	protected $dataHelper;
+    /**
+     * @var \Magezon\PageBuilder\Helper\Data
+     */
+    protected $dataHelper;
 
     /**
      * Instagram constructor.
@@ -37,22 +33,22 @@ class Instagram extends \Magezon\Builder\Block\Element
      * @param \Magezon\PageBuilder\Helper\Data $dataHelper
      * @param array $data
      */
-	public function __construct(
-		\Magento\Framework\View\Element\Template\Context $context,
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\Core\Helper\Data $coreHelper,
-		\Magezon\PageBuilder\Helper\Data $dataHelper,
-		array $data = []
-	) {
-		parent::__construct($context, $data);
+        \Magezon\PageBuilder\Helper\Data $dataHelper,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
         $this->coreHelper   =   $coreHelper;
-		$this->dataHelper   =   $dataHelper;
-	}
+        $this->dataHelper   =   $dataHelper;
+    }
 
     /**
      * Get Instagram element title
      * @return string
      */
-	public function getElementTitle()
+    public function getElementTitle()
     {
         $getTitle = $this->getElement()->getTitle();
         $title = $this->coreHelper->filter($getTitle);
@@ -100,57 +96,57 @@ class Instagram extends \Magezon\Builder\Block\Element
         return 'https://www.instagram.com/'.$username;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getDataSize()
-	{
-		$element   = $this->getElement();
-		$photoSize = $element->getData('photo_size');
-		$size      = '1000x1000';
-		switch ($photoSize) {
-			case 'thumbnail':
-				$size = '150x150';
-				break;
+    /**
+     * @return string
+     */
+    public function getDataSize()
+    {
+        $element   = $this->getElement();
+        $photoSize = $element->getData('photo_size');
+        $size      = '1000x1000';
+        switch ($photoSize) {
+            case 'thumbnail':
+                $size = '150x150';
+                break;
 
-			case 'small':
-				$size = '320x320';
-				break;
+            case 'small':
+                $size = '320x320';
+                break;
 
-			case 'large':
-				$size = '640x640';
-				break;
-		}
-		return $size;
-	}
+            case 'large':
+                $size = '640x640';
+                break;
+        }
+        return $size;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getAdditionalStyleHtml()
-	{
-		$styleHtml = '';
-		$element   = $this->getElement();
+    /**
+     * @return string
+     */
+    public function getAdditionalStyleHtml()
+    {
+        $styleHtml = '';
+        $element   = $this->getElement();
 
-		if ($gap = (int)$element->getData('gap')) {
-			$styles = [];
-			$styles['padding'] = $this->getStyleProperty($gap / 2);
-			$styleHtml .= $this->getStyles([
-				'.mgz-grid-item'
-			], $styles);
-		}
+        if ($gap = (int)$element->getData('gap')) {
+            $styles = [];
+            $styles['padding'] = $this->getStyleProperty($gap / 2);
+            $styleHtml .= $this->getStyles([
+                '.mgz-grid-item'
+            ], $styles);
+        }
 
-		$styles = [];
-		$styles['font-size'] = $this->getStyleProperty($element->getData('text_size'));
-		$styles['color'] = $this->getStyleColor($element->getData('text_color'));
-		$styleHtml .= $this->getStyles(['.item-likes', '.item-comments'], $styles);
+        $styles = [];
+        $styles['font-size'] = $this->getStyleProperty($element->getData('text_size'));
+        $styles['color'] = $this->getStyleColor($element->getData('text_color'));
+        $styleHtml .= $this->getStyles(['.item-likes', '.item-comments'], $styles);
 
-		$styles = [];
-		$styles['background'] = $this->getStyleColor($element->getData('overlay_color'));
-		$styleHtml .= $this->getStyles('.item-metadata', $styles);
+        $styles = [];
+        $styles['background'] = $this->getStyleColor($element->getData('overlay_color'));
+        $styleHtml .= $this->getStyles('.item-metadata', $styles);
 
-		$styleHtml .= $this->getLineStyles();
+        $styleHtml .= $this->getLineStyles();
 
-		return $styleHtml;
-	}
+        return $styleHtml;
+    }
 }

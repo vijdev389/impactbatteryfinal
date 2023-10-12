@@ -8,7 +8,6 @@ $titleAlign       = $element->getData('title_align');
 $titleTag         = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
 $description      = $coreHelper->filter($element->getData('description'));
 $showLine         = $element->getData('show_line');
-$activeSections   = explode(',', $element->getData('active_sections'));
 $hideEmptySection = $element->getData('hide_empty_section');
 $collapsibleAll   = $element->getData('collapsible_all') ? 'true' : 'false';
 $atLeastOneOpen   = $element->getData('at_least_one_open') ? 'true' : 'false';
@@ -16,6 +15,10 @@ $icon             = $element->getData('icon');
 $iconPosition     = $element->getData('icon_position') ? $element->getData('icon_position') : 'left';
 $activeIcon       = $element->getData('active_icon');
 $accordionIcon    = $element->getData('accordion_icon');
+$activeSections = [];
+if (!empty($element->getData('active_sections'))) {
+    $activeSections   = explode(',', $element->getData('active_sections'));
+}
 if ($accordionIcon!='custom') {
 	$icon = $activeIcon = '';
 }

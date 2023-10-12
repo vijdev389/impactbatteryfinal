@@ -17,11 +17,11 @@ namespace Magezon\PageBuilder\Data\Element;
 class FacebookComments extends \Magezon\Builder\Data\Element\AbstractElement
 {
     /**
-     * @return Magezon\Builder\Data\Form\Element\Fieldset
+     * @return \Magezon\Builder\Data\Form\Element\Fieldset
      */
     public function prepareGeneralTab()
     {
-    	$general = parent::prepareGeneralTab();
+        $general = parent::prepareGeneralTab();
 
             $general->addChildren(
                 'page_url',
@@ -47,9 +47,9 @@ class FacebookComments extends \Magezon\Builder\Data\Element\AbstractElement
                     'templateOptions' => [
                        'label' => __('Number of Posts'),
                        'note'  => __('The number of comments to show by default.')
-                   ]
-               ]
-           );
+                    ]
+                ]
+            );
 
         return $general;
     }

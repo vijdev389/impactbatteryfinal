@@ -16,24 +16,24 @@ namespace Magezon\PageBuilder\Block;
 
 class Builder extends \Magezon\Builder\Block\Builder
 {
-	/**
+    /**
      * Path to template file in theme.
      *
      * @var string
      */
     protected $_template = 'Magezon_PageBuilder::builder.phtml';
 
-	/**
-	 * @var \Magezon\PageBuilder\Helper\Data
-	 */
-	protected $dataHelper;
+    /**
+     * @var \Magezon\PageBuilder\Helper\Data
+     */
+    protected $dataHelper;
 
-	/**
-	 * @param \Magento\Framework\View\Element\Template\Context $context        
-	 * @param \Magezon\Builder\Model\CompositeConfigProvider   $configProvider 
-	 * @param \Magezon\PageBuilder\Helper\Data                 $dataHelper     
-	 * @param array                                            $data           
-	 */
+    /**
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magezon\Builder\Model\CompositeConfigProvider   $configProvider
+     * @param \Magezon\PageBuilder\Helper\Data                 $dataHelper
+     * @param array                                            $data
+     */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\PageBuilder\Model\CompositeConfigProvider $configProvider,
@@ -41,6 +41,6 @@ class Builder extends \Magezon\Builder\Block\Builder
         array $data = []
     ) {
         parent::__construct($context, $configProvider, $data);
-		$this->dataHelper = $dataHelper;
+        $this->dataHelper = $dataHelper;
     }
 }

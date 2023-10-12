@@ -14,7 +14,7 @@
 
 namespace Magezon\PageBuilder\Plugin\Contact\Controller\Index;
 
-use \Magento\Framework\App\ObjectManager;
+use Magento\Framework\Controller\Result\Redirect;
 
 class Post
 {
@@ -33,12 +33,12 @@ class Post
     }
 
     public function afterExecute(
-    	$subject,
-    	$result
+        $subject,
+        $result
     ) {
-    	if ($subject->getRequest()->getParam('mgz') && $result instanceof \Magento\Framework\Controller\Result\Redirect) {
-    		$result->setUrl($this->redirect->getRefererUrl());
-    	}
-    	return $result;
+        if ($subject->getRequest()->getParam('mgz') && $result instanceof Redirect) {
+            $result->setUrl($this->redirect->getRefererUrl());
+        }
+        return $result;
     }
 }

@@ -24,23 +24,33 @@ class Output
     /**
      * @param \Magezon\PageBuilder\Helper\Data $dataHelper
      */
-	public function __construct(
-		\Magezon\PageBuilder\Helper\Data $dataHelper
-	) {
-		$this->dataHelper = $dataHelper;
-	}
-
-	public function afterProductAttribute(
-        $subject,
-        $result
+    public function __construct(
+        \Magezon\PageBuilder\Helper\Data $dataHelper
     ) {
-    	return $this->dataHelper->filter($result);
+        $this->dataHelper = $dataHelper;
     }
 
-	public function afterCategoryAttribute(
+    /**
+     * @param $subject
+     * @param $result
+     * @return string
+     */
+    public function afterProductAttribute(
         $subject,
         $result
     ) {
-    	return $this->dataHelper->filter($result);
+        return $this->dataHelper->filter($result);
+    }
+
+    /**
+     * @param $subject
+     * @param $result
+     * @return string
+     */
+    public function afterCategoryAttribute(
+        $subject,
+        $result
+    ) {
+        return $this->dataHelper->filter($result);
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<scommerce_trackingbase>
+			<general>
+                <product_item_class>div.products form.product-item</product_item_class>
+			</general>
+		</scommerce_trackingbase>
+	</default>
+</config>
