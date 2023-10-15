@@ -29,7 +29,6 @@
         "cweagans/composer-patches": "^1.7",
         "doctrine/deprecations": "^1.0",
         "extend/module-warranty": "dev-master",
-        "iwd/dominate-saas": "4.4.2",
         "magefan/module-admin-user-guide": "^2.0",
         "magefan/module-blog": "2.11.0",
         "magefan/module-blog-comments-recaptcha": "^2.1",

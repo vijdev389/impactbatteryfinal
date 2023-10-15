@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f3b6becada388f63b70375bada93f60",
+    "content-hash": "f3166134043ae2ae1ce8db7a16a85f04",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -301,16 +301,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.283.2",
+            "version": "3.283.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "6616677d76e39af28138512740199d38a461859f"
+                "reference": "4cc8d6c7e856de80d9316f659c4c626d3713f6c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6616677d76e39af28138512740199d38a461859f",
-                "reference": "6616677d76e39af28138512740199d38a461859f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4cc8d6c7e856de80d9316f659c4c626d3713f6c1",
+                "reference": "4cc8d6c7e856de80d9316f659c4c626d3713f6c1",
                 "shasum": ""
             },
             "require": {
@@ -390,9 +390,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.2"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.3"
             },
-            "time": "2023-10-06T18:09:54+00:00"
+            "time": "2023-10-12T18:14:56+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -2640,35 +2640,6 @@
             "time": "2023-08-27T10:13:57+00:00"
         },
         {
-            "name": "iwd/dominate-saas",
-            "version": "4.4.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.magento.com/archives/iwd/dominate-saas/iwd-dominate-saas-4.4.2.0.zip",
-                "shasum": "8f1ea16071f4aa3484a84d9b21859257742ca045"
-            },
-            "require": {
-                "magento/module-checkout": "100.*|101.*|102.*|103.*",
-                "magento/module-payment": "100.*|101.*|102.*|103.*",
-                "magento/module-quote": "100.*|101.*|102.*|103.*",
-                "magento/module-sales": "100.*|101.*|102.*|103.*",
-                "php": "~7.1.0|~7.2.0|~7.3.0|~7.4.0|~8.1.0|~8.2.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "IWD\\CheckoutConnector\\": ""
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "description": "Dominate Checkout Connector"
-        },
-        {
             "name": "justinrainbow/json-schema",
             "version": "v5.2.13",
             "source": {
@@ -3280,16 +3251,16 @@
         },
         {
             "name": "laminas/laminas-feed",
-            "version": "2.21.0",
+            "version": "2.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-feed.git",
-                "reference": "52918789a417bc292ccd6fbb4b91bd78a65d50ab"
+                "reference": "669792b819fca7274698147ad7a2ecc1b0a9b141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-feed/zipball/52918789a417bc292ccd6fbb4b91bd78a65d50ab",
-                "reference": "52918789a417bc292ccd6fbb4b91bd78a65d50ab",
+                "url": "https://api.github.com/repos/laminas/laminas-feed/zipball/669792b819fca7274698147ad7a2ecc1b0a9b141",
+                "reference": "669792b819fca7274698147ad7a2ecc1b0a9b141",
                 "shasum": ""
             },
             "require": {
@@ -3297,24 +3268,24 @@
                 "ext-libxml": "*",
                 "laminas/laminas-escaper": "^2.9",
                 "laminas/laminas-stdlib": "^3.6",
-                "php": "~8.1.0 || ~8.2.0"
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "laminas/laminas-servicemanager": "<3.3",
                 "zendframework/zend-feed": "*"
             },
             "require-dev": {
-                "laminas/laminas-cache": "^2.13.2 || ^3.10.1",
+                "laminas/laminas-cache": "^2.13.2 || ^3.11",
                 "laminas/laminas-cache-storage-adapter-memory": "^1.1.0 || ^2.2",
                 "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-db": "^2.18",
                 "laminas/laminas-http": "^2.18",
                 "laminas/laminas-servicemanager": "^3.21.0",
-                "laminas/laminas-validator": "^2.30.1",
-                "phpunit/phpunit": "^10.2.6",
+                "laminas/laminas-validator": "^2.38",
+                "phpunit/phpunit": "^10.3.1",
                 "psalm/plugin-phpunit": "^0.18.4",
                 "psr/http-message": "^2.0",
-                "vimeo/psalm": "^5.13.1"
+                "vimeo/psalm": "^5.14.1"
             },
             "suggest": {
                 "laminas/laminas-cache": "Laminas\\Cache component, for optionally caching feeds between requests",
@@ -3356,7 +3327,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-07-24T09:21:16+00:00"
+            "time": "2023-10-11T20:16:37+00:00"
         },
         {
             "name": "laminas/laminas-file",
@@ -24055,16 +24026,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "5.0.11",
+            "version": "5.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "1998a287a3d7f2771c9591aef1c528d9d44cc4b4"
+                "reference": "7f528f5fd8cdcd05cd0a85eb1e24d05df989e0c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/1998a287a3d7f2771c9591aef1c528d9d44cc4b4",
-                "reference": "1998a287a3d7f2771c9591aef1c528d9d44cc4b4",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/7f528f5fd8cdcd05cd0a85eb1e24d05df989e0c4",
+                "reference": "7f528f5fd8cdcd05cd0a85eb1e24d05df989e0c4",
                 "shasum": ""
             },
             "require": {
@@ -24159,7 +24130,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Codeception/Codeception/issues",
-                "source": "https://github.com/Codeception/Codeception/tree/5.0.11"
+                "source": "https://github.com/Codeception/Codeception/tree/5.0.12"
             },
             "funding": [
                 {
@@ -24167,7 +24138,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-08-22T06:42:39+00:00"
+            "time": "2023-10-15T18:04:50+00:00"
         },
         {
             "name": "codeception/lib-asserts",
@@ -24744,16 +24715,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.34.1",
+            "version": "v3.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "98bf1b1068b4ceddbbc2a2b70b67a5e380add9e3"
+                "reference": "ec1ccc264994b6764882669973ca435cf05bab08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/98bf1b1068b4ceddbbc2a2b70b67a5e380add9e3",
-                "reference": "98bf1b1068b4ceddbbc2a2b70b67a5e380add9e3",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ec1ccc264994b6764882669973ca435cf05bab08",
+                "reference": "ec1ccc264994b6764882669973ca435cf05bab08",
                 "shasum": ""
             },
             "require": {
@@ -24786,8 +24757,6 @@
                 "phpspec/prophecy": "^1.16",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpunit/phpunit": "^9.5",
-                "phpunitgoodpractices/polyfill": "^1.6",
-                "phpunitgoodpractices/traits": "^1.9.2",
                 "symfony/phpunit-bridge": "^6.2.3",
                 "symfony/yaml": "^5.4 || ^6.0"
             },
@@ -24827,7 +24796,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.34.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.35.1"
             },
             "funding": [
                 {
@@ -24835,7 +24804,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-03T23:51:05+00:00"
+            "time": "2023-10-12T13:47:26+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -26204,16 +26173,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.21",
+            "version": "v0.11.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "bcb22101107f3bf770523b65630c9d547f60c540"
+                "reference": "128fa1b608be651999ed9789c95e6e2a31b5802b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/bcb22101107f3bf770523b65630c9d547f60c540",
-                "reference": "bcb22101107f3bf770523b65630c9d547f60c540",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/128fa1b608be651999ed9789c95e6e2a31b5802b",
+                "reference": "128fa1b608be651999ed9789c95e6e2a31b5802b",
                 "shasum": ""
             },
             "require": {
@@ -26242,7 +26211,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.11.x-dev"
+                    "dev-0.11": "0.11.x-dev"
                 },
                 "bamarni-bin": {
                     "bin-links": false,
@@ -26278,9 +26247,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.21"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.22"
             },
-            "time": "2023-09-17T21:15:54+00:00"
+            "time": "2023-10-14T21:56:36+00:00"
         },
         {
             "name": "rector/rector",
@@ -27806,5 +27775,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
