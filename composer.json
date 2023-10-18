@@ -42,7 +42,6 @@
         "nikic/php-parser": "^4.15",
         "olegkoval/magento2-regenerate-url-rewrites": "^1.6",
         "paradoxlabs/authnetcim": "^4.3",
-        "paradoxlabs/tokenbase": "^4.5",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "scommerce/core": "^2.0",
