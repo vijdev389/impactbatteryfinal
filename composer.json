@@ -24,7 +24,7 @@
         "amasty/cron-schedule-list": "1.0.7",
         "amasty/feed": "2.8.0",
         "amasty/finder": "1.12.1",
-        "amasty/preorder": "^2.0.6",
+        "amasty/preorder": "2.0.8",
         "aws/aws-crt-php": "^1.0",
         "cweagans/composer-patches": "^1.7",
         "doctrine/deprecations": "^1.0",

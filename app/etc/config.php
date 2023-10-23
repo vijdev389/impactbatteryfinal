@@ -339,6 +339,8 @@ return [
         'IWD_CheckoutConnector' => 1,
         'MageWorx_SeoAll' => 1,
         'MageWorx_Info' => 1,
+        'MageWorx_OpenAI' => 1,
+        'MageWorx_SeoAI' => 1,
         'MageWorx_HtmlSitemap' => 1,
         'MageWorx_SeoBase' => 1,
         'MageWorx_SeoBreadcrumbs' => 1,
