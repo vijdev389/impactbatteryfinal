@@ -23,9 +23,11 @@
         "amasty/base": "1.14.7",
         "amasty/cron-schedule-list": "1.0.7",
         "amasty/feed": "2.8.0",
-        "amasty/finder": "1.12.1",
+        "amasty/finder": "1.13.0",
+        "amasty/module-pre-order-lite": "2.1.0",
         "amasty/preorder": "2.0.8",
         "aws/aws-crt-php": "^1.0",
+        "ctidigital/magento2-csp-whitelist": "^1.0",
         "cweagans/composer-patches": "^1.7",
         "doctrine/deprecations": "^1.0",
         "extend/module-warranty": "dev-master",
@@ -36,10 +38,10 @@
         "magefan/module-blog-graph-ql": "^2.1",
         "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0",
-        "magento/product-community-edition": "2.4.6-p1",
+        "magento/product-community-edition": "2.4.6-p3",
         "magento/quality-patches": "^1.1",
-        "mageworx/module-seosuiteultimate": "^2.33",
-        "markshust/magento2-module-disabletwofactorauth": "^1.0",
+        "mageworx/module-seosuiteultimate": "^2.38",
+        "markshust/magento2-module-disabletwofactorauth": "^2.0",
         "nikic/php-parser": "^4.15",
         "olegkoval/magento2-regenerate-url-rewrites": "^1.6",
         "paradoxlabs/authnetcim": "^4.3",
@@ -47,7 +49,7 @@
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "scommerce/core": "^2.0",
-        "signifyd/module-connect": "^5.4.1",
+        "signifyd/module-connect": "^5.5",
         "signifyd/signifyd-php": "^4.1.2",
         "symfony/polyfill-php81": "^1.27"
     },
@@ -79,13 +81,15 @@
         "friendsofphp/php-cs-fixer": "^3.8",
         "lusitanian/oauth": "^0.8",
         "magento/magento-coding-standard": "*",
-        "magento/magento2-functional-testing-framework": "^4.2.1",
+        "magento/magento2-functional-testing-framework": "^4.3.1",
         "pdepend/pdepend": "^2.10",
         "phpmd/phpmd": "^2.12",
         "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
+        "sebastian/comparator": "<=4.0.6",
         "sebastian/phpcpd": "^6.0",
-        "symfony/finder": "^5.4"
+        "symfony/finder": "^5.4",
+        "symfony/process": "<=v5.4.23"
     },
     "conflict": {
         "gene/bluefoot": "*"
@@ -105,7 +109,8 @@
     "repositories": {
         "0": {
             "type": "composer",
-            "url": "https://repo.magento.com/"
+            "url": "https://repo.magento.com/",
+            "exclude": ["extend/module-warranty"]
         },
         "humanelement": {
             "type": "composer",

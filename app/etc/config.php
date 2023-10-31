@@ -331,6 +331,7 @@ return [
         'Amasty_CronScheduleList' => 1,
         'Amasty_Feed' => 1,
         'Amasty_Finder' => 1,
+        'Amasty_PreOrderLite' => 1,
         'Amasty_Preorder' => 1,
         'CtiDigital_CspWhitelist' => 1,
         'Extend_Warranty' => 1,
