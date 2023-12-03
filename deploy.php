@@ -3,7 +3,7 @@ namespace Deployer;
 
 require 'recipe/magento2.php';
 
-set('keep_releases', 10);
+set('keep_releases', 11);
 set('cleanup_use_sudo', false);
 
 
@@ -17,7 +17,7 @@ set('git_tty', true);
 // [Optional] Allocate timeout value for commands. Default value is 300.
 set('default_timeout', 1200);
 
-set('http_user', 'ae05e2da_8');
+set('http_user', 'a245ed97_1');
 
 add('shared_files', [
     'auth.json',
@@ -58,12 +58,17 @@ add('clear_paths', [
 ]);
 
 // Hosts Nexcess Dev Server 
-host('fef55b1fbd.nxcli.net')
-    ->set('labels', ['stage' => 'nexcessdev'])
-    ->set('remote_user', 'ae05e2da_8')
-    ->set('deploy_path', '/chroot/home/ae05e2da/deploy');
+//host('fef55b1fbd.nxcli.net')
+  //  ->set('labels', ['stage' => 'nexcessdev'])
+  //  ->set('remote_user', 'ae05e2da_8')
+  //  ->set('deploy_path', '/chroot/home/ae05e2da/deploy');
 
 // Hosts Nexcess Live Server 
+
+host('e595220221.nxcli.net')
+    ->set('labels', ['prod' => 'nexcessprod'])
+    ->set('remote_user', 'a245ed97_1')
+    ->set('deploy_path', '/home/a245ed97/deploy/releases');
 
 
 // Hooks
