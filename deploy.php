@@ -68,7 +68,7 @@ add('clear_paths', [
 host('e595220221.nxcli.net')
     ->set('labels', ['prod' => 'nexcessprod'])
     ->set('remote_user', 'a245ed97_1')
-    ->set('deploy_path', '/home/a245ed97/deploy/releases');
+    ->set('deploy_path', '/home/a245ed97/deploy');
 
 
 // Hooks
