@@ -5,6 +5,7 @@ require 'recipe/magento2.php';
 
 set('keep_releases', 11);
 set('cleanup_use_sudo', false);
+set('writable_mode', 'chown');
 
 
 
