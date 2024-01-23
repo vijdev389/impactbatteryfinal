@@ -59,17 +59,17 @@ add('clear_paths', [
 ]);
 
 // Hosts Nexcess Dev Server 
-//host('fef55b1fbd.nxcli.net')
-  //  ->set('labels', ['stage' => 'nexcessdev'])
-  //  ->set('remote_user', 'ae05e2da_8')
-  //  ->set('deploy_path', '/chroot/home/ae05e2da/deploy');
+host('fef55b1fbd.nxcli.net')
+    ->set('labels', ['stage' => 'nexcessdev'])
+    ->set('remote_user', 'ae05e2da_8')
+    ->set('deploy_path', '/chroot/home/ae05e2da/deploy');
 
 // Hosts Nexcess Live Server 
 
-host('e595220221.nxcli.net')
-    ->set('labels', ['prod' => 'nexcessprod'])
-    ->set('remote_user', 'a245ed97_1')
-    ->set('deploy_path', '/home/a245ed97/deploy');
+//host('e595220221.nxcli.net')
+    //->set('labels', ['prod' => 'nexcessprod'])
+    //->set('remote_user', 'a245ed97_1')
+    //->set('deploy_path', '/home/a245ed97/deploy');
 
 
 // Hooks

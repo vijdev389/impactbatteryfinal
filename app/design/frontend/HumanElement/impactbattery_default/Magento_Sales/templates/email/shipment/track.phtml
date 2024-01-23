@@ -1,0 +1,51 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /* @var \Magento\Framework\View\Element\Template $block */ ?>
+<?php $_shipment = $block->getShipment() ?>
+<?php
+/* @var \Magento\Sales\Model\Order $_order */
+$_order = $block->getOrder() ?>
+<?php if ($_shipment && $_order) : ?>
+    <?php $trackCollection = $_shipment->getTracksCollection() ?>
+    <?php if ($trackCollection) : ?>
+        <br />
+        <table class="shipment-track">
+            <thead>
+            <tr>
+                <th><?= $block->escapeHtml(__('Shipped By')) ?></th>
+                <th><?= $block->escapeHtml(__('Tracking Number')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($trackCollection as $_item) : ?>
+                <tr>
+                    <td><?= $block->escapeHtml($_item->getTitle()) ?>:</td>
+                    <td>
+                    <?php if($_item->getTitle() == "United States Postal Service (USPS)") {  ?>
+                            <a href="https://tools.usps.com/go/TrackConfirmAction!input.action?tRef=qt&tLc=0&tLabels=<?= $block->escapeHtml($_item->getNumber()); ?>" target="_blank">
+                                <?= $block->escapeHtml($_item->getNumber()) ?>
+                            </a>
+                        <?php } else if($_item->getTitle() == "United Parcel Service") { ?>
+                            <a href="https://www.ups.com/track?loc=en_US&tracknum=<?= $block->escapeHtml($_item->getNumber()); ?>&requester=ST/trackdetails" target="_blank">
+                                <?= $block->escapeHtml($_item->getNumber()) ?>
+                            </a>
+                        <?php } else if($_item->getTitle() == "FedEx") { ?>
+                            <a href="https://www.fedex.com/fedextrack/?trknbr=<?= $block->escapeHtml($_item->getNumber()); ?>&trkqual=12026~702990684611~FDEG" target="_blank">
+                                <?= $block->escapeHtml($_item->getNumber()) ?>
+                            </a>
+                        <?php } else{?>
+                            <a href="<?= $block->escapeUrl($block->getTrackingUrl()->getUrl($_item)) ?>" target="_blank">
+                            <?= $block->escapeHtml($_item->getNumber()) ?>
+                            </a>
+                        <?php } ?>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+<?php endif; ?>
