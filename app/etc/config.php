@@ -334,6 +334,7 @@ return [
         'Amasty_PreOrderLite' => 1,
         'Amasty_Preorder' => 1,
         'CtiDigital_CspWhitelist' => 1,
+        'Doofinder_Feed' => 1,
         'Extend_Warranty' => 1,
         'Scommerce_TrackingBase' => 1,
         'Scommerce_GoogleTagManagerPro' => 1,
