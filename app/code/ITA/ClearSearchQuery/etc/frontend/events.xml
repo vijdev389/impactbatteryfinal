@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_front_send_response_before">
+		<!-- Disable Amasty's observer by providing an empty observer -->
+        <observer name="amasty_finder_load_page" instance="Amasty\Finder\Observer\LoadPage" disabled="true"/>
+        <observer name="clear_search_query" instance="ITA\ClearSearchQuery\Observer\ClearSearch" />
+    </event>
+</config>
