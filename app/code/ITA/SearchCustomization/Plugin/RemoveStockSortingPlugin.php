@@ -32,7 +32,7 @@ class RemoveStockSortingPlugin
         $attribute,
         $dir = 'desc'
     ) {
-		//$subject->getSelect()->reset(Zend_Db_Select::ORDER);
+        //$subject->getSelect()->reset(Zend_Db_Select::ORDER);
         $this->logger->info('Setting product collection sort order', ['attribute' => $attribute]);
 
         
@@ -40,8 +40,13 @@ class RemoveStockSortingPlugin
         if ($attribute === 'is_out_of_stock' || $attribute === 'entity_id') {
             // Reset to default sorting: sort by relevance (if applicable) and then entity_id
             $subject->getSelect()->reset(Select::ORDER); // Reset existing order
-            $subject->getSelect()->order('relevance_score DESC'); // Sort by relevance score
-            $subject->getSelect()->order('entity_id ASC'); // Sort by entity_id ascending
+             // Only add 'relevance_score' if it exists in the collection
+            if (in_array('relevance_score', $subject->getSelect()->getPart(Select::COLUMNS))) {
+                $subject->getSelect()->order('relevance_score DESC');
+            }
+
+            // Sort by entity_id ascending as a fallback
+            $subject->getSelect()->order('entity_id ASC');
         } else {
             // Proceed with the original method for other fields
             return $proceed($attribute, $dir);
