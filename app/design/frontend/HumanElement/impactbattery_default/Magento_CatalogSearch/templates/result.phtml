@@ -41,3 +41,14 @@ $productList = $block->getProductListHtml();
     </div>
 </div>
 <?php endif; ?>
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        jQuery(".catalogsearch-result-index dl.block").appendTo("#layered-filter-block");
+        if (jQuery(window).width() < 769) {
+            jQuery('.catalogsearch-result-index dl.block').remove();
+        }
+      });
+</script>
+<style>
+.catalogsearch-result-index dl.block{padding: 30px 0 0 20px;}
+</style>
