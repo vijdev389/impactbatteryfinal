@@ -2,5 +2,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 	<preference for="MageWorx\SeoMarkup\Block\Head\Json\Product" type="Rock\Customization\Block\Head\Json\Product" />
 	
-	<preference for="IWD\CheckoutConnector\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" type="Rock\Customization\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" />
+	<!--<preference for="IWD\CheckoutConnector\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" type="Rock\Customization\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" />-->
+	<type name="IWD\CheckoutConnector\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="rock_customization_collection_factory_plugin" type="Rock\Customization\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory" sortOrder="1"/>
+    </type>
 </config>

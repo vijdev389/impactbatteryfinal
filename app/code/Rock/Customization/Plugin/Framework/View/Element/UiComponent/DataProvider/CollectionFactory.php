@@ -1,5 +1,4 @@
 <?php
-
 namespace Rock\Customization\Plugin\Framework\View\Element\UiComponent\DataProvider;
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory as MagentoCollectionFactory;
@@ -7,7 +6,7 @@ use \Magento\Framework\App\ResourceConnection;
 
 /**
  * Class CollectionFactory
- * @package IWD\OrderGrid\Plugin\Framework\View\Element\UiComponent\DataProvider
+ * @package Rock\Customization\Plugin\Framework\View\Element\UiComponent\DataProvider
  */
 class CollectionFactory extends \IWD\CheckoutConnector\Plugin\Framework\View\Element\UiComponent\DataProvider\CollectionFactory
 {
@@ -22,20 +21,24 @@ class CollectionFactory extends \IWD\CheckoutConnector\Plugin\Framework\View\Ele
     private $resourceConnection;
 
     /**
-     * @var string[]
+     * @param ResourceConnection $resourceConnection
      */
-    private $dataSource = [
-        'sales_order_invoice_grid_data_source'    => '\Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult',
-        'sales_order_shipment_grid_data_source'   => '\Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult',
-        'sales_order_creditmemo_grid_data_source' => '\Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult'
-    ];
+    public function __construct(
+        ResourceConnection $resourceConnection
+    ) {
+        parent::__construct($resourceConnection);  // Call parent constructor to initialize the parent class
+        $this->resourceConnection = $resourceConnection;
+    }
 
     /**
-     * @param $dataSource
+     * Add payment method title to the grid
+     *
+     * @param string $dataSource
      */
     public function addPaymentMethodTitle($dataSource)
     {
-        switch ($dataSource){
+        // Custom logic before the parent method
+        switch ($dataSource) {
             case 'sales_order_creditmemo_grid_data_source':
             case 'sales_order_shipment_grid_data_source':
             case 'sales_order_invoice_grid_data_source':
@@ -48,5 +51,8 @@ class CollectionFactory extends \IWD\CheckoutConnector\Plugin\Framework\View\Ele
                 );
                 break;
         }
+
+        // Optional: add any custom modifications here, after the original functionality
+        parent::addPaymentMethodTitle($dataSource);  // Optionally, call parent method for existing logic
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Define the database schema for the 'iwd_checkout_pay' table -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup:Declaration/Schema.xsd">
+    <table name="iwd_checkout_pay" resource="default" engine="innodb" comment="IWD Checkout Payment Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="order_id" padding="10" nullable="false" comment="Order Id"/>
+        <column xsi:type="varchar" name="payment_method" nullable="false" length="255" comment="Payment Method Title"/>
+        
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        
+        <!-- Add index on order_id column -->
+        <index name="IDX_ORDER_ID" indexType="btree">
+            <column name="order_id"/>
+        </index>
+
+        <!-- Add index on payment_method column -->
+        <index name="IDX_PAYMENT_METHOD" indexType="btree">
+            <column name="payment_method"/>
+        </index>
+    </table>
+</schema>
