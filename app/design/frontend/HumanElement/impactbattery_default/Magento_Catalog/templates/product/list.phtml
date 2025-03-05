@@ -163,3 +163,54 @@ $_helper = $block->getData('outputHelper');
     <?= $block->getChildBlock('toolbar')->setIsBottom(true)->toHtml() ?>
     <?php // phpcs:ignore Magento2.Legacy.PhtmlTemplate ?>
 <?php endif; ?>
+<?php
+/**
+ * AJAX Add to Cart Script in PHTML
+ */
+?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'Magento_Customer/js/customer-data'
+    ], function ($, customerData) {
+        $(document).on('click', '.owl-carousel .tocart', function (e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            var button = $(this).closest('button');
+            var originalText = button.html(); // Store original text
+             // Change text to "Adding..."
+            button.prop('disabled', true).addClass('loading').html('<span>Adding...</span>');
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                dataType: 'json',
+                beforeSend: function () {
+                    $('body').trigger('processStart');
+                },
+                success: function (response) {
+                     // Change text to "Added!"
+                    button.html('<span>Added!</span>').removeClass('loading').addClass('added');
+                    if (response.success) {
+                        customerData.reload(['cart'], true);
+                        // Optional: Show success message
+                        //alert('Product added to cart successfully!');
+                    } else {
+                        //alert(response.message);
+                    }
+                    // Revert back to "Add to Cart" after 1.5 seconds
+                    setTimeout(function () {
+                        button.html(originalText).removeClass('added').prop('disabled', false);
+                    }, 1500);
+                },
+                error: function () {
+                    alert('Something went wrong. Please try again.');
+                },
+                complete: function () {
+                    $('body').trigger('processStop');
+                    jQuery(".counter-number").trigger("click");
+                }
+            });
+        });
+    });
+</script>
