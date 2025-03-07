@@ -173,7 +173,7 @@ $_helper = $block->getData('outputHelper');
         'jquery',
         'Magento_Customer/js/customer-data'
     ], function ($, customerData) {
-        $(document).on('click', '.owl-carousel .tocart', function (e) {
+        $(document).on('click', '.tocart', function (e) {
             e.preventDefault();
             var form = $(this).closest('form');
             var button = $(this).closest('button');
@@ -186,13 +186,13 @@ $_helper = $block->getData('outputHelper');
                 data: form.serialize(),
                 dataType: 'json',
                 beforeSend: function () {
-                    $('body').trigger('processStart');
+                    //$('body').trigger('processStart');
                 },
                 success: function (response) {
                      // Change text to "Added!"
                     button.html('<span>Added!</span>').removeClass('loading').addClass('added');
                     if (response.success) {
-                        customerData.reload(['cart'], true);
+                        //customerData.reload(['cart'], true);
                         // Optional: Show success message
                         //alert('Product added to cart successfully!');
                     } else {
@@ -207,8 +207,14 @@ $_helper = $block->getData('outputHelper');
                     alert('Something went wrong. Please try again.');
                 },
                 complete: function () {
-                    $('body').trigger('processStop');
-                    jQuery(".counter-number").trigger("click");
+                    //$('body').trigger('processStop');
+                     //customerData.reload(['cart'], true);
+                     setTimeout(function () {
+                        jQuery(".counter-number").trigger("click");
+                    }, 1500);
+                    // Scroll to top animation
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+
                 }
             });
         });
