@@ -268,6 +268,7 @@ return [
         'Magento_ReCaptchaWebapiGraphQl' => 1,
         'Magento_ReCaptchaWebapiRest' => 1,
         'Magento_ReCaptchaWebapiUi' => 1,
+        'Magento_ReCaptchaWishlist' => 1,
         'Magento_RelatedProductGraphQl' => 1,
         'Magento_ReleaseNotification' => 1,
         'Magento_RemoteStorage' => 1,

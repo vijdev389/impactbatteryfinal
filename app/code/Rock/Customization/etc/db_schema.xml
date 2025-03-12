@@ -11,12 +11,12 @@
         </constraint>
         
         <!-- Add index on order_id column -->
-        <index name="IDX_ORDER_ID" indexType="btree">
+        <index referenceId="IDX_ORDER_ID" indexType="btree">
             <column name="order_id"/>
         </index>
 
         <!-- Add index on payment_method column -->
-        <index name="IDX_PAYMENT_METHOD" indexType="btree">
+        <index referenceId="IDX_PAYMENT_METHOD" indexType="btree">
             <column name="payment_method"/>
         </index>
     </table>
