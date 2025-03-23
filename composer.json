@@ -20,11 +20,11 @@
     },
     "version": "2.4.6-p1",
     "require": {
-        "amasty/base": "1.17.0",
+        "amasty/base": "1.14.7",
         "amasty/cron-schedule-list": "1.0.7",
-        "amasty/feed": "3.1.0",
-        "amasty/finder": "1.13.2",
-        "amasty/module-pre-order-lite": "2.1.1",
+        "amasty/feed": "2.8.0",
+        "amasty/finder": "1.13.0",
+        "amasty/module-pre-order-lite": "2.1.0",
         "amasty/preorder": "2.0.8",
         "aws/aws-crt-php": "^1.0",
         "ctidigital/magento2-csp-whitelist": "^1.0",
@@ -33,12 +33,12 @@
         "extend/module-warranty": "dev-master",
         "iwd/dominate-saas": "4.4.2",
         "magefan/module-admin-user-guide": "^2.0",
-        "magefan/module-blog": "^2.12.3",
+        "magefan/module-blog": "2.11.0",
         "magefan/module-blog-comments-recaptcha": "^2.1",
         "magefan/module-blog-graph-ql": "^2.1",
         "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0",
-        "magento/product-community-edition": "2.4.6-p9",
+        "magento/product-community-edition": "2.4.6-p8",
         "magento/quality-patches": "^1.1",
         "mageplaza/module-delete-orders": "^4.0",
         "mageworx/module-seosuiteultimate": "^2.38",
@@ -89,7 +89,8 @@
         "phpunit/phpunit": "^9.5",
         "sebastian/comparator": "<=4.0.6",
         "sebastian/phpcpd": "^6.0",
-        "symfony/finder": "^5.4"
+        "symfony/finder": "^5.4",
+        "symfony/process": "<=v5.4.23"
     },
     "conflict": {
         "gene/bluefoot": "*"
