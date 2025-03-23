@@ -3,7 +3,7 @@ namespace Deployer;
 
 require 'recipe/magento2.php';
 
-set('keep_releases', 11);
+set('keep_releases', 30);
 set('cleanup_use_sudo', false);
 set('writable_mode', 'chown');
 
