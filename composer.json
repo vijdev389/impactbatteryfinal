@@ -38,7 +38,7 @@
         "magefan/module-blog-graph-ql": "^2.1",
         "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0",
-        "magento/product-community-edition": "2.4.6-p8",
+        "magento/product-community-edition": "2.4.6-p9",
         "magento/quality-patches": "^1.1",
         "mageplaza/module-delete-orders": "^4.0",
         "mageworx/module-seosuiteultimate": "^2.38",
@@ -89,8 +89,7 @@
         "phpunit/phpunit": "^9.5",
         "sebastian/comparator": "<=4.0.6",
         "sebastian/phpcpd": "^6.0",
-        "symfony/finder": "^5.4",
-        "symfony/process": "<=v5.4.23"
+        "symfony/finder": "^5.4"
     },
     "conflict": {
         "gene/bluefoot": "*"
@@ -111,7 +110,9 @@
         "0": {
             "type": "composer",
             "url": "https://repo.magento.com/",
-            "exclude": ["extend/module-warranty"]
+            "exclude": [
+                "extend/module-warranty"
+            ]
         },
         "humanelement": {
             "type": "composer",
