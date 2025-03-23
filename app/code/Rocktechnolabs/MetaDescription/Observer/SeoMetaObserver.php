@@ -27,9 +27,9 @@ class SeoMetaObserver implements ObserverInterface
     {
         $product = $observer->getProduct();
         
-        $metaDesc = trim($product->getAttributeDefaultValue('meta_description'));
+        $metaDesc = trim((string) $product->getAttributeDefaultValue('meta_description'));
         if ($metaDesc == '') {
-            $metaDesc = trim($product->setStore(1)->getMetaDescription());
+            $metaDesc = trim((string) $product->setStore(1)->getMetaDescription());
         }
         // $metaDesc = "test Working .....";
         $product->setMetaDescription($metaDesc);
