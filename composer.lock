@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "122fc712ed60073e33cd779366ff888d",
+    "content-hash": "9e951f6ab1ef7a80e10c65ff7b631478",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -5437,22 +5437,22 @@
         },
         {
             "name": "magefan/module-blog",
-            "version": "2.12.0",
+            "version": "2.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magefan/module-blog.git",
-                "reference": "7dddf90c0577d3965639bba32c7baaaddb8d8e93"
+                "reference": "5a8f33dedf82781d449b1f56d64338e49928e316"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-blog/zipball/7dddf90c0577d3965639bba32c7baaaddb8d8e93",
-                "reference": "7dddf90c0577d3965639bba32c7baaaddb8d8e93",
+                "url": "https://api.github.com/repos/magefan/module-blog/zipball/5a8f33dedf82781d449b1f56d64338e49928e316",
+                "reference": "5a8f33dedf82781d449b1f56d64338e49928e316",
                 "shasum": ""
             },
             "require": {
                 "magefan/module-blog-graph-ql": ">=2.1.9",
-                "magefan/module-community": ">=2.1.29",
-                "magefan/module-wysiwyg-advanced": ">=2.0.15"
+                "magefan/module-community": ">=2.2.7",
+                "magefan/module-wysiwyg-advanced": ">=2.0.17"
             },
             "suggest": {
                 "magefan/module-amp-blog": "Install this module to activate Blog integration with the Plumrocket AMP extension."
@@ -5470,9 +5470,9 @@
             "description": "Implements Blog functionality on Magento 2 store",
             "support": {
                 "issues": "https://github.com/magefan/module-blog/issues",
-                "source": "https://github.com/magefan/module-blog/tree/2.12.0"
+                "source": "https://github.com/magefan/module-blog/tree/2.12.3"
             },
-            "time": "2024-09-20T11:23:02+00:00"
+            "time": "2025-03-13T09:43:17+00:00"
         },
         {
             "name": "magefan/module-blog-comments-recaptcha",
