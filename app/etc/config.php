@@ -335,10 +335,9 @@ return [
         'Amasty_PreOrderLite' => 1,
         'Amasty_Preorder' => 1,
         'CtiDigital_CspWhitelist' => 1,
-        'Doofinder_Feed' => 1,
         'Extend_Warranty' => 1,
-        'Scommerce_TrackingBase' => 1,
-        'Scommerce_GoogleTagManagerPro' => 1,
+        'Hyva_ScommerceTrackingBase' => 1,
+        'Hyva_ScommerceGoogleTagManagerPro' => 1,
         'ITA_ClearSearchQuery' => 1,
         'ITA_Pathfinder' => 1,
         'ITA_SearchCustomization' => 1,
@@ -389,8 +388,6 @@ return [
         'Scommerce_BreezeTrackingBase' => 1,
         'Scommerce_BreezeGoogleTagManagerPro' => 1,
         'Scommerce_Core' => 1,
-        'Hyva_ScommerceTrackingBase' => 1,
-        'Hyva_ScommerceGoogleTagManagerPro' => 1,
         'Signifyd_Connect' => 1,
         'Temando_ShippingRemover' => 1
     ]
