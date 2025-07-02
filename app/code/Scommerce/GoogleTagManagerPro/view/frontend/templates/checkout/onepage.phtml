@@ -1,0 +1,124 @@
+<?php
+/**
+ * @var $this \Scommerce\GoogleTagManagerPro\Block\Checkout\Onepage
+ */
+
+$helper = $this->getHelper();
+
+if (!$helper->isEnhancedEcommerceEnabled()) return;
+$cartItems = $this->getCartItems();
+?>
+<script>
+    //<![CDATA[
+    require(['jquery', 'Magento_Checkout/js/model/quote', 'domReady'], function (jQuery,quote, domReady) {
+        var sentSteps = [];
+
+        function stepSent(step) {
+            for (var i in sentSteps) {
+                if (sentSteps[i] === step) return true;
+            }
+            return false;
+        }
+
+		var old_shipping = ''; var old_payment = '';
+        domReady(function () {
+			//Fixed to make it compatible with latest jquery version. .live function is depricated
+			jQuery(document).on('click','input:radio, button, submit', function(e) {
+				//shipping
+				if (quote.shippingMethod() != null) {
+					var shipping = quote.shippingMethod().carrier_code;
+					if (shipping != undefined && old_shipping != shipping) {
+						old_shipping = shipping;
+						steps(shipping, 1);
+					}
+				}
+				//payment
+				if (quote.paymentMethod() != null) {
+					var payment = quote.paymentMethod().method;
+					if (payment != undefined && old_payment != payment) {
+						old_payment = payment;
+						steps(payment, 2);
+					}
+				}
+				//console.log('payment - '+ payment);
+            });
+
+            function steps(value, pos) {
+                if (value != undefined) {
+                    //console.log(value, pos);
+                    if (stepSent(pos) === false) {
+                        sentSteps.push(pos);
+                        <?php $intCtr=0; $hasItems = false;?>
+                        dataLayer.push({
+                            'event': 'checkout',
+                            'ecommerce': {
+                                'checkout': {
+                                    'actionField': {'step': pos, 'option': value},
+                                    'products': [
+                                        <?php foreach($cartItems as $_quoteItem) : ?>
+                                            <?php
+                                            $trackingData = $_quoteItem->getScTrackingData();
+                                            if (!$trackingData) {
+                                                $impressionList = 'Category - ' . $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct()));
+                                            } else {
+                                                $trackingData = json_decode($trackingData, true);
+                                                $impressionList = $trackingData['list'];
+                                            }
+                                            ?>
+                                            <?php $intCtr++;?>
+                                            <?php if (!($_quoteItem->getProductType() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE
+                                                || ($_quoteItem->getParentItemId() && $_quoteItem->getParentItem()->getProductType() != \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE))): ?>
+                                                <?php if ($hasItems): ?>,<?php endif; $hasItems = true; ?>
+                                                <?php if ($_quoteItem->getParentItemId()) {
+                                                    $parentItem = $_quoteItem->getParentItem();
+                                                    $price = $helper->productPrice($parentItem);
+                                                } else {
+                                                    $price = $helper->productPrice($_quoteItem);
+                                                }?>
+                                                {
+                                                    'name': '<?php echo $this->escapeJsQuote($_quoteItem->getName()) ?>',
+                                                    'id': '<?php echo $this->escapeJsQuote($helper->getParentSKU($_quoteItem)) ?>',
+                                                    'price': '<?php echo $price ?>',
+                                                    'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($_quoteItem->getProduct())) ?>',
+                                                    'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct())) ?>',
+                                                    'quantity': '<?php echo $_quoteItem->getQty() ?>',
+                                                    'list': scGetProductImpression('<?php echo $helper->getParentSKU($_quoteItem) ?>') == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($_quoteItem->getProduct())) ?>' : scGetProductImpression('<?php echo $helper->getParentSKU($_quoteItem) ?>').list
+                                                }
+                                            <?php endif;?>
+                                        <?php endforeach; ?>
+                                    ]
+                                }
+                            },
+                            'eventCallback': function() {
+                            //document.location = 'checkout.html';
+                            }
+                        });
+                    } else {
+                        dataLayer.push({
+                            'event': 'checkoutOption',
+                            'ecommerce': {
+                                'checkout_option': {
+                                    'actionField': {'step': pos, 'option': value},
+                                }
+                            },
+                            'eventCallback': function() {
+                                //document.location = 'checkout.html';
+                            }
+                        });
+                    }
+                }
+            }
+
+            quote.shippingMethod.subscribe(function(newVal) {
+                if (newVal && newVal.hasOwnProperty('carrier_code')) {
+                    var shipping = newVal.carrier_code;
+                    if (shipping != undefined && old_shipping != shipping) {
+                        old_shipping = shipping;
+                        steps(shipping, 1);
+                    }
+                }
+            });
+        });
+    });
+    //]]>
+</script>

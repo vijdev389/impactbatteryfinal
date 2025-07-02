@@ -1,0 +1,150 @@
+<?php
+/**
+ * @var $this \Scommerce\GoogleTagManagerPro\Block\View
+ */
+?>
+<?php
+$helper = $this->getHelper();
+
+if (!$helper->isEnhancedEcommerceEnabled()) return;
+
+$_product = $this->getProduct();
+
+$_category = $this->getCurrentCategory();
+
+if ($_category){
+    $_categoryName = $helper->getCategoryPath($_category);
+} else {
+    $_categoryName = $helper->getProductCategoryName($_product);
+}
+
+$_relatedProductIds = $_product->getRelatedProductIds();
+$_JsRelatedProducts = '';
+$_JsRelatedProductUrls='';
+if (count($_relatedProductIds)){
+    $_relatedProducts =  $this->getProducts($_relatedProductIds);
+
+    $_relatedProductUrls = array();
+    $_relatedProductItems = array();
+    $_relatedImpressionList = 'Related Product';
+    $_relatedClickLabel = 'Related';
+    $_loop = 1;
+
+    foreach ($_relatedProducts as $_relatedProduct){
+        $_relatedProductUrls[] = $_relatedProduct->getProductUrl();
+
+        $_relatedProductItems[] = array(
+            'id' => $this->escapeJsQuote($_relatedProduct->getSku()),
+            'name'  => $this->escapeJsQuote($_relatedProduct->getName()),
+            'category' => $this->escapeJsQuote($helper->getProductCategoryName($_relatedProduct)),
+            'brand' => $this->escapeJsQuote($helper->getBrand($_relatedProduct)),
+            'price' => $helper->productPrice($_relatedProduct),
+            'list'  => $_relatedImpressionList,
+            'position' => $_loop
+        );
+
+        $_loop++;
+    }
+
+    $_JsRelatedProducts = json_encode($_relatedProductItems);
+    $_JsRelatedProductUrls = json_encode($_relatedProductUrls);
+
+    echo $this->getLayout()
+        ->createBlock('Scommerce\GoogleTagManagerPro\Block\ImpressionList')
+        ->setJsProducts($_JsRelatedProducts)
+        ->setJsProductUrls($_JsRelatedProductUrls)
+        ->setTemplate('Scommerce_GoogleTagManagerPro::impressionlist.phtml')
+        ->toHtml();
+}
+
+$_upsellProductIds = $_product->getUpSellProductIds();
+$_JsUpsellProducts = '';
+$_JsUpsellProductUrls = '';
+
+if (count($_upsellProductIds)){
+    $_upsellProducts = $this->getProducts($_upsellProductIds);
+
+    $_upsellProductUrls = array();
+    $_upsellProductItems = array();
+    $_upsellImpressionList = 'Upsell Product';
+    $_upsellClickLabel = 'Upsell';
+    $_loop = 1;
+
+    foreach ($_upsellProducts as $_upsellProduct) {
+        $_upsellProductUrls[] = $_upsellProduct->getProductUrl();
+        //$_upsellProductUrls[] = substr($_upsellProductUrl, 0, strpos($_upsellProductUrl, '?'));
+
+        $_upsellProductItems[] = array(
+            'id' => $this->escapeJsQuote($_upsellProduct->getSku()),
+            'name' => $this->escapeJsQuote($_upsellProduct->getName()),
+            'category' => $this->escapeJsQuote($helper->getProductCategoryName($_upsellProduct)),
+            'brand' => $this->escapeJsQuote($helper->getBrand($_upsellProduct)),
+            'price' => $helper->productPrice($_upsellProduct),
+            'list' => $_upsellImpressionList,
+            'position' => $_loop
+        );
+
+        $_loop++;
+    }
+
+    $_JsUpsellProducts = json_encode($_upsellProductItems);
+    $_JsUpsellProductUrls = json_encode($_upsellProductUrls);
+
+    echo $this->getLayout()
+        ->createBlock('Scommerce\GoogleTagManagerPro\Block\ImpressionList')
+        ->setJsProducts($_JsUpsellProducts)
+        ->setJsProductUrls($_JsUpsellProductUrls)
+        ->setTemplate('Scommerce_GoogleTagManagerPro::impressionlist.phtml')
+        ->toHtml();
+}
+?>
+
+<script>
+    //<![CDATA[
+    var impressionList = scGetProductImpression('<?php echo $_product->getSku() ?>');
+    impressionList = impressionList == '' ? 'Category - <?php echo $this->escapeJsQuote($helper->getProductCategoryName($_product)) ?>' : impressionList.list;
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+        'event': 'view_item',
+        'ecommerce': {
+            'detail': {
+                'actionField': {'list': impressionList },    // 'detail' actions have an optional list property.
+                'products': [{
+                    'name': '<?php echo $this->escapeJsQuote($_product->getName()) ?>',         // Name or ID is required.
+                    'id': '<?php echo $this->escapeJsQuote($_product->getSku()) ?>',
+                    'price': '<?php echo $helper->productPrice($_product)?>',
+                    'brand': '<?php echo $this->escapeJsQuote($helper->getBrand($_product)) ?>',
+                    'category': '<?php echo $this->escapeJsQuote($helper->getProductCategoryName($_product)) ?>'
+                }]
+            }
+        }
+    });
+    //console.log('Sent detailed view - <?php echo $this->escapeJsQuote($_product->getName()) ?>');
+    //]]>
+</script>
+
+<?php if ($helper->isAjaxEnabled()):?>
+    <script>
+        require([
+            'jquery',
+            'mage/mage',
+            'Magento_Catalog/product/view/validation',
+            'catalogAddToCart'
+        ], function ($) {
+            'use strict';
+
+            $('#product_addtocart_form').mage('validation', {
+                radioCheckboxClosest: '.nested',
+                submitHandler: function (form) {
+                    var widget = $(form).catalogAddToCart({
+                        bindSubmit: false
+                    });
+
+                    widget.catalogAddToCart('submitForm', $(form));
+
+                    return false;
+                }
+            });
+        });
+    </script>
+<?php endif;?>

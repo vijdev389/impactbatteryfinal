@@ -1,0 +1,76 @@
+<?php
+/**
+ *
+ * @var $this Scommerce\GoogleTagManagerPro\Block\ListProduct
+ */
+?>
+
+<?php
+$helper = $this->getHelper();
+if (!$helper->isEnhancedEcommerceEnabled() || $helper->isCategoryAjaxEnabled()) return;
+
+$_SIOSEnabled = $helper->isSIOSEnabled();
+$_PICText = $helper->getPICText();
+
+$_productCollection = $this->getProductCollection();
+
+$_category = $this->getLayer()->getCurrentCategory();
+if ($_category->getDisplayMode() == $this->getCMDisplayMode()) return;
+
+$_categoryName = '';
+$_impressionList = '';
+
+if ($_category) {
+    $_categoryName = $helper->getCategoryPath($_category);
+}
+
+$_mode = $this->getMode();
+$_productUrls = array();
+$_products = array();
+
+if ($_mode == 'category') {
+    $_impressionList = 'Category - ' . $_categoryName;
+} elseif ($_mode == 'search') {
+    $_impressionList = 'Search Results';
+}
+
+echo $this->getLayout()
+    ->createBlock('Scommerce\GoogleTagManagerPro\Block\ImpressionList')
+    ->setProductCollection($_productCollection)
+    ->setImpressionList($_impressionList)
+    ->setCategory($_categoryName)
+    ->setTemplate('Scommerce_GoogleTagManagerPro::impressionlist.phtml')
+    ->toHtml();
+?>
+<script>
+    require(['jquery'], function($) {
+        $(document).on('submit', ".product-item form[data-role=tocart-form]", function() {
+            var product;
+            var href = $(this).closest('.product-item').find('a').attr('href');
+            var jsProductUrls = window.scProductUrls;
+            if (jsProductUrls != undefined) {
+                var index = jsProductUrls.indexOf(href);
+                if (index != -1) {
+                    product = window.scProducts[index];
+                    scGtmSaveImpression(product.id, product.list, product.category);
+                    dataLayer.push({
+                        'event': 'productClick',
+                        'ecommerce': {
+                            'click': {
+                                'actionField': {'list': product.list},      // Optional list property.
+                                'products': [{
+                                    'name': product.name,                      // Name or ID is required.
+                                    'id': product.id,
+                                    'price': product.price,
+                                    'brand': product.brand,
+                                    'category': product.category,
+                                    'position': product.position
+                                }]
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>

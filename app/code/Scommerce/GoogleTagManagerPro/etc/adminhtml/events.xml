@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2019 Scommerce Mage. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="sc_gtm_creditmemo_save_after" instance="Scommerce\GoogleTagManagerPro\Model\Observer\CreditMemoSaveAfter" />
+    </event>
+    <event name="sales_order_place_after">
+        <observer name="sc_gtm_sales_order_place_after" instance="Scommerce\GoogleTagManagerPro\Model\Observer\OrderPlaceAfter" />
+    </event>
+</config>
