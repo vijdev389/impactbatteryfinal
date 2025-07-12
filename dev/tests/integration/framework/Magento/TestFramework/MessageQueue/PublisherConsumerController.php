@@ -73,7 +73,7 @@ class PublisherConsumerController
         array $consumers = [],
         array $appInitParams = [],
         ?int $maxMessages = null,
-        ClearQueueProcessor $clearQueueProcessor = null
+        ?ClearQueueProcessor $clearQueueProcessor = null
     ) {
         $this->consumers = $consumers;
         $this->publisher = $publisher;
@@ -203,9 +203,9 @@ class PublisherConsumerController
     {
         $i = 0;
         do {
-            sleep(5);
+            sleep(3);
             $assertion = call_user_func_array($condition, $params);
-        } while (!$assertion && ($i++ < 50));
+        } while (!$assertion && ($i++ < 20));
 
         if (!$assertion) {
             throw new PreconditionFailedException("No asynchronous messages were processed.");

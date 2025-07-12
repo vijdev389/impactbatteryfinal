@@ -291,7 +291,7 @@ define([
 		}
 
 		$scope.$on('editElement', function($e, elem, activeTab) {
-			if (elem.id == element.id) {
+			if (elem.id == element.id && !window.isModalShowing) {
 				self.editElement(elem, activeTab);
 				$rootScope.$broadcast('elementReloaded', element);
 			}
@@ -301,6 +301,7 @@ define([
 			elem.builder.editing = false;
 			elem.builder.hovered = false;
 			$rootScope.editingElement = elem;
+			window.isModalShowing = true;
 			var modal = magezonBuilderModal.open('element', {
 				windowClass: 'mgz-modal-' + elem.type,
 				resolve: {
@@ -310,9 +311,11 @@ define([
 					}
 				}
 			}, function() {
+				window.isModalShowing = false;
 				self.deactiveElement(elem);
 				$rootScope.editingElement = '';
 			}, function() {
+				window.isModalShowing = false;
 				self.deactiveElement(elem);
 				$rootScope.editingElement = '';
 			});

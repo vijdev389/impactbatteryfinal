@@ -1,7 +1,8 @@
 var config = {
     map: {
         "*": {
-            "mgz.owlcarousel": "Magezon_Core/js/owl.carousel.min"
+            "mgz.owlcarousel": "Magezon_Core/js/owl.carousel.min",
+            'jquery-ui-modules/widget': 'Magezon_Core/js/jquery/ui-modules/widget'
         }
     },
     shim: {

@@ -24,9 +24,10 @@ class Slider extends \Magezon\Builder\Block\Element
     {
         $src = '';
         if ($slide['background_type'] == 'youtube' && $slide['youtube_id']) {
-            $params['mute']                         = $slide['video_mute'] ? 1 : 0;
-            $params['modestbranding']               = $slide['video_modest_branding'] ? 1 : 0;
-            $params['rel']                          = $slide['video_related_videos'] ? 1 : 0;
+            $params['autoplay']                     = $slide['autoplay']? 1 : 0;
+            $params['mute']                         = ($slide['mute'] || $slide['autoplay']) ? 1 : 0;
+            $params['loop']                         = $slide['loop'] ? 1 : 0;
+            $params['controls']                     = $slide['controls'] ? 1 : 0;
             if ($slide['loop']) {
                 $params['playlist'] = $slide['youtube_id'];
             }

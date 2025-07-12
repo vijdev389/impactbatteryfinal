@@ -20,6 +20,7 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Api\AttributeRepositoryInterface;
+use Magento\Eav\Model\Config;
 
 class AddFeaturedProductAttribute implements DataPatchInterface, PatchVersionInterface
 {
@@ -39,18 +40,26 @@ class AddFeaturedProductAttribute implements DataPatchInterface, PatchVersionInt
     private $attributeRepository;
 
     /**
+     * @var Config
+     */
+    protected $eavConfig;
+
+    /**
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory $eavSetupFactory
      * @param AttributeRepositoryInterface $attributeRepository
+     * @param Config $eavConfig
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
         EavSetupFactory $eavSetupFactory,
-        AttributeRepositoryInterface $attributeRepository
+        AttributeRepositoryInterface $attributeRepository,
+        Config $eavConfig
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
         $this->attributeRepository = $attributeRepository;
+        $this->eavConfig = $eavConfig;
     }
 
     /**
@@ -61,7 +70,8 @@ class AddFeaturedProductAttribute implements DataPatchInterface, PatchVersionInt
         $entityType = \Magento\Catalog\Model\Product::ENTITY;
         $attributeCode = 'featured';
         try {
-            $attribute = $this->attributeRepository->get($entityType, $attributeCode);
+//            $attribute = $this->attributeRepository->get($entityType, $attributeCode);
+            $attribute = $this->eavConfig->getAttribute($entityType, $attributeCode);
         } catch (\Exception $e) {}
 
         if (!isset($attribute) || !$attribute || !$attribute->getAttributeId()) {

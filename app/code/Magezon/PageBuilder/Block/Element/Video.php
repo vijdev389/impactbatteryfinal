@@ -139,6 +139,7 @@ class Video extends \Magezon\Builder\Block\Element
         }
         if ($element->getData('video_type') == 'vimeo') {
             $params['muted']     = $element->getData('mute') ? 1 : 0;
+            $params['controls']  = $element->getData('controls') ? 1 : 0;
             $params['title']     = $element->getData('vimeo_title') ? 1 : 0;
             $params['portrait']  = $element->getData('vimeo_portrait') ? 1 : 0;
             $params['byline']    = $element->getData('vimeo_byline') ? 1 : 0;
@@ -146,6 +147,7 @@ class Video extends \Magezon\Builder\Block\Element
             $params['color']     = !empty($videoColor) ? str_replace('#', '', $element->getData('video_color')) : '';
             $params['api']       = 1;
             $params['player_id'] = 'player';
+            $params['autopause'] = 'false';
         }
         return $params;
     }

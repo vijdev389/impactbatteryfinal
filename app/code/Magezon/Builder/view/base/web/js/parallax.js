@@ -294,6 +294,7 @@ define([
 		var parallaxSpeed   = $this.attr( 'data-parallax-speed' );
 		var parallaxMobile  = $this.attr( 'data-parallax-mobile' ) === 'true' || $this.attr( 'data-parallax-mobile' ) === '1';
 
+		$this.parent().addClass('parallax-wrapper');
         // video type
         if ( backgroundType === 'yt_vm_video' || backgroundType === 'video' ) {
 			video           = $this.attr( 'data-parallax-video' );

@@ -1,7 +1,4 @@
-// /**
-//  * Copyright © Magento, Inc. All rights reserved.
-//  * See COPYING.txt for license details.
-//  */
+// Override to fix issue github.com/magento/magento2/issues/39817
 
 //
 //  Responsive
@@ -27,11 +24,11 @@
 
 & when (@media-target = 'mobile'), (@media-target = 'all') {
 
-    @media only screen and (max-width: (@screen__m + 1)) {
+    @media only screen and (max-width: @screen__m) {
         .media-width('max', (@screen__m + 1));
     }
 
-    @media only screen and (max-width: @screen__m) {
+    @media only screen and (max-width: (@screen__m - 1)) {
         .media-width('max', @screen__m);
     }
 
@@ -50,7 +47,6 @@
     @media all and (min-width: @screen__s) {
         .media-width('min', @screen__s);
     }
-
 }
 
 //
@@ -59,17 +55,23 @@
 
 & when (@media-target = 'desktop'), (@media-target = 'all') {
 
+    @media all and (min-width: @screen__m),
+    print {
+        .media-width('min', @screen__m);
+    }
+
     @media all and (min-width: (@screen__m + 1)),
     print {
         .media-width('min', (@screen__m + 1));
     }
 
-    @media all and (min-width: (@screen__m + 1)),
+    @media all and (max-width: (@screen__l - 1)),
     print {
-        .media-width('min', (@screen__m));
+        .media-width('max', @screen__l);
     }
 
-    @media all and (min-width: @screen__l),
+    //  Amasty fix. Return desktop styles
+    @media all and (min-width: (@screen__l)),
     print {
         .media-width('min', @screen__l);
     }

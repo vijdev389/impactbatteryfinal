@@ -30,16 +30,21 @@ $classes                     = $this->getOwlCarouselClasses();
 			$_element = $item['element'];
 			$id       = $_element->getId();
 			?>
+			<?php 
+			$html = $item['html'];
+			if ($html) {
+			?>
 				<div class="item mgz-carousel-item">
-					<?= $item['html'] ?>
+					<?= $html ?>
 				</div>
+			<?php } ?>
 		<?php } ?>
 	</div>
 <?php } ?>
 
 <script>
 	require(['jquery', 'Magezon_PageBuilder/js/slider'], function($) {
-		$('#<?= $id_owl ?>').slider(<?= $coreHelper->serialize($carouselOptions) ?>);
+		$('#<?= $id_owl ?>').sliders(<?= $coreHelper->serialize($carouselOptions) ?>);
 	})
 </script>
 
