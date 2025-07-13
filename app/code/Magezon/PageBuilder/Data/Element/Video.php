@@ -569,18 +569,18 @@ class Video extends \Magezon\Builder\Data\Element\AbstractElement
                 ]
             );
 
-                $container4->addChildren(
-                    'player_controls',
-                    'toggle',
-                    [
-                        'sortOrder'       => 10,
-                        'key'             => 'controls',
-                        'defaultValue'    => true,
-                        'templateOptions' => [
-                            'label' => __('Player Controls')
-                        ]
-                    ]
-                );
+                // $container4->addChildren(
+                //     'player_controls',
+                //     'toggle',
+                //     [
+                //         'sortOrder'       => 10,
+                //         'key'             => 'controls',
+                //         'defaultValue'    => true,
+                //         'templateOptions' => [
+                //             'label' => __('Player Controls')
+                //         ]
+                //     ]
+                // );
 
                 $container4->addChildren(
                     'modest_branding',

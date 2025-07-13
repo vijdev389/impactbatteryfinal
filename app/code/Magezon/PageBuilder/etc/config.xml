@@ -23,9 +23,9 @@
 				<enable_products>1</enable_products>
 				<enable_categories>1</enable_categories>
 			</general>
-			<instagram>
+			<!-- <instagram>
 				<password backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
-			</instagram>
+			</instagram> -->
 		</mgzpagebuilder>
 	</default>
 </config>

@@ -48,25 +48,33 @@ class Categories
     private $storeManager;
 
     /**
+     * @var \Magento\Catalog\Model\Product\Visibility
+     */
+    private $catalogProductVisibility;
+
+    /**
      * @var \Magezon\Core\Helper\Data
      */
     private $coreHelper;
 
     /**
-     * @param CategoryCollectionFactory                  $categoryCollectionFactory
-     * @param DbHelper                                   $dbHelper
+     * @param CategoryCollectionFactory $categoryCollectionFactory
+     * @param DbHelper $dbHelper
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magezon\Core\Helper\Data                  $coreHelper
+     * @param \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility
+     * @param \Magezon\Core\Helper\Data $coreHelper
      */
     public function __construct(
         CategoryCollectionFactory $categoryCollectionFactory,
         DbHelper $dbHelper,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility,
         \Magezon\Core\Helper\Data $coreHelper
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
         $this->dbHelper                  = $dbHelper;
         $this->storeManager              = $storeManager;
+        $this->catalogProductVisibility  = $catalogProductVisibility;
         $this->coreHelper                = $coreHelper;
     }
 
@@ -224,6 +232,7 @@ class Categories
         $categories = $this->categoryCollectionFactory->create();
         $categories->addAttributeToSelect(['name', 'is_active', 'parent_id']);
         $categories->setStoreId($storeId);
+        $categories->setOrder('position', 'ASC');
         $attributes[] = [
             'attribute' => 'entity_id', 'in' => $ids
         ];
@@ -239,13 +248,19 @@ class Categories
             $categories->getSelect()
                 ->joinLeft(
                     [
-                        'aggregation' => $categories->getResource()->getTable('catalog_category_product'),
+                        'ccpi' => $categories->getResource()->getTable('catalog_category_product_index'),
                     ],
-                    "e.entity_id = aggregation.category_id",
+                    "e.entity_id = ccpi.category_id",
                     [
-                        'product_count' => 'COUNT(aggregation.product_id)'
+                        'product_count' => 'COUNT(ccpi.product_id)'
                     ]
-                )->group('e.entity_id')->group($categories->getResource()->getTable('url_rewrite'). '.request_path');
+                )->where(
+                    'ccpi.visibility in (?)', $this->catalogProductVisibility->getVisibleInSiteIds()                    
+                )->group(
+                    'e.entity_id'
+                )->group(
+                    'ccpi.category_id'
+                )->group($categories->getResource()->getTable('url_rewrite') . '.request_path');
         }
         return $categories;
     }

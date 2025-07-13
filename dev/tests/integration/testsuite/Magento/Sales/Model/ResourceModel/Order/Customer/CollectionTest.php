@@ -14,9 +14,6 @@ use Magento\Store\Api\WebsiteRepositoryInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Test for Magento\Customer\Model\ResourceModel\Customer\Collection
- */
 class CollectionTest extends TestCase
 {
     /**
