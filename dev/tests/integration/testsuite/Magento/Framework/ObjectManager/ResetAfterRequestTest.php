@@ -57,7 +57,7 @@ class ResetAfterRequestTest extends \PHPUnit\Framework\TestCase
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public static function resetAfterRequestClassDataProvider()
+    public function resetAfterRequestClassDataProvider()
     {
         $resetAfterRequestClasses = [];
         foreach (Classes::getVirtualClasses() as $name => $type) {

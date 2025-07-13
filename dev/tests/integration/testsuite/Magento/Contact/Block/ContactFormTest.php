@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2021 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -30,7 +30,7 @@ class ContactFormTest extends TestCase
     private $block;
 
     /**
-     * @inheritDoc
+     * @inheirtDoc
      */
     protected function setUp(): void
     {
@@ -62,16 +62,16 @@ class ContactFormTest extends TestCase
         $this->assertInstanceOf($expectedViewModelType, $this->block->getData('view_model'));
     }
 
-    public static function dataProvider(): array
+    public function dataProvider(): array
     {
         return [
             'view model was not preset before' => [
-                'setViewModel' => false,
-                'expectedViewModelType' => UserDataProvider::class
+                'set view model' => false,
+                'expected view model type' => UserDataProvider::class
             ],
             'view model was pre-installed before' => [
-                'setViewModel' => true,
-                'expectedViewModelType' => self::SOME_VIEW_MODEL
+                'set view model' => true,
+                'expected view model type' => self::SOME_VIEW_MODEL
             ]
         ];
     }

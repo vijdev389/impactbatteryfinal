@@ -267,7 +267,7 @@ class BundleTest extends \Magento\TestFramework\Indexer\TestCase
      *
      * @return array
      */
-    public static function valuesDataProvider(): array
+    public function valuesDataProvider(): array
     {
         return [
             [
@@ -344,20 +344,20 @@ class BundleTest extends \Magento\TestFramework\Indexer\TestCase
     /**
      * @return array
      */
-    public static function shouldUpdateBundleStockStatusIfChildProductsStockStatusChangedDataProvider(): array
+    public function shouldUpdateBundleStockStatusIfChildProductsStockStatusChangedDataProvider(): array
     {
         return [
             'all options are required' => [
                 true,
                 true,
-                'outOfStockImportFile' => 'import_bundle_set_option1_products_out_of_stock.csv',
-                'inStockImportFile' => 'import_bundle_set_option1_products_in_stock.csv'
+                'out-of-stock' => 'import_bundle_set_option1_products_out_of_stock.csv',
+                'in-stock' => 'import_bundle_set_option1_products_in_stock.csv'
             ],
             'all options are optional' => [
                 false,
                 false,
-                'outOfStockImportFile' => 'import_bundle_set_all_products_out_of_stock.csv',
-                'inStockImportFile' => 'import_bundle_set_option1_products_in_stock.csv'
+                'out-of-stock' => 'import_bundle_set_all_products_out_of_stock.csv',
+                'in-stock' => 'import_bundle_set_option1_products_in_stock.csv'
             ]
         ];
     }

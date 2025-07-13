@@ -129,7 +129,7 @@ class MassDeleteTest extends AbstractBackendController
      *
      * @return array
      */
-    public static function failedRequestDataProvider(): array
+    public function failedRequestDataProvider(): array
     {
         return [
             [
@@ -155,16 +155,16 @@ class MassDeleteTest extends AbstractBackendController
      *
      * @return array
      */
-    public static function successRequestDataProvider(): array
+    public function successRequestDataProvider(): array
     {
         return [
             [
-                'emails' => ['customer1@example.com'],
+                'customerEmails' => ['customer1@example.com'],
                 'constraint' => self::equalTo(['A total of 1 record(s) were deleted.']),
                 'messageType' => MessageInterface::TYPE_SUCCESS,
             ],
             [
-                'emails' => ['customer2@example.com', 'customer3@example.com'],
+                'customerEmails' => ['customer2@example.com', 'customer3@example.com'],
                 'constraint' => self::equalTo(['A total of 2 record(s) were deleted.']),
                 'messageType' => MessageInterface::TYPE_SUCCESS,
             ],

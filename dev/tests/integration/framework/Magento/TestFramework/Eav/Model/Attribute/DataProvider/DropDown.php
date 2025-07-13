@@ -21,24 +21,24 @@ class DropDown extends AbstractAttributeDataWithOptions
     public function __construct()
     {
         parent::__construct();
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
-        static::$defaultAttributePostData['swatch_input_type'] = 'dropdown';
+        $this->defaultAttributePostData['used_for_sort_by'] = '0';
+        $this->defaultAttributePostData['swatch_input_type'] = 'dropdown';
     }
 
     /**
      * @inheritdoc
      */
-    public static function getUpdateProvider(): array
+    public function getUpdateProvider(): array
     {
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProvider(),
             [
                 "{$frontendInput}_other_attribute_code" => [
-                    'postData' => [
+                    'post_data' => [
                         'attribute_code' => 'text_attribute_update',
                     ],
-                    'expectedData' => [
+                    'expected_data' => [
                         'attribute_code' => 'dropdown_attribute',
                     ],
                 ],
@@ -49,7 +49,7 @@ class DropDown extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    protected static function getFrontendInput(): string
+    protected function getFrontendInput(): string
     {
         return 'select';
     }
@@ -57,7 +57,7 @@ class DropDown extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    protected static function getUpdatePostData(): array
+    protected function getUpdatePostData(): array
     {
         return [
             'frontend_label' => [
@@ -88,9 +88,9 @@ class DropDown extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    protected static function getUpdateExpectedData(): array
+    protected function getUpdateExpectedData(): array
     {
-        $updatePostData = static::getUpdatePostData();
+        $updatePostData = $this->getUpdatePostData();
         return array_merge(
             $updatePostData,
             [

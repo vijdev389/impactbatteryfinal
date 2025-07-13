@@ -37,7 +37,7 @@ class TypeTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function factoryDataProvider()
+    public function factoryDataProvider()
     {
         return [
             [null, \Magento\Catalog\Model\Product\Type\Simple::class],
@@ -70,7 +70,7 @@ class TypeTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function factoryReturnsSingletonDataProvider()
+    public function factoryReturnsSingletonDataProvider()
     {
         return [
             [null],
@@ -92,7 +92,7 @@ class TypeTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf($expectedClass, $type);
     }
 
-    public static function priceFactoryDataProvider()
+    public function priceFactoryDataProvider()
     {
         return [
             [null, \Magento\Catalog\Model\Product\Type\Price::class],
@@ -145,7 +145,7 @@ class TypeTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($this->_productType->getOptionText($typeId));
     }
 
-    public static function getOptionTextDataProvider()
+    public function getOptionTextDataProvider()
     {
         return [
             [\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE],

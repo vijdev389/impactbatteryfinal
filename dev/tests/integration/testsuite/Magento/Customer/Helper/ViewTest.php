@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2014 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Customer\Helper;
 
@@ -66,7 +66,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public static function getCustomerNameDataProvider()
+    public function getCustomerNameDataProvider()
     {
         /** @var \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerFactory */
         $customerFactory = Bootstrap::getObjectManager()->create(
@@ -132,7 +132,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
                 )->setLastname(
                     '<strong>LastName</strong>'
                 ),
-                '<h1>FirstName</h1> <strong>LastName</strong>',
+                '&lt;h1&gt;FirstName&lt;/h1&gt; &lt;strong&gt;LastName&lt;/strong&gt;',
             ],
         ];
     }

@@ -30,7 +30,7 @@ class DiConfigFilesTest extends \PHPUnit\Framework\TestCase
      */
     protected static $_moduleAreaFiles = [];
 
-    protected static function _prepareFiles()
+    protected function _prepareFiles()
     {
         //init primary configs
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
@@ -85,10 +85,10 @@ class DiConfigFilesTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public static function linearFilesProvider()
+    public function linearFilesProvider()
     {
         if (empty(self::$_primaryFiles)) {
-            self::_prepareFiles();
+            $this->_prepareFiles();
         }
 
         $common = array_merge(self::$_primaryFiles->toArray(), self::$_moduleGlobalFiles->toArray());
@@ -113,7 +113,7 @@ class DiConfigFilesTest extends \PHPUnit\Framework\TestCase
     {
         $mapperMock = $this->createMock(\Magento\Framework\ObjectManager\Config\Mapper\Dom::class);
         $fileResolverMock = $this->getMockBuilder(\Magento\Framework\Config\FileResolverInterface::class)
-            ->addMethods(['read'])
+            ->setMethods(['read'])
             ->getMockForAbstractClass();
         $fileResolverMock->expects($this->any())->method('read')->willReturn($files);
         $validationStateMock = $this->createPartialMock(
@@ -135,10 +135,10 @@ class DiConfigFilesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public static function mixedFilesProvider()
+    public function mixedFilesProvider()
     {
         if (empty(self::$_primaryFiles)) {
-            self::_prepareFiles();
+            $this->_prepareFiles();
         }
         foreach (self::$_primaryFiles->toArray() as $file) {
             $primaryFiles[] = [[$file]];

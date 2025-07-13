@@ -143,19 +143,19 @@ class UpdateTest extends AbstractBackendController
      *
      * @return array
      */
-    public static function updateWithQuoteProvider(): array
+    public function updateWithQuoteProvider(): array
     {
         return [
             'with_quote_item_id' => [
-                'hasQuoteItem' => true,
-                'expectedUpdateResult' => [
+                'has_quote_item' => true,
+                'expected_update_result' => [
                     'ok' => true,
                     'js_var_name' => 'iFrameResponse',
                 ],
             ],
             'without_quote_item_id' => [
-                'hasQuoteItem' => false,
-                'expectedUpdateResult' => [
+                'has_quote_item' => false,
+                'expected_update_result' => [
                     'error' => true,
                     'message' => (string)__('The quote items are incorrect. Verify the quote items and try again.'),
                     'js_var_name' => 'iFrameResponse',
@@ -257,7 +257,7 @@ class UpdateTest extends AbstractBackendController
     /**
      * @return array
      */
-    public static function bundleOptionQuantityProvider(): array
+    public function bundleOptionQuantityProvider(): array
     {
         return [
             'Quantity, less than allowed in the Shopping Cart' => [
@@ -270,7 +270,7 @@ class UpdateTest extends AbstractBackendController
             ],
             'Quantity, greater than available' => [
                 '1000',
-                'Not enough items for sale',
+                'The requested qty is not available',
             ],
             'Quantity, greater than allowed in the Shopping Cart' => [
                 '100000',

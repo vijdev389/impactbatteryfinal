@@ -23,7 +23,7 @@ class TranslationFiles extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getLocalePlacePath()
+    public function getLocalePlacePath()
     {
         $pathToSource = BP;
         $places = [];

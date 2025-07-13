@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2020 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -48,9 +48,10 @@ class UpdateCategoryTest extends AbstractSaveCategoryTest
     public function testUpdateCategoryForDefaultStoreView(array $postData): void
     {
         $storeId = (int)$this->storeManager->getStore('default')->getId();
+        $postData = array_merge($postData, ['store_id' => $storeId]);
         $responseData = $this->performSaveCategoryRequest($postData);
         $this->assertRequestIsSuccessfullyPerformed($responseData);
-        $category = $this->categoryRepository->get($postData['entity_id'], $storeId);
+        $category = $this->categoryRepository->get($postData['entity_id'], $postData['store_id']);
         unset($postData['use_default']);
         unset($postData['use_config']);
         foreach ($postData as $key => $value) {
@@ -61,11 +62,11 @@ class UpdateCategoryTest extends AbstractSaveCategoryTest
     /**
      * @return array
      */
-    public static function categoryDataProvider(): array
+    public function categoryDataProvider(): array
     {
         return [
             [
-                'postData' => [
+                'post_data' => [
                     'entity_id' => 333,
                     CategoryInterface::KEY_IS_ACTIVE => '0',
                     CategoryInterface::KEY_INCLUDE_IN_MENU => '0',

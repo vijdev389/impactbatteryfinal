@@ -94,13 +94,7 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
         $outputMock = $this->getMockForAbstractClass(OutputInterface::class);
         $outputMock
             ->method('writeln')
-            ->willReturnCallback(
-                function ($arg1) {
-                    if ($arg1 === '<info>Configuration value saved in app/etc/env.php</info>') {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive(['<info>Configuration value saved in app/etc/env.php</info>']);
 
         $inputMocks = [];
 
@@ -137,20 +131,20 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
         $assertCallback($config);
     }
 
-    public static function executeDataProvider()
+    public function executeDataProvider()
     {
         return [
             [
                 ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
                 null,
                 function (array $config) {
-                    self::assertTrue(isset($config['system']['default']['some']['config']['path_two']));
-                    self::assertTrue(isset($config['system']['default']['some']['config']['path_three']));
-                    self::assertEquals(
+                    $this->assertTrue(isset($config['system']['default']['some']['config']['path_two']));
+                    $this->assertTrue(isset($config['system']['default']['some']['config']['path_three']));
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['default']['some']['config']['path_two']
                     );
-                    self::assertEquals(
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['default']['some']['config']['path_three']
                     );
@@ -160,12 +154,12 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
                 'website',
                 'test',
                 function (array $config) {
-                    self::assertTrue(isset($config['system']['website']['test']['some']['config']['path_two']));
-                    self::assertEquals(
+                    $this->assertTrue(isset($config['system']['website']['test']['some']['config']['path_two']));
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['website']['test']['some']['config']['path_two']
                     );
-                    self::assertEquals(
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['website']['test']['some']['config']['path_three']
                     );
@@ -190,13 +184,9 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
         $outputMock = $this->getMockForAbstractClass(OutputInterface::class);
         $outputMock
             ->method('writeln')
-            ->willReturnCallback(
-                function ($arg1) {
-                    if ($arg1 == '<info>Please set configuration values or skip them by pressing [Enter]:</info>' ||
-                        $arg1 == '<info>Configuration values saved in app/etc/env.php</info>') {
-                        return null;
-                    }
-                }
+            ->withConsecutive(
+                ['<info>Please set configuration values or skip them by pressing [Enter]:</info>'],
+                ['<info>Configuration values saved in app/etc/env.php</info>']
             );
         $command = $this->createInteractiveCommand('sensitiveValue');
         $command->run($inputMock, $outputMock);
@@ -211,25 +201,25 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
         $assertCallback($config);
     }
 
-    public static function executeInteractiveDataProvider()
+    public function executeInteractiveDataProvider()
     {
         return [
             [
                 ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
                 null,
                 function (array $config) {
-                    self::assertTrue(isset($config['system']['default']['some']['config']['path_one']));
-                    self::assertTrue(isset($config['system']['default']['some']['config']['path_two']));
-                    self::assertTrue(isset($config['system']['default']['some']['config']['path_three']));
-                    self::assertEquals(
+                    $this->assertTrue(isset($config['system']['default']['some']['config']['path_one']));
+                    $this->assertTrue(isset($config['system']['default']['some']['config']['path_two']));
+                    $this->assertTrue(isset($config['system']['default']['some']['config']['path_three']));
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['default']['some']['config']['path_one']
                     );
-                    self::assertEquals(
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['default']['some']['config']['path_two']
                     );
-                    self::assertEquals(
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['default']['some']['config']['path_three']
                     );
@@ -239,18 +229,18 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
                 'website',
                 'test',
                 function (array $config) {
-                    self::assertTrue(isset($config['system']['website']['test']['some']['config']['path_one']));
-                    self::assertTrue(isset($config['system']['website']['test']['some']['config']['path_two']));
-                    self::assertTrue(isset($config['system']['website']['test']['some']['config']['path_three']));
-                    self::assertEquals(
+                    $this->assertTrue(isset($config['system']['website']['test']['some']['config']['path_one']));
+                    $this->assertTrue(isset($config['system']['website']['test']['some']['config']['path_two']));
+                    $this->assertTrue(isset($config['system']['website']['test']['some']['config']['path_three']));
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['website']['test']['some']['config']['path_one']
                     );
-                    self::assertEquals(
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['website']['test']['some']['config']['path_two']
                     );
-                    self::assertEquals(
+                    $this->assertEquals(
                         'sensitiveValue',
                         $config['system']['website']['test']['some']['config']['path_three']
                     );
@@ -313,29 +303,27 @@ class SensitiveConfigSetCommandTest extends \PHPUnit\Framework\TestCase
         if (!$isInteractive) {
             $inputMock->expects($this->exactly(2))
                 ->method('getArgument')
-                ->willReturnCallback(
-                    function ($arg1) use ($key, $val) {
-                        if ($arg1 == SensitiveConfigSetCommand::INPUT_ARGUMENT_PATH) {
-                            return $key;
-                        } elseif ($arg1 == SensitiveConfigSetCommand::INPUT_ARGUMENT_VALUE) {
-                            return $val;
-                        }
-                    }
+                ->withConsecutive(
+                    [SensitiveConfigSetCommand::INPUT_ARGUMENT_PATH],
+                    [SensitiveConfigSetCommand::INPUT_ARGUMENT_VALUE]
+                )
+                ->willReturnOnConsecutiveCalls(
+                    $key,
+                    $val
                 );
         }
 
         $inputMock->expects($this->exactly(3))
             ->method('getOption')
-            ->willReturnCallback(
-                function ($arg1) use ($scope, $scopeCode, $isInteractive) {
-                    if ($arg1 == SensitiveConfigSetCommand::INPUT_OPTION_SCOPE) {
-                        return $scope;
-                    } elseif ($arg1 == SensitiveConfigSetCommand::INPUT_OPTION_SCOPE_CODE) {
-                        return $scopeCode;
-                    } elseif ($arg1 == SensitiveConfigSetCommand::INPUT_OPTION_INTERACTIVE) {
-                        return $isInteractive;
-                    }
-                }
+            ->withConsecutive(
+                [SensitiveConfigSetCommand::INPUT_OPTION_SCOPE],
+                [SensitiveConfigSetCommand::INPUT_OPTION_SCOPE_CODE],
+                [SensitiveConfigSetCommand::INPUT_OPTION_INTERACTIVE]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $scope,
+                $scopeCode,
+                $isInteractive
             );
 
         return $inputMock;

@@ -91,7 +91,7 @@ class AreBundleOptionsSalableTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public static function executeDataProvider(): array
+    public function executeDataProvider(): array
     {
         return [
             ['default', ['simple1'], 'default', true],

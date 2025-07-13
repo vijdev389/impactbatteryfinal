@@ -47,7 +47,7 @@ class AsynchronousSchemaRequestProcessorTest extends AbstractController
     /**
      * @return array
      */
-    public static function schemaRequestProvider()
+    public function schemaRequestProvider()
     {
         return [
             ['rest/async/schema'],

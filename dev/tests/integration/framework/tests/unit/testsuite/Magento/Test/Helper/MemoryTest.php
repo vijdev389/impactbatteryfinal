@@ -37,14 +37,10 @@ class MemoryTest extends \PHPUnit\Framework\TestCase
     {
         $this->_shell
             ->method('execute')
-            ->willReturnCallback(
-                function ($arg1) {
-                    if (strpos($arg1, 'ps ') === 0) {
-                        throw new \Magento\Framework\Exception\LocalizedException(__('command not found'));
-                    } elseif (strpos($arg1, 'tasklist.exe ') === 0) {
-                        return '"php.exe","12345","N/A","0","26,321 K"';
-                    }
-                }
+            ->withConsecutive([$this->stringStartsWith('ps ')], [$this->stringStartsWith('tasklist.exe ')])
+            ->willReturnOnConsecutiveCalls(
+                $this->throwException(new \Magento\Framework\Exception\LocalizedException(__('command not found'))),
+                '"php.exe","12345","N/A","0","26,321 K"'
             );
 
         $object = new \Magento\TestFramework\Helper\Memory($this->_shell);
@@ -64,7 +60,7 @@ class MemoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function convertToBytesDataProvider()
+    public function convertToBytesDataProvider()
     {
         return [
             'B' => ['1B', '1'],
@@ -93,7 +89,7 @@ class MemoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function convertToBytesBadFormatDataProvider()
+    public function convertToBytesBadFormatDataProvider()
     {
         return [
             'more than one unit of measure' => ['1234KB'],
@@ -118,7 +114,7 @@ class MemoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function convertToBytes64DataProvider()
+    public function convertToBytes64DataProvider()
     {
         return [
             ['2T', '2199023255552'],

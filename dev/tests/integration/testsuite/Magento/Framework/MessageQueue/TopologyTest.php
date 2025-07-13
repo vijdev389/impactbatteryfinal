@@ -82,12 +82,12 @@ class TopologyTest extends TestCase
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function exchangeDataProvider(): array
+    public function exchangeDataProvider(): array
     {
         $virtualHost = defined('RABBITMQ_VIRTUALHOST') ? RABBITMQ_VIRTUALHOST : Amqp::DEFAULT_VIRTUALHOST;
         return [
             'magento-topic-based-exchange1' => [
-                'expectedConfig' => [
+                'exchangeConfig' => [
                     'name' => 'magento-topic-based-exchange1',
                     'vhost' => $virtualHost,
                     'type' => 'topic',
@@ -112,7 +112,7 @@ class TopologyTest extends TestCase
                 ]
             ],
             'magento-topic-based-exchange2' => [
-                'expectedConfig' => [
+                'exchangeConfig' => [
                     'name' => 'magento-topic-based-exchange2',
                     'vhost' => $virtualHost,
                     'type' => 'topic',
@@ -140,7 +140,7 @@ class TopologyTest extends TestCase
                 ]
             ],
             'magento-topic-based-exchange3' => [
-                'expectedConfig' => [
+                'exchangeConfig' => [
                     'name' => 'magento-topic-based-exchange3',
                     'vhost' => $virtualHost,
                     'type' => 'topic',
@@ -152,7 +152,7 @@ class TopologyTest extends TestCase
                 'bindingConfig' => [],
             ],
             'magento-topic-based-exchange4' => [
-                'expectedConfig' => [
+                'exchangeConfig' => [
                     'name' => 'magento-topic-based-exchange4',
                     'vhost' => $virtualHost,
                     'type' => 'topic',

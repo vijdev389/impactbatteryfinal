@@ -108,7 +108,7 @@ class PayflowproVoidTest extends TestCase
     /**
      * @return array
      */
-    public static function orderCancelSuccessDataProvider(): array
+    public function orderCancelSuccessDataProvider(): array
     {
         return [
             'Authorization has expired' => [
@@ -212,7 +212,7 @@ class PayflowproVoidTest extends TestCase
 
         /** @var Payflowpro|MockObject $instance */
         $instance = $this->getMockBuilder(Payflowpro::class)
-            ->onlyMethods(['setStore', 'getInfoInstance'])
+            ->setMethods(['setStore', 'getInfoInstance'])
             ->setConstructorArgs(
                 [
                     $this->objectManager->get(Context::class),

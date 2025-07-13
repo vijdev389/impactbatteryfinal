@@ -60,7 +60,7 @@ class CreditmemoFactoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function createByOrderDataProvider(): array
+    public function createByOrderDataProvider(): array
     {
         return [
             [

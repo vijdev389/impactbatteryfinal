@@ -16,7 +16,7 @@ class DownloadableTest extends AbstractProductExportImportTestCase
     /**
      * @return array
      */
-    public static function exportImportDataProvider(): array
+    public function exportImportDataProvider(): array
     {
         return [
             'downloadable-product' => [

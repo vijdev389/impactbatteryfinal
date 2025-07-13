@@ -121,7 +121,7 @@ class PriceTest extends TestCase
     /**
      * @return array
      */
-    public static function getSelectionFinalTotalPriceWithSimpleTierPriceDataProvider(): array
+    public function getSelectionFinalTotalPriceWithSimpleTierPriceDataProvider(): array
     {
         return [
             [1, 1, 10],

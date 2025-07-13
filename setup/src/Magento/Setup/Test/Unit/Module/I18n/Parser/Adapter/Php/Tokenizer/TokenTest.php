@@ -71,7 +71,7 @@ class TokenTest extends TestCase
     /**
      * @return array
      */
-    public static function testIsNewDataProvider()
+    public function testIsNewDataProvider()
     {
         return [
             'new' => ['name' => T_NEW, 'value' => 'new', 'result' => true],
@@ -83,7 +83,7 @@ class TokenTest extends TestCase
     /**
      * @return array
      */
-    public static function testIsNamespaceSeparatorDataProvider()
+    public function testIsNamespaceSeparatorDataProvider()
     {
         return [
             'new' => ['name' => T_NEW, 'value' => 'new', 'result' => false],
@@ -95,7 +95,7 @@ class TokenTest extends TestCase
     /**
      * @return array
      */
-    public static function testIsIdentifierDataProvider()
+    public function testIsIdentifierDataProvider()
     {
         return [
             'new' => ['name' => T_NEW, 'value' => 'new', 'result' => false],

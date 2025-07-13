@@ -46,7 +46,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function sortOrderAssertionsDataProvider() :array
+    public function sortOrderAssertionsDataProvider() :array
     {
         return [
             [
@@ -55,7 +55,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
                 'rt.review_id',
                 'DESC',
                 function (array $actual) :void {
-                    self::assertLessThan($actual[0], $actual[1]);
+                    $this->assertLessThan($actual[0], $actual[1]);
                 }
             ],
             [
@@ -64,7 +64,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
                 'rt.review_id',
                 'ASC',
                 function (array $actual) :void {
-                    self::assertLessThan($actual[1], $actual[0]);
+                    $this->assertLessThan($actual[1], $actual[0]);
                 }
             ],
             [
@@ -73,7 +73,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
                 'rt.created_at',
                 'ASC',
                 function (array $actual) :void {
-                    self::assertLessThan($actual[1], $actual[0]);
+                    $this->assertLessThan($actual[1], $actual[0]);
                 }
             ],
             [
@@ -82,7 +82,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
                 'rt.review_id',
                 'ASC',
                 function (array $actual) :void {
-                    self::assertLessThan($actual[1], $actual[0]);
+                    $this->assertLessThan($actual[1], $actual[0]);
                 }
             ]
         ];

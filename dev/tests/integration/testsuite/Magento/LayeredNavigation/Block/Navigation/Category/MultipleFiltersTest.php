@@ -54,11 +54,11 @@ class MultipleFiltersTest extends AbstractFiltersTest
     /**
      * @return array
      */
-    public static function getMultipleActiveFiltersDataProvider(): array
+    public function getMultipleActiveFiltersDataProvider(): array
     {
         return [
             'without_filters' => [
-                'products' => [
+                'products_data' => [
                     'test_configurable' => [
                         'simple1000' => 'Option 1',
                         'simple1001' => 'Option 2',
@@ -71,10 +71,10 @@ class MultipleFiltersTest extends AbstractFiltersTest
                     ],
                 ],
                 'filters' => [],
-                'expectedProducts' => ['simple1000', 'simple1001', 'simple1002'],
+                'expected_products' => ['simple1000', 'simple1001', 'simple1002'],
             ],
             'applied_first_option_in_both_filters' => [
-                'products' => [
+                'products_data' => [
                     'test_configurable' => [
                         'simple1000' => 'Option 1',
                         'simple1001' => 'Option 1',
@@ -87,10 +87,10 @@ class MultipleFiltersTest extends AbstractFiltersTest
                     ],
                 ],
                 'filters' => ['test_configurable' => 'Option 1', 'dropdown_attribute' => 'Option 1'],
-                'expectedProducts' => ['simple1000', 'simple1001'],
+                'expected_products' => ['simple1000', 'simple1001'],
             ],
             'applied_mixed_options_in_filters' => [
-                'products' => [
+                'products_data' => [
                     'test_configurable' => [
                         'simple1000' => 'Option 1',
                         'simple1001' => 'Option 2',
@@ -103,7 +103,7 @@ class MultipleFiltersTest extends AbstractFiltersTest
                     ],
                 ],
                 'filters' => ['test_configurable' => 'Option 2', 'dropdown_attribute' => 'Option 3'],
-                'expectedProducts' => ['simple1002'],
+                'expected_products' => ['simple1002'],
             ],
         ];
     }

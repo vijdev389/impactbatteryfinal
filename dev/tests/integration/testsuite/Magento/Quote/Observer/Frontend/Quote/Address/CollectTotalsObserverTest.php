@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2013 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Quote\Observer\Frontend\Quote\Address;
 
@@ -20,7 +20,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test for \Magento\Quote\Observer\Frontend\Quote\Address\CollectTotalsObserver.
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class CollectTotalsObserverTest extends TestCase
 {
@@ -37,7 +36,7 @@ class CollectTotalsObserverTest extends TestCase
     private $objectManager;
 
     /**
-     * @inheritDoc
+     * @inheridoc
      */
     protected function setUp(): void
     {

@@ -88,7 +88,7 @@ class ProductRenderListInterfaceTest extends WebapiAbstract
      * Provider for parts of product information
      * @return array
      */
-    public static function productRenderInfoProvider()
+    public function productRenderInfoProvider()
     {
         return [
             'simple_products_variation' => [

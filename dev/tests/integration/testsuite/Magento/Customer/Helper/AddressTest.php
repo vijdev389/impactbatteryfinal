@@ -26,7 +26,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedClass, $this->helper->getAttributeValidationClass($attributeCode));
     }
 
-    public static function getAttributeValidationClass()
+    public function getAttributeValidationClass()
     {
         return [
             ['bad-code', ''],

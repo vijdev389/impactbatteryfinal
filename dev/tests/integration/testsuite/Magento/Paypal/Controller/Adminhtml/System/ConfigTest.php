@@ -49,7 +49,7 @@ class ConfigTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
     /**
      * @return array
      */
-    public static function saveMerchantCountryDataProvider(): array
+    public function saveMerchantCountryDataProvider(): array
     {
         return [
             [

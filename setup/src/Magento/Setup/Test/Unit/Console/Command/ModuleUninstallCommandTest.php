@@ -250,7 +250,7 @@ class ModuleUninstallCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeFailedValidationDataProvider()
+    public function executeFailedValidationDataProvider()
     {
         return [
             'one non-composer package' => [
@@ -374,7 +374,7 @@ class ModuleUninstallCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeFailedDependenciesDataProvider()
+    public function executeFailedDependenciesDataProvider()
     {
         return [
             [

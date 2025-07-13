@@ -81,7 +81,7 @@ class UploaderTest extends TestCase
     /**
      * @return array
      */
-    public static function uploadDataProvider(): array
+    public function uploadDataProvider(): array
     {
         return [
             [

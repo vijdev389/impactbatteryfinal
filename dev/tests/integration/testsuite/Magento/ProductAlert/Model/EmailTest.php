@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -113,14 +113,14 @@ class EmailTest extends TestCase
 
         $this->_emailModel->addPriceProduct($product);
         $this->_emailModel->send();
-        $emailMessage = quoted_printable_decode($this->transportBuilder->getSentMessage()->getBody()->bodyToString());
+
         $this->assertStringContainsString(
             'John Smith,',
-            $emailMessage
+            $this->transportBuilder->getSentMessage()->getBody()->getParts()[0]->getRawContent()
         );
     }
 
-    public static function customerFunctionDataProvider()
+    public function customerFunctionDataProvider()
     {
         return [
             [true],
@@ -166,12 +166,10 @@ class EmailTest extends TestCase
             $expectedPriceBox = '<span id="product-price-' . $product->getId() . '" data-price-amount="'
                 . $expectedPrice . '" data-price-type="finalPrice" '
                 . 'class="price-wrapper "><span class="price">$' . $expectedPrice . '.00</span></span>';
-            $emailMessage = quoted_printable_decode(
-                $this->transportBuilder->getSentMessage()->getBody()->bodyToString()
-            );
+
             $this->assertStringContainsString(
                 $expectedPriceBox,
-                $emailMessage
+                $this->transportBuilder->getSentMessage()->getBody()->getParts()[0]->getRawContent()
             );
         }
     }

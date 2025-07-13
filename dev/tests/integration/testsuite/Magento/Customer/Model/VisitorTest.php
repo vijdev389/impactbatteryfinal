@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2014 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Customer\Model;
 
@@ -25,14 +25,11 @@ class VisitorTest extends \PHPUnit\Framework\TestCase
         // Visitor has not customer ID yet
         $this->assertTrue($visitor->getDoCustomerLogin());
         $this->assertEquals($customer->getId(), $visitor->getCustomerId());
-        $this->assertNotNull($visitor->getCreatedAt());
 
         // Visitor already has customer ID
-        $createdAt = $visitor->getCreatedAt();
         $visitor->unsDoCustomerLogin();
         $this->_loginCustomer('customer@example.com', 'password');
         $this->assertNull($visitor->getDoCustomerLogin());
-        $this->assertEquals($createdAt, $visitor->getCreatedAt());
     }
 
     /**

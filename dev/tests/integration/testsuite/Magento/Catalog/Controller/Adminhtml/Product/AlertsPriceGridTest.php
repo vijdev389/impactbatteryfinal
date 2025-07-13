@@ -37,18 +37,18 @@ class AlertsPriceGridTest extends AbstractAlertTest
     /**
      * @return array
      */
-    public static function priceLimitProvider(): array
+    public function priceLimitProvider(): array
     {
         return [
             'default_limit' => [
                 'email' => 'customer@example.com',
                 'limit' => null,
-                'expectedCount' => 2,
+                'expected_count' => 2,
             ],
             'limit_1' => [
                 'email' => 'customer@example.com',
                 'limit' => 1,
-                'expectedCount' => 1,
+                'expected_count' => 1,
             ],
         ];
     }

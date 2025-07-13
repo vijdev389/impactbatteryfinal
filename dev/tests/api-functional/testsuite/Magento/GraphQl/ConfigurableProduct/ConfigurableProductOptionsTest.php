@@ -133,7 +133,7 @@ QUERY;
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function expectedResultDataProvider()
+    public function expectedResultDataProvider()
     {
         return [
             [

@@ -74,7 +74,7 @@ class AbstractExtensibleObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($regionCode, $region->getRegionCode());
     }
 
-    public static function extensionAttributesDataProvider()
+    public function extensionAttributesDataProvider()
     {
         return [
             'boolean' => [

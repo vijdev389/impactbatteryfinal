@@ -29,7 +29,7 @@ class DbRuleTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $this->model->getDependencyInfo($module, 'php', $file, $contents));
     }
 
-    public static function getDependencyInfoDataProvider()
+    public function getDependencyInfoDataProvider()
     {
         return [
             ['any', 'non-resource-file-path.php', 'any', []],

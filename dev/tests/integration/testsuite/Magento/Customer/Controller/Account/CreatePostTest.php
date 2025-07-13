@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -24,7 +24,6 @@ use Magento\TestFramework\Mail\Template\TransportBuilderMock;
 use Magento\TestFramework\Request;
 use Magento\TestFramework\TestCase\AbstractController;
 use Magento\Theme\Controller\Result\MessagePlugin;
-use Symfony\Component\Mime\Test\Constraint\EmailTextBodyContains;
 
 /**
  * Tests from customer account create post action.
@@ -256,22 +255,22 @@ class CreatePostTest extends AbstractController
         $message = 'You must confirm your account.'
             . ' Please check your email for the confirmation link or <a href="%1">click here</a> for a new link.';
         $url = $this->urlBuilder->getUrl('customer/account/confirmation', ['_query' => ['email' => $email]]);
-
         $this->assertSessionMessages($this->containsEqual((string)__($message, $url)), MessageInterface::TYPE_SUCCESS);
         /** @var CustomerInterface $customer */
         $customer = $this->customerRepository->get($email);
         $confirmation = $customer->getConfirmation();
         $sendMessage = $this->transportBuilderMock->getSentMessage();
         $this->assertNotNull($sendMessage);
-        $rawMessage = quoted_printable_decode($sendMessage->getBody()->bodyToString());
-
+        $rawMessage = $sendMessage->getBody()->getParts()[0]->getRawContent();
         $this->assertStringContainsString(
-            sprintf(
-                'customer/account/confirm/?email=%s&amp;id=%s&amp;key=%s',
-                urlencode($customer->getEmail()),
-                $customer->getId(),
-                $confirmation
+            (string)__(
+                'You must confirm your %customer_email email before you can sign in (link is only valid once):',
+                ['customer_email' => $email]
             ),
+            $rawMessage
+        );
+        $this->assertStringContainsString(
+            sprintf('customer/account/confirm/?id=%s&amp;key=%s', $customer->getId(), $confirmation),
             $rawMessage
         );
         $this->resetRequest();

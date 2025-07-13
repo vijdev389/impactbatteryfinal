@@ -56,31 +56,31 @@ class SelectFilterTest extends AbstractFiltersTest
     /**
      * @return array
      */
-    public static function getFiltersWithCustomAttributeDataProvider(): array
+    public function getFiltersWithCustomAttributeDataProvider(): array
     {
         return [
             'not_used_in_navigation' => [
-                'products' => [],
-                'attributeData' => ['is_filterable' => 0],
+                'products_data' => [],
+                'attribute_data' => ['is_filterable' => 0],
                 'expectation' => [],
             ],
             'used_in_navigation_with_results' => [
-                'products' => [
+                'products_data' => [
                     'bundle-product' => 'Option 1',
                     'bundle-product-dropdown-options' => 'Option 2',
                 ],
-                'attributeData' => ['is_filterable' => AbstractFilter::ATTRIBUTE_OPTIONS_ONLY_WITH_RESULTS],
+                'attribute_data' => ['is_filterable' => AbstractFilter::ATTRIBUTE_OPTIONS_ONLY_WITH_RESULTS],
                 'expectation' => [
                     ['label' => 'Option 1', 'count' => 1],
                     ['label' => 'Option 2', 'count' => 1],
                 ],
             ],
             'used_in_navigation_without_results' => [
-                'products' => [
+                'products_data' => [
                     'bundle-product' => 'Option 1',
                     'bundle-product-dropdown-options' => 'Option 2',
                 ],
-                'attributeData' => ['is_filterable' => 2],
+                'attribute_data' => ['is_filterable' => 2],
                 'expectation' => [
                     ['label' => 'Option 1', 'count' => 1],
                     ['label' => 'Option 2', 'count' => 1],

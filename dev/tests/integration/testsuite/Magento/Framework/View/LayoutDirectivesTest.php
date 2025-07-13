@@ -288,7 +288,7 @@ class LayoutDirectivesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function sortSpecialCasesDataProvider()
+    public function sortSpecialCasesDataProvider()
     {
         return [
             'Before element which is after' => ['sort_before_after.xml', '312'],

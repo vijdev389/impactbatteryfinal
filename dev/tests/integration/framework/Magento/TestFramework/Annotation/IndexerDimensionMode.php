@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2018 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -15,6 +15,7 @@ use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\TestFramework\Annotation\TestCaseAnnotation;
 use Magento\TestFramework\App\Config;
 use Magento\TestFramework\Fixture\ParserInterface;
 use Magento\TestFramework\Helper\Bootstrap;
@@ -22,7 +23,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Implementation of the @magentoIndexerDimensionMode DocBlock annotation
- *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class IndexerDimensionMode
@@ -85,7 +85,8 @@ class IndexerDimensionMode
         } else {
             ExceptionHandler::handle(
                 'Dimensions mode for indexer has not been changed',
-                test: $test
+                get_class($test),
+                $test->getName(false)
             );
         }
     }
@@ -105,8 +106,9 @@ class IndexerDimensionMode
         } catch (\Throwable $exception) {
             ExceptionHandler::handle(
                 'Unable to parse fixtures',
-                $exception,
-                $test
+                get_class($test),
+                $test->getName(false),
+                $exception
             );
         }
 
@@ -115,7 +117,8 @@ class IndexerDimensionMode
             if ($dbIsolation) {
                 ExceptionHandler::handle(
                     '@magentoDbIsolation must be disabled when using @magentoIndexerDimensionMode',
-                    test: $test
+                    get_class($test),
+                    $test->getName(false)
                 );
             }
 

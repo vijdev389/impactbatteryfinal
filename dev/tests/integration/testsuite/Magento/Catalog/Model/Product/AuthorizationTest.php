@@ -81,7 +81,7 @@ class AuthorizationTest extends TestCase
     /**
      * @return array
      */
-    public static function postRequestData(): array
+    public function postRequestData(): array
     {
         return [
             [
@@ -148,7 +148,7 @@ class AuthorizationTest extends TestCase
     /**
      * @return array
      */
-    public static function postRequestDataException(): array
+    public function postRequestDataException(): array
     {
         return [
             [

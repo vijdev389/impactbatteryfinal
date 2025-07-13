@@ -699,20 +699,20 @@ QUERY;
     /**
      * @return array
      */
-    public static function categoryImageDataProvider(): array
+    public function categoryImageDataProvider(): array
     {
         return [
             'default_filename_strategy' => [
-                'imagePrefix' => null
+                'image_prefix' => null
             ],
             'just_filename_strategy' => [
-                'imagePrefix' => ''
+                'image_prefix' => ''
             ],
             'with_pub_media_strategy' => [
-                'imagePrefix' => '/media/catalog/category/'
+                'image_prefix' => '/media/catalog/category/'
             ],
             'catalog_category_strategy' => [
-                'imagePrefix' => 'catalog/category/'
+                'image_prefix' => 'catalog/category/'
             ],
         ];
     }

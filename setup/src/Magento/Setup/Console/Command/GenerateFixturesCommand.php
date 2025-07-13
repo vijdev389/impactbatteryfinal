@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\Setup\Console\Command;
@@ -25,8 +25,6 @@ class GenerateFixturesCommand extends Command
 
     public const SKIP_REINDEX_OPTION = 'skip-reindex';
 
-    public const NAME = 'setup:performance:generate-fixtures';
-
     /**
      * @var FixtureModel
      */
@@ -46,7 +44,7 @@ class GenerateFixturesCommand extends Command
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('setup:performance:generate-fixtures')
             ->setDescription('Generates fixtures')
             ->setDefinition([
                 new InputArgument(

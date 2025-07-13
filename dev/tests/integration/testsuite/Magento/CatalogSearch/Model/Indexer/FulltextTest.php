@@ -94,8 +94,7 @@ class FulltextTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @magentoAppIsolation enabled
-     * @magentoDbIsolation disabled
+     *
      */
     public function testReindexRowAfterEdit()
     {

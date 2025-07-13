@@ -29,7 +29,7 @@ class BaseurlTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function validationDataProvider()
+    public function validationDataProvider()
     {
         $basePlaceholder = '{{base_url}}';
         $unsecurePlaceholder = '{{unsecure_base_url}}';
@@ -90,7 +90,7 @@ class BaseurlTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function validationExceptionDataProvider()
+    public function validationExceptionDataProvider()
     {
         $baseSuffix = '{{base_url}}test/';
         $unsecurePlaceholder = '{{unsecure_base_url}}';

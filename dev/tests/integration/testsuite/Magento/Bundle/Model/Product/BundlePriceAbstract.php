@@ -55,7 +55,7 @@ abstract class BundlePriceAbstract extends \PHPUnit\Framework\TestCase
      * Get test cases
      * @return array
      */
-    abstract static public function getTestCases();
+    abstract public function getTestCases();
 
     /**
      * @param array $strategyModifiers

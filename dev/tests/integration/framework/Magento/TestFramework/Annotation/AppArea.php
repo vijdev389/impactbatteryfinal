@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2013 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\TestFramework\Annotation;
 
@@ -88,8 +88,9 @@ class AppArea
         } catch (\Throwable $exception) {
             ExceptionHandler::handle(
                 'Unable to parse fixtures',
-                $exception,
-                $test
+                get_class($test),
+                $test->getName(false),
+                $exception
             );
         }
 

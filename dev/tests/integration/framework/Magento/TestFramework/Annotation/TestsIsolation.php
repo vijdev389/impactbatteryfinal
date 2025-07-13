@@ -9,8 +9,6 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ResourceConnection;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\AssertionFailedError;
-use Magento\TestFramework\Event\Magento;
-use PHPUnit\TestRunner\TestResult\PassedTests;
 
 /**
  * Validates tests isolation. Makes sure that test does not keep exceed data in DB.
@@ -132,17 +130,11 @@ class TestsIsolation
     private function checkIsolationRequired(TestCase $test): bool
     {
         $isRequired = false;
-        $passedTests = PassedTests::instance();
-        $event = Magento::getCurrentEventObject();
-        $className = $event->test()->className();
-        $methodName = $event->test()->methodName();
-        $hasTestClassPassed = $passedTests->hasTestClassPassed($className);
-
-        if (!$hasTestClassPassed) {
+        if (!$test->getTestResultObject()) {
             return $isRequired;
         }
+        $passedClasses = $test->getTestResultObject()->passedClasses();
 
-        $passedClasses = [$className.'::'.$methodName];
         if ($passedClasses) {
             $testFilename = current($passedClasses);
 

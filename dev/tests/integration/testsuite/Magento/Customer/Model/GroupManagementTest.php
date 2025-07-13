@@ -112,7 +112,7 @@ class GroupManagementTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getDefaultGroupDataProvider()
+    public function getDefaultGroupDataProvider()
     {
         /** @var \Magento\Store\Model\StoreManagerInterface  $storeManager */
         $storeManager = Bootstrap::getObjectManager()->get(\Magento\Store\Model\StoreManagerInterface::class);

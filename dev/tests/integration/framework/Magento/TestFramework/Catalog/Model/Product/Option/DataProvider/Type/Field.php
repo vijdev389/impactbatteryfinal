@@ -18,7 +18,7 @@ class Field extends AbstractText
     /**
      * @inheritdoc
      */
-    protected static function getType(): string
+    protected function getType(): string
     {
         return ProductCustomOptionInterface::OPTION_TYPE_FIELD;
     }

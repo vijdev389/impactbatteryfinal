@@ -590,7 +590,7 @@ class LinkRepositoryTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function getInvalidLinkPrice()
+    public function getInvalidLinkPrice()
     {
         return [
             [-1.5],
@@ -627,7 +627,7 @@ class LinkRepositoryTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function getInvalidSortOrder()
+    public function getInvalidSortOrder()
     {
         return [
             [-1],
@@ -664,7 +664,7 @@ class LinkRepositoryTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function getInvalidNumberOfDownloads()
+    public function getInvalidNumberOfDownloads()
     {
         return [
             [-1],
@@ -940,7 +940,7 @@ class LinkRepositoryTest extends WebapiAbstract
         $this->assertStringContainsString('jellyfish_1_3.jpg', $link['sample_file']);
     }
 
-    public static function getListForAbsentProductProvider()
+    public function getListForAbsentProductProvider()
     {
         $linkExpectation = [
             'fields' => [

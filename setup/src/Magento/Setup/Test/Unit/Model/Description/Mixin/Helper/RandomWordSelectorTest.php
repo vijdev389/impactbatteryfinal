@@ -42,26 +42,26 @@ class RandomWordSelectorTest extends TestCase
     /**
      * @return array
      */
-    public static function getTestData()
+    public function getTestData()
     {
         return [
             [
-                'fixtureSource' => '
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                'source' => '
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 ',
-                'fixtureCount' => 1
+                'count' => 1
             ],
             [
-                'fixtureSource' => 'Lorem.',
-                'fixtureCount' => 5
+                'source' => 'Lorem.',
+                'count' => 5
             ],
             [
-                'fixtureSource' => '
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                'source' => '
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 ',
-                'fixtureCount' => 3
+                'count' => 3
             ],
         ];
     }

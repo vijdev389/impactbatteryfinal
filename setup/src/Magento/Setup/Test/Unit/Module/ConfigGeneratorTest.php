@@ -54,7 +54,7 @@ class ConfigGeneratorTest extends TestCase
 
         $driverOptions = $this->getMockBuilder(DriverOptions::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getDriverOptions'])
+            ->setMethods(['getDriverOptions'])
             ->getMock();
 
         $this->configGeneratorObject = new ConfigGenerator(

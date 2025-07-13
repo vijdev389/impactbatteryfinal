@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2013 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -112,8 +112,8 @@ class PhpRule implements RuleInterface
         ConfigReader $configReader,
         array $pluginMap = [],
         array $whitelists = [],
-        ?ClassScanner $classScanner = null,
-        ?RouteMapper $routeMapper = null
+        ClassScanner $classScanner = null,
+        RouteMapper $routeMapper = null
     ) {
         $this->_mapRouters = $mapRouters;
         $this->_mapLayoutBlocks = $mapLayoutBlocks;
@@ -178,10 +178,11 @@ class PhpRule implements RuleInterface
     private function caseClassesAndIdentifiers($currentModule, $file, &$contents)
     {
         $pattern = '~\b(?<class>(?<module>('
-            .'(?:'
-            . implode('|', Files::init()->getNamespaces())
-            . ')'
-            . '(?<delimiter>[_\\\\]))[A-Z]{1,}[a-zA-Z0-9]{1,})'
+            . implode(
+                '[_\\\\]|',
+                Files::init()->getNamespaces()
+            )
+            . '(?<delimiter>[_\\\\]))[a-zA-Z0-9]{2,})'
             . '(?<class_inside_module>\\4[a-zA-Z0-9_\\\\]{2,})?)\b'
             . '(?:::(?<module_scoped_key>[A-Za-z0-9_/.]+)[\'"])?~';
 

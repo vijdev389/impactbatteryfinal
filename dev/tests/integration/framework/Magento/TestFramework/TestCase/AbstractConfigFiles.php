@@ -35,11 +35,11 @@ abstract class AbstractConfigFiles extends \PHPUnit\Framework\TestCase
     /**
      * @var ComponentRegistrar
      */
-    protected static $componentRegistrar;
+    protected $componentRegistrar;
 
     protected function setUp(): void
     {
-        self::$componentRegistrar = new ComponentRegistrar();
+        $this->componentRegistrar = new ComponentRegistrar();
         $this->_objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $xmlFiles = $this->getXmlConfigFiles();
         if (!empty($xmlFiles)) {
@@ -120,9 +120,9 @@ abstract class AbstractConfigFiles extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function xmlConfigFileProvider()
+    public function xmlConfigFileProvider()
     {
-        $fileList = self::getXmlConfigFiles();
+        $fileList = $this->getXmlConfigFiles();
         $result = [];
         foreach ($fileList as $fileContent) {
             $result[] = [$fileContent];
@@ -135,14 +135,14 @@ abstract class AbstractConfigFiles extends \PHPUnit\Framework\TestCase
      *
      * @return \Magento\Framework\Config\FileIterator
      */
-    public static function getXmlConfigFiles()
+    public function getXmlConfigFiles()
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         /** @var $moduleDirSearch \Magento\Framework\Component\DirSearch */
         $moduleDirSearch = $objectManager->get(\Magento\Framework\Component\DirSearch::class);
 
         return $objectManager->get(\Magento\Framework\Config\FileIteratorFactory::class)
-            ->create($moduleDirSearch->collectFiles(ComponentRegistrar::MODULE, static::_getConfigFilePathGlob()));
+            ->create($moduleDirSearch->collectFiles(ComponentRegistrar::MODULE, $this->_getConfigFilePathGlob()));
     }
 
     /**
@@ -159,12 +159,12 @@ abstract class AbstractConfigFiles extends \PHPUnit\Framework\TestCase
      *
      * @return string
      */
-    abstract protected static function _getConfigFilePathGlob();
+    abstract protected function _getConfigFilePathGlob();
 
     /**
      * Returns an absolute path to the XSD file corresponding to the XML files specified in _getConfigFilePathGlob
      *
      * @return string
      */
-    abstract protected static function _getXsdPath();
+    abstract protected function _getXsdPath();
 }

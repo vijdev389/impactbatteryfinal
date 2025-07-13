@@ -145,7 +145,7 @@ class CustomerMeTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function assistanceStatesDataProvider(): array
+    public function assistanceStatesDataProvider(): array
     {
         return [
             'Assistance Allowed' => [IsAssistanceEnabledInterface::ALLOWED, true],

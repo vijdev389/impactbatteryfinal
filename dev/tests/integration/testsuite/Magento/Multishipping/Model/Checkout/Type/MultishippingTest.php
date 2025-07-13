@@ -205,7 +205,7 @@ class MultishippingTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getCustomerDefaultAddressDataProvider()
+    public function getCustomerDefaultAddressDataProvider()
     {
         return [
             self::ADDRESS_TYPE_SHIPPING => [self::ADDRESS_TYPE_SHIPPING],

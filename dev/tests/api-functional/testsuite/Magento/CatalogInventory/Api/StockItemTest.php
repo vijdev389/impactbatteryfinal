@@ -127,7 +127,7 @@ class StockItemTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function saveStockItemBySkuWithWrongInputDataProvider()
+    public function saveStockItemBySkuWithWrongInputDataProvider()
     {
         return [
             [

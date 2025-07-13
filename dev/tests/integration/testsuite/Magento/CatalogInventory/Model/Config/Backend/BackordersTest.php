@@ -76,23 +76,23 @@ class BackordersTest extends TestCase
      *
      * @return array
      */
-    public static function afterSaveDataProvider(): array
+    public function afterSaveDataProvider(): array
     {
         return [
             'set_backorders' => [
                 'value' => Stock::BACKORDERS_YES_NONOTIFY,
-                'currentValue' => Stock::BACKORDERS_NO,
-                'expectedIndexerStatus' => StateInterface::STATUS_INVALID,
+                'current_value' => Stock::BACKORDERS_NO,
+                'expected_indexer_status' => StateInterface::STATUS_INVALID,
             ],
             'unset_backorders' => [
                 'value' => Stock::BACKORDERS_NO,
-                'currentValue' => Stock::BACKORDERS_YES_NONOTIFY,
-                'expectedIndexerStatus' => StateInterface::STATUS_INVALID,
+                'current_value' => Stock::BACKORDERS_YES_NONOTIFY,
+                'expected_indexer_status' => StateInterface::STATUS_INVALID,
             ],
             'same_backorders' => [
                 'value' => Stock::BACKORDERS_YES_NONOTIFY,
-                'currentValue' => Stock::BACKORDERS_YES_NONOTIFY,
-                'expectedIndexerStatus' => StateInterface::STATUS_VALID,
+                'current_value' => Stock::BACKORDERS_YES_NONOTIFY,
+                'expected_indexer_status' => StateInterface::STATUS_VALID,
             ],
         ];
     }

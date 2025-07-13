@@ -76,11 +76,11 @@ class ImagesTest extends AbstractBackendController
     /**
      * @return array
      */
-    public static function simpleProductImagesDataProvider(): array
+    public function simpleProductImagesDataProvider(): array
     {
         return [
             'simple_product_with_jpg_image' => [
-                'postData' => [
+                'post_data' => [
                     'product' => [
                         'media_gallery' => [
                             'images' => [

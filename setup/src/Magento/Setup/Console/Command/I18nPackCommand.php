@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Setup\Console\Command;
 
@@ -20,29 +20,28 @@ class I18nPackCommand extends Command
     /**#@+
      * Keys and shortcuts for input arguments and options
      */
-    public const INPUT_KEY_SOURCE = 'source';
-    public const INPUT_KEY_LOCALE = 'locale';
-    public const INPUT_KEY_MODE = 'mode';
-    public const INPUT_KEY_ALLOW_DUPLICATES = 'allow-duplicates';
+    const INPUT_KEY_SOURCE = 'source';
+    const INPUT_KEY_LOCALE = 'locale';
+    const INPUT_KEY_MODE = 'mode';
+    const INPUT_KEY_ALLOW_DUPLICATES = 'allow-duplicates';
     /**#@-*/
 
     /**
      * 'replace' mode value
      */
-    public const MODE_REPLACE = 'replace';
+    const MODE_REPLACE = 'replace';
 
     /**
      * 'merge' mode value
      */
-    public const MODE_MERGE = 'merge';
-    public const NAME = 'i18n:pack';
+    const MODE_MERGE = 'merge';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('i18n:pack')
             ->setDescription('Saves language package');
         $this->setDefinition([
             new InputArgument(
@@ -74,7 +73,7 @@ class I18nPackCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)

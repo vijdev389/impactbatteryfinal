@@ -150,20 +150,20 @@ class ConsumersRunnerTest extends TestCase
     /**
      * @return array
      */
-    public static function runDataProvider()
+    public function runDataProvider()
     {
         return [
           [
               'specificConsumer' => 'exportProcessor',
-              'maxMessage' => 10,
+              'max_messages' => 10,
               'command' => PHP_BINARY . ' ' . BP . '/bin/magento queue:consumers:start %s %s %s',
               'expectedArguments' => ['exportProcessor', '--single-thread', '--max-messages=10'],
           ],
           [
               'specificConsumer' => 'exportProcessor',
-              'maxMessage' => 5000,
+              'max_messages' => 5000,
               'command' => PHP_BINARY . ' ' . BP . '/bin/magento queue:consumers:start %s %s %s',
-              'expectedArguments' => ['exportProcessor', '--single-thread', '--max-messages=5000'],
+              'expectedArguments' => ['exportProcessor', '--single-thread', '--max-messages=100'],
           ],
         ];
     }

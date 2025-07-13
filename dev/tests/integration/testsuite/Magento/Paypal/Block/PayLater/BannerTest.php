@@ -44,7 +44,7 @@ class BannerTest extends TestCase
     /**
      * @return array
      */
-    public static function getJsLayoutDataProvider()
+    public function getJsLayoutDataProvider()
     {
         return [
             [
@@ -136,7 +136,7 @@ class BannerTest extends TestCase
         $this->assertStringContainsString($expectedUrl, $jsConfig['components']['payLater']['config']['sdkUrl']);
     }
 
-    public static function sdkUrlDataProvider()
+    public function sdkUrlDataProvider()
     {
         return [
             [
@@ -251,7 +251,7 @@ class BannerTest extends TestCase
     /**
      * @return array[]
      */
-    public static function toHtmlEmptyDataProvider()
+    public function toHtmlEmptyDataProvider()
     {
         $paymentPath = 'payment/%s/active';
         return [

@@ -50,16 +50,16 @@ class ContainerTest extends TestCase
     /**
      * @return array
      */
-    public static function getOptionTextDataProvider(): array
+    public function getOptionTextDataProvider(): array
     {
         return [
             'with_value' => [
                 'value' => 'container2',
-                'expectedValue' => __('Block after Info Column'),
+                'expected_value' => __('Block after Info Column'),
             ],
             'with_not_valid_value' => [
                 'value' => 'container3',
-                'expectedValue' => false,
+                'expected_value' => false,
             ],
         ];
     }

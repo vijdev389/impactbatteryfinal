@@ -54,7 +54,7 @@ $transactions = [
 /** @var array $transactionData */
 foreach ($transactions as $transactionData) {
     $payment->addData($transactionData);
-    $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_AUTH);
+    $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE);
 }
 
 $order->save();

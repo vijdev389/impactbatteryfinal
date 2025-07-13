@@ -376,7 +376,7 @@ class CartAddingItemsTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function dataProviderForMultiStoreView(): array
+    public function dataProviderForMultiStoreView(): array
     {
         return [
             'noStoreCodeInRequestPath' => [

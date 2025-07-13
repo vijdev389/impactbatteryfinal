@@ -133,7 +133,7 @@ class CreateByPathsTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function notAllowedPathsProvider(): array
+    public function notAllowedPathsProvider(): array
     {
         return [
             [

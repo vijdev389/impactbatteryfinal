@@ -89,7 +89,7 @@ class AuthorizationServiceTest extends \PHPUnit\Framework\TestCase
         $this->_ensurePermissionsAreNotGranted($integrationId, $initialResources);
     }
 
-    public static function changePermissionsProvider()
+    public function changePermissionsProvider()
     {
         return [
             'integration' => [

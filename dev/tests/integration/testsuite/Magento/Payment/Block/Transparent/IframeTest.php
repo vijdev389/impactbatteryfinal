@@ -43,7 +43,7 @@ class IframeTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function xssDataProvider()
+    public function xssDataProvider()
     {
         return [
             ['</script><script>alert("XSS")</script>'],

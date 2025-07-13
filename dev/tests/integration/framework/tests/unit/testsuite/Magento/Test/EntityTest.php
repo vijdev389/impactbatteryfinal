@@ -60,7 +60,7 @@ class EntityTest extends \PHPUnit\Framework\TestCase
         new \Magento\TestFramework\Entity($this->_model, [], 'stdClass');
     }
 
-    public static function crudDataProvider()
+    public function crudDataProvider()
     {
         return [
             'successful CRUD' => ['saveModelSuccessfully'],
@@ -97,7 +97,7 @@ class EntityTest extends \PHPUnit\Framework\TestCase
         $this->_model->expects($this->any())->method('getIdFieldName')->willReturn('id');
 
         $test = $this->getMockBuilder(\Magento\TestFramework\Entity::class)
-            ->onlyMethods(['_getEmptyModel'])
+            ->setMethods(['_getEmptyModel'])
             ->setConstructorArgs([$this->_model, ['test' => 'test']])
             ->getMock();
 

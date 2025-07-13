@@ -81,42 +81,42 @@ class ValidateImportTest extends \Magento\TestFramework\TestCase\AbstractBackend
     /**
      * @return array
      */
-    public static function validationDataProvider(): array
+    public function validationDataProvider(): array
     {
         return [
             [
-                'fileName' => 'catalog_product.csv',
-                'mimeType' => 'text/csv',
+                'file_name' => 'catalog_product.csv',
+                'mime-type' => 'text/csv',
                 'message' => 'File is valid',
                 'delimiter' => ',',
             ],
             [
-                'fileName' => 'test.txt',
-                'mimeType' => 'text/csv',
+                'file_name' => 'test.txt',
+                'mime-type' => 'text/csv',
                 'message' => 'The file cannot be uploaded.',
                 'delimiter' => ',',
             ],
             [
-                'fileName' => 'incorrect_catalog_product_comma.csv',
-                'mimeType' => 'text/csv',
+                'file_name' => 'incorrect_catalog_product_comma.csv',
+                'mime-type' => 'text/csv',
                 'message' => 'Download full report',
                 'delimiter' => ',',
             ],
             [
-                'fileName' => 'incorrect_catalog_product_semicolon.csv',
-                'mimeType' => 'text/csv',
+                'file_name' => 'incorrect_catalog_product_semicolon.csv',
+                'mime-type' => 'text/csv',
                 'message' => 'Download full report',
                 'delimiter' => ';',
             ],
             [
-                'fileName' => 'invalid_catalog_products.zip',
-                'mimeType' => 'application/zip',
+                'file_name' => 'invalid_catalog_products.zip',
+                'mime-type' => 'application/zip',
                 'message' => 'Data validation failed.',
                 'delimiter' => ',',
             ],
             [
-                'fileName' => 'catalog_product.zip',
-                'mimeType' => 'application/zip',
+                'file_name' => 'catalog_product.zip',
+                'mime-type' => 'application/zip',
                 'message' => 'File is valid',
                 'delimiter' => ',',
             ],

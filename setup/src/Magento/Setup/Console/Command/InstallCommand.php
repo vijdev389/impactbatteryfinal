@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -88,8 +88,6 @@ class InstallCommand extends AbstractSetupCommand
      * Regex for sales_order_increment_prefix validation.
      */
     public const SALES_ORDER_INCREMENT_PREFIX_RULE = '/^.{0,20}$/';
-
-    public const NAME = 'setup:install';
 
     /**
      * Installer service factory
@@ -222,7 +220,7 @@ class InstallCommand extends AbstractSetupCommand
                 false
             ),
         ]);
-        $this->setName(self::NAME)
+        $this->setName('setup:install')
             ->setDescription('Installs the Magento application')
             ->setDefinition($inputOptions);
         parent::configure();

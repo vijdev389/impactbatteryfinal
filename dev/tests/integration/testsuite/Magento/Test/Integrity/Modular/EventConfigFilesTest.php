@@ -40,7 +40,7 @@ class EventConfigFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function eventConfigFilesDataProvider()
+    public function eventConfigFilesDataProvider()
     {
         return \Magento\Framework\App\Utility\Files::init()->getConfigFiles('{*/events.xml,events.xml}');
     }

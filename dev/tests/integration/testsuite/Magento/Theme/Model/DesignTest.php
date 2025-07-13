@@ -211,7 +211,7 @@ class DesignTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedDesign, $actualDesign);
     }
 
-    public static function loadChangeTimezoneDataProvider()
+    public function loadChangeTimezoneDataProvider()
     {
         /**
          * Depending on the current UTC time, either UTC-12:00, or UTC+12:00 timezone points to the different date.

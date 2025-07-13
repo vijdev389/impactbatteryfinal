@@ -57,26 +57,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
     private $appMode;
 
     /**
-     * @var \Magento\TestFramework\ObjectManagerFactory|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $factoryMock;
-
-    /**
-     * @var \Magento\TestFramework\ObjectManagerFactory
-     */
-    private $_factory;
-
-    /**
-     * @var \Magento\Indexer\Model\Indexer\Collection | \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $collectionMock;
-
-    /**
-     * @var \Magento\TestFramework\ObjectManager | \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $objectManager;
-
-    /**
      * @inheritdoc
      */
     protected function setUp(): void
@@ -98,19 +78,6 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
             $this->appMode,
             $this->autoloadWrapper
         );
-
-        $this->factoryMock = $this->getMockBuilder(\Magento\TestFramework\ObjectManagerFactory::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['create', 'restore'])
-            ->getMock();
-
-        $this->collectionMock = $this->getMockBuilder(\Magento\Indexer\Model\Indexer\Collection::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->objectManager = $this->getMockBuilder(\Magento\TestFramework\ObjectManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     /**
@@ -169,18 +136,12 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         );
 
         // bypass db dump logic
-        $reflectionProperty = new \ReflectionProperty($subject, '_factory');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($subject, $this->factoryMock);
-        $this->_factory = $this->factoryMock;
         $dbMock = $this->getMockBuilder(Mysql::class)->disableOriginalConstructor()->getMock();
 
         $reflectionSubject = new ReflectionClass($subject);
         $dbProperty = $reflectionSubject->getProperty('_db');
         $dbProperty->setAccessible(true);
         $dbProperty->setValue($subject, $dbMock);
-        $property = $reflectionSubject->getProperty('canLoadArea');
-        $property->setValue($subject, false);
 
         $dbMock
             ->expects($this->any())
@@ -189,6 +150,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
                 false,
                 true
             );
+
         $withArgs = [];
         // Add expected shell execution calls
         foreach ($expectedShellExecutionCalls as $expectedShellExecutionArguments) {
@@ -206,26 +168,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
         }
         $this->shell
             ->method('execute')
-            ->willReturnCallback(function (...$withArgs) {
-                if (!empty($withArgs)) {
-                    return null;
-                }
-            });
-
-        $this->objectManager->expects($this->any())
-            ->method('configure')
-            ->willReturnSelf();
-        TestFrameworkBootstrap::setObjectManager($this->objectManager);
-
-        $this->_factory->expects($this->any())
-            ->method('restore')
-            ->willReturn($this->objectManager);
-        $this->objectManager->expects($this->any())
-            ->method('get')
-            ->willReturnCallback(fn($param) => match ([$param]) {
-                [\Magento\Indexer\Model\Indexer\Collection::class] => $this->collectionMock,
-                default => ''
-            });
+            ->withConsecutive(...$withArgs);
 
         $subject->install(false);
     }
@@ -235,7 +178,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function installDataProvider()
+    public function installDataProvider()
     {
         $installShellCommandExpectation = [
             PHP_BINARY . ' -f %s setup:install -vvv ' .
@@ -250,7 +193,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
                 '',
                 '0',
                 '0',
-                self::getInitParamsQuery(sys_get_temp_dir()),
+                $this->getInitParamsQuery(sys_get_temp_dir()),
                 true
             ]
         ];
@@ -280,7 +223,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
                             'magento_replica',
                             'root',
                             'secret',
-                            self::getInitParamsQuery(sys_get_temp_dir()),
+                            $this->getInitParamsQuery(sys_get_temp_dir()),
                         ]
                     ]
                 ]
@@ -300,7 +243,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
                             'bar',
                             'baz',
                             'qux',
-                            self::getInitParamsQuery(sys_get_temp_dir()),
+                            $this->getInitParamsQuery(sys_get_temp_dir()),
                         ]
                     ]
                 ]
@@ -381,23 +324,23 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function partialLoadAreaDataProvider()
+    public function partialLoadAreaDataProvider()
     {
         return [
             [
-                'areaCode' => Area::AREA_GLOBAL,
+                'area_code' => Area::AREA_GLOBAL,
             ],
             [
-                'areaCode' => Area::AREA_WEBAPI_REST,
+                'area_code' => Area::AREA_WEBAPI_REST,
             ],
             [
-                'areaCode' => Area::AREA_WEBAPI_SOAP,
+                'area_code' => Area::AREA_WEBAPI_SOAP,
             ],
             [
-                'areaCode' => Area::AREA_CRONTAB,
+                'area_code' => Area::AREA_CRONTAB,
             ],
             [
-                'areaCode' => Area::AREA_GRAPHQL,
+                'area_code' => Area::AREA_GRAPHQL,
             ],
         ];
     }
@@ -408,7 +351,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
      * @param string $dir The base application directory
      * @return string
      */
-    private static function getInitParamsQuery(string $dir)
+    private function getInitParamsQuery(string $dir)
     {
         return str_replace(
             '%s',

@@ -71,7 +71,7 @@ class CustomerSharingOptionsTest extends WebapiAbstract
             ['customerRegistry' => $this->customerRegistry]
         );
 
-        $this->customerHelper = new CustomerHelper($this->name());
+        $this->customerHelper = new CustomerHelper();
         $this->customerData = $this->customerHelper->createSampleCustomer();
         $this->tokenService = Bootstrap::getObjectManager()->get(CustomerTokenServiceInterface::class);
 
@@ -158,16 +158,16 @@ class CustomerSharingOptionsTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function getCustomerDataWebsiteScopeDataProvider(): array
+    public function getCustomerDataWebsiteScopeDataProvider(): array
     {
         return [
             'Default Store View' => [
-                'storeCode' => 'default',
-                'expectingException' => false
+                'store_code' => 'default',
+                'exception' => false
             ],
             'Custom Store View' => [
-                'storeCode' => 'fixture_second_store',
-                'expectingException' => true
+                'store_code' => 'fixture_second_store',
+                'exception' => true
             ]
         ];
     }
@@ -177,16 +177,16 @@ class CustomerSharingOptionsTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function getCustomerDataGlobalScopeDataProvider(): array
+    public function getCustomerDataGlobalScopeDataProvider(): array
     {
         return [
             'Default Store View' => [
-                'storeCode' => 'default',
-                'expectingException' => false
+                'store_code' => 'default',
+                'exception' => false
             ],
             'Custom Store View' => [
-                'storeCode' => 'fixture_second_store',
-                'expectingException' => false
+                'store_code' => 'fixture_second_store',
+                'exception' => false
             ]
         ];
     }

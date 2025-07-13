@@ -101,7 +101,7 @@ class MassactionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getCountDataProvider()
+    public function getCountDataProvider()
     {
         return [
             [
@@ -143,7 +143,7 @@ class MassactionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getItemsDataProvider()
+    public function getItemsDataProvider()
     {
         return [
             [

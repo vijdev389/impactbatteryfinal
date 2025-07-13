@@ -27,7 +27,7 @@ class ContentConverterTest extends \Magento\TestFramework\TestCase\AbstractContr
         $this->assertEquals($expected, $this->converter->convert($value));
     }
 
-    public static function convertDataProvider()
+    public function convertDataProvider()
     {
         // @codingStandardsIgnoreStart
         $someContent = '<div class="content-heading">

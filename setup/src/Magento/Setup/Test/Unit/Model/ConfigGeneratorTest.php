@@ -53,12 +53,12 @@ class ConfigGeneratorTest extends TestCase
 
         $this->configDataMock = $this->getMockBuilder(ConfigData::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['set'])
+            ->setMethods(['set'])
             ->getMock();
 
         $configDataFactoryMock = $this->getMockBuilder(ConfigDataFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
 
         $configDataFactoryMock->method('create')
@@ -66,7 +66,7 @@ class ConfigGeneratorTest extends TestCase
 
         $this->driverOptionsMock = $this->getMockBuilder(DriverOptions::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getDriverOptions'])
+            ->setMethods(['getDriverOptions'])
             ->getMock();
 
         $this->model = $objectManager->getObject(

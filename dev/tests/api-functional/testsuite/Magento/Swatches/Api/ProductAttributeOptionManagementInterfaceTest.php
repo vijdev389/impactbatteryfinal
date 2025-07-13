@@ -126,7 +126,7 @@ class ProductAttributeOptionManagementInterfaceTest extends WebapiAbstract
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function addDataProvider(): array
+    public function addDataProvider(): array
     {
         return [
             'visual swatch option with value' => [

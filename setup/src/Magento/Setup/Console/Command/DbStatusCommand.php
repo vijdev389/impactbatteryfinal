@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Setup\Console\Command;
 
@@ -24,10 +24,11 @@ class DbStatusCommand extends AbstractSetupCommand
     /**
      * Code for error when application upgrade is required.
      */
-    public const EXIT_CODE_UPGRADE_REQUIRED = 2;
-    public const NAME = 'setup:db:status';
+    const EXIT_CODE_UPGRADE_REQUIRED = 2;
 
     /**
+     * Object manager provider
+     *
      * @var ObjectManagerProvider
      */
     private $objectManagerProvider;
@@ -68,17 +69,17 @@ class DbStatusCommand extends AbstractSetupCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('setup:db:status')
             ->setDescription('Checks if DB schema or data requires upgrade');
         parent::configure();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

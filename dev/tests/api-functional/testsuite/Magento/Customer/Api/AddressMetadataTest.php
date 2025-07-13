@@ -84,7 +84,7 @@ class AddressMetadataTest extends WebapiAbstract
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function getAttributeMetadataDataProvider()
+    public function getAttributeMetadataDataProvider()
     {
         return [
             Address::POSTCODE => [
@@ -289,9 +289,9 @@ class AddressMetadataTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function getAttributesDataProvider()
+    public function getAttributesDataProvider()
     {
-        $attributeMetadata = self::getAttributeMetadataDataProvider();
+        $attributeMetadata = $this->getAttributeMetadataDataProvider();
         return [
             [
                 'customer_address_edit',

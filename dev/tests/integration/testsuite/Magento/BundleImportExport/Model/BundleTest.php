@@ -12,7 +12,7 @@ class BundleTest extends AbstractProductExportImportTestCase
     /**
      * @return array
      */
-    public static function exportImportDataProvider(): array
+    public function exportImportDataProvider(): array
     {
         return [
             // @todo uncomment after MAGETWO-49677 resolved

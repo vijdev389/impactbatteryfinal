@@ -102,7 +102,6 @@ class RenderingBasedOnIsProductListFlagTest extends \PHPUnit\Framework\TestCase
     public function testRenderingAccordingToIsProductListFlag($flag)
     {
         $this->finalPriceBox->setData('is_product_list', $flag);
-        $this->finalPriceBox->setData('special_price_map', [$this->product->getId() => true]);
         $html = $this->finalPriceBox->toHtml();
         self::assertStringContainsString('5.99', $html);
         $this->assertGreaterThanOrEqual(
@@ -124,7 +123,7 @@ class RenderingBasedOnIsProductListFlagTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function isProductListDataProvider()
+    public function isProductListDataProvider()
     {
         return [
             'is_not_product_list' => [false],

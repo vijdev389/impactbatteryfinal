@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2020 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -36,7 +36,8 @@ class SearchConfigOptionsListTest extends TestCase
         $this->assertEquals('search-engine', $optionsList[0]->getName());
 
         $selectOptions = $optionsList[0]->getSelectOptions();
-        $this->assertCount(2, $selectOptions);
+        $this->assertCount(3, $selectOptions);
+        $this->assertContains('elasticsearch7', $selectOptions);
         $this->assertContains('elasticsearch8', $selectOptions);
         $this->assertContains('opensearch', $selectOptions);
 

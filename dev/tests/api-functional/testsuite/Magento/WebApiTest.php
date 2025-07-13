@@ -11,11 +11,11 @@ use Magento\TestFramework\SkippableInterface;
 use Magento\TestFramework\Workaround\Override\Config;
 use Magento\TestFramework\Workaround\Override\WrapperGenerator;
 use PHPUnit\Framework\TestSuite;
-use PHPUnit\TextUI\XmlConfiguration\TestSuiteMapper;
+use PHPUnit\TextUI\TestSuiteMapper;
 use PHPUnit\TextUI\XmlConfiguration\Configuration;
 use PHPUnit\TextUI\XmlConfiguration\Loader;
-use PHPUnit\TextUI\Configuration\TestSuite as TestSuiteConfiguration;
-use PHPUnit\TextUI\Configuration\TestSuiteCollection;
+use PHPUnit\TextUI\XmlConfiguration\TestSuite as TestSuiteConfiguration;
+use PHPUnit\TextUI\XmlConfiguration\TestSuiteCollection;
 
 /**
  * Web API tests wrapper.
@@ -35,19 +35,19 @@ class WebApiTest extends TestSuite
         $overrideConfig = Config::getInstance();
         $configuration = self::getConfiguration();
         $suitesConfig = $configuration->testSuite();
-        $suite = TestSuite::fromClassName($className);
+        $suite = new TestSuite();
         foreach ($suitesConfig as $suiteConfig) {
             $suites = self::getSuites($suiteConfig);
             /** @var TestSuite $testSuite */
             foreach ($suites as $testSuite) {
                 /** @var TestSuite $test */
                 foreach ($testSuite as $test) {
-                    $testName = $test->name();
+                    $testName = $test->getName();
 
                     if ($overrideConfig->hasSkippedTest($testName) && !$test instanceof SkippableInterface) {
                         $reflectionClass = new \ReflectionClass($testName);
                         $resultTest = $generator->generateTestWrapper($reflectionClass);
-                        $suite->addTest(TestSuite::fromClassName($resultTest));
+                        $suite->addTest(new TestSuite($resultTest, $testName));
                     } else {
                         $suite->addTest($test);
                     }
@@ -91,8 +91,6 @@ class WebApiTest extends TestSuite
      */
     private static function getSuites($suiteConfig)
     {
-        return (new TestSuiteMapper())->map(self::getConfigurationFile(),
-            TestSuiteCollection::fromArray([$suiteConfig]),'', ''
-        );
+        return (new TestSuiteMapper())->map(TestSuiteCollection::fromArray([$suiteConfig]), '');
     }
 }

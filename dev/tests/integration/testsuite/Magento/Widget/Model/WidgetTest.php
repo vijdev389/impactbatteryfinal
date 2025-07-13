@@ -55,7 +55,7 @@ class WidgetTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getPlaceholderImageUrlDataProvider()
+    public function getPlaceholderImageUrlDataProvider()
     {
         return [
             'custom image' => [\Magento\Catalog\Block\Product\Widget\NewWidget::class,

@@ -39,7 +39,7 @@
         "magefan/module-blog-graph-ql": "^2.1",
         "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0.4",
-        "magento/product-community-edition": "2.4.8",
+        "magento/product-community-edition": "2.4.7-p6",
         "magento/quality-patches": "^1.1",
         "mageplaza/module-delete-orders": "^4.0",
         "mageworx/module-seosuiteultimate": "^2.38",
@@ -59,7 +59,7 @@
         "exclude-from-classmap": [
             "**/dev/**",
             "**/update/**",
-            "*/*/Test/**/*Test"
+            "**/Test/**"
         ],
         "files": [
             "app/etc/NonComposerComponentRegistration.php"
@@ -75,17 +75,18 @@
         }
     },
     "require-dev": {
-        "magento/magento-allure-phpunit": "^3.0.2",
+        "allure-framework/allure-phpunit": "^2",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
         "dg/bypass-finals": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.22",
-        "carlos-mg89/oauth": "^0.8.17",
+        "lusitanian/oauth": "^0.8",
         "magento/magento-coding-standard": "*",
-        "magento/magento2-functional-testing-framework": "^5.0",
-        "pdepend/pdepend": "3.x-dev",
-        "phpmd/phpmd": "3.x-dev",
+        "magento/magento2-functional-testing-framework": "^4.7",
+        "pdepend/pdepend": "^2.10",
+        "phpmd/phpmd": "^2.12",
         "phpstan/phpstan": "^1.9",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^9.5",
+        "sebastian/phpcpd": "^6.0",
         "symfony/finder": "^6.4"
     },
     "conflict": {

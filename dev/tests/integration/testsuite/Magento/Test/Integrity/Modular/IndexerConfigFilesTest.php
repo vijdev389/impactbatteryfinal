@@ -51,7 +51,7 @@ class IndexerConfigFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function indexerConfigFileDataProvider()
+    public function indexerConfigFileDataProvider()
     {
         return \Magento\Framework\App\Utility\Files::init()->getConfigFiles('indexer.xml');
     }

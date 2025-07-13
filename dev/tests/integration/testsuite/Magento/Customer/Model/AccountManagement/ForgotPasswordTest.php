@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Customer\Model\AccountManagement;
@@ -72,7 +71,7 @@ class ForgotPasswordTest extends TestCase
         $email = 'customer@example.com';
         $result = $this->accountManagement->initiatePasswordReset($email, AccountManagement::EMAIL_RESET);
         $message = $this->transportBuilder->getSentMessage();
-        $messageContent = quoted_printable_decode($message->getBody()->bodyToString());
+        $messageContent = $message->getBody()->getParts()[0]->getRawContent();
         $this->assertTrue($result);
         $this->assertEquals(1, Xpath::getElementsCountForXpath($this->newPasswordLinkPath, $messageContent));
     }
@@ -92,7 +91,7 @@ class ForgotPasswordTest extends TestCase
         $customerId = (int)$customer->getId();
         $result = $this->accountManagement->initiatePasswordReset($email, AccountManagement::EMAIL_RESET);
         $message = $this->transportBuilder->getSentMessage();
-        $messageContent = quoted_printable_decode($message->getBody()->bodyToString());
+        $messageContent = $message->getBody()->getParts()[0]->getRawContent();
         $this->assertTrue($result);
         $this->assertEquals(1, Xpath::getElementsCountForXpath($this->newPasswordLinkPath, $messageContent));
 

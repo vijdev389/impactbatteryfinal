@@ -31,8 +31,7 @@ define(['squire', 'ko', 'jquery', 'jquery/validate'], function (Squire, ko, $) {
                         'getCheckedEmailValue'
                     ]
                 ),
-                'Magento_Checkout/js/model/full-screen-loader': jasmine.createSpy(),
-                'Magento_Checkout/js/view/shipping': jasmine.createSpy()
+                'Magento_Checkout/js/model/full-screen-loader': jasmine.createSpy()
             },
             Component;
 

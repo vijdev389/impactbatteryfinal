@@ -165,7 +165,7 @@ class MassScheduleTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function publisherExceptionDataProvider(): array
+    public function publisherExceptionDataProvider(): array
     {
         return [
             [new \InvalidArgumentException('Unknown publisher type async')],
@@ -297,7 +297,7 @@ class MassScheduleTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    private static function getProduct()
+    private function getProduct()
     {
         /** @var $product \Magento\Catalog\Model\Product */
         $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
@@ -318,20 +318,20 @@ class MassScheduleTest extends \PHPUnit\Framework\TestCase
         return $product;
     }
 
-    public static function productDataProvider()
+    public function productDataProvider()
     {
         return [
             'single_product' => [
-                [['product' => self::getProduct()]],
+                [['product' => $this->getProduct()]],
             ],
             'multiple_products' => [
                 [
-                    ['product' => self::getProduct()
+                    ['product' => $this->getProduct()
                         ->setName('Simple Product 3')
                         ->setSku('unique-simple-product3')
                         ->setMetaTitle('meta title 3')
                     ],
-                    ['product' => self::getProduct()
+                    ['product' => $this->getProduct()
                         ->setName('Simple Product 2')
                         ->setSku('unique-simple-product2')
                         ->setMetaTitle('meta title 2')
@@ -341,16 +341,16 @@ class MassScheduleTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public static function productExceptionDataProvider()
+    public function productExceptionDataProvider()
     {
         return [
             'single_product' => [
-                [['product' => self::getProduct()]],
+                [['product' => $this->getProduct()]],
             ],
             'multiple_products' => [
                 [
-                    ['product' => self::getProduct()],
-                    ['customer' => self::getProduct()]
+                    ['product' => $this->getProduct()],
+                    ['customer' => $this->getProduct()]
                 ]
             ],
         ];

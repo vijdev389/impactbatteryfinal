@@ -40,7 +40,7 @@ class AbstractEavTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->_model = $this->getMockBuilder(\Magento\ImportExport\Model\Export\Entity\AbstractEav::class)
-            ->onlyMethods(['getEntityTypeCode', 'getAttributeCollection'])
+            ->setMethods(['getEntityTypeCode', 'getAttributeCollection'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 

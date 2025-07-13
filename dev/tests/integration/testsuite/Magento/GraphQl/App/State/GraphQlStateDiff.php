@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2023 Adobe
+ * All Rights Reserved.
  */
 declare(strict_types=1);
 
@@ -69,9 +69,18 @@ class GraphQlStateDiff
 
     /**
      * Constructor
+     *
+     * @param TestCase $test
      */
-    public function __construct()
+    public function __construct(TestCase $test)
     {
+        if (8 == PHP_MAJOR_VERSION && 3 == PHP_MINOR_VERSION && PHP_RELEASE_VERSION  < 5) {
+            $test->markTestSkipped(
+                "This test isn't compatible with PHP 8.3 versions less than PHP 8.3.5 because of "
+                . "bug in garbage collector. https://github.com/php/php-src/issues/13569"
+                . " will roll back in AC-11491"
+            );
+        }
         $this->objectManagerBeforeTest = Bootstrap::getObjectManager();
         $this->objectManagerForTest = new ObjectManager($this->objectManagerBeforeTest);
         $this->objectManagerForTest->getFactory()->setObjectManager($this->objectManagerForTest);
@@ -101,7 +110,6 @@ class GraphQlStateDiff
      */
     public function tearDown(): void
     {
-        $this->appState->setAreaCode($this->currentArea);
         $this->objectManagerBeforeTest->getFactory()->setObjectManager($this->objectManagerBeforeTest);
         AppObjectManager::setInstance($this->objectManagerBeforeTest);
         Bootstrap::setObjectManager($this->objectManagerBeforeTest);

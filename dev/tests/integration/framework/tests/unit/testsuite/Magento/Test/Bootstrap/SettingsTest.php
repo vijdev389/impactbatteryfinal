@@ -19,7 +19,7 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
     /**
      * @var string
      */
-    private static string $_fixtureDir;
+    protected $_fixtureDir;
 
     /**
      * Define the fixture directory to be used in both data providers and tests
@@ -31,13 +31,13 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        self::$_fixtureDir = realpath(__DIR__ . '/_files') . '/';
+        $this->_fixtureDir = realpath(__DIR__ . '/_files') . '/';
     }
 
     protected function setUp(): void
     {
         $this->_object = new \Magento\TestFramework\Bootstrap\Settings(
-            self::$_fixtureDir,
+            $this->_fixtureDir,
             [
                 'item_label' => 'Item Label',
                 'number_of_items' => 42,
@@ -82,7 +82,7 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectedResult, $this->_object->get($settingName, $defaultValue));
     }
 
-    public static function getDataProvider(): array
+    public function getDataProvider()
     {
         return [
             'string type' => ['item_label', null, 'Item Label'],
@@ -105,7 +105,7 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectedResult, $this->_object->getAsBoolean($settingName));
     }
 
-    public static function getAsBooleanDataProvider(): array
+    public function getAsBooleanDataProvider()
     {
         return [
             'non-enabled string' => ['item_label', false],
@@ -125,14 +125,14 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectedResult, $this->_object->getAsFile($settingName, $defaultValue));
     }
 
-    public static function getAsFileDataProvider(): array
+    public function getAsFileDataProvider()
     {
         return [
-            'existing file' => ['test_file', '', self::$_fixtureDir. 'metrics.php'],
-            'zero value setting' => ['zero_value', 'default_should_be_ignored', self::$_fixtureDir. '0'],
+            'existing file' => ['test_file', '', "{$this->_fixtureDir}metrics.php"],
+            'zero value setting' => ['zero_value', 'default_should_be_ignored', "{$this->_fixtureDir}0"],
             'empty default value' => ['non_existing_file', '', ''],
-            'zero default value' => ['non_existing_file', '0', self::$_fixtureDir. '0'],
-            'default value' => ['non_existing_file', 'metrics.php', self::$_fixtureDir. 'metrics.php']
+            'zero default value' => ['non_existing_file', '0', "{$this->_fixtureDir}0"],
+            'default value' => ['non_existing_file', 'metrics.php', "{$this->_fixtureDir}metrics.php"]
         ];
     }
 
@@ -150,23 +150,23 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
-    public static function getAsMatchingPathsDataProvider(): array
+    public function getAsMatchingPathsDataProvider()
     {
         return [
             'single pattern' => [
                 'all_xml_files',
-                [self::$_fixtureDir. '1.xml', self::$_fixtureDir. '2.xml'],
+                ["{$this->_fixtureDir}1.xml", "{$this->_fixtureDir}2.xml"],
             ],
             'pattern with braces' => [
                 'all_xml_or_one_php_file',
-                [self::$_fixtureDir. '1.xml', self::$_fixtureDir. '2.xml', self::$_fixtureDir. '4.php'],
+                ["{$this->_fixtureDir}1.xml", "{$this->_fixtureDir}2.xml", "{$this->_fixtureDir}4.php"],
             ],
             'multiple patterns' => [
                 'one_xml_or_any_php_file',
-                [self::$_fixtureDir. '1.xml', self::$_fixtureDir. '4.php'],
+                ["{$this->_fixtureDir}1.xml", "{$this->_fixtureDir}4.php"],
             ],
             'non-existing setting' => ['non_existing', []],
-            'setting with zero value' => ['zero_value', [self::$_fixtureDir. '0']]
+            'setting with zero value' => ['zero_value', ["{$this->_fixtureDir}0"]]
         ];
     }
 
@@ -184,12 +184,12 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
-    public static function getAsConfigFileDataProvider(): array
+    public function getAsConfigFileDataProvider()
     {
         return [
-            'config file & dist file' => ['config_file_with_dist', self::$_fixtureDir. '1.xml'],
-            'config file & no dist file' => ['config_file_no_dist', self::$_fixtureDir. '2.xml'],
-            'no config file & dist file' => ['no_config_file_dist', self::$_fixtureDir. '3.xml.dist']
+            'config file & dist file' => ['config_file_with_dist', "{$this->_fixtureDir}1.xml"],
+            'config file & no dist file' => ['config_file_no_dist', "{$this->_fixtureDir}2.xml"],
+            'no config file & dist file' => ['no_config_file_dist', "{$this->_fixtureDir}3.xml.dist"]
         ];
     }
 
@@ -205,7 +205,7 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         $this->_object->getAsConfigFile($settingName);
     }
 
-    public static function getAsConfigFileExceptionDataProvider(): array
+    public function getAsConfigFileExceptionDataProvider()
     {
         return [
             'non-existing setting' => [
@@ -214,7 +214,7 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
             ],
             'non-existing file' => [
                 'item_label',
-                __("Setting 'item_label' specifies the non-existing file '%1Item Label.dist'.", self::$_fixtureDir),
+                __("Setting 'item_label' specifies the non-existing file '%1Item Label.dist'.", $this->_fixtureDir),
             ]
         ];
     }

@@ -1,7 +1,6 @@
 <?php
 /**
- * Copyright 2025 Adobe
- * All rights reserved.
+ * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 

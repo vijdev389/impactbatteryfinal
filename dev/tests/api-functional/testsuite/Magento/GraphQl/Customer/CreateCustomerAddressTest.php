@@ -340,7 +340,7 @@ MUTATION;
     public function testCreateCustomerAddressWithMissingAttribute()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('"firstname" is required. Enter and try again.');
+        $this->expectExceptionMessage('Required parameters are missing: firstname');
 
         $mutation
             = <<<MUTATION
@@ -807,7 +807,7 @@ MUTATION;
     /**
      * @return array
      */
-    public static function invalidInputDataProvider()
+    public function invalidInputDataProvider()
     {
         return [
             ['', 'Syntax Error: Expected Name, found )'],

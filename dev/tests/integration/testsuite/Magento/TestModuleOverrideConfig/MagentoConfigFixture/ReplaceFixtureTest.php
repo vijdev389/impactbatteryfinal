@@ -76,14 +76,14 @@ class ReplaceFixtureTest extends AbstractOverridesTest
     /**
      * @return array
      */
-    public static function testDataProvider(): array
+    public function testDataProvider(): array
     {
         return [
             'first_data_set' => [
-                'expectedConfigValue' => 'Overridden fixture for method',
+                'expected_config_value' => 'Overridden fixture for method',
             ],
             'second_data_set' => [
-                'expectedConfigValue' => 'Overridden fixture for data set',
+                'expected_config_value' => 'Overridden fixture for data set',
             ],
         ];
     }
@@ -120,14 +120,14 @@ class ReplaceFixtureTest extends AbstractOverridesTest
     /**
      * @return array
      */
-    public static function configValuesProvider(): array
+    public function configValuesProvider(): array
     {
         return [
             'first_data_set' => [
-                'expectedConfigValue' => 'Overridden fixture for method from third module',
+                'expected_config_value' => 'Overridden fixture for method from third module',
             ],
             'second_data_set' => [
-                'expectedConfigValue' => 'Overridden fixture for data set from third module',
+                'expected_config_value' => 'Overridden fixture for data set from third module',
             ],
         ];
     }

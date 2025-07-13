@@ -52,7 +52,7 @@ class MinsaleqtyTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function saveAndLoadDataProvider()
+    public function saveAndLoadDataProvider()
     {
         $objectManager = Bootstrap::getObjectManager();
         $groupManagement = $objectManager->create(GroupManagementInterface::class);

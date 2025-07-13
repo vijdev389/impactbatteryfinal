@@ -10,7 +10,6 @@ declare(strict_types=1);
  *
  * @var array
  */
-global $taxCalculationData;
 $taxCalculationData = [];
 //phpcs:disable Magento2.Security.IncludeFile
 require_once __DIR__ . '/scenarios/excluding_tax_apply_tax_after_discount.php';

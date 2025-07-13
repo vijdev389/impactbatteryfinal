@@ -467,6 +467,7 @@
                 "components/jquery": "1.11.0",
                 "components/jqueryui": "1.10.4",
                 "linkorb/jsmin-php": "1.1.2",
+                "tinymce/tinymce": "3.4.7",
                 "trentrichardson/jquery-timepicker-addon": "1.4.3",
                 "twbs/bootstrap": "3.1.0"
             },
@@ -490,7 +491,8 @@
                     ],
                     "twbs/bootstrap": [
                         "lib/web/jquery/jquery.tabs.js"
-                    ]
+                    ],
+                    "tinymce/tinymce": "lib/web/tiny_mce"
                 },
                 "map": [
                     [
@@ -604,6 +606,10 @@
                     [
                         "lib/web/mage",
                         "lib/web/mage"
+                    ],
+                    [
+                        "lib/web/tiny_mce",
+                        "lib/web/tiny_mce"
                     ],
                     [
                         ".htaccess.sample",

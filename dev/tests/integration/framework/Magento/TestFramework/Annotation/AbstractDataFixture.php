@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2020 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -11,6 +11,8 @@ use Magento\TestFramework\Fixture\ParserInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\TestFramework\Workaround\Override\Fixture\Resolver;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class consist of dataFixtures base logic
@@ -63,8 +65,9 @@ abstract class AbstractDataFixture
         } catch (\Throwable $exception) {
             ExceptionHandler::handle(
                 'Unable to parse fixtures',
-                $exception,
-                $test
+                get_class($test),
+                $test->getName(false),
+                $exception
             );
         }
 
@@ -114,7 +117,7 @@ abstract class AbstractDataFixture
             }
             $fixture['test'] = [
                 'class' => get_class($test),
-                'method' => $test->name(),
+                'method' => $test->getName(false),
                 'dataSet' => $test->dataName(),
             ];
             try {
@@ -122,8 +125,9 @@ abstract class AbstractDataFixture
             } catch (\Throwable $exception) {
                 ExceptionHandler::handle(
                     'Unable to apply fixture: ' . $this->getFixtureReference($fixture),
-                    $exception,
-                    $test
+                    $fixture['test']['class'],
+                    $fixture['test']['method'],
+                    $exception
                 );
             }
             $this->_appliedFixtures[] = $fixture;
@@ -151,8 +155,9 @@ abstract class AbstractDataFixture
             } catch (\Throwable $exception) {
                 ExceptionHandler::handle(
                     'Unable to revert fixture: ' . $this->getFixtureReference($fixture),
-                    $exception,
-                    $test
+                    $fixture['test']['class'],
+                    $fixture['test']['method'],
+                    $exception
                 );
             }
         }
@@ -217,7 +222,7 @@ abstract class AbstractDataFixture
      */
     private function getTestKey(TestCase $test): string
     {
-        return sprintf('%s::%s', get_class($test), $test->nameWithDataSet());
+        return sprintf('%s::%s', get_class($test), $test->getName());
     }
 
     /**

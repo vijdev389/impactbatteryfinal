@@ -92,11 +92,11 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
      * Test cases for current test
      * @return array
      */
-    public static function getTestCases()
+    public function getTestCases()
     {
         return [
             '#1 Testing price for dynamic bundle product with one simple' => [
-                'strategyModifiers' => self::getBundleConfiguration1(),
+                'strategy' => $this->getBundleConfiguration1(),
                 'expectedResults' => [
                     // just price from simple1
                     'minimalPrice' => 10,
@@ -106,7 +106,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
             ],
 
             '#2 Testing price for dynamic bundle product with three simples and different qty' => [
-                'strategyModifiers' => self::getBundleConfiguration2(),
+                'strategy' => $this->getBundleConfiguration2(),
                 'expectedResults' => [
                     // min price from simples 3*10 or 30
                     'minimalPrice' => 30,
@@ -116,7 +116,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
             ],
 
             '#3 Testing price for dynamic bundle product with four simples and different price' => [
-                'strategyModifiers' => self::getBundleConfiguration3(),
+                'strategy' => $this->getBundleConfiguration3(),
                 'expectedResults' => [
                     //  10
                     'minimalPrice' => 10,
@@ -126,7 +126,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
             ],
 
             '#4 Testing price for dynamic bundle with two non required options' => [
-                'strategyModifiers' => self::getBundleConfiguration4(),
+                'strategy' => $this->getBundleConfiguration4(),
                 'expectedResults' => [
                     // 1 * 10
                     'minimalPrice' => 10,
@@ -136,7 +136,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
             ],
 
             '#5 Testing price for dynamic bundle with two required options' => [
-                'strategyModifiers' => self::getBundleConfiguration5(),
+                'strategy' => $this->getBundleConfiguration5(),
                 'expectedResults' => [
                     // 1 * 10 + 1 * 10
                     'minimalPrice' => 20,
@@ -152,7 +152,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
      *
      * @return array
      */
-    private static function getBundleConfiguration1()
+    private function getBundleConfiguration1()
     {
         $optionsData = [
             [
@@ -183,7 +183,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
      *
      * @return array
      */
-    private static function getBundleConfiguration2()
+    private function getBundleConfiguration2()
     {
         $optionsData = [
             [
@@ -226,7 +226,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
      *
      * @return array
      */
-    private static function getBundleConfiguration3()
+    private function getBundleConfiguration3()
     {
         $optionsData = [
             [
@@ -268,7 +268,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
      * Dynamic bundle with two non required options and special price
      * @return array
      */
-    private static function getBundleConfiguration4()
+    private function getBundleConfiguration4()
     {
         $optionsData = [
             [
@@ -323,7 +323,7 @@ class DynamicBundlePriceCalculatorTest extends BundlePriceAbstract
      * Dynamic bundle with two required options
      * @return array
      */
-    private static function getBundleConfiguration5()
+    private function getBundleConfiguration5()
     {
         $optionsData = [
             [

@@ -87,7 +87,7 @@ class TaxTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @return array
      */
-    public static function ajaxActionDataProvider()
+    public function ajaxActionDataProvider()
     {
         return [
             [

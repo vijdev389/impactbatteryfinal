@@ -21,18 +21,18 @@ class DateTime extends AbstractBaseAttributeData
     public function __construct()
     {
         parent::__construct();
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
+        $this->defaultAttributePostData['used_for_sort_by'] = '0';
     }
 
     /**
      * @inheritdoc
      */
-    public static function getAttributeData(): array
+    public function getAttributeData(): array
     {
         return array_replace_recursive(
             parent::getAttributeData(),
             [
-                "{static::getFrontendInput()}_with_default_value" => [
+                "{$this->getFrontendInput()}_with_default_value" => [
                     [
                         'default_value_text' => '',
                         'default_value_datetime' => '02/4/2020 6:30 AM',
@@ -45,12 +45,12 @@ class DateTime extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getAttributeDataWithCheckArray(): array
+    public function getAttributeDataWithCheckArray(): array
     {
         return array_replace_recursive(
             parent::getAttributeDataWithCheckArray(),
             [
-                "{static::getFrontendInput()}_with_default_value" => [
+                "{$this->getFrontendInput()}_with_default_value" => [
                     1 => [
                         'default_value' => '2020-02-04 06:30:00',
                     ],
@@ -62,17 +62,17 @@ class DateTime extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getUpdateProvider(): array
+    public function getUpdateProvider(): array
     {
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProvider(),
             [
                 "{$frontendInput}_other_attribute_code" => [
-                    'postData' => [
+                    'post_data' => [
                         'attribute_code' => 'text_attribute_update',
                     ],
-                    'expectedData' => [
+                    'expected_data' => [
                         'attribute_code' => 'datetime_attribute',
                     ],
                 ],
@@ -83,17 +83,17 @@ class DateTime extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getUpdateProviderWithErrorMessage(): array
+    public function getUpdateProviderWithErrorMessage(): array
     {
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProviderWithErrorMessage(),
             [
                 "{$frontendInput}_wrong_default_value" => [
-                    'postData' => [
+                    'post_data' => [
                         'default_value_datetime' => '//02/4/2020 6:30 AM',
                     ],
-                    'errorMessage' => (string)__('The default date is invalid. Verify the date and try again.'),
+                    'error_message' => (string)__('The default date is invalid. Verify the date and try again.'),
                 ],
             ]
         );
@@ -102,7 +102,7 @@ class DateTime extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getFrontendInput(): string
+    protected function getFrontendInput(): string
     {
         return 'datetime';
     }
@@ -110,7 +110,7 @@ class DateTime extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getUpdatePostData(): array
+    protected function getUpdatePostData(): array
     {
         return [
             'frontend_label' => [
@@ -139,9 +139,9 @@ class DateTime extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getUpdateExpectedData(): array
+    protected function getUpdateExpectedData(): array
     {
-        $updatePostData = static::getUpdatePostData();
+        $updatePostData = $this->getUpdatePostData();
         unset($updatePostData['default_value_datetime']);
         return array_merge(
             $updatePostData,

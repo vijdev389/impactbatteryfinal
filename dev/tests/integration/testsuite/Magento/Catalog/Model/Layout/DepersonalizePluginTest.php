@@ -74,7 +74,7 @@ class DepersonalizePluginTest extends TestCase
     /**
      * @return array
      */
-    public static function afterGenerateElementsDataProvider(): array
+    public function afterGenerateElementsDataProvider(): array
     {
         return [
             'cacheable' => [

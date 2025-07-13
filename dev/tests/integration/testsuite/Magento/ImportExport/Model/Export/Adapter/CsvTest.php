@@ -22,7 +22,7 @@ class CsvTest extends TestCase
     /**
      * @var string Destination file name
      */
-    private static $destination = 'destinationFile';
+    private $destination = 'destinationFile';
 
     /**
      * @var ObjectManagerInterface
@@ -74,11 +74,11 @@ class CsvTest extends TestCase
      *
      * @return array
      */
-    public static function destructDataProvider(): array
+    public function destructDataProvider(): array
     {
         return [
-            'temporary file' => [self::$destination, true],
-            'import history file' => [Import::IMPORT_HISTORY_DIR . self::$destination, false],
+            'temporary file' => [$this->destination, true],
+            'import history file' => [Import::IMPORT_HISTORY_DIR . $this->destination, false],
         ];
     }
 }

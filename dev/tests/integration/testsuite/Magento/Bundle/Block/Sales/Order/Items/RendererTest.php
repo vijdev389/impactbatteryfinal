@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Bundle\Block\Sales\Order\Items;
@@ -205,9 +204,6 @@ class RendererTest extends TestCase
         $sentMessage = $transportBuilderMock->getSentMessage();
 
         $this->assertNotNull($sentMessage);
-        $this->assertStringContainsString(
-            $currencyCodeSymbol,
-            quoted_printable_decode($sentMessage->getBody()->bodyToString())
-        );
+        $this->assertStringContainsString($currencyCodeSymbol, $sentMessage->getBodyText());
     }
 }

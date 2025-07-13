@@ -367,7 +367,7 @@ class InstallCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function validateDataProvider()
+    public function validateDataProvider()
     {
         return [
             'without option' => ['', ''],
@@ -379,7 +379,7 @@ class InstallCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function validateWithExceptionDataProvider()
+    public function validateWithExceptionDataProvider()
     {
         return [
             ['123456789012345678901', 'InvalidArgumentException'],

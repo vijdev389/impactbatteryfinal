@@ -264,14 +264,14 @@ class MagentoStyleTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $input = $this->getMockBuilder(InputInterface::class)
-            ->onlyMethods(['isInteractive'])
+            ->setMethods(['isInteractive'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $input->expects($this->exactly(2))
             ->method('isInteractive')
             ->willReturn(false);
         $output = $this->getMockBuilder(OutputInterface::class)
-            ->onlyMethods(['getVerbosity', 'getFormatter'])
+            ->setMethods(['getVerbosity', 'getFormatter'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $output->expects($this->once())

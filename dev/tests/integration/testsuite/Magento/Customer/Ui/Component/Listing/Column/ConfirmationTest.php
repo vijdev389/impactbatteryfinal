@@ -59,7 +59,7 @@ class ConfirmationTest extends TestCase
      *
      * @return array
      */
-    public static function customersDataProvider(): array
+    public function customersDataProvider(): array
     {
         return [
             [

@@ -62,7 +62,7 @@ class ExecuteProcessForCustomStoreTest extends UpdateHandlerAbstract
     /**
      * @return array
      */
-    public static function getCustomStoreDataProvider()
+    public function getCustomStoreDataProvider()
     {
         return [
             ['description', '', 'not_empty_value', 'not_empty_value'],                  //0

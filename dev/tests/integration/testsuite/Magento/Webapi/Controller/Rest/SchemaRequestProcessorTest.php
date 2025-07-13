@@ -43,7 +43,7 @@ class SchemaRequestProcessorTest extends AbstractController
     /**
      * @return array
      */
-    public static function schemaRequestProvider()
+    public function schemaRequestProvider()
     {
         return [
             ['rest/schema'],

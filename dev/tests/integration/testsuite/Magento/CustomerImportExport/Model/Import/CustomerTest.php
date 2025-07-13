@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2014 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\CustomerImportExport\Model\Import;
@@ -495,8 +495,7 @@ class CustomerTest extends \PHPUnit\Framework\TestCase
     /**
      * Test customer indexer gets invalidated after import when Update on Schedule mode is set
      *
-     * @magentoAppIsolation enabled
-     * @magentoDbIsolation disabled
+     * @magentoDbIsolation enabled
      * @return void
      */
     public function testCustomerIndexer(): void

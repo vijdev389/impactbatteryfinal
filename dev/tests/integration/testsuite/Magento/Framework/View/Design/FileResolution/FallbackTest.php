@@ -82,7 +82,7 @@ class FallbackTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getTemplateFileDataProvider()
+    public function getTemplateFileDataProvider()
     {
         return [
             'non-modular: no default inheritance' => [
@@ -143,7 +143,7 @@ class FallbackTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public static function getLocaleFileDataProvider()
+    public function getLocaleFileDataProvider()
     {
         return [
             'no default inheritance' => [
@@ -190,7 +190,7 @@ class FallbackTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public static function getViewFileDataProvider()
+    public function getViewFileDataProvider()
     {
         return [
             'non-modular: no default inheritance' => [
@@ -293,7 +293,7 @@ class FallbackTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getEmailTemplateFileDataProvider()
+    public function getEmailTemplateFileDataProvider()
     {
         return [
             'no fallback' => [

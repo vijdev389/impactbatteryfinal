@@ -123,7 +123,7 @@ class ModuleEnableDisableCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeDataProvider()
+    public function executeDataProvider()
     {
         return [
             'enable, do not clear static content' => [
@@ -222,7 +222,7 @@ class ModuleEnableDisableCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeAllDataProvider()
+    public function executeAllDataProvider()
     {
         return [
             'enable'  => [true, '%amodules have been enabled%aMagento_Module1%a'],
@@ -257,7 +257,7 @@ class ModuleEnableDisableCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeWithConstraintsDataProvider()
+    public function executeWithConstraintsDataProvider()
     {
         return [
             'enable'  => [true],
@@ -293,7 +293,7 @@ class ModuleEnableDisableCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeExecuteForceDataProvider()
+    public function executeExecuteForceDataProvider()
     {
         return [
             'enable'  => [true, '%amodules have been enabled%aMagento_Module1%a'],

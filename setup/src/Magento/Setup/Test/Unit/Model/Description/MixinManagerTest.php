@@ -63,15 +63,18 @@ class MixinManagerTest extends TestCase
         $this->mixinFactoryMock
             ->expects($this->exactly(count($mixinList)))
             ->method('create')
-            ->willReturnCallback(function ($arg1) use ($mixinList, $xMixinMock, $yMixinMock, $zMixinMock) {
-                if ($arg1 == $mixinList[0]) {
-                    return $xMixinMock;
-                } elseif ($arg1 == $mixinList[1]) {
-                    return $yMixinMock;
-                } elseif ($arg1 == $mixinList[2]) {
-                    return $zMixinMock;
-                }
-            });
+            ->withConsecutive(
+                [$mixinList[0]],
+                [$mixinList[1]],
+                [$mixinList[2]]
+            )
+            ->will(
+                $this->onConsecutiveCalls(
+                    $xMixinMock,
+                    $yMixinMock,
+                    $zMixinMock
+                )
+            );
 
         $this->assertEquals(
             $description . 'xyz',

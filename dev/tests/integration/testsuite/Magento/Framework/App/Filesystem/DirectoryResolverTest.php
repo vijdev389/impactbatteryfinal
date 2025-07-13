@@ -106,7 +106,7 @@ class DirectoryResolverTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function validatePathDataProvider()
+    public function validatePathDataProvider()
     {
         return [
             [

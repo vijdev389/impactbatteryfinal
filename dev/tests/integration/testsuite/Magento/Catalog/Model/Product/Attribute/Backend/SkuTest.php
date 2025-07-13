@@ -64,9 +64,9 @@ class SkuTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function uniqueSkuDataProvider()
+    public function uniqueSkuDataProvider()
     {
-        $product = self::_getProduct();
+        $product = $this->_getProduct();
         return [[$product]];
     }
 
@@ -75,7 +75,7 @@ class SkuTest extends \PHPUnit\Framework\TestCase
      *
      * @return \Magento\Catalog\Model\Product
      */
-    protected static function _getProduct()
+    protected function _getProduct()
     {
         /** @var $product \Magento\Catalog\Model\Product */
         $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(

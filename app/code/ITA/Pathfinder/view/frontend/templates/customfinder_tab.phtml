@@ -1,0 +1,39 @@
+<?php
+//echo "This is Custom tab in product detail page";
+$blockObj= $block->getLayout()->createBlock('ITA\Pathfinder\Block\Pathfinder');
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+
+$registry = $objectManager->get('\Magento\Framework\Registry'); 
+
+$currentProduct = $registry->registry('current_product');
+
+$sku = $currentProduct->getSku();
+//$helper = $this->helper('ITA\Pathfinder\Helper\Data')
+$finderData = $blockObj->getPathfinderDetailsBySku($sku);
+//echo "<pre>", var_dump($finderData->getData());die;
+if($finderData->getSize()){ ?>
+	<div class="additional-attributes-wrapper table-wrapper">
+		<table class="data table" id="amfinder-product-attribute-specs-table">
+			<thead data-part="head">
+				<tr>
+					<th class="label">Vehicle Type</th>
+					<th class="label">Make</th>
+					<th class="label">Model</th>
+					<th class="label">Year</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($finderData->getData() as $fkey => $fdata){ 
+				?>
+				<tr>
+					<td class="col data"><?= $fdata['vehicle_type']; ?></td>
+					<td class="col data"><?= $fdata['make']; ?></td>
+					<td class="col data"><?= $fdata['model']; ?></td>
+					<td class="col data"><?= $fdata['year']; ?></td>
+				</tr>
+				<?php } ?>
+			</tbody>
+		</table>
+	</div>
+
+<?php } ?>

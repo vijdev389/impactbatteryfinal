@@ -106,7 +106,7 @@ class JoinProcessorTest extends \PHPUnit\Framework\TestCase
 
         $collection = $this->getMockBuilder(\Magento\Framework\Data\Collection\AbstractDb::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['joinExtensionAttribute'])
+            ->setMethods(['joinExtensionAttribute'])
             ->getMockForAbstractClass();
 
         $extensionAttributeJoinData = new JoinData();

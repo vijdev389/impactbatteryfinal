@@ -27,6 +27,11 @@ class ShippingInformationManagementTest extends TestCase
     private $management;
 
     /**
+     * @var CartRepositoryInterface
+     */
+    private $cartRepo;
+
+    /**
      * @var CustomerRepositoryInterface
      */
     private $customerRepo;
@@ -43,6 +48,7 @@ class ShippingInformationManagementTest extends TestCase
     {
         $objectManager = Bootstrap::getObjectManager();
         $this->management = $objectManager->get(ShippingInformationManagementInterface::class);
+        $this->cartRepo = $objectManager->get(CartRepositoryInterface::class);
         $this->customerRepo = $objectManager->get(CustomerRepositoryInterface::class);
         $this->shippingFactory = $objectManager->get(ShippingInformationInterfaceFactory::class);
     }
@@ -59,8 +65,7 @@ class ShippingInformationManagementTest extends TestCase
      */
     public function testDifferentAddresses(bool $swapShipping): void
     {
-        $cartRepository = Bootstrap::getObjectManager()->create(CartRepositoryInterface::class);
-        $cart = $cartRepository->getForCustomer(1);
+        $cart = $this->cartRepo->getForCustomer(1);
         $otherCustomer = $this->customerRepo->get('customer_with_addresses@test.com');
         $otherAddresses = $otherCustomer->getAddresses();
         $otherAddress = array_pop($otherAddresses);
@@ -99,7 +104,7 @@ class ShippingInformationManagementTest extends TestCase
      *
      * @return array
      */
-    public static function getAddressesVariation(): array
+    public function getAddressesVariation(): array
     {
         return [
             'Shipping address swap' => [true],

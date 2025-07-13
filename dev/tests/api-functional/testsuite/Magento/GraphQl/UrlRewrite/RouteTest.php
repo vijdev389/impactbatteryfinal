@@ -382,7 +382,7 @@ QUERY;
         $urlRewriteResourceModel->save($urlRewrite);
     }
 
-    public static function urlRewriteEntitiesDataProvider(): array
+    public function urlRewriteEntitiesDataProvider(): array
     {
         return [
             [

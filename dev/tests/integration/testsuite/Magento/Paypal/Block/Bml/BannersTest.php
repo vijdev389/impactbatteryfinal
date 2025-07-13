@@ -75,7 +75,7 @@ class BannersTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function toHtmlDataProvider()
+    public function toHtmlDataProvider()
     {
         return [
             [

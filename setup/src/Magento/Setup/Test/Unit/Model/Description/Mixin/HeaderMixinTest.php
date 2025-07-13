@@ -33,7 +33,7 @@ class HeaderMixinTest extends TestCase
     /**
      * @return array
      */
-    public static function getTestData()
+    public function getTestData()
     {
         return [
             ['', ''],

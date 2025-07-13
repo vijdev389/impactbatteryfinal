@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2011 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Catalog\Helper;
 
@@ -54,7 +54,7 @@ class ProductTest extends TestCase
     private $registry;
 
     /**
-     * @inheritDoc
+     * @inheridoc
      */
     protected function setUp(): void
     {

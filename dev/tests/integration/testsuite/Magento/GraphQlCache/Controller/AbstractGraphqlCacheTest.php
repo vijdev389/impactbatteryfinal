@@ -71,7 +71,7 @@ abstract class AbstractGraphqlCacheTest extends TestCase
      *
      * @inheritdoc
      */
-    protected function runTest(): mixed
+    protected function runTest()
     {
         /** @var Reader $reader */
         if (!$this->envConfigPath) {

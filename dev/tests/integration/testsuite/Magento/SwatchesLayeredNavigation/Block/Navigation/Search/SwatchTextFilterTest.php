@@ -40,7 +40,7 @@ class SwatchTextFilterTest extends CategorySwatchTextFilterTest
     /**
      * @return array
      */
-    public static function getFiltersWithCustomAttributeDataProvider(): array
+    public function getFiltersWithCustomAttributeDataProvider(): array
     {
         $dataProvider = parent::getFiltersWithCustomAttributeDataProvider();
 
@@ -48,18 +48,18 @@ class SwatchTextFilterTest extends CategorySwatchTextFilterTest
             $dataProvider,
             [
                 'not_used_in_navigation' => [
-                    'attributeData' => [
+                    'attribute_data' => [
                         'is_filterable_in_search' => 0,
                     ],
                 ],
                 'used_in_navigation_with_results' => [
-                    'attributeData' => [
+                    'attribute_data' => [
                         'is_filterable' => AbstractFilter::ATTRIBUTE_OPTIONS_ONLY_WITH_RESULTS,
                         'is_filterable_in_search' => 1,
                     ],
                 ],
                 'used_in_navigation_without_results' => [
-                    'attributeData' => [
+                    'attribute_data' => [
                         'is_filterable' => 0,
                         'is_filterable_in_search' => 1,
                     ],

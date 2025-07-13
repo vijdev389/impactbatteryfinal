@@ -56,7 +56,7 @@ class LayoutFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function layoutArgumentsDataProvider()
+    public function layoutArgumentsDataProvider()
     {
         $areas = ['adminhtml', 'frontend', 'email'];
         $data = [];

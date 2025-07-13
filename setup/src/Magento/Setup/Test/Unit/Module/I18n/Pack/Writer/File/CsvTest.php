@@ -96,7 +96,7 @@ class CsvTest extends TestCase
     /**
      * @return array
      */
-    public static function writeDictionaryWithRuntimeExceptionDataProvider()
+    public function writeDictionaryWithRuntimeExceptionDataProvider()
     {
         return [
             ['', []],

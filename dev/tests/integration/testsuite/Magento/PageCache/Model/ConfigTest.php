@@ -34,7 +34,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject $vclTemplateLocator */
         $vclTemplateLocator = $this->getMockBuilder(\Magento\PageCache\Model\Varnish\VclTemplateLocator::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getTemplate'])
+            ->setMethods(['getTemplate'])
             ->getMock();
         $vclTemplateLocator->expects($this->any())
             ->method('getTemplate')
@@ -43,7 +43,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject $vclTemplateLocator */
         $vclGeneratorFactory = $this->getMockBuilder(\Magento\PageCache\Model\Varnish\VclGeneratorFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $expectedParams = [
             'backendHost' => 'example.com',

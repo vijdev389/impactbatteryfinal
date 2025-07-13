@@ -47,18 +47,11 @@ class UpdateCartItemsTest extends GraphQlAbstract
         $itemId = $this->getQuoteItemIdByReservedQuoteIdAndSku->execute('test_quote', 'simple_product');
 
         $quantity = 0.5;
-        $query = $this->getMutation($maskedQuoteId, $itemId, $quantity);
-        $response = $this->graphQlMutation($query);
-
-        $this->assertArrayHasKey('updateCartItems', $response);
-        $this->assertArrayHasKey('errors', $response['updateCartItems']);
-
-        $responseError = $response['updateCartItems']['errors'][0];
-        $this->assertEquals(
-            "Could not update the product with SKU simple_product: The fewest you may purchase is 1.",
-            $responseError['message']
+        $this->expectExceptionMessage(
+            "Could not update the product with SKU simple_product: The fewest you may purchase is 1"
         );
-        $this->assertEquals('INVALID_PARAMETER_VALUE', $responseError['code']);
+        $query = $this->getQuery($maskedQuoteId, $itemId, $quantity);
+        $this->graphQlMutation($query);
     }
 
     /**
@@ -72,17 +65,11 @@ class UpdateCartItemsTest extends GraphQlAbstract
         $itemId = $this->getQuoteItemIdByReservedQuoteIdAndSku->execute('test_quote', 'simple_product');
 
         $quantity = 100;
-        $query = $this->getMutation($maskedQuoteId, $itemId, $quantity);
-        $response = $this->graphQlMutation($query);
-        $this->assertArrayHasKey('updateCartItems', $response);
-        $this->assertArrayHasKey('errors', $response['updateCartItems']);
-
-        $responseError = $response['updateCartItems']['errors'][0];
-        $this->assertEquals(
-            "Could not update the product with SKU simple_product: Not enough items for sale",
-            $responseError['message']
+        $this->expectExceptionMessage(
+            "Could not update the product with SKU simple_product: The requested qty is not available"
         );
-        $this->assertEquals('INSUFFICIENT_STOCK', $responseError['code']);
+        $query = $this->getQuery($maskedQuoteId, $itemId, $quantity);
+        $this->graphQlMutation($query);
     }
 
     /**
@@ -91,9 +78,9 @@ class UpdateCartItemsTest extends GraphQlAbstract
      * @param float $quantity
      * @return string
      */
-    private function getMutation(string $maskedQuoteId, int $itemId, float $quantity): string
+    private function getQuery(string $maskedQuoteId, int $itemId, float $quantity): string
     {
-        return <<<MUTATION
+        return <<<QUERY
 mutation {
   updateCartItems(input: {
     cart_id: "{$maskedQuoteId}"
@@ -110,12 +97,8 @@ mutation {
         quantity
       }
     }
-    errors {
-      message
-      code
-    }
   }
 }
-MUTATION;
+QUERY;
     }
 }

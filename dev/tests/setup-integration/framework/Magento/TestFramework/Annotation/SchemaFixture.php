@@ -86,7 +86,10 @@ class SchemaFixture
         if ($scope === null) {
             $annotations = $this->getAnnotations($test);
         } else {
-            $source = TestCaseAnnotation::getInstance()->getAnnotations($test);
+            $source = TestUtil::parseTestMethodAnnotations(
+                get_class($test),
+                $test->getName(false)
+            );
             $annotations = $source[$scope];
         }
         $result = [];
@@ -117,7 +120,11 @@ class SchemaFixture
      */
     private function getAnnotations(\PHPUnit\Framework\TestCase $test)
     {
-        $annotations = TestCaseAnnotation::getInstance()->getAnnotations($test);
+        $annotations = TestUtil::parseTestMethodAnnotations(
+            get_class($test),
+            $test->getName(false)
+        );
+
         return array_replace($annotations['class'], $annotations['method']);
     }
 

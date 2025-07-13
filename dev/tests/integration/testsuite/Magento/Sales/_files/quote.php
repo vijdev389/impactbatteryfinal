@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+\Magento\TestFramework\Helper\Bootstrap::getInstance()->loadArea('frontend');
+
 $storeManager = Magento\TestFramework\Helper\Bootstrap::getObjectManager()
     ->get(\Magento\Store\Model\StoreManagerInterface::class);
 $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\Catalog\Model\Product::class);
@@ -28,8 +30,6 @@ $product->setTypeId('simple')
     )
     ->setWebsiteIds([$storeManager->getStore()->getWebsiteId()])
     ->save();
-
-\Magento\TestFramework\Helper\Bootstrap::getInstance()->loadArea('frontend');
 
 $productRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
     ->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);

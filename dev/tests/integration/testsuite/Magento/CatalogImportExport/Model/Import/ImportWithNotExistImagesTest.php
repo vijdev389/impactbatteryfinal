@@ -148,7 +148,7 @@ class ImportWithNotExistImagesTest extends TestCase
     /**
      * @return array
      */
-    public static function unexistingImagesDataProvider(): array
+    public function unexistingImagesDataProvider(): array
     {
         return [
             ['/m/a/invalid_image.jpg'],

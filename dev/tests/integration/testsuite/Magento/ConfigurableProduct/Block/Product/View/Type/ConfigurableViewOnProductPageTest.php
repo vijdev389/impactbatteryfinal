@@ -88,7 +88,7 @@ class ConfigurableViewOnProductPageTest extends TestCase
     /**
      * @return array
      */
-    public static function oneChildNotVisibleDataProvider(): array
+    public function oneChildNotVisibleDataProvider(): array
     {
         return [
             'one_child_out_of_stock' => [
@@ -99,7 +99,7 @@ class ConfigurableViewOnProductPageTest extends TestCase
                         'is_in_stock' => StockStatusInterface::STATUS_OUT_OF_STOCK,
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     'stock_status' => 'In stock',
                     'options' => [
                         [
@@ -118,7 +118,7 @@ class ConfigurableViewOnProductPageTest extends TestCase
                         'is_in_stock' => StockStatusInterface::STATUS_IN_STOCK,
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     'stock_status' => 'In stock',
                     'options' => [
                         [
@@ -154,7 +154,7 @@ class ConfigurableViewOnProductPageTest extends TestCase
     /**
      * @return array
      */
-    public static function oneChildNotVisibleDataProviderWithEnabledConfig(): array
+    public function oneChildNotVisibleDataProviderWithEnabledConfig(): array
     {
         return [
             'one_child_out_of_stock' => [
@@ -165,7 +165,7 @@ class ConfigurableViewOnProductPageTest extends TestCase
                         'is_in_stock' => StockStatusInterface::STATUS_OUT_OF_STOCK,
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     'stock_status' => 'In stock',
                     'options' => [
                         [
@@ -188,7 +188,7 @@ class ConfigurableViewOnProductPageTest extends TestCase
                         'is_in_stock' => StockStatusInterface::STATUS_IN_STOCK,
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     'stock_status' => 'In stock',
                     'options' => [
                         [

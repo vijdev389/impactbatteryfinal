@@ -15,7 +15,7 @@ use Magento\TestFramework\Helper\Bootstrap;
 use Magento\TestFramework\Workaround\Override\Fixture\Resolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Metadata\Annotation\Parser\Registry;
+use PHPUnit\Util\Test as TestUtil;
 
 /**
  * Test class for \Magento\TestFramework\Annotation\ConfigFixture.
@@ -81,22 +81,11 @@ class ConfigFixtureTest extends TestCase
         $this->createResolverMock();
         $this->object
             ->method('_getConfigValue')
-            ->willReturnCallback(
-                function ($arg1) {
-                    if ($arg1 == 'web/unsecure/base_url') {
-                        return 'http://localhost/';
-                    }
-                }
-            );
+            ->withConsecutive(['web/unsecure/base_url'])
+            ->willReturnOnConsecutiveCalls('http://localhost/');
         $this->object
             ->method('_setConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2) {
-                    if ($arg1 == 'web/unsecure/base_url' && $arg2 == 'http://example.com/') {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive(['web/unsecure/base_url', 'http://example.com/']);
 
         $this->object->startTest($this);
 
@@ -121,26 +110,17 @@ class ConfigFixtureTest extends TestCase
         $this->createResolverMock();
         $this->object
             ->method('getScopeConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2, $arg3) {
-                    if ($arg1 == 'web/unsecure/base_url' &&
-                        $arg2 == ScopeInterface::SCOPE_WEBSITES &&
-                        $arg3 == 'base') {
-                        return 'http://localhost/';
-                    }
-                }
-            );
+            ->withConsecutive(['web/unsecure/base_url', ScopeInterface::SCOPE_WEBSITES, 'base'])
+            ->willReturnOnConsecutiveCalls('http://localhost/');
         $this->object
             ->method('setScopeConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2, $arg3, $arg4) {
-                    if ($arg1 == 'web/unsecure/base_url' &&
-                        $arg2 == 'http://example.com/' &&
-                        $arg3 == ScopeInterface::SCOPE_WEBSITES &&
-                        $arg4 == 'base') {
-                        return null;
-                    }
-                }
+            ->withConsecutive(
+                [
+                    'web/unsecure/base_url',
+                    'http://example.com/',
+                    ScopeInterface::SCOPE_WEBSITES,
+                    'base'
+                ]
             );
         $this->object->startTest($this);
 
@@ -167,25 +147,21 @@ class ConfigFixtureTest extends TestCase
         $this->createResolverMock();
         $this->object
             ->method('getScopeConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2) {
-                    if ($arg1 == 'web/unsecure/base_url' && $arg2 == ScopeInterface::SCOPE_WEBSITES) {
-                        return 'http://localhost/';
-                    }
-                }
-            );
-
+            ->withConsecutive(
+                [
+                    'web/unsecure/base_url',
+                    ScopeInterface::SCOPE_WEBSITES
+                ]
+            )->willReturnOnConsecutiveCalls('http://localhost/');
         $this->object
             ->method('setScopeConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2, $arg3, $arg4) {
-                    if ($arg1 == 'web/unsecure/base_url' &&
-                        $arg2 == 'http://example.com/' &&
-                        $arg3 == ScopeInterface::SCOPE_WEBSITES &&
-                        $arg4 == null) {
-                        return null;
-                    }
-                }
+            ->withConsecutive(
+                [
+                    'web/unsecure/base_url',
+                    'http://example.com/',
+                    ScopeInterface::SCOPE_WEBSITES,
+                    null
+                ]
             );
         $this->object->startTest($this);
 
@@ -212,23 +188,11 @@ class ConfigFixtureTest extends TestCase
         $this->createResolverMock();
         $this->object
             ->method('_getConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2) {
-                    if ($arg1 == 'dev/restrict/allow_ips' && $arg2 == '') {
-                        return '127.0.0.1';
-                    }
-                }
-            );
-
+            ->withConsecutive(['dev/restrict/allow_ips', ''])
+            ->willReturnOnConsecutiveCalls('127.0.0.1');
         $this->object
             ->method('_setConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2, $arg3) {
-                    if ($arg1 == 'dev/restrict/allow_ips' && $arg2 == '192.168.0.1' && $arg3 == '') {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive(['dev/restrict/allow_ips', '192.168.0.1', '']);
         $this->object->startTest($this);
 
         $this->object->expects(
@@ -254,22 +218,11 @@ class ConfigFixtureTest extends TestCase
         $this->createResolverMock();
         $this->object
             ->method('_getConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2) {
-                    if ($arg1 == 'dev/restrict/allow_ips' && $arg2 == 'admin') {
-                        return '192.168.0.1';
-                    }
-                }
-            );
+            ->withConsecutive(['dev/restrict/allow_ips', 'admin'])
+            ->willReturnOnConsecutiveCalls('192.168.0.1');
         $this->object
             ->method('_setConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2, $arg3) {
-                    if ($arg1 == 'dev/restrict/allow_ips' && $arg2 == '192.168.0.2' && $arg3 == 'admin') {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive(['dev/restrict/allow_ips', '192.168.0.2', 'admin']);
         $this->object->startTest($this);
 
         $this->object->expects(
@@ -306,22 +259,11 @@ class ConfigFixtureTest extends TestCase
         $this->object->startTest($this);
         $this->object
             ->method('_getConfigValue')
-            ->willReturnCallback(
-                function ($arg1) {
-                    if ($arg1 == 'web/unsecure/base_url') {
-                        return 'http://localhost/';
-                    }
-                }
-            );
+            ->withConsecutive(['web/unsecure/base_url'])
+            ->willReturnOnConsecutiveCalls('http://localhost/');
         $this->object
             ->method('_setConfigValue')
-            ->willReturnCallback(
-                function ($arg1, $arg2) {
-                    if ($arg1 == 'web/unsecure/base_url' && $arg2 == 'http://example.com/') {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive(['web/unsecure/base_url', 'http://example.com/']);
         $this->object->initStoreAfter();
     }
 
@@ -336,12 +278,12 @@ class ConfigFixtureTest extends TestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['applyConfigFixtures'])
             ->getMock();
-        $annotations = Registry::getInstance()->forMethod(
+        $annotations = TestUtil::parseTestMethodAnnotations(
             get_class($this),
-            $this->name()
-        )->symbolAnnotations();
+            $this->getName(false)
+        );
         $mock->method('applyConfigFixtures')
-            ->willReturn($annotations[$this->object::ANNOTATION]);
+            ->willReturn($annotations['method'][$this->object::ANNOTATION]);
         $reflection = new \ReflectionClass(Resolver::class);
         $reflectionProperty = $reflection->getProperty('instance');
         $reflectionProperty->setAccessible(true);

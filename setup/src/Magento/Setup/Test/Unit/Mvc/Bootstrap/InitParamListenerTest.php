@@ -68,14 +68,15 @@ class InitParamListenerTest extends TestCase
         $serviceManager->expects($this->once())->method('get')
             ->willReturn($initParams);
         $serviceManager->expects($this->exactly(2))->method('setService')
-            ->willReturnCallback(
-                function ($arg1, $arg2) {
-                    if ($arg1 === DirectoryList::class && $arg2 instanceof DirectoryList) {
-                        return null;
-                    } elseif ($arg1 === Filesystem::class && $arg2 instanceof Filesystem) {
-                        return null;
-                    }
-                }
+            ->withConsecutive(
+                [
+                    DirectoryList::class,
+                    $this->isInstanceOf(DirectoryList::class),
+                ],
+                [
+                    Filesystem::class,
+                    $this->isInstanceOf(Filesystem::class),
+                ]
             );
         $mvcApplication->expects($this->any())->method('getServiceManager')->willReturn($serviceManager);
 
@@ -142,7 +143,7 @@ class InitParamListenerTest extends TestCase
     /**
      * @return array
      */
-    public static function createServiceDataProvider()
+    public function createServiceDataProvider()
     {
         return [
             'none' => [

@@ -102,7 +102,7 @@ class GridTest extends TestCase
     /**
      * @return array
      */
-    public static function gridDataProvider(): array
+    public function gridDataProvider(): array
     {
         return [
             'Magento\Sales\Model\ResourceModel\Order\Grid' => [
@@ -170,7 +170,7 @@ class GridTest extends TestCase
     /**
      * @return array
      */
-    public static function shipmentGridDataProvider(): array
+    public function shipmentGridDataProvider(): array
     {
         return [
             'Magento\Sales\Model\ResourceModel\Grid' => [

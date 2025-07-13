@@ -141,7 +141,7 @@ class ProductGettersTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $this->_model->{$method}());
     }
 
-    public static function getObsoleteGettersDataProvider()
+    public function getObsoleteGettersDataProvider()
     {
         return [
             ['calculated_final_price', 'getCalculatedFinalPrice'],

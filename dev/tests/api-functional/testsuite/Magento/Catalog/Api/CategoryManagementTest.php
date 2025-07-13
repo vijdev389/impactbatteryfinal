@@ -62,7 +62,7 @@ class CategoryManagementTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function treeDataProvider(): array
+    public function treeDataProvider(): array
     {
         return [
             [
@@ -183,7 +183,7 @@ class CategoryManagementTest extends WebapiAbstract
         $this->assertEquals($parentId, $model->getParentId());
     }
 
-    public static function updateMoveDataProvider()
+    public function updateMoveDataProvider()
     {
         return [
             [402, 400, null, 2],

@@ -115,7 +115,7 @@ class CarrierTest extends TestCase
      *
      * @return array
      */
-    public static function trackingDataProvider() : array
+    public function trackingDataProvider() : array
     {
         // phpcs:disable Magento2.Functions.DiscouragedFunction
         $expectedMultiAWBRequestXml = file_get_contents(__DIR__ . '/../_files/TrackingRequest_MultipleAWB.xml');
@@ -372,7 +372,7 @@ class CarrierTest extends TestCase
      *
      * @return array
      */
-    public static function requestToShipmentDataProvider(): array
+    public function requestToShipmentDataProvider(): array
     {
         return [
             [
@@ -552,7 +552,7 @@ class CarrierTest extends TestCase
     /**
      * @return array
      */
-    public static function collectRatesWithoutDimensionsDataProvider()
+    public function collectRatesWithoutDimensionsDataProvider()
     {
         return [
             ['size' => '0', 'height' => '1.1', 'width' => '0.6', 'depth' => '0.7'],
@@ -635,7 +635,7 @@ class CarrierTest extends TestCase
     /**
      * @return array
      */
-    public static function collectRatesWithFreeShippingDataProvider(): array
+    public function collectRatesWithFreeShippingDataProvider(): array
     {
         return [
             [

@@ -25,19 +25,11 @@ class TestCaseProperties
             $properties = $reflectionClass->getProperties();
             foreach ($properties as $property) {
                 $property->setAccessible(true);
-                if ($property->isInitialized($test)) {
-                    $value = $property->getValue($test);
-                    if (is_object($value) && method_exists($value, '__destruct') &&
-                        is_callable([$value, '__destruct'])) {
-                        $value->__destruct();
-                    }
+                $value = $property->getValue($test);
+                if (is_object($value) && method_exists($value, '__destruct') && is_callable([$value, '__destruct'])) {
+                    $value->__destruct();
                 }
-
-                if (is_array($property->getDefaultValue())) {
-                    $property->setValue($test, []);
-                } else {
-                    $property->setValue($test, null);
-                }
+                $property->setValue($test, null);
             }
         }
     }

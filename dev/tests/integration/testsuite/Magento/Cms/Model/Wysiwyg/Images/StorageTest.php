@@ -268,7 +268,7 @@ class StorageTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function testUploadFileWithWrongExtensionDataProvider(): array
+    public function testUploadFileWithWrongExtensionDataProvider(): array
     {
         return [
             [
@@ -344,7 +344,7 @@ class StorageTest extends \PHPUnit\Framework\TestCase
     /**
      * Provide sizes for resizeFile test
      */
-    public static function getThumbnailsSizes(): array
+    public function getThumbnailsSizes(): array
     {
         return [
             [

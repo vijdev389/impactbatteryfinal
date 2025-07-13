@@ -37,30 +37,30 @@ class BooleanFilterTest extends AbstractFiltersTest
     /**
      * @return array
      */
-    public static function getFiltersWithCustomAttributeDataProvider(): array
+    public function getFiltersWithCustomAttributeDataProvider(): array
     {
         return [
             'not_used_in_navigation' => [
-                'products' => [],
-                'attributeData' => ['is_filterable' => 0],
+                'products_data' => [],
+                'attribute_data' => ['is_filterable' => 0],
                 'expectation' => [],
             ],
             'used_in_navigation_with_results' => [
-                'products' => [
+                'products_data' => [
                     'simple1000' => 'Yes',
                     'simple1001' => 'Yes',
                 ],
-                'attributeData' => ['is_filterable' => AbstractFilter::ATTRIBUTE_OPTIONS_ONLY_WITH_RESULTS],
+                'attribute_data' => ['is_filterable' => AbstractFilter::ATTRIBUTE_OPTIONS_ONLY_WITH_RESULTS],
                 'expectation' => [
                     ['label' => 'Yes', 'count' => 2],
                 ],
             ],
             'used_in_navigation_without_results' => [
-                'products' => [
+                'products_data' => [
                     'simple1000' => 'Yes',
                     'simple1001' => 'Yes',
                 ],
-                'attributeData' => ['is_filterable' => 2],
+                'attribute_data' => ['is_filterable' => 2],
                 'expectation' => [
                     ['label' => 'Yes', 'count' => 2],
                     ['label' => 'No', 'count' => 0],
@@ -91,32 +91,32 @@ class BooleanFilterTest extends AbstractFiltersTest
     /**
      * @return array
      */
-    public static function getActiveFiltersWithCustomAttributeDataProvider(): array
+    public function getActiveFiltersWithCustomAttributeDataProvider(): array
     {
         return [
             'selected_yes_option_in_all_products' => [
-                'products' => ['simple1000' => 'Yes', 'simple1001' => 'Yes'],
+                'products_data' => ['simple1000' => 'Yes', 'simple1001' => 'Yes'],
                 'expectation' => ['label' => 'Yes', 'count' => 0],
-                'filterValue' => 'Yes',
-                'productsCount' => 2,
+                'filter_value' => 'Yes',
+                'products_count' => 2,
             ],
             'selected_yes_option_in_one_product' => [
-                'products' => ['simple1000' => 'Yes', 'simple1001' => 'No'],
+                'products_data' => ['simple1000' => 'Yes', 'simple1001' => 'No'],
                 'expectation' => ['label' => 'Yes', 'count' => 0],
-                'filterValue' => 'Yes',
-                'productsCount' => 1,
+                'filter_value' => 'Yes',
+                'products_count' => 1,
             ],
             'selected_no_option_in_all_products' => [
-                'products' => ['simple1000' => 'No', 'simple1001' => 'No'],
+                'products_data' => ['simple1000' => 'No', 'simple1001' => 'No'],
                 'expectation' => ['label' => 'No', 'count' => 0],
-                'filterValue' => 'No',
-                'productsCount' => 2,
+                'filter_value' => 'No',
+                'products_count' => 2,
             ],
             'selected_no_option_in_one_product' => [
-                'products' => ['simple1000' => 'Yes', 'simple1001' => 'No'],
+                'products_data' => ['simple1000' => 'Yes', 'simple1001' => 'No'],
                 'expectation' => ['label' => 'No', 'count' => 0],
-                'filterValue' => 'No',
-                'productsCount' => 1,
+                'filter_value' => 'No',
+                'products_count' => 1,
             ],
         ];
     }

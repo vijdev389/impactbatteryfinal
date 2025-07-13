@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2017 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -49,7 +49,7 @@ class CacheTest extends TestCase
     public function testGetOptions()
     {
         $options = $this->configOptionsList->getOptions();
-        $this->assertCount(11, $options);
+        $this->assertCount(10, $options);
 
         $this->assertArrayHasKey(0, $options);
         $this->assertInstanceOf(SelectConfigOption::class, $options[0]);
@@ -85,15 +85,11 @@ class CacheTest extends TestCase
 
         $this->assertArrayHasKey(8, $options);
         $this->assertInstanceOf(TextConfigOption::class, $options[8]);
-        $this->assertEquals('cache-backend-redis-use-lua-on-gc', $options[8]->getName());
+        $this->assertEquals('cache-id-prefix', $options[8]->getName());
 
         $this->assertArrayHasKey(9, $options);
-        $this->assertInstanceOf(TextConfigOption::class, $options[9]);
-        $this->assertEquals('cache-id-prefix', $options[9]->getName());
-
-        $this->assertArrayHasKey(10, $options);
-        $this->assertInstanceOf(FlagConfigOption::class, $options[10]);
-        $this->assertEquals('allow-parallel-generation', $options[10]->getName());
+        $this->assertInstanceOf(FlagConfigOption::class, $options[9]);
+        $this->assertEquals('allow-parallel-generation', $options[9]->getName());
     }
 
     /**
@@ -101,8 +97,7 @@ class CacheTest extends TestCase
      */
     public function testCreateConfigCacheRedis()
     {
-        // Return default value for all config options
-        $this->deploymentConfigMock->method('get')->willReturnArgument(1);
+        $this->deploymentConfigMock->method('get')->willReturn('');
 
         $expectedConfigData = [
             'cache' => [
@@ -110,19 +105,19 @@ class CacheTest extends TestCase
                     'default' => [
                         'backend' => \Magento\Framework\Cache\Backend\Redis::class,
                         'backend_options' => [
-                            'server' => '127.0.0.1',
-                            'port' => '6379',
-                            'database' => '0',
+                            'server' => '',
+                            'port' => '',
+                            'database' => '',
                             'password' => '',
-                            'compress_data' => '1',
+                            'compress_data' => '',
                             'compression_lib' => '',
-                            'use_lua' => '0',
-                            'use_lua_on_gc' => '1'
+                            '_useLua' => '',
+                            'use_lua' => ''
                         ],
                         'id_prefix' => $this->expectedIdPrefix(),
                     ]
                 ],
-                'allow_parallel_generation' => 'false',
+                'allow_parallel_generation' => '',
             ]
         ];
 
@@ -137,16 +132,25 @@ class CacheTest extends TestCase
      */
     public function testCreateConfigWithRedisConfig()
     {
-        $this->deploymentConfigMock->method('get')
-            ->willReturnCallback(
-                function ($arg1, $arg2 = null) {
-                    if ($arg1 === CacheConfigOptionsList::CONFIG_PATH_CACHE_ID_PREFIX) {
-                        return 'XXX_';
-                    } else {
-                        return $arg2;
-                    }
-                }
-            );
+        $this->deploymentConfigMock->method('get')->withConsecutive(
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_ID_PREFIX],
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_BACKEND_SERVER, '127.0.0.1'],
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_BACKEND_DATABASE, '0'],
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_BACKEND_PORT, '6379'],
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_BACKEND_PASSWORD, ''],
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_BACKEND_COMPRESS_DATA, '1'],
+            [CacheConfigOptionsList::CONFIG_PATH_CACHE_BACKEND_COMPRESSION_LIB, ''],
+            [CacheConfigOptionsList::CONFIG_PATH_ALLOW_PARALLEL_CACHE_GENERATION, 'false']
+        )->willReturnOnConsecutiveCalls(
+            'XXX_',
+            '127.0.0.1',
+            '0',
+            '6379',
+            '',
+            '1',
+            '',
+            null
+        );
 
         $expectedConfigData = [
             'cache' => [
@@ -160,12 +164,12 @@ class CacheTest extends TestCase
                             'password' => '',
                             'compress_data' => '1',
                             'compression_lib' => 'gzip',
-                            'use_lua' => '0',
-                            'use_lua_on_gc' => '1'
+                            '_useLua' => null,
+                            'use_lua' => null
                         ],
                     ]
                 ],
-                'allow_parallel_generation' => 'false',
+                'allow_parallel_generation' => null,
             ]
         ];
 
@@ -247,6 +251,8 @@ class CacheTest extends TestCase
                 'db' => '',
                 'port' => '',
                 'password' => '',
+                '_useLua' => null,
+                'use_lua' => null
             ])
             ->willReturn(true);
 

@@ -9,7 +9,7 @@ namespace Magento\TestFramework\Mail;
 use Magento\Framework\Mail\EmailMessageInterface;
 
 /**
- * Mock of mail transport interface
+ * Class TransportInterfaceMock
  */
 class TransportInterfaceMock implements \Magento\Framework\Mail\TransportInterface
 {
@@ -19,22 +19,13 @@ class TransportInterfaceMock implements \Magento\Framework\Mail\TransportInterfa
     private $message;
 
     /**
-     * @var null|callable
-     */
-    private $onMessageSentCallback;
-
-    /**
      * TransportInterfaceMock constructor.
      *
      * @param null|EmailMessageInterface $message
-     * @param null|callable $onMessageSentCallback
      */
-    public function __construct(
-        $message = null,
-        ?callable $onMessageSentCallback = null
-    ) {
+    public function __construct($message = null)
+    {
         $this->message = $message;
-        $this->onMessageSentCallback = $onMessageSentCallback;
     }
 
     /**
@@ -44,7 +35,8 @@ class TransportInterfaceMock implements \Magento\Framework\Mail\TransportInterfa
      */
     public function sendMessage()
     {
-        $this->onMessageSentCallback && call_user_func($this->onMessageSentCallback, $this->message);
+        //phpcs:ignore Squiz.PHP.NonExecutableCode.ReturnNotRequired
+        return;
     }
 
     /**

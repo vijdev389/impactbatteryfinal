@@ -92,7 +92,7 @@ class SendTest extends TestCase
     /**
      * @return array
      */
-    public static function formDataProvider(): array
+    public function formDataProvider(): array
     {
         return [
             ['name', 'Customer Form Name'],
@@ -121,7 +121,7 @@ class SendTest extends TestCase
     /**
      * @return array
      */
-    public static function customerSessionDataProvider(): array
+    public function customerSessionDataProvider(): array
     {
         return [
             ['name', 'John Smith'],

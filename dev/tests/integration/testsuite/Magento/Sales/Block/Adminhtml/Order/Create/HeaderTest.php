@@ -39,7 +39,7 @@ class HeaderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedResult, $this->_block->toHtml());
     }
 
-    public static function toHtmlDataProvider()
+    public function toHtmlDataProvider()
     {
         $customerIdFromFixture = 1;
         $defaultStoreView = 1;

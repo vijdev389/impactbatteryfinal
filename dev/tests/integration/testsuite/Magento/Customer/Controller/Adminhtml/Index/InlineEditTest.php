@@ -120,19 +120,15 @@ class InlineEditTest extends AbstractBackendController
     /**
      * @return array
      */
-    public static function inlineEditParametersDataProvider(): array
+    public function inlineEditParametersDataProvider(): array
     {
         return [
             [
-                'params' => [
-                    'items' => [],
-                    'isAjax' => true,
-                ]
+                'items' => [],
+                'isAjax' => true,
             ],
             [
-                'params' => [
-                    'items' => [],
-                ]
+                'items' => [],
             ],
         ];
     }

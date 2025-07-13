@@ -28,13 +28,13 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetRouteFrontName($route, $scope)
     {
-        self::assertEquals(
-            Bootstrap::getObjectManager()->create(Config::class)->getRouteFrontName($route, $scope),
-            Bootstrap::getObjectManager()->create(Config::class)->getRouteFrontName($route, $scope)
+        $this->assertEquals(
+            $this->objectManager->create(Config::class)->getRouteFrontName($route, $scope),
+            $this->objectManager->create(Config::class)->getRouteFrontName($route, $scope)
         );
     }
 
-    public static function getRouteFrontNameDataProvider()
+    public function getRouteFrontNameDataProvider()
     {
         return [
             ['adminhtml', 'adminhtml'],

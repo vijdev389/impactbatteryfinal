@@ -333,7 +333,7 @@ PHP
     {
         $scanner = $this->getMockBuilder(FileClassScanner::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getFileContents'])
+            ->setMethods(['getFileContents'])
             ->getMock();
 
         return $scanner;

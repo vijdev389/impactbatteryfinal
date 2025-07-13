@@ -135,14 +135,14 @@ class FormTest extends \PHPUnit\Framework\TestCase
     {
         $resourceMock = $this->getMockBuilder(
             \Magento\Cms\Model\ResourceModel\Page::class
-        )->onlyMethods(
+        )->setMethods(
             ['lookupStoreIds']
         )->disableOriginalConstructor()->getMock();
         $resourceMock->expects($this->any())->method('lookupStoreIds')->willReturn($stores);
 
         $cmsPageMock = $this->getMockBuilder(
             \Magento\Cms\Model\Page::class
-        )->onlyMethods(
+        )->setMethods(
             ['getResource', 'getId']
         )->disableOriginalConstructor()->getMock();
         $cmsPageMock->expects($this->any())->method('getId')->willReturn(1);

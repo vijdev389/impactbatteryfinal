@@ -30,16 +30,16 @@ class PublicCodeTest extends TestCase
     /**
      * @var string[]|null
      */
-    private static $blockWhitelist;
+    private $blockWhitelist;
 
     /**
      * Return whitelist class names
      *
      * @return string[]
      */
-    private static function getWhitelist(): array
+    private function getWhitelist(): array
     {
-        if (self::$blockWhitelist === null) {
+        if ($this->blockWhitelist === null) {
             $whiteListFiles = str_replace(
                 '\\',
                 '/',
@@ -49,9 +49,9 @@ class PublicCodeTest extends TestCase
             foreach (glob($whiteListFiles) as $fileName) {
                 $whiteListItems[] = file($fileName, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             }
-            self::$blockWhitelist = array_merge([], ...$whiteListItems);
+            $this->blockWhitelist = array_merge([], ...$whiteListItems);
         }
-        return self::$blockWhitelist;
+        return $this->blockWhitelist;
     }
 
     /**
@@ -91,7 +91,7 @@ class PublicCodeTest extends TestCase
      * @return array
      * @throws Exception
      */
-    public static function layoutFilesDataProvider()
+    public function layoutFilesDataProvider()
     {
         return Files::init()->getLayoutFiles([], true);
     }
@@ -150,7 +150,7 @@ class PublicCodeTest extends TestCase
      * @return array
      * @throws Exception
      */
-    public static function publicPHPTypesDataProvider(): array
+    public function publicPHPTypesDataProvider(): array
     {
         $files = Files::init()->getPhpFiles(Files::INCLUDE_LIBS | Files::INCLUDE_APP_CODE);
         $result = [];
@@ -160,7 +160,7 @@ class PublicCodeTest extends TestCase
                 $fileClassScanner = new FileClassScanner($file);
                 $className = $fileClassScanner->getClassName();
 
-                if (!in_array($className, self::getWhitelist())
+                if (!in_array($className, $this->getWhitelist())
                     && (class_exists($className) || interface_exists($className))
                 ) {
                     $result[$className] = [$className];

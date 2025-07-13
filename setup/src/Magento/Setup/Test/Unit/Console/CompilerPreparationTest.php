@@ -114,7 +114,7 @@ class CompilerPreparationTest extends TestCase
     /**
      * @return array
      */
-    public static function commandNameDataProvider()
+    public function commandNameDataProvider()
     {
         return [
             'ST compiler, directory exists' => [

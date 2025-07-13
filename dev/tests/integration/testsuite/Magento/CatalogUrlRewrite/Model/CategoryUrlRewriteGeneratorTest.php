@@ -227,7 +227,7 @@ class CategoryUrlRewriteGeneratorTest extends TestCase
     /**
      * @return array
      */
-    public static function incorrectUrlRewritesDataProvider()
+    public function incorrectUrlRewritesDataProvider()
     {
         return [
             ['#'],

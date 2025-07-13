@@ -40,7 +40,7 @@ QUERY;
      *
      * @return array
      */
-    public static function dataProviderInvalidStore(): array
+    public function dataProviderInvalidStore(): array
     {
         return [
             'non_existing' => [

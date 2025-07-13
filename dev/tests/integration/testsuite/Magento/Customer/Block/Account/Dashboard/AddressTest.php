@@ -98,7 +98,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $html);
     }
 
-    public static function getPrimaryShippingAddressHtmlDataProvider()
+    public function getPrimaryShippingAddressHtmlDataProvider()
     {
         $expected = "John Smith<br />\nCompanyName<br />\nGreen str, 67<br />\n\n\n\nCityM,  Alabama, 75477<br />"
             . "\nUnited States<br />\nT: <a href=\"tel:3468676\">3468676</a>\n\n";
@@ -125,7 +125,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $html);
     }
 
-    public static function getPrimaryBillingAddressHtmlDataProvider()
+    public function getPrimaryBillingAddressHtmlDataProvider()
     {
         $expected = "John Smith<br />\nCompanyName<br />\nGreen str, 67<br />\n\n\n\nCityM,  Alabama, 75477<br />"
             . "\nUnited States<br />\nT: <a href=\"tel:3468676\">3468676</a>\n\n";
@@ -166,7 +166,7 @@ class AddressTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $url);
     }
 
-    public static function getPrimaryAddressEditUrlDataProvider()
+    public function getPrimaryAddressEditUrlDataProvider()
     {
         return [
             '1' => [1, 'http://localhost/index.php/customer/address/edit/id/1/'],

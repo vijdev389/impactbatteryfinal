@@ -126,7 +126,7 @@ class VariationHandlerTest extends TestCase
     /**
      * @return array
      */
-    public static function generateSimpleProductsDataProvider(): array
+    public function generateSimpleProductsDataProvider(): array
     {
         return [
             [
@@ -163,7 +163,7 @@ class VariationHandlerTest extends TestCase
     /**
      * @return array
      */
-    public static function generateSimpleProductsWithPartialDataDataProvider(): array
+    public function generateSimpleProductsWithPartialDataDataProvider(): array
     {
         return [
             [

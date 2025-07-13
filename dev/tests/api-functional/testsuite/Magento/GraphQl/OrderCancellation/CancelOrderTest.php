@@ -1,14 +1,16 @@
 <?php
 /**
- * Copyright 2025 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
 namespace Magento\GraphQl\OrderCancellation;
 
-use Magento\Framework\GraphQl\Query\Uid;
+use Magento\Framework\ObjectManagerInterface;
 use Magento\GraphQl\GetCustomerAuthenticationHeader;
+use Magento\Quote\Api\CartManagementInterface;
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderRepository;
@@ -18,6 +20,7 @@ use Magento\Sales\Test\Fixture\Shipment as ShipmentFixture;
 use Magento\Store\Test\Fixture\Store;
 use Magento\TestFramework\Fixture\DataFixtureStorageManager;
 use Magento\TestFramework\Fixture\DataFixture;
+use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Customer\Test\Fixture\Customer;
 use Magento\Framework\Exception\AuthenticationException;
 use Magento\Framework\Exception\LocalizedException;
@@ -57,27 +60,28 @@ use Magento\Quote\Test\Fixture\AddProductToCart as AddProductToCartFixture;
     DataFixture(SetDeliveryMethodFixture::class, ['cart_id' => '$cart.id$']),
     DataFixture(SetPaymentMethodFixture::class, ['cart_id' => '$cart.id$']),
     DataFixture(PlaceOrderFixture::class, ['cart_id' => '$cart.id$'], 'order'),
-    DataFixture(InvoiceFixture::class, ['order_id' => '$order.id$'], 'invoice')
+    DataFixture(InvoiceFixture::class, ['order_id' => '$order.id$'], 'invoice'),
+    Config('sales/cancellation/enabled', 1)
 ]
 class CancelOrderTest extends GraphQlAbstract
 {
     /**
-     * @var Uid
+     * @var ObjectManagerInterface
      */
-    private $idEncoder;
+    private $objectManager;
 
     /**
-     * @var DataFixtureStorageManager
+     * @var CartManagementInterface
      */
-    private $fixtures;
+    protected $cartManagement;
 
     /**
      * @inheritdoc
      */
     protected function setUp(): void
     {
-        $this->idEncoder = Bootstrap::getObjectManager()->get(Uid::class);
-        $this->fixtures = Bootstrap::getObjectManager()->get(DataFixtureStorageManager::class)->getStorage();
+        $this->objectManager = Bootstrap::getObjectManager();
+        $this->cartManagement = $this->objectManager->get(CartManagementInterface::class);
     }
 
     /**
@@ -85,16 +89,9 @@ class CancelOrderTest extends GraphQlAbstract
      * @throws AuthenticationException
      * @throws LocalizedException
      */
-    #[
-        Config('sales/cancellation/enabled', 1)
-    ]
     public function testAttemptToCancelOrderWhenMissingReason()
     {
-        $this->expectException(ResponseContainsErrorsException::class);
-        $this->expectExceptionMessage("Field CancelOrderInput.reason of required type String! was not provided.");
-
-        $this->graphQlMutation(
-            <<<MUTATION
+        $query = <<<QUERY
         mutation {
             cancelOrder(
               input: {
@@ -107,10 +104,17 @@ class CancelOrderTest extends GraphQlAbstract
                 }
             }
           }
-MUTATION,
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $this->expectException(ResponseContainsErrorsException::class);
+        $this->expectExceptionMessage("Field CancelOrderInput.reason of required type String! was not provided.");
+
+        $this->graphQlMutation(
+            $query,
             [],
             '',
-            $this->getCustomerAuthHeaders()
+            $customerToken
         );
     }
 
@@ -124,23 +128,40 @@ MUTATION,
     ]
     public function testAttemptToCancelOrderWhenCancellationFeatureDisabled()
     {
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: {$order->getEntityId()},
+                reason: "Sample reason"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
         $this->assertEquals(
             [
                 'cancelOrder' => [
-                    'errorV2' => [
-                        'message' => 'Order cancellation is not enabled for requested store.'
-                    ],
+                    'error' => 'Order cancellation is not enabled for requested store.',
                     'order' => null
                 ]
             ],
             $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2(
-                    $this->idEncoder->encode((string)$this->fixtures->get('order')->getEntityId()),
-                    "Other"
-                ),
+                $query,
                 [],
                 '',
-                $this->getCustomerAuthHeaders()
+                $customerToken
             )
         );
     }
@@ -150,16 +171,9 @@ MUTATION,
      * @throws AuthenticationException
      * @throws LocalizedException
      */
-    #[
-        Config('sales/cancellation/enabled', 1)
-    ]
     public function testAttemptToCancelOrderWhenMissingOrderId()
     {
-        $this->expectException(ResponseContainsErrorsException::class);
-        $this->expectExceptionMessage("Field CancelOrderInput.order_id of required type ID! was not provided.");
-
-        $this->graphQlMutation(
-            <<<MUTATION
+        $query = <<<QUERY
         mutation {
             cancelOrder(
               input: {
@@ -172,10 +186,17 @@ MUTATION,
                 }
             }
           }
-MUTATION,
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $this->expectException(ResponseContainsErrorsException::class);
+        $this->expectExceptionMessage("Field CancelOrderInput.order_id of required type ID! was not provided.");
+
+        $this->graphQlMutation(
+            $query,
             [],
             '',
-            $this->getCustomerAuthHeaders()
+            $customerToken
         );
     }
 
@@ -184,11 +205,32 @@ MUTATION,
      * @throws AuthenticationException
      * @throws LocalizedException
      */
-    #[
-        Config('sales/cancellation/enabled', 1)
-    ]
     public function testAttemptToCancelNonExistingOrder()
     {
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: 99999999,
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
+
         $this->assertEquals(
             [
                 'cancelOrder' =>
@@ -197,12 +239,7 @@ MUTATION,
                         'order' => null
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutation("MTAwMDA="),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
@@ -231,11 +268,39 @@ MUTATION,
         DataFixture(SetDeliveryMethodFixture::class, ['cart_id' => '$cart.id$']),
         DataFixture(SetPaymentMethodFixture::class, ['cart_id' => '$cart.id$']),
         DataFixture(PlaceOrderFixture::class, ['cart_id' => '$cart.id$'], 'order'),
-        DataFixture(InvoiceFixture::class, ['order_id' => '$order.id$'], 'invoice'),
-        Config('sales/cancellation/enabled', 1)
+        DataFixture(InvoiceFixture::class, ['order_id' => '$order.id$'], 'invoice')
     ]
     public function testAttemptToCancelOrderFromAnotherCustomer()
     {
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Sample reason"
+              }
+            ){
+              error
+              order {
+                status
+              }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
+
         $this->assertEquals(
             [
                 'cancelOrder' =>
@@ -244,52 +309,61 @@ MUTATION,
                         'order' => null
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutation(
-                    $this->idEncoder->encode((string)$this->fixtures->get('order')->getEntityId())
-                ),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
     /**
      * @dataProvider orderStatusProvider
      */
-    #[
-        Config('sales/cancellation/enabled', 1)
-    ]
     public function testAttemptToCancelOrderWithSomeStatuses(string $status, string $expectedStatus)
     {
-        $order = $this->fixtures->get('order');
-
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
         $order->setStatus($status);
         $order->setState($status);
 
         /** @var OrderRepositoryInterface $orderRepo */
-        $orderRepo = Bootstrap::getObjectManager()->get(OrderRepository::class);
+        $orderRepo = $this->objectManager->get(OrderRepository::class);
         $orderRepo->save($order);
+
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
 
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => [
-                            'message' => 'Order already closed, complete, cancelled or on hold'
-                        ],
+                        'error' => 'Order already closed, complete, cancelled or on hold',
                         'order' => [
                             'status' => $expectedStatus
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2($this->idEncoder->encode((string)$order->getEntityId())),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
@@ -322,26 +396,45 @@ MUTATION,
     ]
     public function testAttemptToCancelOrderWithOfflinePaymentFullyInvoicedFullyShipped()
     {
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
+
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => [
-                            'message' => 'Order already closed, complete, cancelled or on hold'
-                        ],
+                        'error' => 'Order already closed, complete, cancelled or on hold',
                         'order' => [
                             'status' => 'Complete'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2(
-                    $this->idEncoder->encode((string)$this->fixtures->get('order')->getEntityId())
-                ),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
@@ -387,26 +480,45 @@ MUTATION,
     ]
     public function testAttemptToCancelOrderWithOfflinePaymentFullyInvoicedPartiallyShipped()
     {
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
+
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => [
-                            'message' => 'Order with one or more items shipped cannot be cancelled'
-                        ],
+                        'error' => 'Order with one or more items shipped cannot be cancelled',
                         'order' => [
                             'status' => 'Processing'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2(
-                    $this->idEncoder->encode((string)$this->fixtures->get('order')->getEntityId())
-                ),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
@@ -445,26 +557,45 @@ MUTATION,
     ]
     public function testAttemptToCancelOrderWithOfflinePaymentFullyInvoicedFullyRefunded()
     {
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
+
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => [
-                            'message' => 'Order already closed, complete, cancelled or on hold'
-                        ],
+                        'error' => 'Order already closed, complete, cancelled or on hold',
                         'order' => [
                             'status' => 'Closed'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2(
-                    $this->idEncoder->encode((string)$this->fixtures->get('order')->getEntityId())
-                ),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
@@ -490,24 +621,45 @@ MUTATION,
     ]
     public function testCancelOrderWithOutAnyAmountPaid()
     {
-        $order = $this->fixtures->get('order');
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
 
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => null,
+                        'error' => null,
                         'order' => [
                             'status' => 'Canceled'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2($this->idEncoder->encode((string)$order->getEntityId())),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
 
         $comments = $order->getStatusHistories();
@@ -530,24 +682,45 @@ MUTATION,
     ]
     public function testCancelOrderWithOfflinePaymentFullyInvoiced()
     {
-        $order = $this->fixtures->get('order');
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
 
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => null,
+                        'error' => null,
                         'order' => [
                             'status' => 'Closed'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2($this->idEncoder->encode((string)$order->getEntityId())),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
 
         $comments = $order->getStatusHistories();
@@ -606,24 +779,45 @@ MUTATION,
     ]
     public function testCancelOrderWithOfflinePaymentFullyInvoicedPartiallyRefunded()
     {
-        $order = $this->fixtures->get('order');
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
 
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => null,
+                        'error' => null,
                         'order' => [
                             'status' => 'Closed'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2($this->idEncoder->encode((string)$order->getEntityId())),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
 
         $comments = $order->getAllStatusHistory();
@@ -652,27 +846,43 @@ MUTATION,
     ]
     public function testCancelOrderAttemptingXSSPassedThroughReasonField()
     {
-        $order = $this->fixtures->get('order');
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "<script>while(true){alert(666);}</script>"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
 
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => [
-                            'message' => 'Order cancellation reason is invalid.'
-                        ],
+                        'error' => 'Order cancellation reason is invalid.',
                         'order' => null
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2(
-                    $this->idEncoder->encode((string)$order->getEntityId()),
-                    "<script>while(true){alert(666);}</script>"
-                ),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
     }
 
@@ -708,24 +918,45 @@ MUTATION,
     ]
     public function testCancelPartiallyInvoicedOrder()
     {
-        $order = $this->fixtures->get('order');
+        /**
+         * @var $order OrderInterface
+         */
+        $order = DataFixtureStorageManager::getStorage()->get('order');
+        $query = <<<QUERY
+        mutation {
+            cancelOrder(
+              input: {
+                order_id: "{$order->getEntityId()}"
+                reason: "Other"
+              }
+            ){
+                error
+                order {
+                    status
+                }
+            }
+          }
+QUERY;
+        $customerToken = $this->getHeaders();
+
+        $response = $this->graphQlMutation(
+            $query,
+            [],
+            '',
+            $customerToken
+        );
 
         $this->assertEquals(
             [
                 'cancelOrder' =>
                     [
-                        'errorV2' => null,
+                        'error' => null,
                         'order' => [
                             'status' => 'Canceled'
                         ]
                     ]
             ],
-            $this->graphQlMutation(
-                $this->getCancelOrderMutationWithErrorV2($this->idEncoder->encode((string)$order->getEntityId())),
-                [],
-                '',
-                $this->getCustomerAuthHeaders()
-            )
+            $response
         );
 
         $comments = $order->getStatusHistories();
@@ -742,74 +973,21 @@ MUTATION,
     }
 
     /**
-     * Get cancel order mutation
-     *
-     * @param string $orderId
-     * @return string
-     */
-    private function getCancelOrderMutation(string $orderId): string
-    {
-        return <<<MUTATION
-        mutation {
-            cancelOrder(
-              input: {
-                order_id: "{$orderId}"
-                reason: "Other"
-              }
-            ){
-                error
-                order {
-                    status
-                }
-            }
-        }
-MUTATION;
-    }
-
-    /**
-     * Get cancel order mutation with errorV2
-     *
-     * @param string $orderId
-     * @param string $reason
-     * @return string
-     */
-    private function getCancelOrderMutationWithErrorV2(string $orderId, string $reason = "Other"): string
-    {
-        return <<<MUTATION
-        mutation {
-            cancelOrder(
-              input: {
-                order_id: "{$orderId}"
-                reason: "{$reason}"
-              }
-            ){
-                errorV2 {
-                    message
-                }
-                order {
-                    status
-                }
-            }
-        }
-MUTATION;
-    }
-
-    /**
-     * Get customer auth headers
-     *
      * @return string[]
      * @throws AuthenticationException|LocalizedException
      */
-    private function getCustomerAuthHeaders(): array
+    private function getHeaders(): array
     {
+        /** @var CustomerInterface $customer */
+        $customer = DataFixtureStorageManager::getStorage()->get('customer');
         return Bootstrap::getObjectManager()->get(GetCustomerAuthenticationHeader::class)
-            ->execute($this->fixtures->get('customer')->getEmail());
+            ->execute($customer->getEmail());
     }
 
     /**
      * @return array[]
      */
-    public static function orderStatusProvider(): array
+    public function orderStatusProvider(): array
     {
         return [
             'On Hold status' => [

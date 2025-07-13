@@ -18,17 +18,17 @@ class MultipleSelect extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    public static function getUpdateProvider(): array
+    public function getUpdateProvider(): array
     {
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProvider(),
             [
                 "{$frontendInput}_other_attribute_code" => [
-                    'postData' => [
+                    'post_data' => [
                         'attribute_code' => 'text_attribute_update',
                     ],
-                    'expectedData' => [
+                    'expected_data' => [
                         'attribute_code' => 'multiselect_attribute',
                     ],
                 ],
@@ -39,7 +39,7 @@ class MultipleSelect extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    protected static function getFrontendInput(): string
+    protected function getFrontendInput(): string
     {
         return 'multiselect';
     }
@@ -47,7 +47,7 @@ class MultipleSelect extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    protected static function getUpdatePostData(): array
+    protected function getUpdatePostData(): array
     {
         return [
             'frontend_label' => [
@@ -77,9 +77,9 @@ class MultipleSelect extends AbstractAttributeDataWithOptions
     /**
      * @inheritdoc
      */
-    protected static function getUpdateExpectedData(): array
+    protected function getUpdateExpectedData(): array
     {
-        $updatePostData = static::getUpdatePostData();
+        $updatePostData = $this->getUpdatePostData();
         return array_merge(
             $updatePostData,
             [

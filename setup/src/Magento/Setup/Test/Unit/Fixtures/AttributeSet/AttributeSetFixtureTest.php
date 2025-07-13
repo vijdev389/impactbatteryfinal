@@ -70,7 +70,7 @@ class AttributeSetFixtureTest extends TestCase
 
         $attributeSetFactoryMock = $this->getMockBuilder(\Magento\Eav\Api\Data\AttributeSetInterfaceFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $attributeSetFactoryMock->expects($this->once())
             ->method('create')
@@ -97,7 +97,7 @@ class AttributeSetFixtureTest extends TestCase
 
         $attributeGroupFactoryMock = $this->getMockBuilder(\Magento\Eav\Api\Data\AttributeGroupInterfaceFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $attributeGroupFactoryMock->expects($this->once())
             ->method('create')
@@ -120,7 +120,7 @@ class AttributeSetFixtureTest extends TestCase
 
         $attributeFactoryMock = $this->getMockBuilder(\Magento\Catalog\Api\Data\ProductAttributeInterfaceFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $attributeFactoryMock->expects($this->once())
             ->method('create')
@@ -133,7 +133,7 @@ class AttributeSetFixtureTest extends TestCase
 
         $optionFactoryMock = $this->getMockBuilder(\Magento\Eav\Api\Data\AttributeOptionInterfaceFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $optionFactoryMock->expects($this->once())
             ->method('create')

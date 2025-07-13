@@ -58,7 +58,7 @@ class AttributeFixedProductTaxTest extends TestCase
     /**
      * @return array
      */
-    public static function fPTProvider(): array
+    public function fPTProvider(): array
     {
         return [
             [
@@ -80,7 +80,7 @@ class AttributeFixedProductTaxTest extends TestCase
                         'state' => '',
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     [
                         'website_id' => '0',
                         'country' => 'GB',

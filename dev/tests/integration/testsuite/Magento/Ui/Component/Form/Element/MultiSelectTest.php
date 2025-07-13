@@ -35,7 +35,7 @@ class MultiSelectTest extends TestCase
      *
      * @return array
      */
-    public static function getTestOptions(): array
+    public function getTestOptions(): array
     {
         return [
             'List' => [

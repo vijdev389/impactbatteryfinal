@@ -180,7 +180,7 @@ class DeployStaticContentCommandTest extends \PHPUnit\Framework\TestCase
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $consoleLoggerFactoryMock = $this->getMockBuilder(ConsoleLoggerFactory::class)
-            ->onlyMethods(['getLogger'])
+            ->setMethods(['getLogger'])
             ->disableOriginalConstructor()
             ->getMock();
         $consoleLoggerFactoryMock
@@ -191,7 +191,7 @@ class DeployStaticContentCommandTest extends \PHPUnit\Framework\TestCase
                 }
             );
         $objectManagerProviderMock = $this->getMockBuilder(ObjectManagerProvider::class)
-            ->onlyMethods(['get'])
+            ->setMethods(['get'])
             ->disableOriginalConstructor()
             ->getMock();
         $objectManagerProviderMock

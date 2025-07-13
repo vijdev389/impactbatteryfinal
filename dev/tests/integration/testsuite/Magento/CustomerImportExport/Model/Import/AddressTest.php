@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2014 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 /**
@@ -478,8 +478,7 @@ class AddressTest extends TestCase
     /**
      * Test customer indexer gets invalidated after import when Update on Schedule mode is set
      *
-     * @magentoAppIsolation enabled
-     * @magentoDbIsolation disabled
+     * @magentoDbIsolation enabled
      */
     public function testCustomerIndexer(): void
     {

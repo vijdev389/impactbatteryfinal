@@ -61,11 +61,11 @@ class PriceFilterTest extends AbstractFiltersTest
     /**
      * @return array
      */
-    public static function getFiltersDataProvider(): array
+    public function getFiltersDataProvider(): array
     {
         return [
             'all_children_active' => [
-                'products' => [
+                'products_data' => [
                     'simple333' => ['price' => 60.00],
                 ],
                 'expectation' => [
@@ -82,7 +82,7 @@ class PriceFilterTest extends AbstractFiltersTest
                 ],
             ],
             'one_child_disabled' => [
-                'products' => [
+                'products_data' => [
                     'simple333' => ['price' => 50.00],
                     'simple_10' => ['status' => Status::STATUS_DISABLED],
                 ],

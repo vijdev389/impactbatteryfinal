@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2019 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -43,7 +43,7 @@ class TextAreaAttributeTest extends AbstractAttributeTest
     }
 
     /**
-     * @inheritDoc
+     * @inheritdic
      */
     protected function getAttributeCode(): string
     {
@@ -51,7 +51,7 @@ class TextAreaAttributeTest extends AbstractAttributeTest
     }
 
     /**
-     * @inheritDoc
+     * @inheritdic
      */
     protected function getDefaultAttributeValue(): string
     {

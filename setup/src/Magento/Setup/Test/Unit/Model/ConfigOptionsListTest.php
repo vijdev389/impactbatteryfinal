@@ -13,7 +13,6 @@ use Magento\Framework\Config\Data\ConfigData;
 use Magento\Framework\Encryption\KeyValidator;
 use Magento\Framework\Setup\Option\FlagConfigOption;
 use Magento\Framework\Setup\Option\TextConfigOption;
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Magento\Setup\Model\ConfigGenerator;
 use Magento\Setup\Model\ConfigOptionsList;
 use Magento\Setup\Model\ConfigOptionsList\DriverOptions;
@@ -57,18 +56,6 @@ class ConfigOptionsListTest extends TestCase
      */
     private $driverOptionsMock;
 
-    /**
-     * @var array
-     */
-    private $configOptionsListClasses = [
-        \Magento\Setup\Model\ConfigOptionsList\Session::class,
-        \Magento\Setup\Model\ConfigOptionsList\Cache::class,
-        \Magento\Setup\Model\ConfigOptionsList\PageCache::class,
-        \Magento\Setup\Model\ConfigOptionsList\Lock::class,
-        \Magento\Setup\Model\ConfigOptionsList\Directory::class,
-        \Magento\Setup\Model\ConfigOptionsList\BackpressureLogger::class,
-    ];
-
     protected function setUp(): void
     {
         $this->generator = $this->createMock(ConfigGenerator::class);
@@ -76,16 +63,6 @@ class ConfigOptionsListTest extends TestCase
         $this->dbValidator = $this->createMock(DbValidator::class);
         $this->encryptionKeyValidator = $this->createMock(KeyValidator::class);
         $this->driverOptionsMock = $this->createMock(DriverOptions::class);
-        $objectManagerHelper = new ObjectManager($this);
-        $objects = [];
-        foreach ($this->configOptionsListClasses as $className) {
-            $configOptionClassMock = $this->getMockBuilder($className)
-                ->disableOriginalConstructor()
-                ->onlyMethods([])
-                ->getMock();
-            $objects[] = [$className,$configOptionClassMock];
-        }
-        $objectManagerHelper->prepareObjectManager($objects);
         $this->object = new ConfigOptionsList(
             $this->generator,
             $this->dbValidator,
@@ -244,7 +221,7 @@ class ConfigOptionsListTest extends TestCase
     /**
      * @return array
      */
-    public static function validateCacheHostsDataProvider()
+    public function validateCacheHostsDataProvider()
     {
         return [
             ['localhost', false],

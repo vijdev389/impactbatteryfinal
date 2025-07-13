@@ -31,7 +31,7 @@ class SourceArgumentsReaderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedResult, $actualResult);
     }
 
-    public static function getConstructorArgumentTypesDataProvider()
+    public function getConstructorArgumentTypesDataProvider()
     {
         return [
             [

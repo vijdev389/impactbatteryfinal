@@ -81,7 +81,7 @@ class CacheTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
     /**
      * @return array
      */
-    public static function massActionsInvalidTypesDataProvider()
+    public function massActionsInvalidTypesDataProvider()
     {
         return [
             'enable' => ['massEnable'],

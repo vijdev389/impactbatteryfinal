@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2011 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Tax\Model\ResourceModel;
 
@@ -32,7 +32,7 @@ class CalculationTest extends TestCase
     private $fixtures;
 
     /**
-     * @inheritDoc
+     * @inheirtDoc
      */
     protected function setUp(): void
     {

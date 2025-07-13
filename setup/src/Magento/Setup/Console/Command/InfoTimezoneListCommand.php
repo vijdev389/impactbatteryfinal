@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\Setup\Console\Command;
@@ -18,7 +18,6 @@ use Magento\Framework\App\ObjectManager;
  */
 class InfoTimezoneListCommand extends Command
 {
-    public const NAME = 'info:timezone:list';
     /**
      * List model provides lists of available options for currency, language locales, timezones
      *
@@ -35,7 +34,7 @@ class InfoTimezoneListCommand extends Command
      * @param Lists $lists
      * @param TableFactory $tableHelperFactory
      */
-    public function __construct(Lists $lists, ?TableFactory $tableHelperFactory = null)
+    public function __construct(Lists $lists, TableFactory $tableHelperFactory = null)
     {
         $this->lists = $lists;
         $this->tableHelperFactory = $tableHelperFactory ?: ObjectManager::getInstance()->create(TableFactory::class);
@@ -43,18 +42,18 @@ class InfoTimezoneListCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('info:timezone:list')
             ->setDescription('Displays the list of available timezones');
 
         parent::configure();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

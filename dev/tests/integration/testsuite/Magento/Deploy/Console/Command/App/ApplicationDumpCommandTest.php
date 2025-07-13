@@ -173,14 +173,9 @@ class ApplicationDumpCommandTest extends \PHPUnit\Framework\TestCase
         $outputMock = $this->getMockForAbstractClass(OutputInterface::class);
         $outputMock
             ->method('writeln')
-            ->willReturnCallback(
-                function ($arg1) use ($comment) {
-                    if ($arg1 === ['system' => $comment]) {
-                        return null;
-                    } elseif (preg_match('/<info>Done. Config types dumped: [a-z0-9,\s]+<\/info>/', $arg1)) {
-                        return null;
-                    }
-                }
+            ->withConsecutive(
+                [['system' => $comment]],
+                [$this->matchesRegularExpression('/<info>Done. Config types dumped: [a-z0-9,\s]+<\/info>/')]
             );
         /** @var ApplicationDumpCommand command */
         $command = $this->objectManager->create(ApplicationDumpCommand::class);

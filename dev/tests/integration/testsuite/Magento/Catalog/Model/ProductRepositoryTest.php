@@ -195,7 +195,7 @@ class ProductRepositoryTest extends TestCase
      *
      * @return array
      */
-    public static function skuDataProvider(): array
+    public function skuDataProvider(): array
     {
         return [
             ['sku' => 'simple'],
@@ -345,7 +345,7 @@ class ProductRepositoryTest extends TestCase
      *
      * @return array
      */
-    public static function productUpdateDataProvider(): array
+    public function productUpdateDataProvider(): array
     {
         return [
             'Updating for global store' => [

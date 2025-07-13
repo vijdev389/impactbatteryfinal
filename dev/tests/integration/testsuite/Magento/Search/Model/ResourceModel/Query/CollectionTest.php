@@ -1,22 +1,24 @@
 <?php
 /**
- * Copyright 2024 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
 namespace Magento\Search\Model\ResourceModel\Query;
 
 use Magento\Search\Model\ResourceModel\Query;
+use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
+use Magento\Framework\DB\Adapter\Pdo\Mysql;
 
-class CollectionTest extends TestCase
+class CollectionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Query
      */
-    private Query $queryResource;
+    private $queryResource;
 
     /**
      * @inheritDoc
@@ -27,17 +29,12 @@ class CollectionTest extends TestCase
         $this->queryResource = $objectManager->get(Query::class);
     }
 
-    /**
-     * @return void
-     */
-    public function testSearchQueryTableHasProperIndex(): void
+    public function testSearchQueryTableHasProperIndex()
     {
         $table = $this->queryResource->getTable('search_query');
-        $indexQueryStoreNumPopularity = 'SEARCH_QUERY_STORE_ID_NUM_RESULTS_POPULARITY';
-        $indexQueryTextStoreNumPopularity = 'SEARCH_QUERY_QUERY_TEXT_STORE_ID_NUM_RESULTS_POPULARITY';
+        $indexName = 'SEARCH_QUERY_STORE_ID_NUM_RESULTS_POPULARITY';
         $connection = $this->queryResource->getConnection();
         $tableIndexes = $connection->getIndexList($table);
-        $this->assertArrayHasKey($indexQueryStoreNumPopularity, $tableIndexes);
-        $this->assertArrayHasKey($indexQueryTextStoreNumPopularity, $tableIndexes);
+        $this->assertArrayHasKey($indexName, $tableIndexes);
     }
 }

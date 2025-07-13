@@ -52,7 +52,7 @@ class VirtualTypeMapperTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getTypeDataProvider()
+    public function getTypeDataProvider()
     {
         return [
             [
@@ -120,12 +120,12 @@ class VirtualTypeMapperTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function loadConfigurationDataProvider()
+    public function loadConfigurationDataProvider()
     {
         return [
             // collects two virtual types, defined in module configuration on global area level
             [
-                'diFilesPath' => [self::getFilePath('etc/di.xml')],
+                'diFilesPath' => [$this->getFilePath('etc/di.xml')],
                 'expectedVirtualTypesDependencies' => [
                     'global' => [
                         'Magento\Internal\Some\Class' => 'ExternalVirtualType',
@@ -139,7 +139,7 @@ class VirtualTypeMapperTest extends \PHPUnit\Framework\TestCase
              * but extended for adminhtml as it contains own virtual types definitions
              */
             [
-                'diFilesPath' => [self::getFilePath('etc/di.xml'), self::getFilePath('etc/adminhtml/di.xml')],
+                'diFilesPath' => [$this->getFilePath('etc/di.xml'), $this->getFilePath('etc/adminhtml/di.xml')],
                 'expectedVirtualTypesDependencies' => [
                     'global' => [
                         'Magento\Internal\Some\Class' => 'ExternalVirtualType',
@@ -176,7 +176,7 @@ class VirtualTypeMapperTest extends \PHPUnit\Framework\TestCase
      * @param string $fileName
      * @return string
      */
-    private static function getFilePath($fileName)
+    private function getFilePath($fileName)
     {
         return __DIR__
         . DIRECTORY_SEPARATOR

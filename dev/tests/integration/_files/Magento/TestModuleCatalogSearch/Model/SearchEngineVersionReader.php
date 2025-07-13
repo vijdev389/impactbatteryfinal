@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2022 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -24,7 +24,7 @@ class SearchEngineVersionReader
     private $versionInfo;
 
     /**
-     * Returns full search engine version e.g. 'elasticsearch8'
+     * Returns full search engine version e.g. 'elasticsearch7'
      *
      * @return string
      */

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 declare(strict_types=1);
@@ -23,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ModuleConfigStatusCommand extends Command
 {
-    public const NAME = 'module:config:status';
     /**
      * Deployment config reader
      *
@@ -58,7 +57,7 @@ class ModuleConfigStatusCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(self::NAME)
+            ->setName('module:config:status')
             ->setDescription(
                 'Checks the modules configuration in the \'app/etc/config.php\' file '
                 . 'and reports if they are up to date or not'

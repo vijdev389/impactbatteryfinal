@@ -64,7 +64,7 @@ class ForDirectiveTest extends TestCase
         self::assertEquals($expect, $result);
     }
 
-    public static function useCasesProvider()
+    public function useCasesProvider()
     {
         $items = [
             'ignoreme' => [
@@ -90,7 +90,7 @@ class ForDirectiveTest extends TestCase
         ];
     }
 
-    public static function invalidFormatProvider()
+    public function invalidFormatProvider()
     {
         return [
             ['{{for in}}foo{{/for}}'],

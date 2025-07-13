@@ -7,7 +7,6 @@
 namespace Magento\Test\Integrity;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
-use PHPUnit\Framework\TestStatus\TestStatus;
 
 /**
  * An integrity test that searches for references to static files and asserts that they are resolved via fallback
@@ -56,7 +55,6 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
      * @var \Magento\Framework\Filesystem
      */
     private $filesystem;
-
 
     protected function setUp(): void
     {
@@ -187,7 +185,7 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function referencesFromStaticFilesDataProvider()
+    public function referencesFromStaticFilesDataProvider()
     {
         return \Magento\Framework\App\Utility\Files::init()->getStaticPreProcessingFiles('*.{less,css}');
     }
@@ -227,7 +225,7 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function lessNotConfusedWithCssDataProvider()
+    public function lessNotConfusedWithCssDataProvider()
     {
         return \Magento\Framework\App\Utility\Files::init()->getStaticPreProcessingFiles('*.{less,css}');
     }
@@ -253,12 +251,12 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function referencesFromPhtmlFilesDataProvider()
+    public function referencesFromPhtmlFilesDataProvider()
     {
         $result = [];
         foreach (\Magento\Framework\App\Utility\Files::init()->getPhtmlFiles(true, false) as $info) {
             list($area, $themePath, , , $file) = $info;
-            foreach (self::collectGetViewFileUrl($file) as $fileId) {
+            foreach ($this->collectGetViewFileUrl($file) as $fileId) {
                 $result[] = [$file, $area, $themePath, $fileId];
             }
         }
@@ -271,7 +269,7 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
      * @param string $file
      * @return array
      */
-    private static function collectGetViewFileUrl($file)
+    private function collectGetViewFileUrl($file)
     {
         $result = [];
         if (preg_match_all('/\$block->getViewFileUrl\(\'([^\']+?)\'\)/', file_get_contents($file), $matches)) {
@@ -301,7 +299,7 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function referencesFromLayoutFilesDataProvider()
+    public function referencesFromLayoutFilesDataProvider()
     {
         $result = [];
         $files = \Magento\Framework\App\Utility\Files::init()->getLayoutFiles(['with_metainfo' => true], false);
@@ -309,12 +307,12 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
             list($area, $themePath, , , $file) = array_pad($metaInfo, 5, null);
 
             if (!is_string($file)) {
-                TestStatus::warning(
+                $this->addWarning(
                     'Wrong layout file configuration provided. The `file` meta info must be the type of string'
                 );
                 continue;
             }
-            foreach (self::collectFileIdsFromLayout($file) as $fileId) {
+            foreach ($this->collectFileIdsFromLayout($file) as $fileId) {
                 $result[] = [$file, $area, $themePath, $fileId];
             }
         }
@@ -327,7 +325,7 @@ class StaticFilesTest extends \PHPUnit\Framework\TestCase
      * @param string $file
      * @return array
      */
-    private static function collectFileIdsFromLayout($file)
+    private function collectFileIdsFromLayout($file)
     {
         $xml = simplexml_load_file($file);
         $elements = $xml->xpath('//head/css|link|script');

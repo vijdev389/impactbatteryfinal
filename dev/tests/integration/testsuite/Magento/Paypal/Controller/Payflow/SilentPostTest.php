@@ -94,7 +94,7 @@ class SilentPostTest extends AbstractController
      *
      * @return array
      */
-    public static function responseCodeDataProvider()
+    public function responseCodeDataProvider()
     {
         return [
             [Payflowlink::RESPONSE_CODE_APPROVED, Order::STATE_COMPLETE, Order::STATE_COMPLETE],

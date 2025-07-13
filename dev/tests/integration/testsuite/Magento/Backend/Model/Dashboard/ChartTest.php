@@ -98,7 +98,7 @@ class ChartTest extends TestCase
      *
      * @return array
      */
-    public static function getChartDataProvider(): array
+    public function getChartDataProvider(): array
     {
         return [
             [

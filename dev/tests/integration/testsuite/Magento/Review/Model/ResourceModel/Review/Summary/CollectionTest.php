@@ -71,7 +71,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         );
         $this->loggerMock = $this->getMockForAbstractClass(LoggerInterface::class);
         $this->resourceMock = $this->getMockBuilder(AbstractDb::class)
-            ->onlyMethods(['getConnection', 'getMainTable', 'getTable'])
+            ->setMethods(['getConnection', 'getMainTable', 'getTable'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->connectionMock = $this->createPartialMock(
@@ -82,7 +82,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->selectMock = $this->getMockBuilder(Select::class)
-            ->onlyMethods(['where'])
+            ->setMethods(['where'])
             ->setConstructorArgs(['adapter' => $this->connectionMock, 'selectRenderer' => $selectRenderer])
             ->getMock();
         $this->connectionMock->expects($this->once())
@@ -124,7 +124,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function storeIdDataProvider(): array
+    public function storeIdDataProvider(): array
     {
         return [
             [1, 'store_id = ?'],

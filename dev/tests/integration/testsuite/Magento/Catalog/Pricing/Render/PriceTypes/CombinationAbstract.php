@@ -140,45 +140,45 @@ abstract class CombinationAbstract extends TestCase
      *
      * @return array
      */
-    public static function tierPricesForAllCustomerGroupsDataProvider(): array
+    public function tierPricesForAllCustomerGroupsDataProvider(): array
     {
         return [
             'fixed_tier_price_with_qty_1' => [
-                'specialPrice' => 5.99,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 5.99,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 1, 'value' => 9]],
                     'message_config' => null,
                 ],
             ],
             'fixed_tier_price_with_qty_2' => [
-                'specialPrice' => 5.99,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 5.99,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 2, 'value' => 5]],
                     'message_config' => ['qty' => 2, 'price' => 5.00, 'percent' => 17],
                 ],
             ],
             'percent_tier_price_with_qty_2' => [
-                'specialPrice' => 5.99,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 5.99,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 2, 'percent_value' => 70]],
                     'message_config' => ['qty' => 2, 'price' => 3.00, 'percent' => 50],
                 ],
             ],
             'fixed_tier_price_with_qty_1_is_lower_than_special' => [
-                'specialPrice' => 5,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 5,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 1, 'value' => 5]],
                     'message_config' => null,
                 ],
             ],
             'percent_tier_price_with_qty_1_is_lower_than_special' => [
-                'specialPrice' => 3,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 3,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::NOT_LOGGED_IN_ID, 'qty' => 1, 'percent_value' => 70]],
                     'message_config' => null,
                 ],
@@ -191,21 +191,21 @@ abstract class CombinationAbstract extends TestCase
      *
      * @return array
      */
-    public static function tierPricesForLoggedCustomerGroupDataProvider(): array
+    public function tierPricesForLoggedCustomerGroupDataProvider(): array
     {
         return [
             'fixed_tier_price_with_qty_1' => [
-                'specialPrice' => 5.99,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 5.99,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => 1, 'qty' => 1, 'value' => 9]],
                     'message_config' => null,
                 ],
             ],
             'percent_tier_price_with_qty_1' => [
-                'specialPrice' => 5.99,
-                'regularPrice' => 10,
-                'tierData' => [
+                'special_price' => 5.99,
+                'regular_price' => 10,
+                'tier_data' => [
                     'prices' => [['customer_group_id' => 1, 'qty' => 1, 'percent_value' => 30]],
                     'message_config' => null,
                 ],
@@ -218,81 +218,81 @@ abstract class CombinationAbstract extends TestCase
      *
      * @return array
      */
-    public static function catalogRulesDataProvider(): array
+    public function catalogRulesDataProvider(): array
     {
         return [
             'fixed_catalog_rule_price_more_than_special_price' => [
-                'specialPrice' => 5.99,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 5.99,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 2],
                 ],
-                'tierData' => ['prices' => [], 'message_config' => null],
+                'tier_data' => ['prices' => [], 'message_config' => null],
             ],
             'fixed_catalog_rule_price_lower_than_special_price' => [
-                'specialPrice' => 2,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 2,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 8],
                 ],
-                'tierData' => ['prices' => [], 'message_config' => null],
+                'tier_data' => ['prices' => [], 'message_config' => null],
             ],
             'fixed_catalog_rule_price_more_than_tier_price' => [
-                'specialPrice' => 4,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 4,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 6],
                 ],
-                'tierData' => [
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 2, 'percent_value' => 70]],
                     'message_config' => ['qty' => 2, 'price' => 3.00, 'percent' => 25],
                 ],
             ],
             'fixed_catalog_rule_price_lower_than_tier_price' => [
-                'specialPrice' => 2,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 2,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 7],
                 ],
-                'tierData' => [
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 1, 'value' => 2]],
                     'message_config' => null,
                 ],
             ],
             'adjust_percent_catalog_rule_price_lower_than_special_price' => [
-                'specialPrice' => 4.50,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 4.50,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 45, RuleInterface::SIMPLE_ACTION => 'to_percent'],
                 ],
-                'tierData' => ['prices' => [], 'message_config' => null],
+                'tier_data' => ['prices' => [], 'message_config' => null],
             ],
             'adjust_percent_catalog_rule_price_lower_than_tier_price' => [
-                'specialPrice' => 3,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 3,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 30, RuleInterface::SIMPLE_ACTION => 'to_percent'],
                 ],
-                'tierData' => [
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 1, 'value' => 3.50]],
                     'message_config' => null,
                 ],
             ],
             'percent_catalog_rule_price_lower_than_special_price' => [
-                'specialPrice' => 2,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 2,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 2, RuleInterface::SIMPLE_ACTION => 'to_fixed'],
                 ],
-                'tierData' => ['prices' => [], 'message_config' => null],
+                'tier_data' => ['prices' => [], 'message_config' => null],
             ],
             'percent_catalog_rule_price_lower_than_tier_price' => [
-                'specialPrice' => 1,
-                'regularPrice' => 10,
-                'catalogRules' => [
+                'special_price' => 1,
+                'regular_price' => 10,
+                'catalog_rules' => [
                     [RuleInterface::DISCOUNT_AMOUNT => 1, RuleInterface::SIMPLE_ACTION => 'to_fixed'],
                 ],
-                'tierData' => [
+                'tier_data' => [
                     'prices' => [['customer_group_id' => Group::CUST_GROUP_ALL, 'qty' => 1, 'value' => 3]],
                     'message_config' => null,
                 ],
@@ -305,16 +305,16 @@ abstract class CombinationAbstract extends TestCase
      *
      * @return array
      */
-    public static function percentCustomOptionsDataProvider(): array
+    public function percentCustomOptionsDataProvider(): array
     {
         return [
             'percent_option_for_product_without_special_price' => [
-                'optionPrice' => 5,
-                'productPrices' => ['special_price' => null],
+                'option_price' => 5,
+                'product_prices' => ['special_price' => null],
             ],
             'percent_option_for_product_with_special_price' => [
-                'optionPrice' => 3,
-                'productPrices' => ['special_price' => 5.99],
+                'option_price' => 3,
+                'product_prices' => ['special_price' => 5.99],
             ],
         ];
     }

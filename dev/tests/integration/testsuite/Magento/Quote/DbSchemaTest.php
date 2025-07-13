@@ -35,7 +35,7 @@ class DbSchemaTest extends TestCase
         $this->assertSame($indexType, $indexes[$indexName]['INDEX_TYPE']);
     }
 
-    public static function indexDataProvider(): array
+    public function indexDataProvider(): array
     {
         return [
             [

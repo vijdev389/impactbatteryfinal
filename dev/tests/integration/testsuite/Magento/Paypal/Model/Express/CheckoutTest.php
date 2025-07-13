@@ -74,8 +74,7 @@ class CheckoutTest extends TestCase
 
         $this->api = $this->getMockBuilder(Nvp::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getExportedShippingAddress', 'getExportedBillingAddress', 'getShippingRateCode'])
-            ->onlyMethods(['call'])
+            ->setMethods(['call', 'getExportedShippingAddress', 'getExportedBillingAddress', 'getShippingRateCode'])
             ->getMock();
 
         $this->api->expects($this->any())
@@ -107,7 +106,7 @@ class CheckoutTest extends TestCase
 
         $apiTypeFactory = $this->getMockBuilder(Factory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
 
         $paypalInfo = $this->getMockBuilder(Info::class)
@@ -125,7 +124,7 @@ class CheckoutTest extends TestCase
 
         $api = $this->getMockBuilder(Nvp::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['callSetExpressCheckout'])
+            ->setMethods(['callSetExpressCheckout'])
             ->getMock();
 
         $api->expects($this->any())
@@ -234,7 +233,7 @@ class CheckoutTest extends TestCase
     /**
      * @return array
      */
-    public static function placeGuestQuoteDataProvider(): array
+    public function placeGuestQuoteDataProvider(): array
     {
         return [
             'case with account email absent' => [null, 'paypal_account@email.com'],
@@ -664,12 +663,12 @@ class CheckoutTest extends TestCase
 
         $apiTypeFactory = $this->getMockBuilder(Factory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
 
         $paypalInfo = $this->getMockBuilder(Info::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['importToPayment'])
+            ->setMethods(['importToPayment'])
             ->getMock();
 
         $checkoutModel = $this->objectManager->create(
@@ -683,8 +682,7 @@ class CheckoutTest extends TestCase
 
         $api = $this->getMockBuilder(Nvp::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getExportedShippingAddress', 'getExportedBillingAddress'])
-            ->onlyMethods(['call'])
+            ->setMethods(['call', 'getExportedShippingAddress', 'getExportedBillingAddress'])
             ->getMock();
 
         $apiTypeFactory->expects($this->any())

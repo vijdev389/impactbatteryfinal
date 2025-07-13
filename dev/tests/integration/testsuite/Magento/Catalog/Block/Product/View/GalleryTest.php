@@ -57,7 +57,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @var array
      */
-    private static $imageExpectation = [
+    private $imageExpectation = [
         'thumb' => '/m/a/magento_image.jpg',
         'img' => '/m/a/magento_image.jpg',
         'full' => '/m/a/magento_image.jpg',
@@ -71,7 +71,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @var array
      */
-    private static $thumbnailExpectation = [
+    private $thumbnailExpectation = [
         'thumb' => '/m/a/magento_thumbnail.jpg',
         'img' => '/m/a/magento_thumbnail.jpg',
         'full' => '/m/a/magento_thumbnail.jpg',
@@ -175,7 +175,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function galleryDisabledImagesDataProvider(): array
+    public function galleryDisabledImagesDataProvider(): array
     {
         return [
             [
@@ -183,7 +183,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_image.jpg' => ['disabled' => true],
                     '/m/a/magento_thumbnail.jpg' => [],
                 ],
-                'expectation' => self::$thumbnailExpectation,
+                'expectation' => $this->thumbnailExpectation,
             ],
         ];
     }
@@ -212,7 +212,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function galleryImagesDataProvider(): array
+    public function galleryImagesDataProvider(): array
     {
         return [
             'with_main_image' => [
@@ -221,8 +221,8 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_thumbnail.jpg' => ['main' => true],
                 ],
                 'expectation' => [
-                    self::$imageExpectation,
-                    array_merge(self::$thumbnailExpectation, ['isMain' => true]),
+                    $this->imageExpectation,
+                    array_merge($this->thumbnailExpectation, ['isMain' => true]),
                 ],
             ],
             'without_main_image' => [
@@ -231,8 +231,8 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_thumbnail.jpg' => [],
                 ],
                 'expectation' => [
-                    array_merge(self::$imageExpectation, ['isMain' => true]),
-                    self::$thumbnailExpectation,
+                    array_merge($this->imageExpectation, ['isMain' => true]),
+                    $this->thumbnailExpectation,
                 ],
             ],
             'with_changed_position' => [
@@ -241,8 +241,8 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_thumbnail.jpg' => ['position' => '1'],
                 ],
                 'expectation' => [
-                    array_merge(self::$thumbnailExpectation, ['position' => '1']),
-                    array_merge(self::$imageExpectation, ['position' => '2', 'isMain' => true]),
+                    array_merge($this->thumbnailExpectation, ['position' => '1']),
+                    array_merge($this->imageExpectation, ['position' => '2', 'isMain' => true]),
                 ],
             ],
         ];
@@ -273,7 +273,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function galleryImagesWithImageOptimizationParametersInUrlDataProvider(): array
+    public function galleryImagesWithImageOptimizationParametersInUrlDataProvider(): array
     {
 
         $imageExpectation = [
@@ -357,7 +357,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function galleryImagesOnStoreViewDataProvider(): array
+    public function galleryImagesOnStoreViewDataProvider(): array
     {
         return [
             'with_store_labels' => [
@@ -366,8 +366,8 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_thumbnail.jpg' => [],
                 ],
                 'expectation' => [
-                    array_merge(self::$imageExpectation, ['isMain' => true, 'caption' => 'Some store label']),
-                    self::$thumbnailExpectation,
+                    array_merge($this->imageExpectation, ['isMain' => true, 'caption' => 'Some store label']),
+                    $this->thumbnailExpectation,
                 ],
             ],
             'with_changed_position' => [
@@ -376,8 +376,8 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_thumbnail.jpg' => [],
                 ],
                 'expectation' => [
-                    array_merge(self::$thumbnailExpectation, ['position' => '2']),
-                    array_merge(self::$imageExpectation, ['position' => '3', 'isMain' => true]),
+                    array_merge($this->thumbnailExpectation, ['position' => '2']),
+                    array_merge($this->imageExpectation, ['position' => '3', 'isMain' => true]),
                 ],
             ],
             'with_main_store_image' => [
@@ -386,8 +386,8 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
                     '/m/a/magento_thumbnail.jpg' => ['main' => true],
                 ],
                 'expectation' => [
-                    self::$imageExpectation,
-                    array_merge(self::$thumbnailExpectation, ['isMain' => true]),
+                    $this->imageExpectation,
+                    array_merge($this->thumbnailExpectation, ['isMain' => true]),
                 ],
             ],
         ];
@@ -438,7 +438,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array[]
      */
-    public static function imagesPositionStoreViewDataProvider(): array
+    public function imagesPositionStoreViewDataProvider(): array
     {
         return [
             [
@@ -502,7 +502,7 @@ class GalleryTest extends \PHPUnit\Framework\TestCase
      * @param int|null $storeId
      * @return void
      */
-    private function setGalleryImages(ProductInterface $product, array $images, ?int $storeId = null): void
+    private function setGalleryImages(ProductInterface $product, array $images, int $storeId = null): void
     {
         $product->setImage(null);
         foreach ($images as $file => $data) {

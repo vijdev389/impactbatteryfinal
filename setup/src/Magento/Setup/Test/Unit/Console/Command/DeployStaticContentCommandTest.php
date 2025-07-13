@@ -121,7 +121,7 @@ class DeployStaticContentCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executeDataProvider()
+    public function executeDataProvider()
     {
         return [
             'No options' => [
@@ -181,7 +181,7 @@ class DeployStaticContentCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function executionInNonProductionModeDataProvider()
+    public function executionInNonProductionModeDataProvider()
     {
         return [
             [State::MODE_DEFAULT],

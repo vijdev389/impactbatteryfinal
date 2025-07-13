@@ -113,12 +113,12 @@ class CategoryTest extends TestCase
     /**
      * @return array
      */
-    public static function canShowBlockWithDisplayModeDataProvider(): array
+    public function canShowBlockWithDisplayModeDataProvider(): array
     {
         return [
-            'with_mode_products' => ['displayMode' => CategoryModel::DM_PRODUCT, 'canShow' => true],
-            'with_mode_cms_block' => ['displayMode' => CategoryModel::DM_PAGE, 'canShow' => false],
-            'with_mode_cms_block_and_products' => ['displayMode' => CategoryModel::DM_MIXED, 'canShow' => true],
+            'with_mode_products' => ['mode' => CategoryModel::DM_PRODUCT, 'can_show' => true],
+            'with_mode_cms_block' => ['mode' => CategoryModel::DM_PAGE, 'can_show' => false],
+            'with_mode_cms_block_and_products' => ['mode' => CategoryModel::DM_MIXED, 'can_show' => true],
         ];
     }
 
@@ -146,23 +146,23 @@ class CategoryTest extends TestCase
     /**
      * @return array
      */
-    public static function canShowBlockWithDisplayModeDataProviderOnStoreView(): array
+    public function canShowBlockWithDisplayModeDataProviderOnStoreView(): array
     {
         return [
             'with_mode_products' => [
-                'defaultMode' => CategoryModel::DM_PAGE,
-                'storeMode' => CategoryModel::DM_PRODUCT,
-                'canShow' => true,
+                'default_mode' => CategoryModel::DM_PAGE,
+                'store_mode' => CategoryModel::DM_PRODUCT,
+                'can_show' => true,
             ],
             'with_mode_cms_block' => [
-                'defaultMode' => CategoryModel::DM_PRODUCT,
-                'storeMode' => CategoryModel::DM_PAGE,
-                'canShow' => false
+                'default_mode' => CategoryModel::DM_PRODUCT,
+                'store_mode' => CategoryModel::DM_PAGE,
+                'can_show' => false
             ],
             'with_mode_cms_block_and_products' => [
-                'defaultMode' => CategoryModel::DM_PAGE,
-                'storeMode' => CategoryModel::DM_MIXED,
-                'canShow' => true
+                'default_mode' => CategoryModel::DM_PAGE,
+                'store_mode' => CategoryModel::DM_MIXED,
+                'can_show' => true
             ],
         ];
     }

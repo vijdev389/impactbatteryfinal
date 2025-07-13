@@ -63,7 +63,7 @@ class TestSetterTest extends TestCase
     {
         $mock = $this->getMockBuilder(Resolver::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setCurrentTest'])
+            ->setMethods(['setCurrentTest'])
             ->getMock();
         $reflection = new \ReflectionClass(Resolver::class);
         $reflectionProperty = $reflection->getProperty('instance');

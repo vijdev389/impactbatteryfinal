@@ -132,7 +132,7 @@ class DataTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getTrackingPopupUrlBySalesModelDataProvider()
+    public function getTrackingPopupUrlBySalesModelDataProvider()
     {
         return [
             [\Magento\Sales\Model\Order::class,

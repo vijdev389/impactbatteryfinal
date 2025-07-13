@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright 2011 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -33,7 +34,7 @@ class DesignTest extends TestCase
     private $productRepository;
 
     /**
-     * @inheritDoc
+     * @inheriDoc
      */
     protected function setUp(): void
     {
@@ -79,7 +80,7 @@ class DesignTest extends TestCase
     /**
      * @return array[]
      */
-    public static function getDesignSettingsForProductWithScheduleDesignTest(): array
+    public function getDesignSettingsForProductWithScheduleDesignTest(): array
     {
         $datetime = new \DateTime();
         $datetime->modify('-10 day');
@@ -91,25 +92,25 @@ class DesignTest extends TestCase
 
         return [
             'schedule_design_applied' => [
-                'designSettings' => [
+                'design_settings' => [
                     'custom_layout' => '2columns-left',
                     'custom_design' => '2',
                     'custom_design_from' => $fromApplied,
                     'custom_design_to' => $to,
                 ],
-                'expectedSetting' => [
+                'expected_settings' => [
                     'page_layout' => '2columns-left',
                     'custom_design' => '2',
                 ]
             ],
             'schedule_design_not_applied' => [
-                'designSettings' => [
+                'design_settings' => [
                     'custom_layout' => '2columns-left',
                     'custom_design' => '2',
                     'custom_design_from' => $fromNotApplied,
                     'custom_design_to' => $to,
                 ],
-                'expectedSetting' => [
+                'expected_settings' => [
                     'page_layout' => '3columns',
                     'custom_design' => null,
                 ]
@@ -148,10 +149,10 @@ class DesignTest extends TestCase
     /**
      * @return array
      */
-    public static function getThemeModel(): array
+    public function getThemeModel(): array
     {
         $theme = Bootstrap::getObjectManager()->create(ThemeInterface::class);
-        $theme->setData(self::_getThemeData());
+        $theme->setData($this->_getThemeData());
 
         return [[$theme]];
     }
@@ -159,7 +160,7 @@ class DesignTest extends TestCase
     /**
      * @return array
      */
-    protected static function _getThemeData()
+    protected function _getThemeData()
     {
         return [
             'theme_title' => 'Magento Theme',

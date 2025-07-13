@@ -146,7 +146,7 @@ class ComposerInformationTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function getRequiredPhpVersionDataProvider()
+    public function getRequiredPhpVersionDataProvider()
     {
         return [
             'Skeleton Composer' => ['testSkeleton'],

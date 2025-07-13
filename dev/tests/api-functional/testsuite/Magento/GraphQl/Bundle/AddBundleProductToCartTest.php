@@ -213,7 +213,7 @@ QUERY;
         $this->assertEquals($quantity, $bundleItem['quantity']);
     }
 
-    public static function dataProviderTestUpdateBundleItemQuantity(): array
+    public function dataProviderTestUpdateBundleItemQuantity(): array
     {
         return [
             [2],

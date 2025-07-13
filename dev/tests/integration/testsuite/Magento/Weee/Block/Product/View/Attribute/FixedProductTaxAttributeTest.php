@@ -10,11 +10,9 @@ namespace Magento\Weee\Block\Product\View\Attribute;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Block\Product\ListProduct;
-use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Pricing\Render as CatalogPricingRender;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Customer\Model\Session;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Pricing\Render;
 use Magento\Framework\Pricing\Render\RendererPool;
@@ -70,11 +68,6 @@ class FixedProductTaxAttributeTest extends TestCase
     private $baseWebsiteId;
 
     /**
-     * @var Collection
-     */
-    private $productCollection;
-
-    /**
      * @inheritdoc
      */
     protected function setUp(): void
@@ -100,7 +93,6 @@ class FixedProductTaxAttributeTest extends TestCase
                 'state' => '',
             ]
         ];
-        $this->productCollection = $this->objectManager->create(Collection::class);
     }
 
     /**
@@ -120,14 +112,11 @@ class FixedProductTaxAttributeTest extends TestCase
      * @magentoConfigFixture default_store tax/weee/display_list 0
      *
      * @return void
-     * @throws LocalizedException
      */
     public function testFPTCategoryPageIncludingFPTOnly(): void
     {
         $this->prepareLayoutCategoryPage();
         $product = $this->updateProduct('simple2', $this->textTaxData);
-        $this->productCollection->addItem($product);
-        $this->productListBlock->setCollection($this->productCollection);
         $productPrice = $this->productListBlock->getProductPrice($product);
         $this->assertEquals('$15.00', preg_replace('/\s+/', '', strip_tags($productPrice)));
     }
@@ -137,14 +126,11 @@ class FixedProductTaxAttributeTest extends TestCase
      * @magentoConfigFixture default_store tax/weee/display_list 1
      *
      * @return void
-     * @throws LocalizedException
      */
     public function testFPTCategoryPageIncludingFPTAndDescription(): void
     {
         $this->prepareLayoutCategoryPage();
         $product = $this->updateProduct('simple2', $this->textTaxData);
-        $this->productCollection->addItem($product);
-        $this->productListBlock->setCollection($this->productCollection);
         $productPrice = $this->productListBlock->getProductPrice($product);
         $this->assertStringContainsString('data-label="fixed&#x20;product&#x20;tax"', $productPrice);
         $this->assertEquals('$15.00$5.00', preg_replace('/\s+/', '', strip_tags($productPrice)));
@@ -160,8 +146,6 @@ class FixedProductTaxAttributeTest extends TestCase
     {
         $this->prepareLayoutCategoryPage();
         $product = $this->updateProduct('simple2', $this->textTaxData);
-        $this->productCollection->addItem($product);
-        $this->productListBlock->setCollection($this->productCollection);
         $productPrice = $this->productListBlock->getProductPrice($product);
         $this->assertStringContainsString('data-label="fixed&#x20;product&#x20;tax"', $productPrice);
         $this->assertEquals('$10.00$5.00$15.00', preg_replace('/\s+/', '', strip_tags($productPrice)));
@@ -177,8 +161,6 @@ class FixedProductTaxAttributeTest extends TestCase
     {
         $this->prepareLayoutCategoryPage();
         $product = $this->updateProduct('simple2', $this->textTaxData);
-        $this->productCollection->addItem($product);
-        $this->productListBlock->setCollection($this->productCollection);
         $productPrice = $this->productListBlock->getProductPrice($product);
         $this->assertEquals('$10.00', preg_replace('/\s+/', '', strip_tags($productPrice)));
     }

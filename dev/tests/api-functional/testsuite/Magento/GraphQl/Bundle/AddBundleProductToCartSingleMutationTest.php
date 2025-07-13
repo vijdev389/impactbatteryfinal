@@ -152,7 +152,7 @@ QUERY;
         return base64_encode("bundle/$optionId/$selectionId/$quantity");
     }
 
-    public static function dataProviderTestUpdateBundleItemQuantity(): array
+    public function dataProviderTestUpdateBundleItemQuantity(): array
     {
         return [
             [2],
@@ -320,7 +320,7 @@ QUERY;
      *
      * @return array
      */
-    public static function bundleItemOptionsDataProvider(): array
+    public function bundleItemOptionsDataProvider(): array
     {
         return [
             [

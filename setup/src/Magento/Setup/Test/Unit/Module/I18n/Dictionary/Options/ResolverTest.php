@@ -52,7 +52,7 @@ class ResolverTest extends TestCase
     /**
      * @return array
      */
-    public static function getOptionsDataProvider()
+    public function getOptionsDataProvider()
     {
         $sourceFirst = __DIR__ . '/_files/source';
         $sourceSecond = __DIR__ . '/_files/source';
@@ -147,7 +147,7 @@ class ResolverTest extends TestCase
     /**
      * @return array
      */
-    public static function getOptionsWrongDirDataProvider()
+    public function getOptionsWrongDirDataProvider()
     {
         return [
             ['not_exist', true, 'Specified path is not a Magento root directory'],

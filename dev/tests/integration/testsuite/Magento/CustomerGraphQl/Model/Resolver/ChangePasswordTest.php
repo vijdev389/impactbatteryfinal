@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -106,7 +106,7 @@ QUERY;
 
         // Assert the email contains the expected content
         $this->assertEquals('Your Main Website Store password has been changed', $sentMessage->getSubject());
-        $messageRaw = quoted_printable_decode($sentMessage->getBody()->bodyToString());
+        $messageRaw = $sentMessage->getBody()->getParts()[0]->getRawContent();
         $this->assertStringContainsString(
             'We have received a request to change the following information associated with your account',
             $messageRaw

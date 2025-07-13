@@ -58,7 +58,7 @@ class CollectionTest extends TestCase
     /**
      * @return array
      */
-    public static function getCollectionFiltersDataProvider(): array
+    public function getCollectionFiltersDataProvider(): array
     {
         return [
             'cms_page_collection_for_creation_time' => [

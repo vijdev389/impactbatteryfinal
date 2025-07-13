@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\Setup\Console\Command;
@@ -16,7 +16,6 @@ use Symfony\Component\Console\Question\Question;
 
 class ConfigSetCommand extends AbstractSetupCommand
 {
-    public const NAME = 'setup:config:set';
     /**
      * @var ConfigModel
      */
@@ -31,7 +30,6 @@ class ConfigSetCommand extends AbstractSetupCommand
 
     /**
      * Existing deployment config
-     * @var DeploymentConfig
      */
     private $deploymentConfig;
 
@@ -62,7 +60,7 @@ class ConfigSetCommand extends AbstractSetupCommand
     {
         $options = $this->configModel->getAvailableOptions();
 
-        $this->setName(self::NAME)
+        $this->setName('setup:config:set')
             ->setDescription('Creates or modifies the deployment configuration')
             ->setDefinition($options);
 

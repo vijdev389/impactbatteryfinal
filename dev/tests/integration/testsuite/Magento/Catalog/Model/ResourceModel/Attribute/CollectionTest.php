@@ -57,7 +57,7 @@ class CollectionTest extends TestCase
     /**
      * @return array[]
      */
-    public static function attributesCollectionGetCurrentPageDataProvider(): array
+    public function attributesCollectionGetCurrentPageDataProvider(): array
     {
         return [
             [

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\Setup\Console\Command;
@@ -14,7 +14,6 @@ use Magento\Framework\Setup\ConsoleLogger;
 
 class UninstallCommand extends AbstractSetupCommand
 {
-    public const NAME = 'setup:uninstall';
     /**
      * @var InstallerFactory
      */
@@ -30,17 +29,17 @@ class UninstallCommand extends AbstractSetupCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('setup:uninstall')
             ->setDescription('Uninstalls the Magento application');
         parent::configure();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Wishlist\Controller\Index;
@@ -205,7 +204,7 @@ class AddTest extends AbstractController
         $confirmation = $customer->getConfirmation();
         $sendMessage = $this->transportBuilder->getSentMessage();
         $this->assertNotNull($sendMessage);
-        $rawMessage = quoted_printable_decode($sendMessage->getBody()->bodyToString());
+        $rawMessage = $sendMessage->getBody()->getParts()[0]->getRawContent();
         $this->assertStringContainsString(
             (string)__(
                 'You must confirm your %customer_email email before you can sign in (link is only valid once):',

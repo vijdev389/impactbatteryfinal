@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2020 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -58,7 +58,7 @@ class MultiselectOptionViewTest extends AbstractBundleOptionsViewTest
     }
 
     /**
-     * @inheritDoc
+     * @inheridoc
      */
     protected function getRequiredSelectXpath(): string
     {
@@ -67,7 +67,7 @@ class MultiselectOptionViewTest extends AbstractBundleOptionsViewTest
     }
 
     /**
-     * @inheritDoc
+     * @inheridoc
      */
     protected function getNotRequiredSelectXpath(): string
     {

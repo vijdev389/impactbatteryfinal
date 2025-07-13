@@ -34,34 +34,14 @@ class PathInfoProcessorTest extends TestCase
         $this->assertEquals($pathInfo, $info);
     }
 
-    public static function notValidStoreCodeDataProvider(): array
+    public function notValidStoreCodeDataProvider(): array
     {
         return [
-            'default store id' =>
-                [
-                    'pathInfo' => '/0/m/c/a'
-                ]
-            ,
-            'main store id' =>
-                [
-                    'pathInfo' => '/1/m/c/a'
-                ]
-            ,
-            'nonexistent store code' =>
-                [
-                    'pathInfo' => '/test_string/m/c/a'
-                ]
-            ,
-            'admin store code' =>
-                [
-                    'pathInfo' => '/admin/m/c/a'
-                ]
-            ,
-            'empty path' =>
-                [
-                    'pathInfo' => '/'
-                ]
-            ,
+            ['default store id' => '/0/m/c/a'],
+            ['main store id' => '/1/m/c/a'],
+            ['nonexistent store code' => '/test_string/m/c/a'],
+            ['admin store code' => '/admin/m/c/a'],
+            ['empty path' => '/'],
         ];
     }
 

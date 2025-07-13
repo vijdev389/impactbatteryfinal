@@ -127,7 +127,7 @@ abstract class PaypalPayflowProAbstractTest extends TestCase
         if (empty($this->gatewayMock)) {
             $this->gatewayMock = $this->getMockBuilder(Gateway::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['postRequest'])
+                ->setMethods(['postRequest'])
                 ->getMock();
         }
         return $this->gatewayMock;

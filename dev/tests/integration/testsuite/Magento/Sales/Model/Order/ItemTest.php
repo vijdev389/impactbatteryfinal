@@ -22,7 +22,7 @@ class ItemTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getProductOptionsDataProvider()
+    public function getProductOptionsDataProvider()
     {
         return [
             [

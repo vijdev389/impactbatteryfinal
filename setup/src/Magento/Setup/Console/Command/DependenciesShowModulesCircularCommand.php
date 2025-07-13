@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Setup\Console\Command;
 
@@ -14,15 +14,13 @@ use Magento\Setup\Module\Dependency\ServiceLocator;
  */
 class DependenciesShowModulesCircularCommand extends AbstractDependenciesCommand
 {
-    public const NAME = 'info:dependencies:show-modules-circular';
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
         $this->setDescription('Shows number of circular dependencies between modules')
-            ->setName(self::NAME);
+            ->setName('info:dependencies:show-modules-circular');
         parent::configure();
     }
 

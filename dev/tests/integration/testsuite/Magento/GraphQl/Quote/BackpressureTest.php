@@ -57,7 +57,7 @@ class BackpressureTest extends TestCase
      *
      * @return array
      */
-    public static function getConfiguredCases(): array
+    public function getConfiguredCases(): array
     {
         return [
             'guest' => [

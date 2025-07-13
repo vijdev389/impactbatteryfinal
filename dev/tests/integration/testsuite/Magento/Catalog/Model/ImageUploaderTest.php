@@ -102,16 +102,16 @@ class ImageUploaderTest extends TestCase
     /**
      * @return array
      */
-    public static function saveFileToTmpDirProvider(): array
+    public function saveFileToTmpDirProvider(): array
     {
         return [
             'image_default_name' => [
-                'fileName' => 'magento_small_image.jpg',
-                'expectedName' => 'magento_small_image.jpg',
+                'file_name' => 'magento_small_image.jpg',
+                'expected_name' => 'magento_small_image.jpg',
             ],
             'image_with_space_in_name' => [
-                'fileName' => 'magento_image with space in name.jpg',
-                'expectedName' => 'magento_image_with_space_in_name.jpg',
+                'file_name' => 'magento_image with space in name.jpg',
+                'expected_name' => 'magento_image_with_space_in_name.jpg',
             ],
         ];
     }

@@ -36,7 +36,7 @@ class GraphQlCustomerMutationsTest extends \PHPUnit\Framework\TestCase
             $this->markTestSkipped('GraphQlStateDiff class is not available on this version of Magento.');
         }
 
-        $this->graphQlStateDiff = new GraphQlStateDiff();
+        $this->graphQlStateDiff = new GraphQlStateDiff($this);
         parent::setUp();
     }
 
@@ -198,7 +198,7 @@ class GraphQlCustomerMutationsTest extends \PHPUnit\Framework\TestCase
      * @return array[]
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function customerDataProvider(): array
+    public function customerDataProvider(): array
     {
         return [
             'Create Customer' => [

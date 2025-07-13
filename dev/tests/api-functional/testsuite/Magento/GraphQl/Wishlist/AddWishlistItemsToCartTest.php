@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2025 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare (strict_types = 1);
 
@@ -23,6 +23,9 @@ class AddWishlistItemsToCartTest extends GraphQlAbstract
      */
     private $customerTokenService;
 
+    /**
+     * Set Up
+     */
     protected function setUp(): void
     {
         $objectManager = Bootstrap::getObjectManager();
@@ -112,10 +115,7 @@ class AddWishlistItemsToCartTest extends GraphQlAbstract
     public function testAddItemsToCartForInvalidUser(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage(
-            "The account sign-in was incorrect or your account is disabled temporarily. " .
-            "Please wait and try again later."
-        );
+        $this->expectExceptionMessage("The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.");
 
         $wishlist = $this->getWishlist();
         $customerWishlist = $wishlist['customer']['wishlists'][0];
@@ -145,7 +145,7 @@ class AddWishlistItemsToCartTest extends GraphQlAbstract
 
         $query = $this->getQuery($wishlistId, $itemId);
 
-        $this->graphQlMutation($query);
+        $this->graphQlMutation($query, [], '', ['Authorization' => 'Bearer test_token']);
     }
 
     /**
@@ -206,14 +206,12 @@ class AddWishlistItemsToCartTest extends GraphQlAbstract
         $query = $this->getQuery($customerWishlist['id'], $itemId);
         $this->graphQlMutation($query, [], '', $this->getHeaderMap());
     }
-
-     /**
-      * Add all items from customer's wishlist to cart
-      *
-      * @magentoApiDataFixture Magento/GraphQl/Catalog/_files/simple_product.php
-      * @magentoConfigFixture wishlist/general/active 1
-      * @magentoApiDataFixture Magento/Wishlist/_files/wishlist_with_simple_product.php
-      */
+     /** Add all items from customer's wishlist to cart
+     *
+     * @magentoApiDataFixture Magento/GraphQl/Catalog/_files/simple_product.php
+     * @magentoConfigFixture wishlist/general/active 1
+     * @magentoApiDataFixture Magento/Wishlist/_files/wishlist_with_simple_product.php
+     */
     public function testAddAllWishlistItemsToCart(): void
     {
         $wishlist = $this->getWishlist();
@@ -338,13 +336,6 @@ MUTATION;
         return $this->graphQlQuery($this->getCustomerWishlistQuery(), [], '', $this->getHeaderMap($username));
     }
 
-    /**
-     * Get customer cart details
-     *
-     * @param string $username
-     * @return array
-     * @throws AuthenticationException
-     */
     public function getCustomerCart(string $username): array
     {
         return $this->graphQlQuery($this->getCustomerCartQuery(), [], '', $this->getHeaderMap($username));
@@ -446,4 +437,6 @@ MUTATION;
 }
 QUERY;
     }
+
+
 }

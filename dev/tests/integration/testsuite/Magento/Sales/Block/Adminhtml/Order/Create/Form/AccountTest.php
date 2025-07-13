@@ -71,8 +71,7 @@ class AccountTest extends TestCase
 
         $this->session = $this->getMockBuilder(SessionQuote::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getCustomerId'])
-            ->onlyMethods(['getQuote'])
+            ->setMethods(['getCustomerId','getQuote'])
             ->getMock();
         $this->session->method('getQuote')
             ->willReturn($quote);
@@ -178,8 +177,7 @@ class AccountTest extends TestCase
 
         $this->session = $this->getMockBuilder(SessionQuote::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getCustomerId'])
-            ->onlyMethods(['getQuote'])
+            ->setMethods(['getCustomerId', 'getQuote'])
             ->getMock();
         $this->session->method('getQuote')
             ->willReturn($quote);
@@ -242,8 +240,7 @@ class AccountTest extends TestCase
 
         $this->session = $this->getMockBuilder(SessionQuote::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getCustomerId'])
-            ->onlyMethods(['getQuote'])
+            ->setMethods(['getCustomerId', 'getQuote'])
             ->getMock();
         $this->session->method('getQuote')
             ->willReturn($quote);
@@ -279,7 +276,7 @@ class AccountTest extends TestCase
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function getDataForVatValidatedCustomer(): array
+    public function getDataForVatValidatedCustomer(): array
     {
         return [
             'Validated customer group id when its set in quote' => [

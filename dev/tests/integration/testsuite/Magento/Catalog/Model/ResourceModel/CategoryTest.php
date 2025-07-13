@@ -184,7 +184,7 @@ class CategoryTest extends TestCase
     /**
      * @return array
      */
-    public static function catalogProductChangesWithScheduledUpdateDataProvider(): array
+    public function catalogProductChangesWithScheduledUpdateDataProvider(): array
     {
         return [
             'change products position' => [

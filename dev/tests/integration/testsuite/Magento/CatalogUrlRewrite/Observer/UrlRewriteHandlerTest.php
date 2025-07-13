@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2018 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -11,9 +11,8 @@ use Magento\Catalog\Api\CategoryListInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
+use Magento\TestFramework\ObjectManager;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 use PHPUnit\Framework\TestCase;
 
@@ -26,17 +25,17 @@ class UrlRewriteHandlerTest extends TestCase
     /**
      * @var UrlRewriteHandler
      */
-    private UrlRewriteHandler $handler;
+    private $handler;
 
     /**
      * @var ProductRepositoryInterface
      */
-    private ProductRepositoryInterface $productRepository;
+    private $productRepository;
 
     /**
-     * @var ObjectManagerInterface
+     * @var ObjectManager
      */
-    private ObjectManagerInterface $objectManager;
+    private $objectManager;
 
     /**
      * @inheritdoc
@@ -50,56 +49,13 @@ class UrlRewriteHandlerTest extends TestCase
 
     /**
      * Checks category URLs rewrites generation with enabled `Use Categories Path for Product URLs` option and
-     * store's specific product URL key in store view context.
-     *
-     * @magentoDataFixture Magento/CatalogUrlRewrite/Fixtures/product_custom_url_key.php
-     * @magentoConfigFixture admin_store catalog/seo/product_use_categories 1
-     * @magentoConfigFixture default/catalog/seo/generate_category_product_rewrites 1
-     * @magentoConfigFixture default/catalog/seo/product_rewrite_context store_view
-     *
-     * @return void
-     * @throws NoSuchEntityException
-     */
-    public function testGenerateProductUrlRewriteStoreViewContext(): void
-    {
-        $product = $this->productRepository->get('p002');
-        $category = $this->getCategory('category 1');
-        // change the category scope to the global
-        $category->setStoreId(1)
-            ->setChangedProductIds([$product->getId()])
-            ->setAffectedProductIds([$product->getId()])
-            ->setAnchorsAbove(false);
-
-        $generatedUrls = $this->handler->generateProductUrlRewrites($category);
-        $actual = array_values(
-            array_map(
-                function (UrlRewrite $urlRewrite) {
-                    return $urlRewrite->getRequestPath();
-                },
-                $generatedUrls
-            )
-        );
-
-        $expected = [
-            'store-1-key.html',
-            'cat-1/store-1-key.html'
-        ];
-        self::assertEquals($expected, $actual, 'Generated URLs rewrites do not match.');
-    }
-
-    /**
-     * Checks category URLs rewrites generation with enabled `Use Categories Path for Product URLs` option and
      * store's specific product URL key.
      *
      * @magentoDataFixture Magento/CatalogUrlRewrite/Fixtures/product_custom_url_key.php
      * @magentoConfigFixture admin_store catalog/seo/product_use_categories 1
      * @magentoConfigFixture default/catalog/seo/generate_category_product_rewrites 1
-     * @magentoConfigFixture default/catalog/seo/product_rewrite_context website
-     *
-     * @return void
-     * @throws NoSuchEntityException
      */
-    public function testGenerateProductUrlRewritesWebsiteContext(): void
+    public function testGenerateProductUrlRewrites()
     {
         $product = $this->productRepository->get('p002');
         $category = $this->getCategory('category 1');
@@ -121,10 +77,8 @@ class UrlRewriteHandlerTest extends TestCase
 
         $expected = [
             'store-1-key.html', // the Default store
-            'store-1-key.html', // the Secondary store
             'cat-1/store-1-key.html', // the Default store with Category URL key, first store view
             'cat-1/store-1-key.html', // the Default store with Category URL key, second store view
-            'p002.html', // the Default store
             'p002.html', // the Secondary store
             'cat-1-2/p002.html', // the Secondary store with Category URL key, first store view
             'cat-1-2/p002.html', // the Secondary store with Category URL key, second store view
@@ -135,11 +89,8 @@ class UrlRewriteHandlerTest extends TestCase
     /**
      * @magentoDataFixture Magento/CatalogUrlRewrite/_files/category_with_products.php
      * @magentoConfigFixture default/catalog/seo/generate_category_product_rewrites 1
-     *
-     * @return void
-     * @throws NoSuchEntityException
      */
-    public function testGenerateProductUrlRewrites2(): void
+    public function testGenerateProductUrlRewrites2()
     {
         $product1 = $this->productRepository->get('simple');
         $product2 = $this->productRepository->get('12345');

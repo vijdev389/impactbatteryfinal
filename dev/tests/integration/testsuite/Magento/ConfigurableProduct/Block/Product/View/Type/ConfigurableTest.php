@@ -239,12 +239,12 @@ class ConfigurableTest extends TestCase
     /**
      * @return array
      */
-    public static function expectedDataProvider(): array
+    public function expectedDataProvider(): array
     {
         return [
             [
                 'label' => 'Test Configurable',
-                'expectedConfig' => [
+                'config_data' => [
                     'label' => 'Test Configurable',
                     'options' => [
                         [

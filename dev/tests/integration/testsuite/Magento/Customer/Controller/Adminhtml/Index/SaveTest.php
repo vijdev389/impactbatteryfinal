@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2025 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -119,17 +119,17 @@ class SaveTest extends AbstractBackendController
      *
      * @return array
      */
-    public static function createCustomerProvider(): array
+    public function createCustomerProvider(): array
     {
-        $defaultCustomerData = self::getDefaultCustomerData();
-        $expectedCustomerData = self::getExpectedCustomerData($defaultCustomerData);
+        $defaultCustomerData = $this->getDefaultCustomerData();
+        $expectedCustomerData = $this->getExpectedCustomerData($defaultCustomerData);
         return [
             "fill_all_fields" => [
-                'postData' => $defaultCustomerData,
-                'expectedData' => $expectedCustomerData
+                'post_data' => $defaultCustomerData,
+                'expected_data' => $expectedCustomerData
             ],
             'only_require_fields' => [
-                'postData' => array_replace_recursive(
+                'post_data' => array_replace_recursive(
                     $defaultCustomerData,
                     [
                         'customer' => [
@@ -143,7 +143,7 @@ class SaveTest extends AbstractBackendController
                         ],
                     ]
                 ),
-                'expectedData' => array_replace_recursive(
+                'expected_data' => array_replace_recursive(
                     $expectedCustomerData,
                     [
                         'customer' => [
@@ -191,12 +191,12 @@ class SaveTest extends AbstractBackendController
      *
      * @return array
      */
-    public static function createCustomerErrorsProvider(): array
+    public function createCustomerErrorsProvider(): array
     {
-        $defaultCustomerData = self::getDefaultCustomerData();
+        $defaultCustomerData = $this->getDefaultCustomerData();
         return [
             'without_some_require_fields' => [
-                'postData' => array_replace_recursive(
+                'post_data' => array_replace_recursive(
                     $defaultCustomerData,
                     [
                         'customer' => [
@@ -205,7 +205,7 @@ class SaveTest extends AbstractBackendController
                         ],
                     ]
                 ),
-                'expectedData' => array_replace_recursive(
+                'expected_data' => array_replace_recursive(
                     $defaultCustomerData,
                     [
                         'customer' => [
@@ -215,33 +215,33 @@ class SaveTest extends AbstractBackendController
                         ],
                     ]
                 ),
-                'expectedMessage' => [
+                'expected_message' => [
                     (string)__('"%1" is a required value.', 'First Name'),
                     (string)__('"%1" is a required value.', 'Last Name'),
                 ],
             ],
-            'with_empty_postData' => [
-                'postData' => [],
-                'expectedData' => [],
-                'expectedMessage' => [
-                    (string)__('The email address is required to create a customer account.'),
+            'with_empty_post_data' => [
+                'post_data' => [],
+                'expected_data' => [],
+                'expected_message' => [
+                    (string)__('The customer email is missing. Enter and try again.'),
                 ],
             ],
             'with_invalid_form_data' => [
-                'postData' => [
+                'post_data' => [
                     'account' => [
                         'middlename' => 'test middlename',
                         'group_id' => 1,
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     'account' => [
                         'middlename' => 'test middlename',
                         'group_id' => 1,
                     ],
                 ],
-                'expectedMessage' => [
-                    (string)__('The email address is required to create a customer account.'),
+                'expected_message' => [
+                    (string)__('The customer email is missing. Enter and try again.'),
                 ],
             ]
         ];
@@ -481,7 +481,7 @@ class SaveTest extends AbstractBackendController
      *
      * @return array
      */
-    private static function getDefaultCustomerData(): array
+    private function getDefaultCustomerData(): array
     {
         return [
             'customer' => [
@@ -509,7 +509,7 @@ class SaveTest extends AbstractBackendController
      * @param array $defaultCustomerData
      * @return array
      */
-    private static function getExpectedCustomerData(array $defaultCustomerData): array
+    private function getExpectedCustomerData(array $defaultCustomerData): array
     {
         unset($defaultCustomerData['customer']['sendemail_store_id']);
         return array_replace_recursive(
@@ -611,13 +611,13 @@ class SaveTest extends AbstractBackendController
         $name = $this->customerViewHelper->getCustomerName($customer);
 
         $transportMock = $this->getMockBuilder(TransportInterface::class)
-            ->onlyMethods(['sendMessage'])
+            ->setMethods(['sendMessage'])
             ->getMockForAbstractClass();
         $transportMock->expects($this->exactly($occurrenceNumber))
             ->method('sendMessage');
         $transportBuilderMock = $this->getMockBuilder(TransportBuilder::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(
+            ->setMethods(
                 [
                     'addTo',
                     'setFrom',

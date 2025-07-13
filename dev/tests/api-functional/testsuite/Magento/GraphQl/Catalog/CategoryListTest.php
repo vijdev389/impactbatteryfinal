@@ -538,7 +538,7 @@ QUERY;
     /**
      * @return array
      */
-    public static function filterSingleCategoryDataProvider(): array
+    public function filterSingleCategoryDataProvider(): array
     {
         return [
             [
@@ -607,7 +607,7 @@ QUERY;
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      * @return array
      */
-    public static function filterMultipleCategoriesDataProvider(): array
+    public function filterMultipleCategoriesDataProvider(): array
     {
         return[
             //Filter by multiple IDs

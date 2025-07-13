@@ -121,25 +121,12 @@ class ConfigurableViewOnCategoryPageTest extends TestCase
     {
         $this->executeInStoreContext->execute(
             'fixture_second_store',
-            [$this, 'assertProductPriceContains'],
+            [$this, 'assertProductPrice'],
             'configurable',
             __('As low as') . ' $10.00'
         );
         $this->resetPageLayout();
         $this->assertProductPrice('configurable', '$150.00');
-    }
-
-    /**
-     * @param string $sku
-     * @param string $priceString
-     * @return void
-     */
-    public function assertProductPriceContains(string $sku, string $priceString): void
-    {
-        $this->preparePageLayout();
-        $this->assertCollectionSize(1, $this->getListingBlock()->getLoadedProductCollection());
-        $priceHtml = $this->getListingBlock()->getProductPrice($this->getProduct($sku));
-        $this->assertStringContainsString($priceString, $this->clearPriceHtml($priceHtml));
     }
 
     /**

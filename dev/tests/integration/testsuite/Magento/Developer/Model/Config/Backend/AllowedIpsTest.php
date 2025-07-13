@@ -31,7 +31,7 @@ class AllowedIpsTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function fieldDataProvider()
+    public function fieldDataProvider()
     {
         return [
             ['<'.'script>alert(\'XSS\')</script>', '' ],

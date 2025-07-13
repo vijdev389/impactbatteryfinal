@@ -459,21 +459,19 @@ class CategoryTest extends TestCase
     /**
      * @return array
      */
-    public static function categoryFieldsProvider(): array
+    public function categoryFieldsProvider(): array
     {
         return [
-            'enable_fields' => [
-                'data' => [
+            [
+                'enable_fields' => [
                     'is_active' => '1',
                     'include_in_menu' => '1',
-                ]
-            ],
-            'disable_fields' => [
-                'data' => [
+                ],
+                'disable_fields' => [
                     'is_active' => '0',
                     'include_in_menu' => '0',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 

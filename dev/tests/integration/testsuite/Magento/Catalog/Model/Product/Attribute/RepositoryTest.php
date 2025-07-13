@@ -98,16 +98,16 @@ class RepositoryTest extends TestCase
     /**
      * @return array
      */
-    public static function errorProvider(): array
+    public function errorProvider(): array
     {
         return [
             'with_invalid_attribute_code' => [
-                'fieldName' => 'attribute_code',
-                'fieldValue' => '****',
+                'field_name' => 'attribute_code',
+                'field_value' => '****',
             ],
             'with_invalid_frontend_input' => [
-                'fieldName' => 'frontend_input',
-                'fieldValue' => 'invalid_input',
+                'field_name' => 'frontend_input',
+                'field_value' => 'invalid_input',
             ],
         ];
     }

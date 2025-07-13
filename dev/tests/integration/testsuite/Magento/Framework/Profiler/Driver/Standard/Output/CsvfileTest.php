@@ -46,16 +46,16 @@ class CsvfileTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function displayDataProvider()
+    public function displayDataProvider()
     {
         return [
             'Default delimiter & enclosure' => [
                 'statFile' => __DIR__ . '/_files/timers.php',
-                'expectedFile' => __DIR__ . '/_files/output_default.csv',
+                'expectedHtmlFile' => __DIR__ . '/_files/output_default.csv',
             ],
             'Custom delimiter & enclosure' => [
                 'statFile' => __DIR__ . '/_files/timers.php',
-                'expectedFile' => __DIR__ . '/_files/output_custom.csv',
+                'expectedHtmlFile' => __DIR__ . '/_files/output_custom.csv',
                 '.',
                 '`',
             ]

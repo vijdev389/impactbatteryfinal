@@ -110,7 +110,7 @@ class CategoryUrlRewriteTest extends TestCase
     /**
      * @return array
      */
-    public static function categoryProvider(): array
+    public function categoryProvider(): array
     {
         return [
             'without_url_key' => [
@@ -165,7 +165,7 @@ class CategoryUrlRewriteTest extends TestCase
     /**
      * @return array
      */
-    public static function productRewriteProvider(): array
+    public function productRewriteProvider(): array
     {
         return [
             [
@@ -208,7 +208,7 @@ class CategoryUrlRewriteTest extends TestCase
     /**
      * @return array
      */
-    public static function existingUrlProvider(): array
+    public function existingUrlProvider(): array
     {
         return [
             'with_specified_existing_product_url_key' => [
@@ -274,7 +274,7 @@ class CategoryUrlRewriteTest extends TestCase
     /**
      * @return array
      */
-    public static function categoryMoveProvider(): array
+    public function categoryMoveProvider(): array
     {
         return [
             'append_category' => [

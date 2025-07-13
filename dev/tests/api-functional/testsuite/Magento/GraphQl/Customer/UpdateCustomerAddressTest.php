@@ -159,7 +159,7 @@ MUTATION;
     public function testUpdateCustomerAddressWithMissingAttribute()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('"firstname" is required. Enter and try again.');
+        $this->expectExceptionMessage('Required parameters are missing: firstname');
 
         $userName = 'customer@example.com';
         $password = 'password';
@@ -424,7 +424,7 @@ MUTATION;
     /**
      * @return array
      */
-    public static function invalidInputDataProvider()
+    public function invalidInputDataProvider()
     {
         return [
             ['', '"input" value must be specified'],

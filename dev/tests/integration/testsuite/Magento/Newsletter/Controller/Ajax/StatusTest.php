@@ -54,7 +54,7 @@ class StatusTest extends AbstractController
      * @param void
      * @return array
      */
-    public static function ajaxSubscriberDataProvider(): array
+    public function ajaxSubscriberDataProvider(): array
     {
         return [
             'empty_email_parameter' => [false, ''],

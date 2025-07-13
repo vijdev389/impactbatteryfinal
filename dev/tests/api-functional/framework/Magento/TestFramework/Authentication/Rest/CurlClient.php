@@ -28,14 +28,13 @@ class CurlClient extends \OAuth\Common\Http\Client\CurlClient
     /**
      * @inheritdoc
      */
-    public function normalizeHeaders($headers): array
+    public function normalizeHeaders(&$headers)
     {
-        $normalizeHeaders = [];
-        foreach ($headers as $key => $val) {
-            $val = ucfirst(strtolower($key)) . ': ' . $val;
-            $normalizeHeaders[$key] = $val;
-        }
-
-        return $normalizeHeaders;
+        array_walk(
+            $headers,
+            function (&$val, $key) {
+                $val = ucfirst(strtolower($key)) . ': ' . $val;
+            }
+        );
     }
 }

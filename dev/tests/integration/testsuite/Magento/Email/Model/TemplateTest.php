@@ -157,7 +157,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function templateFallbackDataProvider()
+    public function templateFallbackDataProvider()
     {
         return [
             'Template from module - admin' => [
@@ -261,7 +261,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function templateDirectiveDataProvider()
+    public function templateDirectiveDataProvider()
     {
         return [
             'Template from module folder - adminhtml' => [
@@ -463,7 +463,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
             // @styles comments by default, it is necessary to mock an object to return testable contents
             $themeDirectory = $this->getMockBuilder(\Magento\Framework\Filesystem\Directory\ReadInterface::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(
+                ->setMethods(
                     [
                         'readFile',
                     ]
@@ -476,7 +476,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
 
             $filesystem = $this->getMockBuilder(\Magento\Framework\Filesystem::class)
                 ->disableOriginalConstructor()
-                ->onlyMethods(['getDirectoryRead'])
+                ->setMethods(['getDirectoryRead'])
                 ->getMock();
 
             $filesystem->expects($this->once())
@@ -501,7 +501,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function templateStylesVariableDataProvider()
+    public function templateStylesVariableDataProvider()
     {
         return [
             'Styles from <!--@styles @--> comment - adminhtml' => [
@@ -725,7 +725,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
         $model->setDesignConfig($config);
     }
 
-    public static function setDesignConfigExceptionDataProvider()
+    public function setDesignConfigExceptionDataProvider()
     {
         $storeId = Bootstrap::getObjectManager()->get(\Magento\Store\Model\StoreManagerInterface::class)
             ->getStore()

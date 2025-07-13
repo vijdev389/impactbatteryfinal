@@ -95,7 +95,7 @@ class PriceIndexerDimensionsModeSetCommandTest extends \Magento\TestFramework\In
      * Modes data provider
      * @return array
      */
-    public static function modesDataProvider()
+    public function modesDataProvider()
     {
         return [
             [DimensionModeConfiguration::DIMENSION_NONE, DimensionModeConfiguration::DIMENSION_WEBSITE],

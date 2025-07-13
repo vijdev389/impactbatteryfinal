@@ -103,7 +103,7 @@ class ExecuteProcessForCustomAttributeInCustomStoreTest extends UpdateHandlerAbs
     /**
      * @return array
      */
-    public static function getCustomAttributeDataProvider()
+    public function getCustomAttributeDataProvider()
     {
         return [
             ['dropdown_attribute', 0, '', 1, 1],        //0

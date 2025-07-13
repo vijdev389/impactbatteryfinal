@@ -8,8 +8,7 @@ declare(strict_types=1);
 namespace Magento\TestFramework\Annotation;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Util\Exception;
-use PHPUnit\Metadata\Annotation\Parser\Registry;
+use PHPUnit\Util\Test as TestUtil;
 
 /**
  * Returns annotations for given testcase.
@@ -40,13 +39,9 @@ class TestCaseAnnotation
      */
     public function getAnnotations(TestCase $testCase): array
     {
-        $registry = Registry::getInstance();
-        $className = get_class($testCase);
-        $methodName = $testCase->name();
-
-        return [
-            'method' => $methodName ? $registry->forMethod($className, $methodName)->symbolAnnotations() : null,
-            'class'  => $registry->forClassName($className)->symbolAnnotations(),
-        ];
+        return TestUtil::parseTestMethodAnnotations(
+            get_class($testCase),
+            $testCase->getName(false)
+        );
     }
 }

@@ -108,7 +108,7 @@ class ProfilerTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function profileQueryDataProvider()
+    public function profileQueryDataProvider()
     {
         return [
             ["SELECT * FROM %s", \Magento\Framework\DB\Profiler::SELECT],

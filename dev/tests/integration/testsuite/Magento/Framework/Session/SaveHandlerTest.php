@@ -115,13 +115,8 @@ class SaveHandlerTest extends \PHPUnit\Framework\TestCase
 
         $this->saveHandlerFactoryMock
             ->method('create')
-            ->willReturnCallback(function ($arg) use ($redisHandlerMock, $defaultHandlerMock) {
-                if ($arg == 'redis') {
-                    return $redisHandlerMock;
-                } elseif($arg == SaveHandlerInterface::DEFAULT_HANDLER) {
-                    return $defaultHandlerMock;
-                }
-            });
+            ->withConsecutive(['redis'], [SaveHandlerInterface::DEFAULT_HANDLER])
+            ->willReturnOnConsecutiveCalls($redisHandlerMock, $defaultHandlerMock);
 
         $sessionConfig = $this->objectManager->create(ConfigInterface::class);
         /** @var SaveHandler $saveHandler */

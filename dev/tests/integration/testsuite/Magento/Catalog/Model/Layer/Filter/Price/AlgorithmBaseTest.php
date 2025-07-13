@@ -110,10 +110,10 @@ class AlgorithmBaseTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function pricesSegmentationDataProvider()
+    public function pricesSegmentationDataProvider()
     {
         $testCases = include __DIR__ . '/_files/_algorithm_base_data.php';
-        $testCasesNew = self::getUnSkippedTestCases($testCases);
+        $testCasesNew = $this->getUnSkippedTestCases($testCases);
         $result = [];
         foreach ($testCasesNew as $index => $testCase) {
             $result[] = [
@@ -131,7 +131,7 @@ class AlgorithmBaseTest extends \PHPUnit\Framework\TestCase
      * @param array $testCases
      * @return array
      */
-    private static function getUnSkippedTestCases(array $testCases) : array
+    private function getUnSkippedTestCases(array $testCases) : array
     {
         // TO DO UnSkip skipped test cases and remove this function
         $SkippedTestCases = [];

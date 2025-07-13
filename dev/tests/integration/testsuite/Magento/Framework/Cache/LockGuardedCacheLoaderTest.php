@@ -76,7 +76,7 @@ class LockGuardedCacheLoaderTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array[]
      */
-    public static function dataProviderLockGuardedCacheLoader(): array
+    public function dataProviderLockGuardedCacheLoader(): array
     {
         return [
             'Data loader read' => [

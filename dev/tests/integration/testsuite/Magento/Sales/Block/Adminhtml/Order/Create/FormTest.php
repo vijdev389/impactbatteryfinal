@@ -47,8 +47,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
 
         $this->session = $this->getMockBuilder(QuoteSession::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getCustomerId', 'getStoreId', 'getQuoteId'])
-            ->onlyMethods(['getQuote', 'getStore'])
+            ->setMethods(['getCustomerId', 'getQuote', 'getStoreId', 'getStore', 'getQuoteId'])
             ->getMock();
         $this->session->method('getCustomerId')
             ->willReturn(1);
@@ -58,7 +57,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
 
         $store = $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getCurrentCurrencyCode'])
+            ->setMethods(['getCurrentCurrencyCode'])
             ->getMock();
         $store->method('getCurrentCurrencyCode')
             ->willReturn('USD');

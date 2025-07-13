@@ -21,19 +21,18 @@ class Date extends AbstractBaseAttributeData
     public function __construct()
     {
         parent::__construct();
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
+        $this->defaultAttributePostData['used_for_sort_by'] = '0';
     }
 
     /**
      * @inheritdoc
      */
-    public static function getAttributeData(): array
+    public function getAttributeData(): array
     {
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
         return array_replace_recursive(
             parent::getAttributeData(),
             [
-                "{static::getFrontendInput()}_with_default_value" => [
+                "{$this->getFrontendInput()}_with_default_value" => [
                     [
                         'default_value_text' => '',
                         'default_value_date' => '10/29/2019',
@@ -46,13 +45,12 @@ class Date extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getAttributeDataWithCheckArray(): array
+    public function getAttributeDataWithCheckArray(): array
     {
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
         return array_replace_recursive(
             parent::getAttributeDataWithCheckArray(),
             [
-                "{static::getFrontendInput()}_with_default_value" => [
+                "{$this->getFrontendInput()}_with_default_value" => [
                     1 => [
                         'default_value' => '2019-10-29 00:00:00',
                     ],
@@ -64,18 +62,17 @@ class Date extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getUpdateProvider(): array
+    public function getUpdateProvider(): array
     {
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProvider(),
             [
                 "{$frontendInput}_other_attribute_code" => [
-                    'postData' => [
+                    'post_data' => [
                         'attribute_code' => 'text_attribute_update',
                     ],
-                    'expectedData' => [
+                    'expected_data' => [
                         'attribute_code' => 'date_attribute',
                     ],
                 ],
@@ -86,18 +83,17 @@ class Date extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getUpdateProviderWithErrorMessage(): array
+    public function getUpdateProviderWithErrorMessage(): array
     {
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProviderWithErrorMessage(),
             [
                 "{$frontendInput}_wrong_default_value" => [
-                    'postData' => [
+                    'post_data' => [
                         'default_value_date' => '//2019/12/12',
                     ],
-                    'errorMessage' => (string)__('The default date is invalid. Verify the date and try again.'),
+                    'error_message' => (string)__('The default date is invalid. Verify the date and try again.'),
                 ],
             ]
         );
@@ -106,7 +102,7 @@ class Date extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getFrontendInput(): string
+    protected function getFrontendInput(): string
     {
         return 'date';
     }
@@ -114,7 +110,7 @@ class Date extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getUpdatePostData(): array
+    protected function getUpdatePostData(): array
     {
         return [
             'frontend_label' => [
@@ -143,9 +139,9 @@ class Date extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getUpdateExpectedData(): array
+    protected function getUpdateExpectedData(): array
     {
-        $updatePostData = static::getUpdatePostData();
+        $updatePostData = $this->getUpdatePostData();
         unset($updatePostData['default_value_date']);
         return array_merge(
             $updatePostData,

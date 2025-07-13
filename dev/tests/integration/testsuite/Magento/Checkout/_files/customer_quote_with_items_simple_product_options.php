@@ -83,7 +83,7 @@ foreach ($dropDownValues as $dropDownId => $dropDownValue) {
     $itemsOptions[$dropDownValue->getTitle()] = $options;
 }
 
-$validatorFileMock = $objectManager->create(ValidatorFileMock::class, ['name' => 'testName'])->getInstance();
+$validatorFileMock = $objectManager->get(ValidatorFileMock::class)->getInstance();
 $objectManager->addSharedInstance($validatorFileMock, ValidatorFile::class);
 
 $quote->setStoreId($storeManager->getStore()->getId())

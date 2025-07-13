@@ -9,7 +9,7 @@ namespace Magento\CatalogRule\Model\Indexer;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
-use Magento\CatalogRule\Model\Indexer\Product\ProductRuleProcessor;
+use Magento\CatalogRule\Model\Indexer\Rule\RuleProductProcessor;
 use Magento\Framework\DataObject;
 use Magento\TestFramework\Fixture\AppIsolation;
 use Magento\TestFramework\Fixture\DataFixture;
@@ -19,9 +19,9 @@ use Magento\TestFramework\Helper\Bootstrap;
 class IndexerBuilderInScheduledModeTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var ProductRepositoryInterface
+     * @var RuleProductProcessor
      */
-    private $productRuleProcessor;
+    private $ruleProductProcessor;
 
     /**
      * @var CollectionFactory
@@ -36,7 +36,7 @@ class IndexerBuilderInScheduledModeTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->productRepository = Bootstrap::getObjectManager()->get(ProductRepositoryInterface::class);
-        $this->productRuleProcessor = Bootstrap::getObjectManager()->get(ProductRuleProcessor::class);
+        $this->ruleProductProcessor = Bootstrap::getObjectManager()->get(RuleProductProcessor::class);
         $this->productCollectionFactory = Bootstrap::getObjectManager()->get(CollectionFactory::class);
     }
 
@@ -48,7 +48,7 @@ class IndexerBuilderInScheduledModeTest extends \PHPUnit\Framework\TestCase
     ]
     public function testReindexOfDependentIndexer(): void
     {
-        $indexer = $this->productRuleProcessor->getIndexer();
+        $indexer = $this->ruleProductProcessor->getIndexer();
         $indexer->reindexAll();
         $indexer->setScheduled(true);
 

@@ -57,17 +57,17 @@ class PlaceOrderWithPayflowLinkTest extends TestCase
         $this->getMaskedQuoteIdByReservedOrderId = $this->objectManager->get(GetMaskedQuoteIdByReservedOrderId::class);
         $this->gateway = $this->getMockBuilder(Gateway::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['postRequest'])
+            ->setMethods(['postRequest'])
             ->getMock();
 
         $requestFactory = $this->getMockBuilder(RequestFactory::class)
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->payflowRequest = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['__call','setData'])
+            ->setMethods(['__call','setData'])
             ->getMock();
         $this->payflowRequest->method('__call')
             ->willReturnCallback(
@@ -160,25 +160,22 @@ QUERY;
             ->willReturn($payflowLinkResponse);
 
         $this->payflowRequest
-            ->expects($this->any())
             ->method('setData')
             ->willReturnMap(
                 [
                     [
-                        [
-                            'user' => null,
-                            'vendor' => null,
-                            'partner' => null,
-                            'pwd' => null,
-                            'verbosity' => null,
-                            'BUTTONSOURCE' => $button,
-                            'tender' => 'C',
-                        ],
-                        $this->returnSelf()
+                        'user' => null,
+                        'vendor' => null,
+                        'partner' => null,
+                        'pwd' => null,
+                        'verbosity' => null,
+                        'BUTTONSOURCE' => $button,
+                        'tender' => 'C',
                     ],
-                    ['USER1', 1, $this->returnSelf()],
-                    ['USER2', 'USER2SilentPostHash', $this->returnSelf()]
+                    $this->returnSelf()
                 ],
+                ['USER1', 1, $this->returnSelf()],
+                ['USER2', 'USER2SilentPostHash', $this->returnSelf()]
             );
 
         $response = $this->graphQlRequest->send($query);

@@ -33,7 +33,7 @@ class CodeCheckTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function isClassUsedDataProvider()
+    public function isClassUsedDataProvider()
     {
         return [
             [file_get_contents(__DIR__ . '/_files/create_new_instance.txt'), true],
@@ -63,7 +63,7 @@ class CodeCheckTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function isDirectDescendantDataProvider()
+    public function isDirectDescendantDataProvider()
     {
         return [
             [file_get_contents(__DIR__ . '/_files/extends.txt'), true],

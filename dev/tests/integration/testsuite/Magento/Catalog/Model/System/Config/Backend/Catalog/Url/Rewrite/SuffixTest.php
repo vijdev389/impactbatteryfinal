@@ -115,7 +115,7 @@ class SuffixTest extends TestCase
     /**
      * @return array
      */
-    public static function wrongValuesProvider(): array
+    public function wrongValuesProvider(): array
     {
         return [
             'with_wrong_path' => [

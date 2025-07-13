@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 declare(strict_types=1);
@@ -113,11 +114,11 @@ class NewAccountEmailTemplateTest extends \PHPUnit\Framework\TestCase
         $transportBuilderMock = Bootstrap::getObjectManager()
             ->get(TransportBuilderMock::class);
         $sentMessage = $transportBuilderMock->getSentMessage();
-        $mailTemplate = $sentMessage->getBody()->bodyToString();
+        $sentMessage->getBodyText();
 
         $storeText = implode(',', $this->storeData);
 
-        $this->assertStringContainsString("John,", $mailTemplate);
+        $this->assertStringContainsString("John,", $sentMessage->getBodyText());
         $this->assertStringContainsString("TestStore", $storeText);
         $this->assertStringContainsString("5124666492", $storeText);
         $this->assertStringContainsString("Austin", $storeText);

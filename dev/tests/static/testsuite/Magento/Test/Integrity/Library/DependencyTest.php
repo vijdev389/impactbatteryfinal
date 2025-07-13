@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2013 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Test\Integrity\Library;
 
@@ -40,7 +40,7 @@ class DependencyTest extends TestCase
             'Framework',
             'SomeModule',
             'ModuleName',
-            'Setup\Console\CommandLoader',
+            'Setup\Console\CommandList',
             'Setup\Console\CompilerPreparation',
             'Setup\Model\ObjectManagerProvider',
             'Setup\Mvc\Bootstrap\InitParamListener',

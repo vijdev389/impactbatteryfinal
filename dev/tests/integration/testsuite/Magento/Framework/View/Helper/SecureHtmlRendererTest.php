@@ -37,7 +37,7 @@ class SecureHtmlRendererTest extends TestCase
      *
      * @return array
      */
-    public static function getTags(): array
+    public function getTags(): array
     {
         return [
             [

@@ -45,7 +45,7 @@ class AsyncScheduleMultiStoreTest extends WebapiAbstract
     const STORE_CODE_ALL = 'all';
     const STORE_CODE_DEFAULT = 'default';
 
-    private static $stores = [
+    private $stores = [
         self::STORE_CODE_DEFAULT,
         self::STORE_CODE_ALL,
         self::STORE_CODE_FROM_FIXTURE,
@@ -190,7 +190,7 @@ class AsyncScheduleMultiStoreTest extends WebapiAbstract
 
         $requestData = ['id' => $sku, 'sku' => $sku];
 
-        foreach (self::$stores as $checkingStore) {
+        foreach ($this->stores as $checkingStore) {
             $serviceInfo = [
                 'rest' => [
                     'resourcePath' => self::REST_RESOURCE_PATH . '/' . $sku,
@@ -296,10 +296,10 @@ class AsyncScheduleMultiStoreTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function storeProvider(): array
+    public function storeProvider(): array
     {
         $dataSets = [];
-        foreach (self::$stores as $store) {
+        foreach ($this->stores as $store) {
             $dataSets[$store] = [$store];
         }
 

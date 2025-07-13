@@ -24,7 +24,7 @@ class ClassNameExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getNameWithNamespaceDataProvider()
+    public function getNameWithNamespaceDataProvider()
     {
         return [
             [
@@ -75,7 +75,7 @@ class ClassNameExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getNameDataProvider()
+    public function getNameDataProvider()
     {
         return [
             [
@@ -114,7 +114,7 @@ class ClassNameExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getNamespaceDataProvider()
+    public function getNamespaceDataProvider()
     {
         return [
             [

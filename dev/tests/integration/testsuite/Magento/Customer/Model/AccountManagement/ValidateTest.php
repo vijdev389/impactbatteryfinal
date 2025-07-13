@@ -78,12 +78,12 @@ class ValidateTest extends TestCase
     /**
      * @return array
      */
-    public static function validateFieldsProvider(): array
+    public function validateFieldsProvider(): array
     {
         $attributeEmptyMessage = 'The "%1" attribute value is empty. Set the attribute and try again.';
         return [
             'without_required_fields' => [
-                'customerData' => [],
+                'customer_data' => [],
                 'expectedResults' => [
                     'valid' => false,
                     'messages' => [
@@ -96,7 +96,7 @@ class ValidateTest extends TestCase
                 ],
             ],
             'with_required_fields' => [
-                'customerData' => [
+                'customer_data' => [
                     CustomerInterface::WEBSITE_ID => 1,
                     CustomerInterface::GROUP_ID => 1,
                     CustomerInterface::FIRSTNAME => 'Jane',

@@ -74,7 +74,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
         ];
 
         return $this->getMockBuilder(\Magento\Store\Model\Store::class)
-            ->onlyMethods(['getUrl'])
+            ->setMethods(['getUrl'])
             ->setConstructorArgs($this->modelParams)
             ->getMock();
     }
@@ -98,7 +98,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function loadDataProvider()
+    public function loadDataProvider()
     {
         return [[1, 1], ['default', 1], ['nostore', null]];
     }
@@ -154,7 +154,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getBaseUrlDataProvider()
+    public function getBaseUrlDataProvider()
     {
         return [
             [UrlInterface::URL_TYPE_WEB, false, false, 'http://localhost/'],
@@ -240,7 +240,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getBaseUrlForCustomEntryPointDataProvider()
+    public function getBaseUrlForCustomEntryPointDataProvider()
     {
         return [
             [UrlInterface::URL_TYPE_LINK, false, false, 'http://localhost/custom_entry.php/'],
@@ -434,7 +434,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function saveValidationDataProvider()
+    public function saveValidationDataProvider()
     {
         return [
             'empty store name' => [['name' => '']],
@@ -462,15 +462,11 @@ class StoreTest extends \PHPUnit\Framework\TestCase
 
         $configMock
             ->method('getValue')
-            ->willReturnCallback(
-                function ($arg1) use ($singleStoreModeEnabled, $storeInUrl) {
-                    if ($arg1 == StoreManager::XML_PATH_SINGLE_STORE_MODE_ENABLED) {
-                        return $singleStoreModeEnabled;
-                    } elseif ($arg1 == Store::XML_PATH_STORE_IN_URL) {
-                        return $storeInUrl;
-                    }
-                }
-            );
+            ->withConsecutive(
+                [$this->stringContains(StoreManager::XML_PATH_SINGLE_STORE_MODE_ENABLED)],
+                [$this->stringContains(Store::XML_PATH_STORE_IN_URL)]
+            )
+            ->willReturnOnConsecutiveCalls($singleStoreModeEnabled, $storeInUrl);
 
         $params['config'] = $configMock;
         $model = $objectManager->create(\Magento\Store\Model\Store::class, $params);
@@ -482,7 +478,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
      * @return array
      * @see self::testIsUseStoreInUrl;
      */
-    public static function isUseStoreInUrlDataProvider()
+    public function isUseStoreInUrlDataProvider()
     {
         return [
             [true, null, false, true],
@@ -516,7 +512,7 @@ class StoreTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $model->isCurrentlySecure());
     }
 
-    public static function isCurrentlySecureDataProvider()
+    public function isCurrentlySecureDataProvider()
     {
         return [
             [true, ['HTTPS' => 'on']],

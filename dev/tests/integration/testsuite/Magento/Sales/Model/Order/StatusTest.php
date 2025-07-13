@@ -16,7 +16,7 @@ use Magento\TestFramework\Helper\Bootstrap;
  */
 class StatusTest extends \PHPUnit\Framework\TestCase
 {
-    public static function theCorrectLabelIsUsedDependingOnTheAreaProvider()
+    public function theCorrectLabelIsUsedDependingOnTheAreaProvider()
     {
         return [
             'backend label' => [

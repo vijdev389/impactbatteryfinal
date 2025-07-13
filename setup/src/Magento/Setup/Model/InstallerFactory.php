@@ -8,7 +8,7 @@ namespace Magento\Setup\Model;
 
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Magento\Framework\App\ErrorHandler;
-use Magento\Framework\Setup\ConsoleLoggerInterface;
+use Magento\Framework\Setup\LoggerInterface;
 use Magento\Setup\Module\ResourceFactory;
 
 /**
@@ -48,11 +48,11 @@ class InstallerFactory
     /**
      * Factory method for installer object
      *
-     * @param ConsoleLoggerInterface $log
+     * @param LoggerInterface $log
      * @return Installer
      * @throws \Magento\Setup\Exception
      */
-    public function create(ConsoleLoggerInterface $log)
+    public function create(LoggerInterface $log)
     {
         return new Installer(
             $this->serviceLocator->get(\Magento\Framework\Setup\FilePermissions::class),

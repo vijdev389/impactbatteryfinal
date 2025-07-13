@@ -164,7 +164,7 @@ class InstanceTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function beforeSaveDataProvider()
+    public function beforeSaveDataProvider()
     {
         return [
             # Variation 1

@@ -1,0 +1,52 @@
+
+<div class="content-header" style="padding: 10px 10px;">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td class="a-right">
+                <button class="scalable save" id="upload" type="button"><span>Import</span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit" style="width: 60%;">
+    <form id="edit_form" name="edit_form" method="post" enctype="multipart/form-data">
+        <input name="form_key" type="hidden" class="from_key" value="<?php echo $block->getFormKey() ?>" />
+        <fieldset id="my-fieldset">
+            <table cellspacing="0" class="form-list">
+                <tr>
+                    <td class="label">Add CSV File to Import<span class="required">*</span></td>
+                    <td class="input-ele"><input type="file" class="input-text required-entry" name="csvImport" id="csvImport" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/javascript">
+    require(["jquery"],
+        function($){
+            $('#upload').on('click',function(){
+                CheckData();
+            });
+            function CheckData(){
+                var fd = new FormData();
+                var files = $('#csvImport')[0].files;
+                fd.append('csvImport', files[0]);
+                fd.append('form_key',"<?php echo $block->getFormKey() ?>");
+
+                $.ajax({
+                    type:"POST",
+                    url:"<?php echo $this->getUrl('customfinder/customfinder/uploadcsv') ?>",
+                    enctype: 'multipart/form-data',
+                    processData:false,
+                    contentType:false,
+                    data: fd,
+					showLoader: true //use for display loader 
+                }).done(function(data) {
+                  console.log(data);
+					 location.reload();
+                });
+            }
+        });
+</script>

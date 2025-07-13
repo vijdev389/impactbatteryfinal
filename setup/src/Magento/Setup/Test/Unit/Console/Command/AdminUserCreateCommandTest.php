@@ -51,7 +51,7 @@ class AdminUserCreateCommandTest extends TestCase
         $this->command = new AdminUserCreateCommand($this->installerFactoryMock, new UserValidationRules());
 
         $this->questionHelperMock = $this->getMockBuilder(QuestionHelper::class)
-            ->onlyMethods(['ask'])
+            ->setMethods(['ask'])
             ->getMock();
     }
 
@@ -147,7 +147,7 @@ class AdminUserCreateCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function getOptionListDataProvider(): array
+    public function getOptionListDataProvider(): array
     {
         return [
             [
@@ -185,7 +185,7 @@ class AdminUserCreateCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function validateDataProvider(): array
+    public function validateDataProvider(): array
     {
         return [
             [

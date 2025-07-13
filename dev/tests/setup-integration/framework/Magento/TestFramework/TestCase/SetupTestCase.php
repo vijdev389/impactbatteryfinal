@@ -46,9 +46,9 @@ class SetupTestCase extends \PHPUnit\Framework\TestCase implements MutableDataIn
         $name = null,
         array $data = [],
         $dataName = '',
-        ?ResourceConnection $resourceConnection = null
+        ResourceConnection $resourceConnection = null
     ) {
-        parent::__construct($name);
+        parent::__construct($name, $data, $dataName);
 
         $objectManager = Bootstrap::getObjectManager();
         $this->sqlVersionProvider = $objectManager->get(SqlVersionProvider::class);
@@ -58,10 +58,17 @@ class SetupTestCase extends \PHPUnit\Framework\TestCase implements MutableDataIn
     /**
      * @inheritdoc
      */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function flushData()
     {
         $this->data = [];
-        DataProviderFromFile::setTestObject([]);
     }
 
     /**
@@ -69,11 +76,6 @@ class SetupTestCase extends \PHPUnit\Framework\TestCase implements MutableDataIn
      */
     public function getData()
     {
-        if (empty($this->data)) {
-            $testDataObj = DataProviderFromFile::getTestObject();
-            $this->data = $testDataObj->providedData();
-        }
-
         if (array_key_exists($this->getDbKey(), $this->data)) {
             return $this->data[$this->getDbKey()];
         }
@@ -96,6 +98,7 @@ class SetupTestCase extends \PHPUnit\Framework\TestCase implements MutableDataIn
      * Get db key to decide which file to use.
      *
      * @return string
+     * @throws ConnectionException
      */
     private function getDbKey(): string
     {
@@ -108,9 +111,14 @@ class SetupTestCase extends \PHPUnit\Framework\TestCase implements MutableDataIn
             if ($this->sqlVersionProvider->isMysqlGte8029()) {
                 $this->dbKey = DataProviderFromFile::POSSIBLE_SUFFIXES[SqlVersionProvider::MYSQL_8_0_29_VERSION];
                 break;
-            } elseif ($this->sqlVersionProvider->isMariaDbEngine()) {
-                $suffixKey = $this->sqlVersionProvider->getMariaDbSuffixKey();
-                $this->dbKey = DataProviderFromFile::POSSIBLE_SUFFIXES[$suffixKey];
+            } elseif ($this->sqlVersionProvider->isMariaDBGte10427()) {
+                $this->dbKey = DataProviderFromFile::POSSIBLE_SUFFIXES[SqlVersionProvider::MARIA_DB_10_4_27_VERSION];
+                break;
+            } elseif ($this->sqlVersionProvider->isMariaDBGte10611()) {
+                $this->dbKey = DataProviderFromFile::POSSIBLE_SUFFIXES[SqlVersionProvider::MARIA_DB_10_6_11_VERSION];
+                break;
+            } elseif ($this->sqlVersionProvider->isMariaDBGte101111()) {
+                $this->dbKey = DataProviderFromFile::POSSIBLE_SUFFIXES[SqlVersionProvider::MARIA_DB_10_11_11_VERSION];
                 break;
             } elseif (strpos($this->getDatabaseVersion(), (string)$possibleVersion) !== false) {
                 $this->dbKey = $suffix;

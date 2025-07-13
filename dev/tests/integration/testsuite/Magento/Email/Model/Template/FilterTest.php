@@ -125,7 +125,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function layoutDirectiveDataProvider()
+    public function layoutDirectiveDataProvider()
     {
         $result = [
             'area parameter - omitted' => [
@@ -168,7 +168,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
 
         $translator = $this->getMockBuilder(\Magento\Framework\Translate::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getData'])
+            ->setMethods(['getData'])
             ->getMock();
 
         $translator->method('getData')
@@ -190,7 +190,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function transDirectiveDataProvider()
+    public function transDirectiveDataProvider()
     {
         return [
             [
@@ -301,7 +301,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function cssDirectiveDataProvider()
+    public function cssDirectiveDataProvider()
     {
         return [
             'CSS from theme' => [
@@ -385,7 +385,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function inlinecssDirectiveDataProvider()
+    public function inlinecssDirectiveDataProvider()
     {
         return [
             'CSS from theme' => [
@@ -454,7 +454,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function inlinecssDirectiveThrowsExceptionWhenMissingParameterDataProvider()
+    public function inlinecssDirectiveThrowsExceptionWhenMissingParameterDataProvider()
     {
         return [
             'Missing "file" parameter' => [

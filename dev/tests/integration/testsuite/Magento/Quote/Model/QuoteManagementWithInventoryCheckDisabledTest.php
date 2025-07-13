@@ -90,7 +90,7 @@ class QuoteManagementWithInventoryCheckDisabledTest extends TestCase
     /**
      * @return array
      */
-    public static function getQtyAndStockStatusProvider(): array
+    public function getQtyAndStockStatusProvider(): array
     {
         return [
             [0, 0],

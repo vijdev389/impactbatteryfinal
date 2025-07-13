@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2024 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -245,6 +245,14 @@ class PhpReadinessCheckTest extends TestCase
             50
         );
 
+        $rawPostMessage = sprintf(
+            'Your PHP Version is %s, but always_populate_raw_post_data = -1.
+ 	        $HTTP_RAW_POST_DATA is deprecated from PHP 5.6 onwards and will be removed in PHP 7.0.
+ 	        This will stop the installer from running.
+	        Please open your php.ini file and set always_populate_raw_post_data to -1.
+ 	        If you need more help please call your hosting provider.',
+            PHP_VERSION
+        );
         $expected = [
             'responseType' => ResponseTypeInterface::RESPONSE_TYPE_SUCCESS,
             'data' => [
@@ -259,6 +267,14 @@ class PhpReadinessCheckTest extends TestCase
                 ]
             ]
         ];
+        if (!$this->isPhp7OrHhvm()) {
+            $this->setUpNoPrettyVersionParser();
+            $expected['data']['always_populate_raw_post_data'] = [
+                'message' => $rawPostMessage,
+                'helpUrl' => 'http://php.net/manual/en/ini.core.php#ini.always-populate-settings-data',
+                'error' => false
+            ];
+        }
         $this->assertEquals($expected, $this->phpReadinessCheck->checkPhpSettings());
     }
 
@@ -277,6 +293,14 @@ class PhpReadinessCheckTest extends TestCase
             200
         );
 
+        $rawPostMessage = sprintf(
+            'Your PHP Version is %s, but always_populate_raw_post_data = -1.
+ 	        $HTTP_RAW_POST_DATA is deprecated from PHP 5.6 onwards and will be removed in PHP 7.0.
+ 	        This will stop the installer from running.
+	        Please open your php.ini file and set always_populate_raw_post_data to -1.
+ 	        If you need more help please call your hosting provider.',
+            PHP_VERSION
+        );
         $expected = [
             'responseType' => ResponseTypeInterface::RESPONSE_TYPE_ERROR,
             'data' => [
@@ -291,6 +315,14 @@ class PhpReadinessCheckTest extends TestCase
                 ]
             ]
         ];
+        if (!$this->isPhp7OrHhvm()) {
+            $this->setUpNoPrettyVersionParser();
+            $expected['data']['always_populate_raw_post_data'] = [
+                'message' => $rawPostMessage,
+                'helpUrl' => 'http://php.net/manual/en/ini.core.php#ini.always-populate-settings-data',
+                'error' => false
+            ];
+        }
         $this->assertEquals($expected, $this->phpReadinessCheck->checkPhpSettings());
     }
 
@@ -301,10 +333,28 @@ class PhpReadinessCheckTest extends TestCase
     {
         $this->phpInfo->expects($this->once())->method('getCurrent')->willReturn([]);
 
+        $rawPostMessage = sprintf(
+            'Your PHP Version is %s, but always_populate_raw_post_data = -1.
+ 	        $HTTP_RAW_POST_DATA is deprecated from PHP 5.6 onwards and will be removed in PHP 7.0.
+ 	        This will stop the installer from running.
+	        Please open your php.ini file and set always_populate_raw_post_data to -1.
+ 	        If you need more help please call your hosting provider.',
+            PHP_VERSION
+        );
         $expected = [
             'responseType' => ResponseTypeInterface::RESPONSE_TYPE_SUCCESS,
             'data' => []
         ];
+        if (!$this->isPhp7OrHhvm()) {
+            $this->setUpNoPrettyVersionParser();
+            $expected['data'] = [
+                'always_populate_raw_post_data' => [
+                    'message' => $rawPostMessage,
+                    'helpUrl' => 'http://php.net/manual/en/ini.core.php#ini.always-populate-settings-data',
+                    'error' => false
+                ]
+            ];
+        }
 
         $expected['data']['missed_function_imagecreatefromjpeg'] = [
             'message' => 'You must have installed GD library with --with-jpeg-dir=DIR option.',
@@ -403,6 +453,14 @@ class PhpReadinessCheckTest extends TestCase
         ];
         $this->assertEquals($expected, $this->phpReadinessCheck->checkPhpExtensions());
     }
+
+    /**
+     * @return bool
+     */
+    protected function isPhp7OrHhvm(): bool
+    {
+        return version_compare(PHP_VERSION, '7.0.0-beta') >= 0 || defined('HHVM_VERSION');
+    }
 }
 
 namespace Magento\Setup\Model;
@@ -415,6 +473,8 @@ function ini_get($param)
 {
     if ($param === 'xdebug.max_nesting_level') {
         return 100;
+    } elseif ($param === 'always_populate_raw_post_data') {
+        return -1;
     } elseif ($param === 'memory_limit') {
         return '512M';
     }

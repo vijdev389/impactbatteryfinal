@@ -10,7 +10,6 @@ use Magento\Framework\Component\ComponentRegistrar;
 use Magento\Setup\Module\I18n\Dictionary\Options\ResolverFactory;
 use Magento\Setup\Module\I18n\Locale;
 use Magento\Setup\Module\I18n\Pack\Writer\File\Csv;
-use Magento\Framework\Filesystem\Driver\File;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -18,11 +17,11 @@ use Magento\Framework\Filesystem\Driver\File;
 class TranslationFilesTest extends TranslationFiles
 {
     /**
-     * I18n\Context
+     * Context
      *
      * @var \Magento\Setup\Module\I18n\Context
      */
-    protected static $context;
+    protected $context;
 
     /**
      * Test default locale
@@ -48,9 +47,9 @@ class TranslationFilesTest extends TranslationFiles
      * @return array
      * @throws \RuntimeException
      */
-    public static function defaultLocaleDataProvider()
+    public function defaultLocaleDataProvider()
     {
-        $parser = self::prepareParser();
+        $parser = $this->prepareParser();
 
         $optionResolverFactory = new ResolverFactory();
         $optionResolver = $optionResolverFactory->create(BP, true);
@@ -63,9 +62,9 @@ class TranslationFilesTest extends TranslationFiles
                 throw new \RuntimeException(sprintf('Missed context in row #%d.', $key + 1));
             }
             foreach ($phrase->getContextValue() as $context) {
-                $phraseText = self::eliminateSpecialChars($phrase->getPhrase());
-                $phraseTranslation = self::eliminateSpecialChars($phrase->getTranslation());
-                $file = self::buildFilePath($phrase, $context);
+                $phraseText = $this->eliminateSpecialChars($phrase->getPhrase());
+                $phraseTranslation = $this->eliminateSpecialChars($phrase->getTranslation());
+                $file = $this->buildFilePath($phrase, $context);
                 $defaultLocale[$file]['file'] = $file;
                 $defaultLocale[$file]['phrases'][$phraseText] = $phraseTranslation;
             }
@@ -78,37 +77,36 @@ class TranslationFilesTest extends TranslationFiles
      * @param array $context
      * @return string
      */
-    protected static function buildFilePath($phrase, $context)
+    protected function buildFilePath($phrase, $context)
     {
-        $path = self::getContext()->buildPathToLocaleDirectoryByContext($phrase->getContextType(), $context);
+        $path = $this->getContext()->buildPathToLocaleDirectoryByContext($phrase->getContextType(), $context);
         return $path . Locale::DEFAULT_SYSTEM_LOCALE . '.' . Csv::FILE_EXTENSION;
     }
 
     /**
      * @return \Magento\Setup\Module\I18n\Context
      */
-    protected static function getContext()
+    protected function getContext()
     {
-        if (self::$context === null) {
-            self::$context = new \Magento\Setup\Module\I18n\Context(new ComponentRegistrar());
+        if ($this->context === null) {
+            $this->context = new \Magento\Setup\Module\I18n\Context(new ComponentRegistrar());
         }
-        return self::$context;
+        return $this->context;
     }
 
     /**
      * @return \Magento\Setup\Module\I18n\Parser\Contextual
      */
-    protected static function prepareParser()
+    protected function prepareParser()
     {
         $filesCollector = new \Magento\Setup\Module\I18n\FilesCollector();
 
         $phraseCollector = new \Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer\PhraseCollector(
             new \Magento\Setup\Module\I18n\Parser\Adapter\Php\Tokenizer()
         );
-        $fileSystem = new File;
         $adapters = [
             'php' => new \Magento\Setup\Module\I18n\Parser\Adapter\Php($phraseCollector),
-            'js' =>  new \Magento\Setup\Module\I18n\Parser\Adapter\Js($fileSystem),
+            'js' =>  new \Magento\Setup\Module\I18n\Parser\Adapter\Js(),
             'xml' => new \Magento\Setup\Module\I18n\Parser\Adapter\Xml(),
             'html' => new \Magento\Setup\Module\I18n\Parser\Adapter\Html(),
         ];
@@ -129,7 +127,7 @@ class TranslationFilesTest extends TranslationFiles
      * @param string $text
      * @return string
      */
-    protected static function eliminateSpecialChars($text)
+    protected function eliminateSpecialChars($text)
     {
         return preg_replace(['/\\\\\'/', '/\\\\\\\\/'], ['\'', '\\'], $text);
     }

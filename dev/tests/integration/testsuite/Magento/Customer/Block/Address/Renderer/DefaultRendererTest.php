@@ -35,7 +35,7 @@ class DefaultRendererTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function renderArrayDataProvider()
+    public function renderArrayDataProvider()
     {
         $addressAttributes = [
             'city' => 'CityM',
@@ -82,7 +82,7 @@ class DefaultRendererTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function renderDataProvider()
+    public function renderDataProvider()
     {
         $data = [
             'city' => 'CityM',

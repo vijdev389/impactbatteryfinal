@@ -39,7 +39,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function providerNotValidFiles()
+    public function providerNotValidFiles()
     {
         return [['invalid.csv']]; //File does not exist
     }
@@ -64,7 +64,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function providerRead()
+    public function providerRead()
     {
         return [['popup.csv', 10, 'var myData'], ['popup.csv', 15, 'var myData = 5;']];
     }
@@ -87,7 +87,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function readAllProvider()
+    public function readAllProvider()
     {
         return [
             ['popup.csv', 'var myData = 5;'],
@@ -116,7 +116,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function readLineProvider()
+    public function readLineProvider()
     {
         return [
             ['popup.csv', ['var myData = 5;'], 999],
@@ -161,7 +161,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function statProvider()
+    public function statProvider()
     {
         return [['popup.csv'], ['foo/file_three.txt']];
     }
@@ -192,7 +192,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function providerCsv()
+    public function providerCsv()
     {
         return [['data.csv', 0, ',', '"', '\\', ['field1', 'field2'], ['field3', 'field4']]];
     }
@@ -216,7 +216,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function providerPosition()
+    public function providerPosition()
     {
         return [['popup.csv', 5], ['popup.csv', 10]];
     }
@@ -242,7 +242,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function providerSeek()
+    public function providerSeek()
     {
         return [
             ['popup.csv', 5, SEEK_SET, 5],
@@ -270,7 +270,7 @@ class ReadTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function providerEof()
+    public function providerEof()
     {
         return [['popup.csv', 5, false], ['popup.csv', 10, false]];
     }

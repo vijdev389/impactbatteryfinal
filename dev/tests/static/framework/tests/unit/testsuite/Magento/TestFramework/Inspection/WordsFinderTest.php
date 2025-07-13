@@ -21,7 +21,7 @@ class WordsFinderTest extends \PHPUnit\Framework\TestCase
         new \Magento\TestFramework\Inspection\WordsFinder($configFile, $baseDir, new ComponentRegistrar());
     }
 
-    public static function constructorExceptionDataProvider()
+    public function constructorExceptionDataProvider()
     {
         $fixturePath = __DIR__ . '/_files/';
         return [
@@ -53,7 +53,7 @@ class WordsFinderTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function findWordsDataProvider()
+    public function findWordsDataProvider()
     {
         $mainConfig = __DIR__ . '/_files/config.xml';
         $additionalConfig = __DIR__ . '/_files/config_additional.xml';

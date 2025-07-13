@@ -13,7 +13,6 @@ use Magento\Setup\Module\I18n\FilesCollector;
 use Magento\Setup\Module\I18n\Parser\AbstractParser;
 use Magento\Setup\Module\I18n\Parser\AdapterInterface;
 use Magento\Setup\Module\I18n\Parser as Parser;
-use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -54,19 +53,6 @@ class ParserTest extends TestCase
      */
     public function testAddPhrase($options, $phpFiles, $jsFiles, $phpMap, $jsMap, $phraseFactoryMap, $expectedResult)
     {
-        foreach ($phraseFactoryMap as &$phrase) {
-            if (is_callable($phrase[1])) {
-                $phrase[1] = $phrase[1]($this);
-            }
-        }
-
-        $finalExpectedResult = [];
-        foreach ($expectedResult as $key => $result) {
-            if (is_callable($result)) {
-                $finalExpectedResult[$key] = $result($this);
-            }
-        }
-
         // 1. Create mocks
         $phpAdapter = new AdapterStub();
         $jsAdapter = new AdapterStub();
@@ -81,6 +67,7 @@ class ParserTest extends TestCase
 
         $this->factory->expects($this->any())
             ->method('createPhrase')
+            ->with()
             ->willReturnMap($phraseFactoryMap);
 
         //4. Set expectations
@@ -92,22 +79,31 @@ class ParserTest extends TestCase
             ]);
 
         $result = $this->parser->parse($options);
-        $this->assertEquals($finalExpectedResult, $result);
+        $this->assertEquals($expectedResult, $result);
     }
 
     /**
      * @return array
      */
-    public static function addPhraseDataProvider(): array
+    public function addPhraseDataProvider()
     {
-        $phraseMock1 = static fn (self $testCase) => $testCase->createPhaseMock('php phrase111');
-        $phraseMock2 = static fn (self $testCase) => $testCase->createPhaseMock('php phrase112');
-        $phraseMock3 = static fn (self $testCase) => $testCase->createPhaseMock('php phrase121');
-        $phraseMock4 = static fn (self $testCase) => $testCase->createPhaseMock('php phrase122');
-        $phraseMock5 = static fn (self $testCase) => $testCase->createPhaseMock('js phrase111');
-        $phraseMock6 = static fn (self $testCase) => $testCase->createPhaseMock('js phrase112');
-        $phraseMock7 = static fn (self $testCase) => $testCase->createPhaseMock('js phrase121');
-        $phraseMock8 = static fn (self $testCase) => $testCase->createPhaseMock('js phrase122');
+        $phraseMock1 = $this->createMock(Phrase::class);
+        $phraseMock2 = $this->createMock(Phrase::class);
+        $phraseMock3 = $this->createMock(Phrase::class);
+        $phraseMock4 = $this->createMock(Phrase::class);
+        $phraseMock5 = $this->createMock(Phrase::class);
+        $phraseMock6 = $this->createMock(Phrase::class);
+        $phraseMock7 = $this->createMock(Phrase::class);
+        $phraseMock8 = $this->createMock(Phrase::class);
+
+        $phraseMock1->expects($this->any())->method('getCompiledPhrase')->willReturn('php phrase111');
+        $phraseMock2->expects($this->any())->method('getCompiledPhrase')->willReturn('php phrase112');
+        $phraseMock3->expects($this->any())->method('getCompiledPhrase')->willReturn('php phrase121');
+        $phraseMock4->expects($this->any())->method('getCompiledPhrase')->willReturn('php phrase122');
+        $phraseMock5->expects($this->any())->method('getCompiledPhrase')->willReturn('js phrase111');
+        $phraseMock6->expects($this->any())->method('getCompiledPhrase')->willReturn('js phrase112');
+        $phraseMock7->expects($this->any())->method('getCompiledPhrase')->willReturn('js phrase121');
+        $phraseMock8->expects($this->any())->method('getCompiledPhrase')->willReturn('js phrase122');
 
         return [
             [
@@ -181,18 +177,6 @@ class ParserTest extends TestCase
                 ],
             ]
         ];
-    }
-
-    /**
-     * @param string $result
-     * @return MockObject
-     * @throws Exception
-     */
-    public function createPhaseMock(string $result): MockObject
-    {
-        $phraseMock = $this->createMock(Phrase::class);
-        $phraseMock->expects($this->any())->method('getCompiledPhrase')->willReturn($result);
-        return $phraseMock;
     }
 }
 

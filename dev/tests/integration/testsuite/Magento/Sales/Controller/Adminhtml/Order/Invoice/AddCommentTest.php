@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Sales\Controller\Adminhtml\Order\Invoice;
@@ -58,8 +57,8 @@ class AddCommentTest extends AbstractInvoiceControllerTest
         );
 
         $this->assertEquals($message->getSubject(), $subject);
-        $bodyParts = quoted_printable_decode($message->getBody()->bodyToString());
-        $this->assertThat($bodyParts, $messageConstraint);
+        $bodyParts = $message->getBody()->getParts();
+        $this->assertThat(reset($bodyParts)->getRawContent(), $messageConstraint);
     }
 
     /**

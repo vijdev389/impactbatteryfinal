@@ -213,16 +213,16 @@ class CategoryRepositoryTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function deleteSystemOrRootDataProvider(): array
+    public function deleteSystemOrRootDataProvider(): array
     {
         return [
             'system_category' => [
-                'categoryId' => Category::TREE_ROOT_ID,
-                'exceptionMsg' => self::buildExceptionMessage(Category::TREE_ROOT_ID),
+                'category_id' => Category::TREE_ROOT_ID,
+                'exception_message' => $this->buildExceptionMessage(Category::TREE_ROOT_ID),
             ],
             'root_category' => [
-                'categoryId' => 2,
-                'exceptionMsg' => self::buildExceptionMessage(2),
+                'category_id' => 2,
+                'exception_message' => $this->buildExceptionMessage(2),
             ],
         ];
     }
@@ -233,7 +233,7 @@ class CategoryRepositoryTest extends WebapiAbstract
      * @param int $categoryId
      * @return string
      */
-    private static function buildExceptionMessage(int $categoryId): string
+    private function buildExceptionMessage(int $categoryId): string
     {
         $translatedMsg = (string)__('Cannot delete category with id %1');
 
@@ -269,13 +269,12 @@ class CategoryRepositoryTest extends WebapiAbstract
         $this->createdCategories = [$categoryId];
     }
 
-    #[
-        DataFixture(CategoryFixture::class, as: 'category')
-    ]
+    /**
+     * @magentoApiDataFixture Magento/Catalog/_files/category.php
+     */
     public function testUpdateWithDefaultSortByAttribute()
     {
-        $category = $this->fixtures->get('category');
-        $categoryId = $category->getId();
+        $categoryId = 333;
         $categoryData = [
             'name' => 'Update Category Test With default_sort_by Attribute',
             'is_active' => true,
@@ -283,7 +282,7 @@ class CategoryRepositoryTest extends WebapiAbstract
             'custom_attributes' => [
                 [
                     'attribute_code' => 'default_sort_by',
-                    'value' => "price"
+                    'value' => ["name"],
                 ],
             ],
         ];
@@ -294,7 +293,7 @@ class CategoryRepositoryTest extends WebapiAbstract
         $category = $model->load($categoryId);
         $this->assertTrue((bool)$category->getIsActive(), 'Category "is_active" must equal to true');
         $this->assertEquals("Update Category Test With default_sort_by Attribute", $category->getName());
-        $this->assertEquals("price", $category->getDefaultSortBy());
+        $this->assertEquals("name", $category->getDefaultSortBy());
         $this->createdCategories = [$categoryId];
     }
 

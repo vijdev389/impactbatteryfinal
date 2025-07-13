@@ -55,28 +55,28 @@ class DictionaryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectation, $result);
     }
 
-    public static function dictionaryDataProvider()
+    public function dictionaryDataProvider()
     {
         return [
             // First case with multiple inheritance, the obtained dictionary is en_AU
-            'a case with multiple inheritance' => self::getDataMultipleInheritance(),
+            'a case with multiple inheritance' => $this->getDataMultipleInheritance(),
             // Second case with inheritance of package with the same language code
-            'a case with inheritance similar language code' => self::getDataInheritanceWitSimilarCode(),
+            'a case with inheritance similar language code' => $this->getDataInheritanceWitSimilarCode(),
             // Third case with circular inheritance, when two packages depend on each other
-            'a case with circular inheritance' => self::getDataCircularInheritance(),
+            'a case with circular inheritance' => $this->getDataCircularInheritance(),
             // Fourth case with multiple inheritance from dev docs
-            'a case with multiple inheritance from dev docs' => self::getDataMultipleInheritanceFromDevDocs()
+            'a case with multiple inheritance from dev docs' => $this->getDataMultipleInheritanceFromDevDocs()
         ];
     }
 
     /**
      * @return array
      */
-    private static function getDataMultipleInheritance()
+    private function getDataMultipleInheritance()
     {
         return [
             // Dictionary that will be requested
-            'languageCode' => 'en_AU',
+            'language_code' => 'en_AU',
             // Expected merged dictionary data
             'expectation' => [
                 'one' => '1.0',
@@ -94,11 +94,11 @@ class DictionaryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    private static function getDataInheritanceWitSimilarCode()
+    private function getDataInheritanceWitSimilarCode()
     {
         return [
             // Dictionary that will be requested
-            'languageCode' => 'ru_RU',
+            'language_code' => 'ru_RU',
             // Expected merged dictionary data
             'expectation' => [
                 'one' => '1.0',
@@ -111,11 +111,11 @@ class DictionaryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    private static function getDataCircularInheritance()
+    private function getDataCircularInheritance()
     {
         return [
             // Dictionary that will be requested
-            'languageCode' => 'en_AZ',
+            'language_code' => 'en_AZ',
             // Expected merged dictionary data
             'expectation' => [
                 'one' => '1.0',
@@ -150,11 +150,11 @@ class DictionaryTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    private static function getDataMultipleInheritanceFromDevDocs()
+    private function getDataMultipleInheritanceFromDevDocs()
     {
         return [
             // Dictionary that will be requested
-            'languageCode' => 'en_AK',
+            'language_code' => 'en_AK',
             // Expected merged dictionary data
             'expectation' => [
                 'one' => 'en_us_package_one',

@@ -21,23 +21,23 @@ class Text extends AbstractBaseAttributeData
     public function __construct()
     {
         parent::__construct();
-        static::$defaultAttributePostData['frontend_class'] = '';
-        static::$defaultAttributePostData['used_for_sort_by'] = '0';
+        $this->defaultAttributePostData['frontend_class'] = '';
+        $this->defaultAttributePostData['used_for_sort_by'] = '0';
     }
 
     /**
      * @inheritdoc
      */
-    public static function getAttributeData(): array
+    public function getAttributeData(): array
     {
         return array_replace_recursive(
             parent::getAttributeData(),
             [
-                "{static::getFrontendInput()}_with_input_validation" => [
-                    array_merge(static::$defaultAttributePostData, ['frontend_class' => 'validate-alpha']),
+                "{$this->getFrontendInput()}_with_input_validation" => [
+                    array_merge($this->defaultAttributePostData, ['frontend_class' => 'validate-alpha']),
                 ],
-                "{static::getFrontendInput()}_without_input_validation" => [
-                    static::$defaultAttributePostData,
+                "{$this->getFrontendInput()}_without_input_validation" => [
+                    $this->defaultAttributePostData,
                 ],
             ]
         );
@@ -46,18 +46,18 @@ class Text extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getAttributeDataWithCheckArray(): array
+    public function getAttributeDataWithCheckArray(): array
     {
         return array_merge_recursive(
             parent::getAttributeDataWithCheckArray(),
             [
-                "{static::getFrontendInput()}_with_input_validation" => [
+                "{$this->getFrontendInput()}_with_input_validation" => [
                     [
                         'attribute_code' => 'test_attribute_name',
                         'frontend_class' => 'validate-alpha',
                     ],
                 ],
-                "{static::getFrontendInput()}_without_input_validation" => [
+                "{$this->getFrontendInput()}_without_input_validation" => [
                     [
                         'attribute_code' => 'test_attribute_name',
                         'frontend_class' => '',
@@ -70,17 +70,17 @@ class Text extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    public static function getUpdateProvider(): array
+    public function getUpdateProvider(): array
     {
-        $frontendInput = static::getFrontendInput();
+        $frontendInput = $this->getFrontendInput();
         return array_replace_recursive(
             parent::getUpdateProvider(),
             [
                 "{$frontendInput}_other_attribute_code" => [
-                    'postData' => [
+                    'post_data' => [
                         'attribute_code' => 'varchar_attribute_update',
                     ],
-                    'expectedData' => [
+                    'expected_data' => [
                         'attribute_code' => 'varchar_attribute',
                     ],
                 ],
@@ -91,7 +91,7 @@ class Text extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getFrontendInput(): string
+    protected function getFrontendInput(): string
     {
         return 'text';
     }
@@ -99,7 +99,7 @@ class Text extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getUpdatePostData(): array
+    protected function getUpdatePostData(): array
     {
         return [
             'frontend_label' => [
@@ -128,9 +128,9 @@ class Text extends AbstractBaseAttributeData
     /**
      * @inheritdoc
      */
-    protected static function getUpdateExpectedData(): array
+    protected function getUpdateExpectedData(): array
     {
-        $updatePostData = static::getUpdatePostData();
+        $updatePostData = $this->getUpdatePostData();
         unset($updatePostData['default_value_text']);
         return array_merge(
             $updatePostData,

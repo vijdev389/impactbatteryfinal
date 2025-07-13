@@ -17,7 +17,7 @@ class DateGroupDataProvider extends OptionsDateGroupDataProvider
     /**
      * @inheritdoc
      */
-    public static function getData(): array
+    public function getData(): array
     {
         $optionsData = parent::getData();
         unset(

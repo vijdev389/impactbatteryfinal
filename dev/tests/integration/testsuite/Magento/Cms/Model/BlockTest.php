@@ -112,11 +112,11 @@ class BlockTest extends TestCase
      * Data provider for "testGetByIdentifier" and "testUpdateTime" method
      * @return array
      */
-    public static function testGetByIdentifierDataProvider(): array
+    public function testGetByIdentifierDataProvider(): array
     {
         return [
             [
-                'blockData' => [
+                'data' => [
                     'title'      => 'Test title',
                     'stores'     => [0],
                     'identifier' => 'test-identifier',

@@ -64,7 +64,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getProcessedTemplateFrontendDataProvider()
+    public function getProcessedTemplateFrontendDataProvider()
     {
         return [
             'frontend' => ['default', 'Magento/luma'],
@@ -96,7 +96,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getProcessedTemplateAreaDataProvider()
+    public function getProcessedTemplateAreaDataProvider()
     {
         $designTheme = Bootstrap::getObjectManager()
             ->get(DesignInterface::class)
@@ -126,7 +126,7 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function isValidToSendDataProvider()
+    public function isValidToSendDataProvider()
     {
         return [
             ['john.doe@example.com', 'john.doe', 'Test Subject', true],

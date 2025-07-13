@@ -15,7 +15,6 @@ use Magento\Tax\Api\Data\TaxRuleInterfaceFactory;
 use Magento\Tax\Api\TaxRateRepositoryInterface;
 use Magento\Tax\Api\TaxRuleRepositoryInterface;
 use Magento\Tax\Model\ResourceModel\Calculation\Rate\CollectionFactory;
-use Magento\Tax\Model\ResourceModel\Calculation\Rate\Collection;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -89,7 +88,7 @@ class TaxRulesFixtureTest extends TestCase
 
         $this->taxRuleRepositoryMock = $this->getMockBuilder(TaxRuleRepositoryInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['save', 'get', 'delete', 'deleteById', 'getList'])
+            ->setMethods(['save', 'get', 'delete', 'deleteById', 'getList'])
             ->getMockForAbstractClass();
 
         $this->fixtureModelMock
@@ -102,12 +101,12 @@ class TaxRulesFixtureTest extends TestCase
 
         $this->taxRateCollectionFactoryMock = $this->getMockBuilder(CollectionFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
 
         $taxRateCollectionMock = $this->getMockBuilder(Collection::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getAllIds'])
+            ->setMethods(['getAllIds'])
             ->getMock();
 
         $this->taxRateCollectionFactoryMock->expects($this->once())

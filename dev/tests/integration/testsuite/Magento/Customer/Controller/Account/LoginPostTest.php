@@ -77,34 +77,34 @@ class LoginPostTest extends AbstractController
     /**
      * @return array
      */
-    public static function missingParametersDataProvider(): array
+    public function missingParametersDataProvider(): array
     {
         return [
             'missing_email' => [
                 'email' => null,
                 'password' => 'password',
-                'expectedErrorMessage' => 'A login and a password are required.',
+                'expected_error_message' => 'A login and a password are required.',
             ],
             'missing_password' => [
                 'email' => 'customer@example.com',
                 'password' => null,
-                'expectedErrorMessage' => 'A login and a password are required.',
+                'expected_error_message' => 'A login and a password are required.',
             ],
             'missing_both_parameters' => [
                 'email' => null,
                 'password' => null,
-                'expectedErrorMessage' => 'A login and a password are required.',
+                'expected_error_message' => 'A login and a password are required.',
             ],
             'wrong_email' => [
                 'email' => 'wrongemail@example.com',
                 'password' => 'password',
-                'expectedErrorMessage' => 'The account sign-in was incorrect or your account is disabled temporarily.'
+                'expected_error_message' => 'The account sign-in was incorrect or your account is disabled temporarily.'
                     . ' Please wait and try again later.',
             ],
             'wrong_password' => [
                 'email' => 'customer@example.com',
                 'password' => 'wrongpassword',
-                'expectedErrorMessage' => 'The account sign-in was incorrect or your account is disabled temporarily.'
+                'expected_error_message' => 'The account sign-in was incorrect or your account is disabled temporarily.'
                     . ' Please wait and try again later.',
             ],
         ];

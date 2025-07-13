@@ -74,13 +74,13 @@ class BootstrapTest extends \PHPUnit\Framework\TestCase
             ['emulateHttpRequest', 'emulateSession']
         );
         $this->_docBlockBootstrap = $this->getMockBuilder(\Magento\TestFramework\Bootstrap\DocBlock::class)
-            ->onlyMethods(['registerAnnotations'])
+            ->setMethods(['registerAnnotations'])
             ->setConstructorArgs([__DIR__])
             ->getMock();
         $profilerDriver =
             $this->createPartialMock(\Magento\Framework\Profiler\Driver\Standard::class, ['registerOutput']);
         $this->_profilerBootstrap = $this->getMockBuilder(\Magento\TestFramework\Bootstrap\Profiler::class)
-            ->onlyMethods(['registerFileProfiler', 'registerBambooProfiler'])
+            ->setMethods(['registerFileProfiler', 'registerBambooProfiler'])
             ->setConstructorArgs([$profilerDriver])
             ->getMock();
 

@@ -105,7 +105,7 @@ class AggregatedTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getFilesDataProvider()
+    public function getFilesDataProvider()
     {
         $fixtureDir = dirname(dirname(__DIR__));
         return [

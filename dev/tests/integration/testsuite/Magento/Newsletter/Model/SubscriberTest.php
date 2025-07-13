@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -20,7 +20,6 @@ use PHPUnit\Framework\TestCase;
  * Class checks subscription behavior.
  *
  * @see \Magento\Newsletter\Model\Subscriber
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class SubscriberTest extends TestCase
 {
@@ -76,12 +75,11 @@ class SubscriberTest extends TestCase
     {
         $subscriber = $this->subscriberFactory->create();
         $subscriber->subscribe('customer_confirm@example.com');
-        $emailMessage = quoted_printable_decode($this->transportBuilder->getSentMessage()->getBody()->bodyToString());
         // confirmationCode 'ysayquyajua23iq29gxwu2eax2qb6gvy' is taken from fixture
         $this->assertStringContainsString(
             '/newsletter/subscriber/confirm/id/' . $subscriber->getSubscriberId()
             . '/code/ysayquyajua23iq29gxwu2eax2qb6gvy',
-            $emailMessage
+            $this->transportBuilder->getSentMessage()->getBody()->getParts()[0]->getRawContent()
         );
         $this->assertEquals(Subscriber::STATUS_NOT_ACTIVE, $subscriber->getSubscriberStatus());
     }
@@ -284,6 +282,7 @@ class SubscriberTest extends TestCase
      */
     private function getMessageRawContent(EmailMessage $message): string
     {
-        return quoted_printable_decode($message->getBody()->bodyToString());
+        $emailParts = $message->getBody()->getParts();
+        return current($emailParts)->getRawContent();
     }
 }

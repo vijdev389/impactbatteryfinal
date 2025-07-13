@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2024 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\Persistent\Model\Checkout;
@@ -132,7 +132,7 @@ class GuestPaymentInformationManagementPluginTest extends \PHPUnit\Framework\Tes
      */
     public function testBeforeSavePaymentInformationAndPlaceOrder()
     {
-        $guestEmail = 'customer@example.com';
+        $guestEmail = 'guest@example.com';
 
         //Retrieve customer from repository
         /** @var \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository */

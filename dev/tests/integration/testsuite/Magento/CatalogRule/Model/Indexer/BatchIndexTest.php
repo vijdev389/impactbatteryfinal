@@ -125,7 +125,7 @@ class BatchIndexTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function dataProvider()
+    public function dataProvider()
     {
         return [
             [1, 20, 17],

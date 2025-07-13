@@ -96,7 +96,7 @@ class GroupRepositoryTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function getGroupDataProvider()
+    public function getGroupDataProvider()
     {
         return [
             'NOT LOGGED IN' => [
@@ -223,7 +223,7 @@ class GroupRepositoryTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function testExcludedWebsitesRestDataProvider(): array
+    public function testExcludedWebsitesRestDataProvider(): array
     {
         return [
             ['Create Group No Excludes REST', [], null],
@@ -665,7 +665,7 @@ class GroupRepositoryTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function testExcludedWebsitesSoapDataProvider(): array
+    public function testExcludedWebsitesSoapDataProvider(): array
     {
         return [
             ['Create Group No Excludes SOAP', [], null],
@@ -1092,7 +1092,7 @@ class GroupRepositoryTest extends WebapiAbstract
     /**
      * Data provider for testSearchGroups
      */
-    public static function testSearchGroupsDataProvider()
+    public function testSearchGroupsDataProvider()
     {
         return [
             ['tax_class_id', 3, []],

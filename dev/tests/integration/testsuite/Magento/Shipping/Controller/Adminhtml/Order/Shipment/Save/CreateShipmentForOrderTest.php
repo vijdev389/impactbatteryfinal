@@ -68,7 +68,7 @@ class CreateShipmentForOrderTest extends AbstractShipmentControllerTest
      *
      * @return array
      */
-    public static function dataForCreateShipmentDataProvider(): array
+    public function dataForCreateShipmentDataProvider(): array
     {
         return [
             'create_full_shipment' => [

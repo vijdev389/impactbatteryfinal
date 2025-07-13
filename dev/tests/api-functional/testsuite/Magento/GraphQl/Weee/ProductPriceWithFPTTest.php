@@ -129,7 +129,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceExcludeTaxAndIncludeFPTOnlySettingsProvider()
+    public function catalogPriceExcludeTaxAndIncludeFPTOnlySettingsProvider()
     {
         return [
             [
@@ -186,7 +186,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceExcludeTaxAndIncludeFPTWithDescriptionSettingsProvider()
+    public function catalogPriceExcludeTaxAndIncludeFPTWithDescriptionSettingsProvider()
     {
         return [
             [
@@ -252,7 +252,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceExcludeTaxCatalogDisplayIncludeTaxAndIncludeFPTOnlySettingsProvider()
+    public function catalogPriceExcludeTaxCatalogDisplayIncludeTaxAndIncludeFPTOnlySettingsProvider()
     {
         return [
             [
@@ -319,7 +319,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceExclTaxCatalogDisplayInclTaxAndInclFPTWithDescriptionSettingsProvider()
+    public function catalogPriceExclTaxCatalogDisplayInclTaxAndInclFPTWithDescriptionSettingsProvider()
     {
         return [
             [
@@ -377,7 +377,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceInclTaxCatalogDisplayExclTaxAndInclFPTWithDescriptionSettingsProvider()
+    public function catalogPriceInclTaxCatalogDisplayExclTaxAndInclFPTWithDescriptionSettingsProvider()
     {
         return [
             [
@@ -435,7 +435,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceInclTaxCatalogDisplayInclTaxAndInclFPTOnlySettingsProvider()
+    public function catalogPriceInclTaxCatalogDisplayInclTaxAndInclFPTOnlySettingsProvider()
     {
         return [
             [
@@ -509,7 +509,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceIncTaxCatalogDisplayInclTaxInclFPTWithDescrWithTaxAppliedOnFPTSettingsProvider()
+    public function catalogPriceIncTaxCatalogDisplayInclTaxInclFPTWithDescrWithTaxAppliedOnFPTSettingsProvider()
     {
         return [
             [
@@ -596,7 +596,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceInclTaxCatalogDisplayIncludeTaxAndMuyltipleFPTsSettingsProvider()
+    public function catalogPriceInclTaxCatalogDisplayIncludeTaxAndMuyltipleFPTsSettingsProvider()
     {
         return [
             [
@@ -659,7 +659,7 @@ class ProductPriceWithFPTTest extends GraphQlAbstract
      *
      * @return array
      */
-    public static function catalogPriceDisabledFPTSettingsProvider()
+    public function catalogPriceDisabledFPTSettingsProvider()
     {
         return [
             [

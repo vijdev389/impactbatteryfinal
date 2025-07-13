@@ -44,7 +44,7 @@ class IsExcludedTest extends TestCase
     /**
      * @return array
      */
-    public static function directoriesDataProvider(): array
+    public function directoriesDataProvider(): array
     {
         return [
             [

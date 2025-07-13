@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\CodeMessDetector\Test\Unit\Rule\UnusedCode;
 
-use PHPMD\Rule\UnusedFormalParameter;
+use Magento\CodeMessDetector\Rule\UnusedCode\UnusedFormalParameter;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Report;
@@ -74,17 +74,8 @@ class UnusedFormalParameterTest extends TestCase
          */
         $methodNode->expects($this->atLeastOnce())
             ->method('findChildrenOfType')
-            ->willReturnCallback(
-                function ($arg1) use ($parametersMock) {
-                    if ($arg1 == 'FormalParameters') {
-                        return [$parametersMock];
-                    } elseif ($arg1 == 'CompoundVariable') {
-                        return [];
-                    } elseif ($arg1 == 'FunctionPostfix') {
-                        return [];
-                    }
-                }
-            );
+            ->withConsecutive(['FormalParameters'], ['CompoundVariable'], ['FunctionPostfix'])
+            ->willReturnOnConsecutiveCalls([$parametersMock], [], []);
 
         // Dummy result for removeRegularVariables
         $methodNode->expects($this->once())

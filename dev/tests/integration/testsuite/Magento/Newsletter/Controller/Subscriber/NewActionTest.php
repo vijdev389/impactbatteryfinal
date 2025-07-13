@@ -124,20 +124,20 @@ class NewActionTest extends AbstractController
     /**
      * @return array
      */
-    public static function subscribersDataProvider(): array
+    public function subscribersDataProvider(): array
     {
         return [
             'without_email' => [
                 'email' => '',
-                'expectedMessage' => '',
+                'message' => '',
             ],
             'with_unused_email' => [
                 'email' => 'not_used@example.com',
-                'expectedMessage' => 'Thank you for your subscription.',
+                'message' => 'Thank you for your subscription.',
             ],
             'with_invalid_email' => [
                 'email' => 'invalid_email.com',
-                'expectedMessage' => 'Please enter a valid email address.'
+                'message' => 'Please enter a valid email address.'
             ],
         ];
     }
@@ -163,11 +163,11 @@ class NewActionTest extends AbstractController
     /**
      * @return array
      */
-    public static function emailAndStatusDataProvider()
+    public function emailAndStatusDataProvider()
     {
         return [
-            'email' => ['new_customer@example.com', 2],
-            'subscriptionType' => ['not_a_customer@gmail.com', 1],
+            'customer' => ['new_customer@example.com', 2],
+            'not_a_customer' => ['not_a_customer@gmail.com', 1],
         ];
     }
 

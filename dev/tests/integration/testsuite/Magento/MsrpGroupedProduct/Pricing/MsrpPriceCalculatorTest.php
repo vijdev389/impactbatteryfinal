@@ -85,7 +85,7 @@ class MsrpPriceCalculatorTest extends TestCase
     /**
      * @return array
      */
-    public static function getMsrpPriceValueDataProvider(): array
+    public function getMsrpPriceValueDataProvider(): array
     {
         return [
             [

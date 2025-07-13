@@ -70,7 +70,7 @@ class AccountTest extends \Magento\TestFramework\TestCase\AbstractBackendControl
         }
     }
 
-    public static function saveDataProvider()
+    public function saveDataProvider()
     {
         $password = uniqid('123q');
         return [

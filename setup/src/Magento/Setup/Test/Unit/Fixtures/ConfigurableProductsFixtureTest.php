@@ -51,8 +51,7 @@ class ConfigurableProductsFixtureTest extends TestCase
     {
         $this->fixtureModelMock = $this->getMockBuilder(FixtureModel::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getValue', 'getObjectManager'])
-            ->addMethods(['createAttributeSet'])
+            ->setMethods(['createAttributeSet', 'getValue', 'getObjectManager'])
             ->getMock();
 
         $this->attributeSetsFixtureMock = $this->getMockBuilder(AttributeSetFixture::class)
@@ -121,7 +120,7 @@ class ConfigurableProductsFixtureTest extends TestCase
             ]);
 
         $attributeCollectionFactoryMock = $this->getMockBuilder(CollectionFactory::class)
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -26,7 +26,7 @@ class PaymentConfigFilesTest extends \Magento\TestFramework\TestCase\AbstractCon
      *
      * @return string
      */
-    protected static function _getConfigFilePathGlob()
+    protected function _getConfigFilePathGlob()
     {
         return 'etc/payment.xml';
     }
@@ -36,9 +36,9 @@ class PaymentConfigFilesTest extends \Magento\TestFramework\TestCase\AbstractCon
      *
      * @return string
      */
-    protected static function _getXsdPath()
+    protected function _getXsdPath()
     {
-        return self::$componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_Payment')
+        return $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_Payment')
             . '/etc/payment_file.xsd';
     }
 }

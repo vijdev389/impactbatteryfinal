@@ -126,7 +126,7 @@ class CartItemPricesWithFPTTest extends GraphQlAbstract
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function cartItemFixedProductTaxDataProvider(): array
+    public function cartItemFixedProductTaxDataProvider(): array
     {
         return [
             [

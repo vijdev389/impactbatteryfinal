@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Magento\Catalog\Block\Product\ListProduct;
 
-use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Block\Product\ListProduct;
 use Magento\Catalog\Test\Fixture\Category as CategoryFixture;
@@ -54,11 +53,6 @@ class CheckProductPriceTest extends TestCase
     private $customerSession;
 
     /**
-     * @var Collection
-     */
-    private $productCollection;
-
-    /**
      * @inheritdoc
      */
     protected function setUp(): void
@@ -67,7 +61,6 @@ class CheckProductPriceTest extends TestCase
         $this->pageFactory = $this->objectManager->get(PageFactory::class);
         $this->productRepository = $this->objectManager->get(ProductRepositoryInterface::class);
         $this->customerSession = $this->objectManager->create(Session::class);
-        $this->productCollection = $this->objectManager->create(Collection::class);
         parent::setUp();
     }
 
@@ -127,7 +120,6 @@ class CheckProductPriceTest extends TestCase
      * Assert that product special price rendered correctly.
      *
      * @magentoDataFixture Magento/Catalog/_files/product_special_price.php
-     * @magentoDbIsolation disabled
      *
      * @return void
      */
@@ -170,7 +162,6 @@ class CheckProductPriceTest extends TestCase
      * Assert that price of product with fixed tier price for not logged user is renders correctly.
      *
      * @magentoDataFixture Magento/Catalog/_files/product_simple_with_fixed_tier_price_for_not_logged_user.php
-     * @magentoDbIsolation disabled
      *
      * @return void
      */
@@ -365,9 +356,6 @@ class CheckProductPriceTest extends TestCase
     private function getProductPriceHtml(string $sku): string
     {
         $product = $this->productRepository->get($sku, false, null, true);
-        if (false === in_array($product->getId(), $this->productCollection->getAllIds())) {
-            $this->productCollection->addItem($product);
-        }
 
         return preg_replace('/[\n\r]/', '', $this->getListProductBlock()->getProductPrice($product));
     }
@@ -387,8 +375,6 @@ class CheckProductPriceTest extends TestCase
         $page->getLayout()->generateXml();
         /** @var Template $categoryProductsBlock */
         $categoryProductsBlock = $page->getLayout()->getBlock('category.products');
-        $listProduct = $categoryProductsBlock->getChildBlock('product_list');
-        $listProduct->setCollection($this->productCollection);
 
         return $categoryProductsBlock->getChildBlock('product_list');
     }

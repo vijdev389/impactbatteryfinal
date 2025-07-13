@@ -59,7 +59,7 @@ class EventManagerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedSubscribers, $actualSubscribers);
     }
 
-    public static function fireEventDataProvider()
+    public function fireEventDataProvider()
     {
         return [
             'straight order' => [false, ['subscriberOne', 'subscriberTwo']],

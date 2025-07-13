@@ -85,7 +85,7 @@ class AdminTokenServiceTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function validationDataProvider()
+    public function validationDataProvider()
     {
         return [
             'Check for empty credentials' => ['', ''],

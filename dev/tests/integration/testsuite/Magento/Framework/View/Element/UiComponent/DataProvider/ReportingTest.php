@@ -77,7 +77,7 @@ class ReportingTest extends TestCase
     /**
      * @return array[]
      */
-    public static function filtersDataProvider()
+    public function filtersDataProvider()
     {
         return [
             'variation 1 (filter OR filter) AND filter' => [
@@ -98,7 +98,7 @@ class ReportingTest extends TestCase
                         'condition_type' => 'eq',
                     ],
                 ],
-                'expectedCount' => 2,
+                'expected_count' => 2,
             ],
             'variation 2 (filter OR filter) AND filter' => [
                 'filters' => [
@@ -118,7 +118,7 @@ class ReportingTest extends TestCase
                         'condition_type' => 'like',
                     ],
                 ],
-                'expectedCount' => 5,
+                'expected_count' => 5,
             ],
             'variation 3 (filter OR filter) AND filter' => [
                 'filters' => [
@@ -138,7 +138,7 @@ class ReportingTest extends TestCase
                         'condition_type' => 'eq',
                     ],
                 ],
-                'expectedCount' => 1,
+                'expected_count' => 1,
             ],
             'variation (filter OR filter) AND filter AND (filter OR filter)' => [
                 'filters' => [
@@ -168,7 +168,7 @@ class ReportingTest extends TestCase
                         'condition_type' => 'like',
                     ],
                 ],
-                'expectedCount' => 1,
+                'expected_count' => 1,
             ],
         ];
     }

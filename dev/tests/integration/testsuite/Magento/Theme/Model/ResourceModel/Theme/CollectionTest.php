@@ -68,7 +68,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getThemeByFullPathDataProvider()
+    public function getThemeByFullPathDataProvider()
     {
         return [
             ['test_area/test/default', true],
@@ -100,7 +100,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addAreaFilterDataProvider()
+    public function addAreaFilterDataProvider()
     {
         return [
             ['area' => 'test_area', 'themeCount' => 1],
@@ -131,7 +131,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addTypeFilterDataProvider()
+    public function addTypeFilterDataProvider()
     {
         return [
             ['themeType' => ThemeInterface::TYPE_PHYSICAL, 'themeCount' => 1],

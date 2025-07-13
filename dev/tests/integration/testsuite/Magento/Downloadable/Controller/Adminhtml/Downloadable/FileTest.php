@@ -105,7 +105,7 @@ class FileTest extends \Magento\TestFramework\TestCase\AbstractBackendController
      *
      * @return array
      */
-    public static function extensionsDataProvider()
+    public function extensionsDataProvider()
     {
         return [
             ['sample.php'],
@@ -133,7 +133,7 @@ class FileTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals(0, $result['errorcode']);
     }
 
-    public static function uploadWrongUploadTypeDataProvider(): array
+    public function uploadWrongUploadTypeDataProvider(): array
     {
         return [
             [

@@ -121,7 +121,7 @@ class CompositeTest extends TestCase
      *
      * @return array
      */
-    public static function renderConfigureResultExceptionProvider(): array
+    public function renderConfigureResultExceptionProvider(): array
     {
         return [
             'error_true' => [
@@ -129,13 +129,13 @@ class CompositeTest extends TestCase
                     'error' => true,
                     'message' => 'Test Message'
                 ],
-                'expectedErrorMessage' => 'Test Message',
+                'expected_error_message' => 'Test Message',
             ],
             'without_product' => [
                 'data' => [
                     'ok' => true,
                 ],
-                'expectedErrorMessage' => 'The product that was requested doesn\'t exist.'
+                'expected_error_message' => 'The product that was requested doesn\'t exist.'
                     . ' Verify the product and try again.',
             ],
         ];

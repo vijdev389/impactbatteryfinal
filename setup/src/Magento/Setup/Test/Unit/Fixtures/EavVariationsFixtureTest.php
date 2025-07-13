@@ -83,7 +83,7 @@ class EavVariationsFixtureTest extends TestCase
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->attributeFactoryMock = $this->getMockBuilder(AttributeFactory::class)
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -142,9 +142,9 @@ class EavVariationsFixtureTest extends TestCase
         $this->attributeSetMock->expects($this->once())->method('getDefaultGroupId')->willReturn(2);
 
         $attributeMock = $this->getMockBuilder(Attribute::class)
-            ->addMethods(['setAttributeGroupId'])
-            ->onlyMethods([
+            ->setMethods([
                 'setAttributeSetId',
+                'setAttributeGroupId',
                 'save',
             ])
             ->disableOriginalConstructor()

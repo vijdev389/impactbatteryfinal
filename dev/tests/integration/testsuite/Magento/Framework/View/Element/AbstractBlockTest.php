@@ -516,7 +516,7 @@ class AbstractBlockTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function escapeHtmlDataProvider()
+    public function escapeHtmlDataProvider()
     {
         return [
             'array data' => [

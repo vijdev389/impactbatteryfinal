@@ -155,7 +155,7 @@ class ReturnItemsAfterRefundOrderTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function refundWithReturnItemsToStockUnshippedOrderDataProvider()
+    public function refundWithReturnItemsToStockUnshippedOrderDataProvider()
     {
         return [
             [false, 99],
@@ -166,7 +166,7 @@ class ReturnItemsAfterRefundOrderTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function dataProvider()
+    public function dataProvider()
     {
         return [
             'refundAllOrderItems' => [2],

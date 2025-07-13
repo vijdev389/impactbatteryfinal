@@ -151,25 +151,25 @@ class HelperTest extends TestCase
     /**
      * @return array
      */
-    public static function initializeDataProvider(): array
+    public function initializeDataProvider(): array
     {
         return [
             'children_with_same_image_and_roles' => [
-                'childProducts' => [
+                'child_products' => [
                     'simple_10' => [
-                        'media_gallery' => self::getMediaGallery(['ben062bdw2v' => '/m/a/magento_image.jpg.tmp']),
+                        'media_gallery' => $this->getMediaGallery(['ben062bdw2v' => '/m/a/magento_image.jpg.tmp']),
                         'images' => [
                             '/m/a/magento_image.jpg.tmp' => ['swatch_image', 'small_image', 'image', 'thumbnail'],
                         ],
                     ],
                     'simple_20' => [
-                        'media_gallery' => self::getMediaGallery(['ben062bdw2v' => '/m/a/magento_image.jpg.tmp']),
+                        'media_gallery' => $this->getMediaGallery(['ben062bdw2v' => '/m/a/magento_image.jpg.tmp']),
                         'images' => [
                             '/m/a/magento_image.jpg.tmp' => ['swatch_image', 'small_image', 'image', 'thumbnail'],
                         ],
                     ],
                 ],
-                'expectedImages' => [
+                'expected_images' => [
                     'simple_10' => [
                         '/m/a/magento_image_1.jpg' => ['swatch_image', 'small_image', 'image', 'thumbnail'],
                     ],
@@ -179,15 +179,15 @@ class HelperTest extends TestCase
                 ],
             ],
             'children_with_different_images' => [
-                'childProducts' => [
+                'child_products' => [
                     'simple_10' => [
-                        'media_gallery' => self::getMediaGallery(['ben062bdw2v' => '/m/a/magento_image.jpg.tmp']),
+                        'media_gallery' => $this->getMediaGallery(['ben062bdw2v' => '/m/a/magento_image.jpg.tmp']),
                         'images' => [
                             '/m/a/magento_image.jpg.tmp' => ['swatch_image', 'small_image', 'image', 'thumbnail'],
                         ],
                     ],
                     'simple_20' => [
-                        'media_gallery' => self::getMediaGallery(
+                        'media_gallery' => $this->getMediaGallery(
                             ['lrwuv5ukisn' => '/m/a/magento_small_image.jpg.tmp']
                         ),
                         'images' => [
@@ -195,7 +195,7 @@ class HelperTest extends TestCase
                         ],
                     ],
                 ],
-                'expectedImages' => [
+                'expected_images' => [
                     'simple_10' => [
                         '/m/a/magento_image_1.jpg' => ['swatch_image', 'small_image', 'image', 'thumbnail'],
                     ],
@@ -205,9 +205,9 @@ class HelperTest extends TestCase
                 ],
             ],
             'children_with_different_image_roles' => [
-                'childProducts' => [
+                'child_products' => [
                     'simple_10' => [
-                        'media_gallery' => self::getMediaGallery(
+                        'media_gallery' => $this->getMediaGallery(
                             [
                                 'ben062bdw2v' => '/m/a/magento_image.jpg.tmp',
                                 'lrwuv5ukisn' => '/m/a/magento_small_image.jpg.tmp',
@@ -219,7 +219,7 @@ class HelperTest extends TestCase
                         ],
                     ],
                     'simple_20' => [
-                        'media_gallery' => self::getMediaGallery(
+                        'media_gallery' => $this->getMediaGallery(
                             [
                                 'ben062bdw2v' => '/m/a/magento_image.jpg.tmp',
                                 'lrwuv5ukisn' => '/m/a/magento_small_image.jpg.tmp',
@@ -231,7 +231,7 @@ class HelperTest extends TestCase
                         ],
                     ],
                 ],
-                'expectedImages' => [
+                'expected_images' => [
                     'simple_10' => [
                         '/m/a/magento_image_1.jpg' => ['swatch_image', 'small_image'],
                         '/m/a/magento_small_image_1.jpg' => ['image', 'thumbnail'],
@@ -248,9 +248,9 @@ class HelperTest extends TestCase
     /**
      * @return array
      */
-    public static function initializeWithExistingChildImagesDataProvider(): array
+    public function initializeWithExistingChildImagesDataProvider(): array
     {
-        $dataProvider = self::initializeDataProvider();
+        $dataProvider = $this->initializeDataProvider();
         unset($dataProvider['children_with_different_images'], $dataProvider['children_with_different_image_roles']);
 
         return array_values($dataProvider);
@@ -328,7 +328,7 @@ class HelperTest extends TestCase
      * @param array $imageNames
      * @return array
      */
-    private static function getMediaGallery(array $imageNames): array
+    private function getMediaGallery(array $imageNames): array
     {
         $images = [];
         foreach ($imageNames as $key => $item) {

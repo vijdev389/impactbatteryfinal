@@ -88,12 +88,12 @@ QUERY;
     /**
      * @return array
      */
-    public static function categoriesDeleteDataProvider(): array
+    public function categoriesDeleteDataProvider(): array
     {
         return [
             [
-                'categoryToDelete' => 402,
-                'expectedResult' => [
+                'category_to_delete' => 402,
+                'expected_result' => [
                     'categoryList' => [
                         [
                             'id' => 400,

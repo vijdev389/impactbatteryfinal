@@ -170,13 +170,7 @@ class ConfigModelTest extends TestCase
 
         $this->writer
             ->method('saveConfig')
-            ->willReturnCallback(
-                function ($arg) use ($testSetExpected1, $testSetExpected2) {
-                    if ($arg == $testSetExpected1 || $arg == $testSetExpected2) {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive([$testSetExpected1], [$testSetExpected2]);
 
         $this->configModel->process([]);
     }

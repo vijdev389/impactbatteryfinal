@@ -8,27 +8,14 @@ declare(strict_types=1);
 namespace Magento\GraphQl\Customer;
 
 use Exception;
-use Magento\Customer\Api\Data\CustomerInterface;
-use Magento\Customer\Test\Fixture\Customer;
 use Magento\Framework\Exception\AuthenticationException;
 use Magento\Integration\Api\CustomerTokenServiceInterface;
-use Magento\TestFramework\Fixture\DataFixture;
-use Magento\TestFramework\Fixture\DataFixtureStorageManager;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\TestFramework\TestCase\GraphQlAbstract;
 
 /**
  * Tests for new update customer endpoint
  */
-#[
-    DataFixture(
-        Customer::class,
-        [
-            'email' => 'customer@example.com',
-        ],
-        'customer'
-    )
-]
 class UpdateCustomerV2Test extends GraphQlAbstract
 {
     /**
@@ -41,22 +28,20 @@ class UpdateCustomerV2Test extends GraphQlAbstract
      */
     private $lockCustomer;
 
-    /**
-     * @var CustomerInterface|null
-     */
-    private $customer;
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->customerTokenService = Bootstrap::getObjectManager()->get(CustomerTokenServiceInterface::class);
         $this->lockCustomer = Bootstrap::getObjectManager()->get(LockCustomer::class);
-        $this->customer = DataFixtureStorageManager::getStorage()->get('customer');
     }
 
+    /**
+     * @magentoApiDataFixture Magento/Customer/_files/customer.php
+     */
     public function testUpdateCustomer(): void
     {
+        $currentEmail = 'customer@example.com';
         $currentPassword = 'password';
 
         $newPrefix = 'Dr';
@@ -100,7 +85,7 @@ QUERY;
             $query,
             [],
             '',
-            $this->getCustomerAuthHeaders($this->customer->getEmail(), $currentPassword)
+            $this->getCustomerAuthHeaders($currentEmail, $currentPassword)
         );
 
         $this->assertEquals($newPrefix, $response['updateCustomerV2']['customer']['prefix']);
@@ -113,11 +98,15 @@ QUERY;
         $this->assertEquals($newGender, $response['updateCustomerV2']['customer']['gender']);
     }
 
+    /**
+     * @magentoApiDataFixture Magento/Customer/_files/customer.php
+     */
     public function testUpdateCustomerIfInputDataIsEmpty(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('"input" value should be specified');
 
+        $currentEmail = 'customer@example.com';
         $currentPassword = 'password';
 
         $query = <<<QUERY
@@ -133,14 +122,11 @@ mutation {
     }
 }
 QUERY;
-        $this->graphQlMutation(
-            $query,
-            [],
-            '',
-            $this->getCustomerAuthHeaders($this->customer->getEmail(), $currentPassword)
-        );
+        $this->graphQlMutation($query, [], '', $this->getCustomerAuthHeaders($currentEmail, $currentPassword));
     }
 
+    /**
+     */
     public function testUpdateCustomerIfUserIsNotAuthorized(): void
     {
         $this->expectException(Exception::class);
@@ -164,13 +150,17 @@ QUERY;
         $this->graphQlMutation($query);
     }
 
+    /**
+     * @magentoApiDataFixture Magento/Customer/_files/customer.php
+     */
     public function testUpdateCustomerIfAccountIsLocked(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('The account is locked.');
 
-        $this->lockCustomer->execute((int)$this->customer->getId());
+        $this->lockCustomer->execute(1);
 
+        $currentEmail = 'customer@example.com';
         $currentPassword = 'password';
         $newFirstname = 'Richard';
 
@@ -187,19 +177,18 @@ mutation {
     }
 }
 QUERY;
-        $this->graphQlMutation(
-            $query,
-            [],
-            '',
-            $this->getCustomerAuthHeaders($this->customer->getEmail(), $currentPassword)
-        );
+        $this->graphQlMutation($query, [], '', $this->getCustomerAuthHeaders($currentEmail, $currentPassword));
     }
 
+    /**
+     * @magentoApiDataFixture Magento/Customer/_files/customer.php
+     */
     public function testEmptyCustomerName(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('"First Name" is a required value.');
+        $this->expectExceptionMessage('Required parameters are missing: First Name');
 
+        $currentEmail = 'customer@example.com';
         $currentPassword = 'password';
 
         $query = <<<QUERY
@@ -215,14 +204,12 @@ mutation {
     }
 }
 QUERY;
-        $this->graphQlMutation(
-            $query,
-            [],
-            '',
-            $this->getCustomerAuthHeaders($this->customer->getEmail(), $currentPassword)
-        );
+        $this->graphQlMutation($query, [], '', $this->getCustomerAuthHeaders($currentEmail, $currentPassword));
     }
 
+    /**
+     * @magentoApiDataFixture Magento/Customer/_files/customer.php
+     */
     public function testEmptyCustomerLastName(): void
     {
         $query = <<<QUERY
@@ -240,16 +227,14 @@ mutation {
 QUERY;
 
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('"Last Name" is a required value.');
+        $this->expectExceptionMessage('Required parameters are missing: Last Name');
 
-        $this->graphQlMutation(
-            $query,
-            [],
-            '',
-            $this->getCustomerAuthHeaders($this->customer->getEmail(), 'password')
-        );
+        $this->graphQlMutation($query, [], '', $this->getCustomerAuthHeaders('customer@example.com', 'password'));
     }
 
+    /**
+     * @magentoApiDataFixture Magento/Customer/_files/customer.php
+     */
     public function testUpdateCustomerIfDobIsInvalid(): void
     {
         $invalidDob = 'bla-bla-bla';
@@ -271,12 +256,7 @@ QUERY;
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Invalid date');
 
-        $this->graphQlMutation(
-            $query,
-            [],
-            '',
-            $this->getCustomerAuthHeaders($this->customer->getEmail(), 'password')
-        );
+        $this->graphQlMutation($query, [], '', $this->getCustomerAuthHeaders('customer@example.com', 'password'));
     }
 
     /**

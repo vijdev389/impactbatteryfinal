@@ -78,7 +78,7 @@ class TextTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function renderDataProvider()
+    public function renderDataProvider()
     {
         return [
             [

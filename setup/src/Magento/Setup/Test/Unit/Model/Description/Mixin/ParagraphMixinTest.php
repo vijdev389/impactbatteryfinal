@@ -33,7 +33,7 @@ class ParagraphMixinTest extends TestCase
     /**
      * @return array
      */
-    public static function getTestData()
+    public function getTestData()
     {
         return [
             ['', '<p></p>'],

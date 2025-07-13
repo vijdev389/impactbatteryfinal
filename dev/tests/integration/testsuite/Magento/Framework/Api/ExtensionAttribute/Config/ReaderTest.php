@@ -50,7 +50,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
 
         $this->_fileResolverMock = $this->getMockBuilder(\Magento\Framework\App\Arguments\FileResolver\Primary::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['get'])
+            ->setMethods(['get'])
             ->getMock();
         $this->_fileResolverMock->expects($this->once())
             ->method('get')

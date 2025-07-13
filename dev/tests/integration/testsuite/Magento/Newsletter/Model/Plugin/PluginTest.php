@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Newsletter\Model\Plugin;
 
@@ -261,14 +261,13 @@ class PluginTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotNull($message);
         $this->assertEquals('Welcome to Main Website Store', $message->getSubject());
-        $mailMessage = quoted_printable_decode($message->getBody()->bodyToString());
         $this->assertStringContainsString(
             'John',
-            $mailMessage
+            $message->getBody()->getParts()[0]->getRawContent()
         );
         $this->assertStringContainsString(
             'customer@example.com',
-            $mailMessage
+            $message->getBody()->getParts()[0]->getRawContent()
         );
 
         /** @var \Magento\Newsletter\Model\Subscriber $subscriber */
@@ -290,11 +289,11 @@ class PluginTest extends \PHPUnit\Framework\TestCase
         ->getTransport();
 
         $message = $this->transportBuilderMock->getSentMessage();
-        $mailMessage = quoted_printable_decode($message->getBody()->bodyToString());
+
         $this->assertNotNull($message);
         $this->assertStringContainsString(
             $subscriber->getConfirmationLink(),
-            $mailMessage
+            $message->getBody()->getParts()[0]->getRawContent()
         );
         $this->assertEquals('Newsletter subscription confirmation', $message->getSubject());
     }

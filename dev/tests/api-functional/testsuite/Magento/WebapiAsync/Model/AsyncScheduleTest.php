@@ -202,11 +202,11 @@ class AsyncScheduleTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function productCreationProvider()
+    public function productCreationProvider()
     {
         $productBuilder = function ($data) {
             return array_replace_recursive(
-                self::getSimpleProductData(),
+                $this->getSimpleProductData(),
                 $data
             );
         };
@@ -235,7 +235,7 @@ class AsyncScheduleTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function productGetDataProvider()
+    public function productGetDataProvider()
     {
         return [
             ['psku-test-1', null],
@@ -248,7 +248,7 @@ class AsyncScheduleTest extends WebapiAbstract
      * @param array $productData
      * @return array
      */
-    private static function getSimpleProductData($productData = [])
+    private function getSimpleProductData($productData = [])
     {
         return [
             ProductInterface::SKU              => isset($productData[ProductInterface::SKU])

@@ -79,7 +79,7 @@ class SearchAssetsTest extends TestCase
      *
      * @return array
      */
-    public static function searchCriteriaProvider(): array
+    public function searchCriteriaProvider(): array
     {
         return [
             [

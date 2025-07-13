@@ -1,7 +1,8 @@
 <?php
+
 /**
- * Copyright 2021 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -22,7 +23,7 @@ class EmailSenderTest extends TestCase
     private $emailSender;
 
     /**
-     * @inheritDoc
+     * @inheirtDoc
      */
     protected function setUp(): void
     {

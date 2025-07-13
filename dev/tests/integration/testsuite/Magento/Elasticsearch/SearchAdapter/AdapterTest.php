@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Elasticsearch\SearchAdapter;
 
@@ -15,13 +15,12 @@ use Magento\TestModuleCatalogSearch\Model\SearchEngineVersionReader;
 /**
  * Class AdapterTest
  *
- * @magentoAppIsolation enabled
  * @magentoDbIsolation disabled
  * @magentoDataFixture Magento/Framework/Search/_files/products.php
  *
  * Important: Please make sure that each integration test file works with unique elastic search index. In order to
  * achieve this, use @ magentoConfigFixture to pass unique value for index_prefix for every test
- * method. E.g. '@magentoConfigFixture current_store catalog/search/elasticsearch8_index_prefix adaptertest'
+ * method. E.g. '@ magentoConfigFixture current_store catalog/search/elasticsearch7_index_prefix adaptertest'
  *
  * In ElasticSearch, a reindex is required if the test includes a new data fixture with new items to search, see
  * testAdvancedSearchDateField().
@@ -412,7 +411,7 @@ class AdapterTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function elasticSearchAdvancedSearchDataProvider()
+    public function elasticSearchAdvancedSearchDataProvider()
     {
         return [
             ['white', 'shorts', ['from' => '16', 'to' => '18'], 0],
@@ -671,7 +670,7 @@ class AdapterTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function dateDataProvider()
+    public function dateDataProvider()
     {
         return [
             [['from' => '1999-12-31T00:00:00Z', 'to' => '2000-01-01T00:00:00Z'], 1],
@@ -679,7 +678,7 @@ class AdapterTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public static function filterByAttributeValuesDataProvider()
+    public function filterByAttributeValuesDataProvider()
     {
         return [
             'quick_search_container' => [

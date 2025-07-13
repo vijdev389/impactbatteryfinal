@@ -42,7 +42,7 @@ class InitialTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public static function getDataDataProvider()
+    public function getDataDataProvider()
     {
         return [
             ['default'],

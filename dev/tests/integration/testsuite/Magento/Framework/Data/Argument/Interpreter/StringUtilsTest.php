@@ -42,14 +42,14 @@ class StringUtilsTest extends \PHPUnit\Framework\TestCase
         $this->model = new StringUtils($this->booleanUtils, $baseStringUtils);
         /** @var RendererInterface|\PHPUnit\Framework\MockObject\MockObject $translateRenderer */
         $translateRenderer = $this->getMockBuilder(RendererInterface::class)
-          ->onlyMethods(['render'])
+          ->setMethods(['render'])
           ->getMockForAbstractClass();
         $translateRenderer->expects($this->any())->method('render')->willReturnCallback(
-
+            
                 function ($input) {
                     return end($input) . ' (translated)';
                 }
-
+            
         );
         \Magento\Framework\Phrase::setRenderer($translateRenderer);
     }
@@ -73,7 +73,7 @@ class StringUtilsTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function evaluateDataProvider()
+    public function evaluateDataProvider()
     {
         return [
             'no value' => [[], ''],
@@ -106,7 +106,7 @@ class StringUtilsTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function evaluateExceptionDataProvider()
+    public function evaluateExceptionDataProvider()
     {
         return ['not a string' => [['value' => 123]]];
     }

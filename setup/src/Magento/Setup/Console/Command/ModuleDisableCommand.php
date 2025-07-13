@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Setup\Console\Command;
 
@@ -10,14 +10,12 @@ namespace Magento\Setup\Console\Command;
  */
 class ModuleDisableCommand extends AbstractModuleManageCommand
 {
-    public const NAME = 'module:disable';
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('module:disable')
             ->setDescription('Disables specified modules');
         parent::configure();
     }

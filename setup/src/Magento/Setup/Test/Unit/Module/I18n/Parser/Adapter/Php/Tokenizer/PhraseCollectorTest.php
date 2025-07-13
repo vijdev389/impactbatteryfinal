@@ -67,21 +67,6 @@ class PhraseCollectorTest extends TestCase
         array $isMatchingClassReturnValues,
         array $result
     ) {
-        $nextRealToken = [];
-        foreach ($getNextRealTokenReturnValues as $key => $token) {
-            if (is_callable($token)) {
-                $nextRealToken[$key] = $token($this);
-            } else {
-                $nextRealToken[$key] = $token;
-            }
-        }
-
-        foreach ($getFunctionArgumentsTokensReturnValues as &$returnToken) {
-            if (is_callable($returnToken[0][0])) {
-                $returnToken[0][0] = $returnToken[0][0]($this);
-            }
-        }
-
         $matchingClass = 'Phrase';
 
         $this->tokenizerMock->expects($this->once())
@@ -97,7 +82,7 @@ class PhraseCollectorTest extends TestCase
             ->method('getNextRealToken')
             ->will(call_user_func_array(
                 [$this, 'onConsecutiveCalls'],
-                $nextRealToken
+                $getNextRealTokenReturnValues
             ));
         $this->tokenizerMock->expects($this->any())
             ->method('getFunctionArgumentsTokens')
@@ -121,7 +106,7 @@ class PhraseCollectorTest extends TestCase
     /**
      * @return array
      */
-    public static function testParseDataProvider()
+    public function testParseDataProvider()
     {
         $file = 'path/to/file.php';
         $line = 110;
@@ -146,32 +131,20 @@ class PhraseCollectorTest extends TestCase
                     true //after ;
                 ],
                 'getNextRealTokenReturnValues' => [
-                    static fn (self $testCase) => $testCase->createToken(false, false, false, false, '$phrase1'),
-                    static fn (self $testCase) => $testCase->createToken(false, false, false, false, '='),
-                    static fn (self $testCase) => $testCase->createToken(false, false, true, false, 'new', $line),
-                    static fn (self $testCase) => $testCase->createToken(false, false, false, false, ';'),
-                    static fn (self $testCase) => $testCase->createToken(false, false, false, false, '$phrase2'),
-                    static fn (self $testCase) => $testCase->createToken(false, false, false, false, '='),
-                    static fn (self $testCase) => $testCase->createToken(true, false, false, false, '__', $line),
-                    static fn (self $testCase) => $testCase->createToken(false, true, false, false, '('),
-                    static fn (self $testCase) => $testCase->createToken(false, false, false, false, ';'),
+                    $this->createToken(false, false, false, false, '$phrase1'),
+                    $this->createToken(false, false, false, false, '='),
+                    $this->createToken(false, false, true, false, 'new', $line),
+                    $this->createToken(false, false, false, false, ';'),
+                    $this->createToken(false, false, false, false, '$phrase2'),
+                    $this->createToken(false, false, false, false, '='),
+                    $this->createToken(true, false, false, false, '__', $line),
+                    $this->createToken(false, true, false, false, '('),
+                    $this->createToken(false, false, false, false, ';'),
                     false
                 ],
                 'getFunctionArgumentsTokensReturnValues' => [
-                    [[static fn (self $testCase) => $testCase->createToken(
-                        false,
-                        false,
-                        false,
-                        true,
-                        '\'Testing\''
-                    )]], // 'Testing')
-                    [[static fn (self $testCase) => $testCase->createToken(
-                        false,
-                        false,
-                        false,
-                        true,
-                        '\'More testing\''
-                    )]] // 'More testing')
+                    [[$this->createToken(false, false, false, true, '\'Testing\'')]], // 'Testing')
+                    [[$this->createToken(false, false, false, true, '\'More testing\'')]] // 'More testing')
                 ],
                 'isMatchingClassReturnValues' => [
                     true // \Magento\Framework\Phrase(

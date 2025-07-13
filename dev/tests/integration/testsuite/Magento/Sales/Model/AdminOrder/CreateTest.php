@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2012 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Sales\Model\AdminOrder;
 
@@ -546,7 +546,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
      * @case #2 Changed after failed first place order action.
      * @return array
      */
-    public static function createOrderNewCustomerWithFailedFirstPlaceOrderActionDataProvider()
+    public function createOrderNewCustomerWithFailedFirstPlaceOrderActionDataProvider()
     {
         return [
             1 => ['customer@email.com', 'customer@email.com'],
@@ -699,7 +699,6 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         /** @var SessionQuote $session */
         $session = $this->objectManager->create(SessionQuote::class);
         $session->setCustomerId($fixtureCustomerId);
-        $session->setTransferredItems(['cart' => [124]]);
         /** @var $quoteFixture Quote */
         $quoteFixture = $this->objectManager->create(Quote::class);
         $quoteFixture->load('test01', 'reserved_order_id');
@@ -711,7 +710,6 @@ class CreateTest extends \PHPUnit\Framework\TestCase
         $this->model->moveQuoteItem($item, 'cart', 3);
         self::assertEquals(4, $item->getQty(), 'Number of Qty isn\'t correct for Quote item.');
         self::assertEquals(3, $item->getQtyToAdd(), 'Number of added qty isn\'t correct for Quote item.');
-        self::assertEquals($session->getTransferredItems(), ['cart' => []]);
     }
 
     /**
@@ -780,12 +778,6 @@ class CreateTest extends \PHPUnit\Framework\TestCase
              */
             $session->setCustomerId(0);
         }
-
-        /** Save changes and reload the quote to make sure future changes to the quote trigger collectTotals */
-        $quoteRepository = $this->objectManager->create(\Magento\Quote\Api\CartRepositoryInterface::class);
-        $quoteRepository->save($this->model->getQuote());
-        $quote = $quoteRepository->get($this->model->getQuote()->getId(), [$this->model->getQuote()->getStoreId()]);
-        $this->model->setQuote($quote);
 
         /** Emulate availability of shipping method (all are disabled by default) */
         /** @var $rate Quote\Address\Rate */
@@ -994,7 +986,7 @@ class CreateTest extends \PHPUnit\Framework\TestCase
     {
         $customerMock = $this->getMockBuilder(\Magento\Customer\Model\Data\Customer::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(
+            ->setMethods(
                 [
                     'getId',
                     'getGroupId',

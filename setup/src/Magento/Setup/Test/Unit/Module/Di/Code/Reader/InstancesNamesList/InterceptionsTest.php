@@ -53,22 +53,22 @@ class InterceptionsTest extends TestCase
     {
         $this->logMock = $this->getMockBuilder(Log::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['add', 'report'])
+            ->setMethods(['add', 'report'])
             ->getMock();
 
         $this->classesScanner = $this->getMockBuilder(ClassesScanner::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getList'])
+            ->setMethods(['getList'])
             ->getMock();
 
         $this->classReaderMock = $this->getMockBuilder(ClassReader::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getParents'])
+            ->setMethods(['getParents'])
             ->getMock();
 
         $this->validatorMock = $this->getMockBuilder(Validator::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['validate', 'add'])
+            ->setMethods(['validate', 'add'])
             ->getMock();
 
         $this->model = new Interceptions(
@@ -166,7 +166,7 @@ class InterceptionsTest extends TestCase
      *
      * @return array
      */
-    public static function getListExceptionDataProvider()
+    public function getListExceptionDataProvider()
     {
         return [
             [new ValidatorException(new Phrase('Not Valid!'))],

@@ -66,7 +66,7 @@ abstract class PaypalExpressAbstractTest extends TestCase
 
         $apiFactoryMock = $this->getMockBuilder(ApiFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $apiFactoryMock->method('create')
             ->willReturnMap(
@@ -174,7 +174,7 @@ abstract class PaypalExpressAbstractTest extends TestCase
             $constructorArgs += ['data' => []];
             $this->nvpMock = $this->getMockBuilder($nvpClass)
                 ->setConstructorArgs($constructorArgs)
-                ->onlyMethods(['call'])
+                ->setMethods(['call'])
                 ->getMock();
         }
         return $this->nvpMock;

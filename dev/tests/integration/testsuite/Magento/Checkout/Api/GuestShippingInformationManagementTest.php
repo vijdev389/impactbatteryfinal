@@ -172,7 +172,7 @@ class GuestShippingInformationManagementTest extends TestCase
      *
      * @return array
      */
-    public static function getAddressesVariation(): array
+    public function getAddressesVariation(): array
     {
         return [
             'Shipping address swap' => [true],

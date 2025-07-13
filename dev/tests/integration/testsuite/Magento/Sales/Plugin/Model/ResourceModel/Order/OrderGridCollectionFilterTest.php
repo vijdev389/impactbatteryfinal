@@ -80,10 +80,10 @@ class OrderGridCollectionFilterTest extends TestCase
 
         if ($mainTable == 'sales_order_grid') {
             $condition = ['from' => $fieldValue , 'locale' => "en_US", 'datetime' => true];
-            $selectCondition = "WHERE (`main_table`.`{$field}` >= '{$convertedDate}')";
+            $selectCondition = "WHERE (`{$field}` >= '{$convertedDate}')";
         } else {
             $condition = ['qteq' => $fieldValue];
-            $selectCondition = "WHERE (((`main_table`.`{$field}` = '{$convertedDate}')))";
+            $selectCondition = "WHERE (((`{$field}` = '{$convertedDate}')))";
         }
 
         $this->searchResult = $this->objectManager->create(

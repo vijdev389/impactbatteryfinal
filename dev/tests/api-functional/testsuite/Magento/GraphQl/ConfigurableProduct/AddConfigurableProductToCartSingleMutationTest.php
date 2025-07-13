@@ -155,7 +155,7 @@ class AddConfigurableProductToCartSingleMutationTest extends GraphQlAbstract
         $response = $this->graphQlMutation($query);
 
         self::assertEquals(
-            'Not enough items for sale',
+            'The requested qty is not available',
             $response['addProductsToCart']['user_errors'][0]['message']
         );
     }

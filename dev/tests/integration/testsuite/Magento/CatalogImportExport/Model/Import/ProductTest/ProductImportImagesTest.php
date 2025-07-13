@@ -59,7 +59,7 @@ class ProductImportImagesTest extends ProductTestBase
     /**
      * @return array[]
      */
-    public static function importImagesDataProvider(): array
+    public function importImagesDataProvider(): array
     {
         return [
             [

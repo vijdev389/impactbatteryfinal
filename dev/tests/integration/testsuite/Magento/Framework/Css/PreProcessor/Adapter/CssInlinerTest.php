@@ -45,18 +45,18 @@ class CssInlinerTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getFilesDataProvider()
+    public function getFilesDataProvider()
     {
         $fixtureDir = dirname(dirname(__DIR__));
         return [
             'noSpacesCss'=>[
-                'htmlFilePath' => $fixtureDir . "/_files/css/test-input.html",
-                'cssFilePath' => $fixtureDir . "/_files/css/test-css-no-spaces.css",
+                'resultHtml' => $fixtureDir . "/_files/css/test-input.html",
+                'cssWithoutSpaces' => $fixtureDir . "/_files/css/test-css-no-spaces.css",
                 'vertical-align: top; padding: 10px 10px 10px 0; width: 50%;'
             ],
             'withSpacesCss'=>[
-                'htmlFilePath' => $fixtureDir . "/_files/css/test-input.html",
-                'cssFilePath' => $fixtureDir . "/_files/css/test-css-with-spaces.css",
+                'resultHtml' => $fixtureDir . "/_files/css/test-input.html",
+                'cssWithSpaces' => $fixtureDir . "/_files/css/test-css-with-spaces.css",
                 'vertical-align: top; padding: 10px 10px 10px 0; width: 50%;'
             ],
         ];
@@ -84,13 +84,13 @@ class CssInlinerTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getFilesDataProviderEmogrifier()
+    public function getFilesDataProviderEmogrifier()
     {
         $fixtureDir = dirname(dirname(__DIR__));
         return [
             'noSpacesCss'=>[
-                'htmlFilePath' => $fixtureDir . "/_files/css/test-input.html",
-                'cssFilePath' => $fixtureDir . "/_files/css/test-css-no-spaces.css",
+                'resultHtml' => $fixtureDir . "/_files/css/test-input.html",
+                'cssWithoutSpaces' => $fixtureDir . "/_files/css/test-css-no-spaces.css",
                 'vertical-align: top; padding: 10px 10px 10px 0; width: 50%;'
             ]
         ];

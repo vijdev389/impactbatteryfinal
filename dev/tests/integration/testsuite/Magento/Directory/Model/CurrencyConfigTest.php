@@ -107,7 +107,7 @@ class CurrencyConfigTest extends TestCase
      *
      * @return array
      */
-    public static function getConfigCurrenciesDataProvider()
+    public function getConfigCurrenciesDataProvider()
     {
         return [
             [

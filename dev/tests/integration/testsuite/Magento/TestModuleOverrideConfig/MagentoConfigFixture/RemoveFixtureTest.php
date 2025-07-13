@@ -67,16 +67,16 @@ class RemoveFixtureTest extends AbstractOverridesTest
     /**
      * @return array
      */
-    public static function testDataProvider(): array
+    public function testDataProvider(): array
     {
         return [
             'first_data_set' => [
-                'expectedFirstValue' => '2nd field default value',
-                'expectedSecondValue' => 'new_value',
+                'expected_first_config_value' => '2nd field default value',
+                'expected_second_config_value' => 'new_value',
             ],
             'second_data_set' => [
-                'expectedFirstValue' => '2nd field default value',
-                'expectedSecondValue' => '3rd field website scope default value',
+                'expected_first_config_value' => '2nd field default value',
+                'expected_second_config_value' => '3rd field website scope default value',
             ],
         ];
     }

@@ -70,7 +70,7 @@ class StoresFixtureTest extends TestCase
 
         $this->storeManagerMock = $this->getMockBuilder(StoreManager::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(
+            ->setMethods(
                 [
                     'getGroup',
                     'getGroups',
@@ -87,19 +87,21 @@ class StoresFixtureTest extends TestCase
 
         $this->categoryFactoryMock = $this->getMockBuilder(CategoryFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
 
         $categoryMock = $this->getMockBuilder(CategoryInterface::class)
             ->disableOriginalConstructor()
-            ->addMethods(['create', 'setDefaultSortBy', 'save'])
-            ->onlyMethods(
+            ->setMethods(
                 [
+                    'create',
                     'setName',
                     'setPath',
                     'setLevel',
                     'setAvailableSortBy',
+                    'setDefaultSortBy',
                     'setIsActive',
+                    'save'
                 ]
             )
             ->getMockForAbstractClass();
@@ -142,7 +144,7 @@ class StoresFixtureTest extends TestCase
 
         $this->localeConfigMock = $this->getMockBuilder(Config::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getAllowedLocales'])
+            ->setMethods(['getAllowedLocales'])
             ->getMock();
 
         $this->localeConfigMock->expects($this->once())
@@ -155,8 +157,7 @@ class StoresFixtureTest extends TestCase
 
         $storeMock = $this->getMockBuilder(StoreInterface::class)
             ->disableOriginalConstructor()
-            ->addMethods(['getRootCategoryId', 'addData', 'save'])
-            ->onlyMethods(['getId'])
+            ->setMethods(['getId', 'getRootCategoryId', 'addData', 'save'])
             ->getMockForAbstractClass();
 
         $storeMock->expects($this->exactly(11))
@@ -165,16 +166,31 @@ class StoresFixtureTest extends TestCase
 
         $storeMock->expects($this->exactly(11))
             ->method('addData')
-            ->willReturnCallback(function ($arg) use ($storeMock) {
-                if (isset($arg['code'])) {
-                    return $storeMock;
-                }
-            });
+            ->withConsecutive(
+                [
+                    [
+                        'store_id' => null,
+                        'name' => 'Store view 2 - website_id_1 - group_id_1',
+                        'website_id' => 1,
+                        'group_id' => 1,
+                        'code' => 'store_view_2',
+                    ]
+                ],
+                [
+                    [
+                        'store_id' => null,
+                        'name' => 'Store view 3 - website_id_1 - group_id_1',
+                        'website_id' => 1,
+                        'group_id' => 1,
+                        'code' => 'store_view_3',
+                    ]
+                ]
+            )
+            ->willReturn($storeMock);
 
         $storeGroupMock = $this->getMockBuilder(GroupInterface::class)
             ->disableOriginalConstructor()
-            ->addMethods(['addData', 'save'])
-            ->onlyMethods(['getId'])
+            ->setMethods(['getId', 'addData', 'save'])
             ->getMockForAbstractClass();
 
         $storeGroupMock->expects($this->exactly(11))
@@ -183,16 +199,31 @@ class StoresFixtureTest extends TestCase
 
         $storeGroupMock->expects($this->exactly(5))
             ->method('addData')
-            ->willReturnCallback(function ($arg) use ($storeGroupMock) {
-                if ($arg['code'] == 'store_group_2' || $arg['code'] == 'store_group_3') {
-                    return $storeGroupMock;
-                }
-            });
+            ->withConsecutive(
+                [
+                    [
+                        'group_id' => null,
+                        'website_id' => 1,
+                        'name' => 'Store Group 2 - website_id_1',
+                        'code' => 'store_group_2',
+                        'root_category_id' => $categoryMock,
+                    ]
+                ],
+                [
+                    [
+                        'group_id' => null,
+                        'website_id' => 1,
+                        'name' => 'Store Group 3 - website_id_1',
+                        'code' => 'store_group_3',
+                        'root_category_id' => $categoryMock,
+                    ]
+                ]
+            )
+            ->willReturn($storeGroupMock);
 
         $websiteMock = $this->getMockBuilder(WebsiteInterface::class)
             ->disableOriginalConstructor()
-            ->addMethods(['addData', 'save'])
-            ->onlyMethods(['getId'])
+            ->setMethods(['getId', 'addData', 'save'])
             ->getMockForAbstractClass();
 
         $websiteMock->expects($this->exactly(3))
@@ -201,11 +232,25 @@ class StoresFixtureTest extends TestCase
 
         $websiteMock->expects($this->exactly(2))
             ->method('addData')
-            ->willReturnCallback(function ($arg) use ($storeGroupMock) {
-                if ($arg['code'] == 'website_2' || $arg['code'] == 'website_3') {
-                    return $storeGroupMock;
-                }
-            });
+            ->withConsecutive(
+                [
+                    [
+                        'website_id' => null,
+                        'code' => 'website_2',
+                        'name' => 'Website 2',
+                        'is_default' => false,
+                    ]
+                ],
+                [
+                    [
+                        'website_id' => null,
+                        'code' => 'website_3',
+                        'name' => 'Website 3',
+                        'is_default' => false,
+                    ]
+                ]
+            )
+            ->willReturn($storeGroupMock);
 
         $this->storeManagerMock->expects($this->once())
             ->method('getGroups')

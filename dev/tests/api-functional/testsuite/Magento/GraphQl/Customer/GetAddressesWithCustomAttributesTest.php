@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2023 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -150,7 +150,7 @@ class GetAddressesWithCustomAttributesTest extends GraphQlAbstract
     private $customer;
 
     /**
-     * @inheritDoc
+     * @inheridoc
      */
     protected function setUp(): void
     {

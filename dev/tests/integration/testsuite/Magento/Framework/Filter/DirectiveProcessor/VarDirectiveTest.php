@@ -63,7 +63,7 @@ class VarDirectiveTest extends TestCase
         self::assertEquals($expect, $result);
     }
 
-    public static function useCasesProvider()
+    public function useCasesProvider()
     {
         return [
             ['foo',['foo' => true], '1'],

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Setup\Console\Command;
 
@@ -31,8 +31,7 @@ class DeployStaticContentCommand extends Command
     /**
      * Default language value. Always used for adminhtml, fallback if no frontend locale is supplied.
      */
-    public const DEFAULT_LANGUAGE_VALUE = 'en_US';
-    public const NAME = 'setup:static-content:deploy';
+    const DEFAULT_LANGUAGE_VALUE = 'en_US';
 
     /**
      * @var InputValidator
@@ -91,7 +90,7 @@ class DeployStaticContentCommand extends Command
      */
     protected function configure()
     {
-        $this->setName(self::NAME)
+        $this->setName('setup:static-content:deploy')
             ->setDescription('Deploys static view files')
             ->setDefinition($this->options->getOptionsList());
 

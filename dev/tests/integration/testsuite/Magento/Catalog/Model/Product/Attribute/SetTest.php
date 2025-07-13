@@ -127,24 +127,24 @@ class SetTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addAttributeToSetDataProvider(): array
+    public function addAttributeToSetDataProvider(): array
     {
         return [
             'add_to_existing_group' => [
-                'groupName' => 'Content',
-                'attributeCode' => 'zzz',
+                'group_name' => 'Content',
+                'attribute_code' => 'zzz',
             ],
             'add_to_new_group' => [
-                'groupName' => 'Test',
-                'attributeCode' => 'zzz',
+                'group_name' => 'Test',
+                'attribute_code' => 'zzz',
             ],
             'move_to_existing_group' => [
-                'groupName' => 'Images',
-                'attributeCode' => 'description',
+                'group_name' => 'Images',
+                'attribute_code' => 'description',
             ],
             'move_to_new_group' => [
-                'groupName' => 'Test',
-                'attributeCode' => 'description',
+                'group_name' => 'Test',
+                'attribute_code' => 'description',
             ],
         ];
     }

@@ -244,15 +244,15 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addIsSaleableAttributeToSortDataProvider(): array
+    public function addIsSaleableAttributeToSortDataProvider(): array
     {
         return [
             [
-                'productSku' => 'simple_saleable',
+                'product_sku' => 'simple_saleable',
                 'order' => Collection::SORT_ORDER_DESC,
             ],
             [
-                'productSku' => 'simple_not_saleable',
+                'product_sku' => 'simple_not_saleable',
                 'order' => Collection::SORT_ORDER_ASC,
             ]
         ];
@@ -280,15 +280,15 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addPriceAttributeToSortDataProvider(): array
+    public function addPriceAttributeToSortDataProvider(): array
     {
         return [
             [
-                'productSku' => 'simple',
+                'product_sku' => 'simple',
                 'order' => Collection::SORT_ORDER_DESC,
             ],
             [
-                'productSku' => 'simple-2',
+                'product_sku' => 'simple-2',
                 'order' => Collection::SORT_ORDER_ASC,
             ]
         ];
@@ -349,7 +349,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addAttributeTierPriceToFilterDataProvider(): array
+    public function addAttributeTierPriceToFilterDataProvider(): array
     {
         return [
             'condition is array' => [['eq' => 8]],
@@ -376,7 +376,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function addAttributeIsSaleableToFilterDataProvider(): array
+    public function addAttributeIsSaleableToFilterDataProvider(): array
     {
         return [
             'condition is array' => [['eq' => 1]],

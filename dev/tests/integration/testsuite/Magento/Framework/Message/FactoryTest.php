@@ -35,7 +35,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(\Magento\Framework\Message\MessageInterface::class, $message);
     }
 
-    public static function createProvider()
+    public function createProvider()
     {
         return [
             [MessageInterface::TYPE_SUCCESS],

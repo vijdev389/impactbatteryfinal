@@ -23,7 +23,7 @@ class TextGroupDataProvider
      *
      * @return array
      */
-    public static function getData(): array
+    public function getData(): array
     {
         return [
             'type_field_required' => [

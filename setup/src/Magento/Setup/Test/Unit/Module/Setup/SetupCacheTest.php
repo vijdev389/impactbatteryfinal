@@ -57,7 +57,7 @@ class SetupCacheTest extends TestCase
     /**
      * @return array
      */
-    public static function getNonexistentDataProvider()
+    public function getNonexistentDataProvider()
     {
         return [
             [null],
@@ -94,7 +94,7 @@ class SetupCacheTest extends TestCase
     /**
      * @return array
      */
-    public static function hasDataProvider()
+    public function hasDataProvider()
     {
         return [
             'existing'           => ['table', 'parent', 'row', 'field', true],

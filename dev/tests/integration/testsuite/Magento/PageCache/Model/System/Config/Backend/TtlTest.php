@@ -36,7 +36,7 @@ class TtlTest extends \PHPUnit\Framework\TestCase
         $this->_prepareData($value, $path);
     }
 
-    public static function beforeSaveDataProvider()
+    public function beforeSaveDataProvider()
     {
         return [
             [125, 'ttl_1'],
@@ -56,7 +56,7 @@ class TtlTest extends \PHPUnit\Framework\TestCase
         $this->_prepareData($value, $path);
     }
 
-    public static function beforeSaveDataProviderWithException()
+    public function beforeSaveDataProviderWithException()
     {
         return [
             ['', 'ttl_3'],

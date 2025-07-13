@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2023 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -40,7 +40,7 @@ class MultiStoreTest extends \PHPUnit\Framework\TestCase
     private $fixtures;
 
     /**
-     * @inheritDoc
+     * @inheridoc
      * @throws LocalizedException
      */
     protected function setUp(): void
@@ -142,8 +142,9 @@ class MultiStoreTest extends \PHPUnit\Framework\TestCase
         ->addTo($customerData['email'])
         ->getTransport();
 
-        $fromEmail = $transportBuilderMock->getSentMessage()->getFrom()[0]->getEmail();
+        $headers = $transportBuilderMock->getSentMessage()->getHeaders();
+
         $this->assertNotNull($transportBuilderMock->getSentMessage());
-        $this->assertStringContainsString($customerData['storeEmail'], $fromEmail);
+        $this->assertStringContainsString($customerData['storeEmail'], $headers['From']);
     }
 }

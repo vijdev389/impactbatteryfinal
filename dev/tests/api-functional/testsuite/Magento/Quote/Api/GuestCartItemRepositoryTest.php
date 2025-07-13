@@ -191,7 +191,7 @@ class GuestCartItemRepositoryTest extends WebapiAbstract
      * @param string|null $errorMessage
      * @dataProvider updateItemDataProvider
      */
-    public function testUpdateItem(array $stockData, ?string $errorMessage = null)
+    public function testUpdateItem(array $stockData, string $errorMessage = null)
     {
         $this->updateStockData('simple_one', $stockData);
         /** @var Quote $quote */
@@ -301,7 +301,7 @@ class GuestCartItemRepositoryTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function updateItemDataProvider(): array
+    public function updateItemDataProvider(): array
     {
         return [
             [
@@ -337,7 +337,7 @@ class GuestCartItemRepositoryTest extends WebapiAbstract
                     'use_config_backorders' => 0,
                     'backorders' => Stock::BACKORDERS_NO,
                 ],
-                'Not enough items for sale'
+                'The requested qty is not available'
             ]
         ];
     }

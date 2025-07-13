@@ -58,7 +58,7 @@ class EditTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getStoreTypesForLayout()
+    public function getStoreTypesForLayout()
     {
         return [
             [
@@ -100,7 +100,7 @@ class EditTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function getStoreDataForBlock()
+    public function getStoreDataForBlock()
     {
         return [
             [

@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 namespace Magento\Setup\Console\Command;
 
@@ -36,12 +36,11 @@ class ModuleUninstallCommand extends AbstractModuleCommand
     /**
      * Names of input options
      */
-    public const INPUT_KEY_REMOVE_DATA = 'remove-data';
-    public const INPUT_KEY_BACKUP_CODE = 'backup-code';
-    public const INPUT_KEY_BACKUP_MEDIA = 'backup-media';
-    public const INPUT_KEY_BACKUP_DB = 'backup-db';
-    public const INPUT_KEY_NON_COMPOSER_MODULE = 'non-composer';
-    public const NAME = 'module:uninstall';
+    const INPUT_KEY_REMOVE_DATA = 'remove-data';
+    const INPUT_KEY_BACKUP_CODE = 'backup-code';
+    const INPUT_KEY_BACKUP_MEDIA = 'backup-media';
+    const INPUT_KEY_BACKUP_DB = 'backup-db';
+    const INPUT_KEY_NON_COMPOSER_MODULE = 'non-composer';
 
     /**
      * Deployment Configuration
@@ -51,6 +50,8 @@ class ModuleUninstallCommand extends AbstractModuleCommand
     private $deploymentConfig;
 
     /**
+     * Full module list
+     *
      * @var FullModuleList
      */
     private $fullModuleList;
@@ -84,16 +85,22 @@ class ModuleUninstallCommand extends AbstractModuleCommand
     private $composer;
 
     /**
+     * BackupRollback factory
+     *
      * @var BackupRollbackFactory
      */
     private $backupRollbackFactory;
 
     /**
+     * Module Uninstaller
+     *
      * @var ModuleUninstaller
      */
     private $moduleUninstaller;
 
     /**
+     * Module Registry uninstaller
+     *
      * @var ModuleRegistryUninstaller
      */
     private $moduleRegistryUninstaller;
@@ -132,7 +139,7 @@ class ModuleUninstallCommand extends AbstractModuleCommand
         UninstallCollector $collector,
         ModuleUninstaller $moduleUninstaller,
         ModuleRegistryUninstaller $moduleRegistryUninstaller,
-        ?MaintenanceModeEnabler $maintenanceModeEnabler = null
+        MaintenanceModeEnabler $maintenanceModeEnabler = null
     ) {
         parent::__construct($objectManagerProvider);
         $this->composer = $composer;
@@ -149,8 +156,6 @@ class ModuleUninstallCommand extends AbstractModuleCommand
     }
 
     /**
-     * Returns patch applier object
-     *
      * @return PatchApplier
      */
     private function getPatchApplier()
@@ -164,7 +169,7 @@ class ModuleUninstallCommand extends AbstractModuleCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -200,14 +205,14 @@ class ModuleUninstallCommand extends AbstractModuleCommand
                 'All modules, that will be past here will be non composer based'
             )
         ];
-        $this->setName(self::NAME)
+        $this->setName('module:uninstall')
             ->setDescription('Uninstalls modules installed by composer')
             ->setDefinition($options);
         parent::configure();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function isModuleRequired()
     {
@@ -215,7 +220,7 @@ class ModuleUninstallCommand extends AbstractModuleCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */

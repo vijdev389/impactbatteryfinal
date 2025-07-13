@@ -63,18 +63,18 @@ class TextAttributeTest extends AbstractAttributeTest
     /**
      * @return array
      */
-    public static function attributeWithTagsProvider(): array
+    public function attributeWithTagsProvider(): array
     {
         return [
             'allow_html_tags' => [
-                'allowHtmlTags' => true,
-                'attributeValue' => '<h2>Text with <p>html inside</p></h2>',
-                'expectedAttributeValue' => '<h2>Text with <p>html inside</p></h2>',
+                'allow_html_tags' => true,
+                'attribute_value' => '<h2>Text with <p>html inside</p></h2>',
+                'expected_attribute_value' => '<h2>Text with <p>html inside</p></h2>',
             ],
             'disallow_html_tags' => [
-                'allowHtmlTags' => false,
-                'attributeValue' => '<h2>Text with <p>html inside</p></h2>',
-                'expectedAttributeValue' => '&lt;h2&gt;Text with &lt;p&gt;html inside&lt;/p&gt;&lt;/h2&gt;',
+                'allow_html_tags' => false,
+                'attribute_value' => '<h2>Text with <p>html inside</p></h2>',
+                'expected_attribute_value' => '&lt;h2&gt;Text with &lt;p&gt;html inside&lt;/p&gt;&lt;/h2&gt;',
             ],
         ];
     }

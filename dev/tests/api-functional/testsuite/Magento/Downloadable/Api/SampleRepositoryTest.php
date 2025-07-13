@@ -317,7 +317,7 @@ class SampleRepositoryTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function getInvalidSortOrder()
+    public function getInvalidSortOrder()
     {
         return [
             [-1],
@@ -484,7 +484,7 @@ class SampleRepositoryTest extends WebapiAbstract
         $this->assertNotEmpty($link['sample_file']);
     }
 
-    public static function getListForAbsentProductProvider()
+    public function getListForAbsentProductProvider()
     {
         $sampleExpectation = [
             'fields' => [

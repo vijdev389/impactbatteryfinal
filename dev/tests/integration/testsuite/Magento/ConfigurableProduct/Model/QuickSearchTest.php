@@ -85,7 +85,7 @@ class QuickSearchTest extends TestCase
      *
      * @return array
      */
-    public static function productAvailabilityInSearchByVisibilityDataProvider(): array
+    public function productAvailabilityInSearchByVisibilityDataProvider(): array
     {
         return [
             'visible_catalog_only' => [

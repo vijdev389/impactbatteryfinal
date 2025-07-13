@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magezon
+ *
+ * This source file is subject to the Magezon Software License, which is available at https://www.magezon.com/license.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ * If you wish to customize this module for your needs.
+ * Please refer to https://www.magezon.com for more information.
+ *
+ * @category  Magezon
+ * @package   Magezon_PageBuilder
+ * @copyright Copyright (C) 2019 Magezon (https://www.magezon.com)
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="ita_custompathfinder" resource="default" engine="innodb" comment="Ita Custompathfinder Table">
+		<column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+			comment="Entity ID"/>
+		<column xsi:type="varchar" name="vehicle_type" nullable="false" length="255" comment="Vehicle Type"/>
+		<column xsi:type="varchar" name="make" nullable="false" length="255" comment="Make"/>
+		<column xsi:type="varchar" name="model" nullable="false" length="255" comment="Model"/>
+		<column xsi:type="varchar" name="year" nullable="false" length="255" comment="Year"/>
+		<column xsi:type="varchar" name="sku" nullable="false" length="255" comment="sku"/>
+		<column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+				comment="Creation Time"/>
+		<column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+				comment="Modification Time"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="entity_id"/>
+		</constraint>
+	</table>
+</schema>

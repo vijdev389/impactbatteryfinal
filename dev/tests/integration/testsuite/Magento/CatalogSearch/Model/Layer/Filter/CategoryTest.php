@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2011 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\CatalogSearch\Model\Layer\Filter;
@@ -9,13 +9,13 @@ namespace Magento\CatalogSearch\Model\Layer\Filter;
 /**
  * Test class for \Magento\CatalogSearch\Model\Layer\Filter\Category.
  *
- * @magentoDbIsolation disabled
+ * @magentoDbIsolation enabled
  * @magentoAppIsolation enabled
  * @magentoDataFixture Magento/Catalog/_files/categories.php
  */
 class CategoryTest extends \PHPUnit\Framework\TestCase
 {
-    private const CURRENT_CATEGORY_FILTER = 'current_category_filter';
+    const CURRENT_CATEGORY_FILTER = 'current_category_filter';
 
     /**
      * @var \Magento\CatalogSearch\Model\Layer\Filter\Category
@@ -100,6 +100,9 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Category', $this->_model->getName());
     }
 
+    /**
+     * @magentoDbIsolation disabled
+     */
     public function testGetItems()
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
@@ -134,6 +137,8 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Check that only children category of current category are aggregated
+     *
+     * @magentoDbIsolation disabled
      */
     public function testCategoryAggregation(): void
     {

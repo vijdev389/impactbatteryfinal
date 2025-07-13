@@ -25,6 +25,7 @@ class ConfigsApplyFixture extends Fixture
         if (empty($configs)) {
             return;
         }
+        $this->fixtureModel->resetObjectManager();
 
         foreach ($configs['config'] as $config) {
             $backendModel = isset($config['backend_model'])

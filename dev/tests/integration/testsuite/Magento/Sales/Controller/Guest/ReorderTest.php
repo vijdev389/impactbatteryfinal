@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Sales\Controller\Guest;
@@ -215,7 +214,7 @@ class ReorderTest extends AbstractController
 
         $this->assertStringContainsString(
             'Your Credit Memo # for Order #' . $orderIncrementId,
-            quoted_printable_decode($message->getBody()->bodyToString())
+            $message->getBody()->getParts()[0]->getRawContent()
         );
     }
 }

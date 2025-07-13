@@ -54,22 +54,22 @@ class DirectoryTest extends TestCase
     {
         $this->logMock = $this->getMockBuilder(Log::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['add'])
+            ->setMethods(['add'])
             ->getMock();
 
         $this->classesScanner = $this->getMockBuilder(ClassesScanner::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getList'])
+            ->setMethods(['getList'])
             ->getMock();
 
         $this->classReaderMock = $this->getMockBuilder(ClassReader::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getParents'])
+            ->setMethods(['getParents'])
             ->getMock();
 
         $this->validatorMock = $this->getMockBuilder(Validator::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['validate'])
+            ->setMethods(['validate'])
             ->getMock();
 
         $this->model = new Directory(
@@ -201,7 +201,7 @@ class DirectoryTest extends TestCase
      *
      * @return array
      */
-    public static function getListExceptionDataProvider()
+    public function getListExceptionDataProvider()
     {
         return [
             [new ValidatorException(new Phrase('Not Valid!'))],

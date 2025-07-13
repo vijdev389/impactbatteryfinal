@@ -141,7 +141,7 @@ class StockTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expectedStockStatus, (bool) $stockStatus[$bundle->getId()]);
     }
 
-    public static function reindexRowDataProvider(): array
+    public function reindexRowDataProvider(): array
     {
         return [
             [

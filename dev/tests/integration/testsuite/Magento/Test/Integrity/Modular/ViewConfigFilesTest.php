@@ -32,7 +32,7 @@ class ViewConfigFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function viewConfigFileDataProvider()
+    public function viewConfigFileDataProvider()
     {
         $result = [];
         $files = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(

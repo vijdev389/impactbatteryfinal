@@ -97,7 +97,7 @@ class AssetsTest extends TestCase
      *
      * @return array
      */
-    public static function assetsDataProvider(): array
+    public function assetsDataProvider(): array
     {
         return [
             'One asset' => [

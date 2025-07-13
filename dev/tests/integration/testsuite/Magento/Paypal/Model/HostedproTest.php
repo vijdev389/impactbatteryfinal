@@ -41,7 +41,7 @@ class HostedproTest extends \PHPUnit\Framework\TestCase
 
         $this->api = $this->getMockBuilder(Nvp::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['call'])
+            ->setMethods(['call'])
             ->getMock();
 
         $proFactory = $this->getProFactory();
@@ -87,7 +87,7 @@ class HostedproTest extends \PHPUnit\Framework\TestCase
     {
         $config = $this->getMockBuilder(Config::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getValue'])
+            ->setMethods(['getValue'])
             ->getMock();
         $config->expects(static::any())
             ->method('getValue')
@@ -104,8 +104,7 @@ class HostedproTest extends \PHPUnit\Framework\TestCase
     {
         $pro = $this->getMockBuilder(Pro::class)
             ->disableOriginalConstructor()
-            ->addMethods(['__wakeup'])
-            ->onlyMethods(['getApi', 'setMethod', 'getConfig'])
+            ->setMethods(['getApi', 'setMethod', 'getConfig', '__wakeup'])
             ->getMock();
 
         $config = $this->getConfig();
@@ -118,7 +117,7 @@ class HostedproTest extends \PHPUnit\Framework\TestCase
 
         $proFactory = $this->getMockBuilder(ProFactory::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->getMock();
         $proFactory->expects(static::once())
             ->method('create')

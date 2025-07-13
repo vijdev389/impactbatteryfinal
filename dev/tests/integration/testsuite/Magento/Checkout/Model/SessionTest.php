@@ -141,7 +141,6 @@ class SessionTest extends TestCase
         $this->checkoutSession->setCustomerData($customer);
         $quote = $this->checkoutSession->getQuote();
         $this->validateCustomerDataInQuote($quote);
-        $this->quoteRepository->delete($quote);
     }
 
     /**
@@ -159,7 +158,6 @@ class SessionTest extends TestCase
         $this->customerSession->setCustomerDataObject($customer);
         $quote = $this->checkoutSession->getQuote();
         $this->validateCustomerDataInQuote($quote);
-        $this->quoteRepository->delete($quote);
     }
 
     /**

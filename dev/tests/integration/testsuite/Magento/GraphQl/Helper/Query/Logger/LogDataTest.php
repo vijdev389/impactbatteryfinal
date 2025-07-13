@@ -99,7 +99,7 @@ class LogDataTest extends TestCase
      *
      * @return array[]
      */
-    public static function getQueryInformationDataProvider()
+    public function getQueryInformationDataProvider()
     {
         return [
             [ // query with all headers

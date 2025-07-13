@@ -1,40 +1,86 @@
 <?php
 /**
- * Copyright 2022 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
 namespace Magento\TestFramework\Annotation;
 
-use PHPUnit\Event\Code\ThrowableBuilder;
 use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
 
 class ExceptionHandler
 {
     /**
-     * Throws \PHPUnit\Framework\Exception and fail the test if provided.
+     * Format exception message and throws PHPUnit\Framework\Exception
      *
      * @param string $message
+     * @param string $testClass
+     * @param string|null $testMethod
      * @param \Throwable|null $previous
-     * @param TestCase|null $test
-     * @return never
-     * @throws Exception
+     * @return void
      */
     public static function handle(
         string $message,
-        ?\Throwable $previous = null,
-        ?TestCase $test = null
-    ): never {
-        if (!$test) {
-            throw new Exception($message, 0, $previous);
+        string $testClass,
+        string $testMethod = null,
+        \Throwable $previous = null
+    ): void {
+        try {
+            $reflected = new ReflectionClass($testClass);
+        } catch (ReflectionException $e) {
+            throw new Exception(
+                $e->getMessage(),
+                (int) $e->getCode(),
+                $e
+            );
         }
 
-        if ($previous) {
-            $throwable = ThrowableBuilder::from($previous);
-            $message .= PHP_EOL . 'Caused by' . PHP_EOL . $throwable->asString();
+        $name = $testMethod;
+
+        if ($name && $reflected->hasMethod($name)) {
+            try {
+                $reflected = $reflected->getMethod($name);
+            } catch (ReflectionException $e) {
+                throw new Exception(
+                    $e->getMessage(),
+                    (int) $e->getCode(),
+                    $e
+                );
+            }
         }
-        $test::fail($message);
+
+        $location = sprintf(
+            "%s(%d): %s->%s()",
+            $reflected->getFileName(),
+            $reflected->getStartLine(),
+            $testClass,
+            $testMethod
+        );
+
+        $summary = '';
+        if ($previous) {
+            $exception = $previous;
+            do {
+                $summary .= PHP_EOL
+                    . PHP_EOL
+                    . 'Caused By: '
+                    . $exception->getMessage()
+                    . PHP_EOL
+                    . $exception->getTraceAsString();
+            } while ($exception = $exception->getPrevious());
+        }
+        throw new Exception(
+            sprintf(
+                "%s\n#0 %s%s",
+                $message,
+                $location,
+                $summary
+            ),
+            0,
+            $previous
+        );
     }
 }

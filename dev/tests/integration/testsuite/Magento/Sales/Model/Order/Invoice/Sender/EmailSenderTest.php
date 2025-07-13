@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Sales\Model\Order\Invoice\Sender;
@@ -76,10 +75,11 @@ class EmailSenderTest extends TestCase
         $message = $this->transportBuilder->getSentMessage();
         $this->assertStringContainsString(
             'SKU: simple',
-            quoted_printable_decode($message->getBody()->bodyToString()),
+            $message->getBody()->getParts()[0]->getRawContent(),
             'Expected text wasn\'t found in message.'
         );
     }
+
 
     /**
      * Get first order invoice

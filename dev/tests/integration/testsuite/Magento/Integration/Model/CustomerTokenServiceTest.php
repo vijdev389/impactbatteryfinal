@@ -7,13 +7,8 @@
 namespace Magento\Integration\Model;
 
 use Magento\Customer\Api\AccountManagementInterface;
-use Magento\Customer\Test\Fixture\Customer;
-use Magento\Framework\Exception\EmailNotConfirmedException;
 use Magento\Framework\Exception\InputException;
 use Magento\Integration\Model\Oauth\Token as TokenModel;
-use Magento\TestFramework\Fixture\Config;
-use Magento\TestFramework\Fixture\DataFixture;
-use Magento\TestFramework\Fixture\DataFixtureStorageManager;
 use Magento\TestFramework\Helper\Bootstrap;
 
 /**
@@ -89,35 +84,12 @@ class CustomerTokenServiceTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    #[
-        Config('customer/create_account/confirm', 1, 'website'),
-        DataFixture(
-            Customer::class,
-            [
-                'email' => 'another@example.com',
-                'confirmation' => 'account_not_confirmed'
-            ],
-            'customer'
-        )
-    ]
-    public function testCreateCustomerAccessTokenEmailNotConfirmed()
-    {
-        $customer = DataFixtureStorageManager::getStorage()->get('customer');
-        $this->expectException(EmailNotConfirmedException::class);
-
-        $this->tokenService->createCustomerAccessToken($customer->getEmail(), 'password');
-
-        $this->expectExceptionMessage(
-            "This account isn't confirmed. Verify and try again."
-        );
-    }
-
     /**
      * Provider to test input validation
      *
      * @return array
      */
-    public static function validationDataProvider()
+    public function validationDataProvider()
     {
         return [
             'Check for empty credentials' => ['', ''],

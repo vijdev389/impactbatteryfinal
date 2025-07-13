@@ -106,16 +106,16 @@ class BundleTest extends TestCase
     /**
      * @return array
      */
-    public static function isSalableForStockStatusProvider(): array
+    public function isSalableForStockStatusProvider(): array
     {
         return [
             'is_salable' => [
-                'isSalable' => true,
-                'expectedValue' => 'In stock',
+                'is_salable' => true,
+                'expected_value' => 'In stock',
             ],
             'is_not_salable' => [
-                'isSalable' => false,
-                'expectedValue' => 'Out of stock',
+                'is_salable' => false,
+                'expected_value' => 'Out of stock',
             ],
         ];
     }
@@ -139,16 +139,16 @@ class BundleTest extends TestCase
     /**
      * @return array
      */
-    public static function isSalableForCustomizeButtonProvider(): array
+    public function isSalableForCustomizeButtonProvider(): array
     {
         return [
             'is_salable' => [
-                'isSalable' => true,
-                'expectedValue' => 'Customize and Add to Cart',
+                'is_salable' => true,
+                'expected_value' => 'Customize and Add to Cart',
             ],
             'is_not_salable' => [
-                'isSalable' => false,
-                'expectedValue' => '',
+                'is_salable' => false,
+                'expected_value' => '',
             ],
         ];
     }

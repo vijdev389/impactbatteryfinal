@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2019 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -338,12 +338,12 @@ class ProductPriceTest extends GraphQlAbstract
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public static function priceDataProvider() : array
+    public function priceDataProvider() : array
     {
         return [
             [
-                'customerGroup' => Group::CUST_GROUP_ALL,
-                'expectedPriceRange' => [
+                'customer_group' => Group::CUST_GROUP_ALL,
+                'expected_price_range' => [
                     "simple1" => [
                         "minimum_price" => [
                             "regular_price" => ["value" => 10],
@@ -369,27 +369,27 @@ class ProductPriceTest extends GraphQlAbstract
                         ]
                     ]
                 ],
-                'expectedTierPrices' => [
+                'expected_tier_prices' => [
                     "simple1" => [
                         0 => [
                             'discount' =>['amount_off' => 1, 'percent_off' => 10],
-                            'final_price' =>['value'=> 9],
+                            'final_price' =>['value'=> 9 * 2],
                             'quantity' => 2
                         ]
                     ],
                     "simple2" => [
                         0 => [
                             'discount' =>['amount_off' => 2, 'percent_off' => 10],
-                            'final_price' =>['value'=> 18],
+                            'final_price' =>['value'=> 18 * 2],
                             'quantity' => 2
                         ]
                     ]
                 ],
-                'customerData' => []
+                'customer_data' => []
             ],
             [
-                'customerGroup' => 1,
-                'expectedPriceRange' => [
+                'customer_group' => 1,
+                'expected_price_range' => [
                     "simple1" => [
                         "minimum_price" => [
                             "regular_price" => ["value" => 10],
@@ -415,23 +415,23 @@ class ProductPriceTest extends GraphQlAbstract
                         ]
                     ]
                 ],
-                'expectedTierPrices' => [
+                'expected_tier_prices' => [
                     "simple1" => [
                         0 => [
                             'discount' =>['amount_off' => 1, 'percent_off' => 10],
-                            'final_price' =>['value'=> 9],
+                            'final_price' =>['value'=> 9 * 2 ],
                             'quantity' => 2
                         ]
                     ],
                     "simple2" => [
                         0 => [
                             'discount' =>['amount_off' => 2, 'percent_off' => 10],
-                            'final_price' =>['value'=> 18],
+                            'final_price' =>['value'=> 18 * 2],
                             'quantity' => 2
                         ]
                     ]
                 ],
-                'customerData' => [
+                'customer_data' => [
                     'username' => 'customer@example.com',
                     'password' => 'password'
                 ]
@@ -606,7 +606,7 @@ class ProductPriceTest extends GraphQlAbstract
                         'amount_off' => 1,
                         'percent_off' => 10
                     ],
-                    'final_price' =>['value'=> 9],
+                    'final_price' =>['value'=> 9 * 2],
                     'quantity' => 2
                 ]
             ]
@@ -809,7 +809,7 @@ class ProductPriceTest extends GraphQlAbstract
                                 2
                             )
                         ],
-                        'final_price' =>['value'=> $tierPriceData[0]['value']],
+                        'final_price' =>['value'=> $tierPriceData[0]['value'] * 2],
                         'quantity' => 2
                     ]
                 ]
@@ -887,7 +887,7 @@ class ProductPriceTest extends GraphQlAbstract
                          'amount_off' => 3,
                          'percent_off' => 30
                     ],
-                    'final_price' =>['value'=> 7],
+                    'final_price' =>['value'=> 7 * 2],
                     'quantity' => 2
                 ]
             ]
@@ -1371,7 +1371,7 @@ QUERY;
     /**
      * @return array[]
      */
-    public static function configurableProductPriceRangeWithDisplayOutOfStockProductsEnabledDataProvider(): array
+    public function configurableProductPriceRangeWithDisplayOutOfStockProductsEnabledDataProvider(): array
     {
         return [
             [

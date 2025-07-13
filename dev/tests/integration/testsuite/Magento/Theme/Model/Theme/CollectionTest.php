@@ -71,7 +71,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function expectedThemeDataFromConfiguration()
+    public function expectedThemeDataFromConfiguration()
     {
         return [
             [

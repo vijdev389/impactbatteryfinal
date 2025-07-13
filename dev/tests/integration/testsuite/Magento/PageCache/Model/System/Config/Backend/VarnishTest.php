@@ -57,7 +57,7 @@ class VarnishTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $expected);
     }
 
-    public static function beforeSaveDataProvider()
+    public function beforeSaveDataProvider()
     {
         return [
             ['localhost', 'access_list', 'localhost', false],
@@ -92,7 +92,7 @@ class VarnishTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $expected);
     }
 
-    public static function afterLoadDataProvider()
+    public function afterLoadDataProvider()
     {
         return [
             ['access_list', 'localhost', true],

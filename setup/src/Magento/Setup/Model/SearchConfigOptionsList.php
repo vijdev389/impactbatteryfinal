@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2020 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
@@ -149,7 +149,8 @@ class SearchConfigOptionsList
     public function getAvailableSearchEngineList(): array
     {
         return [
-            'elasticsearch8' => 'Elasticsearch 8.x (deprecated)',
+            'elasticsearch7' => 'Elasticsearch 7.x (deprecated)',
+            'elasticsearch8' => 'Elasticsearch 8.x',
             'opensearch' => 'OpenSearch'
         ];
     }

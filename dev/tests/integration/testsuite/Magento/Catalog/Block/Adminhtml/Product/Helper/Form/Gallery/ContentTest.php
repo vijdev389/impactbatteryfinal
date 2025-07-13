@@ -125,7 +125,7 @@ class ContentTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function getImagesAndImageTypesDataProvider()
+    public function getImagesAndImageTypesDataProvider()
     {
         return [
             [
@@ -182,7 +182,7 @@ class ContentTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array[]
      */
-    public static function imagesPositionStoreViewDataProvider(): array
+    public function imagesPositionStoreViewDataProvider(): array
     {
         return [
             [

@@ -91,11 +91,11 @@ class PriceTest extends TestCase
     /**
      * @return array
      */
-    public static function childProductsDataProvider(): array
+    public function childProductsDataProvider(): array
     {
         return [
             [
-                'updateData' => [
+                'update_data' => [
                     'simple_option_1' => [
                         'special_price' => 50,
                     ],
@@ -114,7 +114,7 @@ class PriceTest extends TestCase
                         ],
                     ],
                 ],
-                'expectedData' => [
+                'expected_data' => [
                     [
                         'baseOldPrice' => ['amount' => 150],
                         'oldPrice' => ['amount' => 150],

@@ -1,13 +1,14 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
 namespace Magento\Setup\Test\Unit\Console\Command;
 
 use Magento\Framework\App\DeploymentConfig;
+use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Validator\Currency as CurrencyValidator;
 use Magento\Framework\Validator\Locale as LocaleValidator;
 use Magento\Framework\Validator\Timezone as TimezoneValidator;
@@ -40,6 +41,11 @@ class InstallStoreConfigurationCommandTest extends TestCase
      * @var Installer|MockObject
      */
     private $installer;
+
+    /**
+     * @var ObjectManagerInterface|MockObject
+     */
+    private $objectManager;
 
     /**
      * @var LocaleValidator|MockObject
@@ -77,7 +83,13 @@ class InstallStoreConfigurationCommandTest extends TestCase
         $this->deploymentConfig = $this->createMock(DeploymentConfig::class);
         $this->installer = $this->createMock(Installer::class);
         $objectManagerProvider = $this->createMock(ObjectManagerProvider::class);
-
+        $this->objectManager = $this->getMockForAbstractClass(
+            ObjectManagerInterface::class,
+            [],
+            '',
+            false
+        );
+        $objectManagerProvider->expects($this->once())->method('get')->willReturn($this->objectManager);
         $this->command = new InstallStoreConfigurationCommand(
             $this->installerFactory,
             $this->deploymentConfig,
@@ -143,7 +155,7 @@ class InstallStoreConfigurationCommandTest extends TestCase
     /**
      * @return array
      */
-    public static function validateDataProvider()
+    public function validateDataProvider()
     {
         return [
             [

@@ -172,11 +172,11 @@ class AsyncScheduleCustomRouteTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function productCreationProvider()
+    public function productCreationProvider()
     {
         $productBuilder = function ($data) {
             return array_replace_recursive(
-                self::getSimpleProductData(),
+                $this->getSimpleProductData(),
                 $data
             );
         };
@@ -208,7 +208,7 @@ class AsyncScheduleCustomRouteTest extends WebapiAbstract
      * @param array $productData
      * @return array
      */
-    private static function getSimpleProductData($productData = [])
+    private function getSimpleProductData($productData = [])
     {
         return [
             ProductInterface::SKU              => isset($productData[ProductInterface::SKU])

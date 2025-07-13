@@ -56,7 +56,7 @@ class AbstractBuilderTest extends TestCase
     /**
      * @return array
      */
-    public static function dataProviderWrongParseOptions()
+    public function dataProviderWrongParseOptions()
     {
         return [[['write' => [1, 2]]], [['parse' => [], 'write' => [1, 2]]]];
     }
@@ -75,7 +75,7 @@ class AbstractBuilderTest extends TestCase
     /**
      * @return array
      */
-    public static function dataProviderWrongWriteOptions()
+    public function dataProviderWrongWriteOptions()
     {
         return [[['parse' => [1, 2]]], [['parse' => [1, 2], 'write' => []]]];
     }

@@ -85,7 +85,7 @@ class CacheManagerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($testConfig, $config->load(self::CACHE_ID));
     }
 
-    public static function interceptionCompiledConfigDataProvider()
+    public function interceptionCompiledConfigDataProvider()
     {
         return [
             [['classA' => true, 'classB' => false]],
@@ -93,7 +93,7 @@ class CacheManagerTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public static function interceptionCacheConfigDataProvider()
+    public function interceptionCacheConfigDataProvider()
     {
         return [
             [['classC' => true, 'classD' => false]],

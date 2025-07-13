@@ -18,7 +18,7 @@ class CodeMessOutput extends Output
     /**
      * @inheritdoc
      */
-    protected function doWrite(string $message): void
+    protected function doWrite($message)
     {
         // TODO: Implement doWrite() method.
     }

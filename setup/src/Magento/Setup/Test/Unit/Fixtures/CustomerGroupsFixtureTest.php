@@ -65,8 +65,7 @@ class CustomerGroupsFixtureTest extends TestCase
 
         //Mock for customer groups collection
         $this->groupCollectionFactoryMock = $this->getMockBuilder(CollectionFactory::class)
-            ->addMethods(['getSize'])
-            ->onlyMethods(['create'])
+            ->setMethods(['create', 'getSize'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -82,14 +81,13 @@ class CustomerGroupsFixtureTest extends TestCase
 
         //Mock customer groups data object
         $this->groupDataObjectMock = $this->getMockBuilder(GroupInterface::class)
-            ->addMethods(['save'])
-            ->onlyMethods(['setCode', 'setTaxClassId'])
+            ->setMethods(['setCode', 'setTaxClassId', 'save'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
 
         //Mock customer groups factory
         $this->groupFactoryMock = $this->getMockBuilder(GroupInterfaceFactory::class)
-            ->onlyMethods(['create'])
+            ->setMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
 

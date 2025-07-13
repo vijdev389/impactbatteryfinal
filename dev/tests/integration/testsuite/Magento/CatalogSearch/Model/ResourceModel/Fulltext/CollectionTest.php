@@ -120,7 +120,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public static function filtersDataProviderSearch()
+    public function filtersDataProviderSearch()
     {
         return [
             ['quick_search_container', ['search_term' => '  shorts'], 2],
@@ -132,7 +132,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public static function filtersDataProviderQuickSearch()
+    public function filtersDataProviderQuickSearch()
     {
         return [
             [['search_term' => '  shorts'], 2],
@@ -140,7 +140,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public static function filtersDataProviderCatalogView()
+    public function filtersDataProviderCatalogView()
     {
         return [
             [['category_ids' => 2], 5],
@@ -205,7 +205,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function configurableProductWithMultipleOptionsDataProvider(): array
+    public function configurableProductWithMultipleOptionsDataProvider(): array
     {
         return [
             [

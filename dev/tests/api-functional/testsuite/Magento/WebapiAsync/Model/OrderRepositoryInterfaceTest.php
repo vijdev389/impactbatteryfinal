@@ -137,7 +137,7 @@ class OrderRepositoryInterfaceTest extends WebapiAbstract
      *
      * @return array
      */
-    public static function saveDataProvider(): array
+    public function saveDataProvider(): array
     {
         return [
             'update order in bulk mode' => [

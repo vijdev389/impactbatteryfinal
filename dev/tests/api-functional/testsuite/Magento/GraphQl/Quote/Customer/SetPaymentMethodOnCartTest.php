@@ -234,7 +234,7 @@ QUERY;
     /**
      * @return array
      */
-    public static function dataProviderSetPaymentMethodWithoutRequiredParameters(): array
+    public function dataProviderSetPaymentMethodWithoutRequiredParameters(): array
     {
         return [
             'missed_cart_id' => [

@@ -243,7 +243,7 @@ class CreateCustomOptionsTest extends TestCase
      *
      * @return array
      */
-    public static function productCustomOptionsTypeTextDataProvider(): array
+    public function productCustomOptionsTypeTextDataProvider(): array
     {
         return [
             'area_field_required_options' => [
@@ -331,7 +331,7 @@ class CreateCustomOptionsTest extends TestCase
      *
      * @return array
      */
-    public static function fileExtensionsDataProvider(): array
+    public function fileExtensionsDataProvider(): array
     {
         return [
             ['JPG, PNG, GIF', 'jpg, png, gif'],
@@ -351,7 +351,7 @@ class CreateCustomOptionsTest extends TestCase
      *
      * @return array
      */
-    public static function productCustomOptionsTypeSelectDataProvider(): array
+    public function productCustomOptionsTypeSelectDataProvider(): array
     {
         return [
             'drop_down_field_required_option' => [
@@ -652,7 +652,7 @@ class CreateCustomOptionsTest extends TestCase
      *
      * @return array
      */
-    public static function productCustomOptionsTypeDateDataProvider(): array
+    public function productCustomOptionsTypeDateDataProvider(): array
     {
         return [
             'date_field_required_options' => [
@@ -809,7 +809,7 @@ class CreateCustomOptionsTest extends TestCase
      *
      * @return array
      */
-    public static function productCustomOptionsWithErrorDataProvider(): array
+    public function productCustomOptionsWithErrorDataProvider(): array
     {
         return [
             'error_option_without_product_sku' => [

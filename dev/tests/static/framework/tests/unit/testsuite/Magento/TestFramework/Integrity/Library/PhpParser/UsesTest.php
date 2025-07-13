@@ -44,7 +44,7 @@ class UsesTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function hasUsesDataProvider(): array
+    public function hasUsesDataProvider(): array
     {
         return [
             'simple_php7' => [
@@ -173,7 +173,7 @@ class UsesTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function classNamesDataProvider(): array
+    public function classNamesDataProvider(): array
     {
         return [
             'class_from_uses_php7' => [

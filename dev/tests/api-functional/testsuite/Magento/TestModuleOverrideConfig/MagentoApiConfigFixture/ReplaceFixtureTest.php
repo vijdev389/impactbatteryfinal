@@ -85,7 +85,7 @@ class ReplaceFixtureTest extends AbstractOverridesTest
     /**
      * @return array
      */
-    public static function testDataProvider(): array
+    public function testDataProvider(): array
     {
         return [
             'first_data_set' => [

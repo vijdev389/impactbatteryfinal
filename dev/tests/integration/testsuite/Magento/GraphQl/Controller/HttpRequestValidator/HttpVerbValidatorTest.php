@@ -77,7 +77,7 @@ class HttpVerbValidatorTest extends TestCase
     /**
      * @return array
      */
-    public static function validateDataProvider(): array
+    public function validateDataProvider(): array
     {
         return [
             [

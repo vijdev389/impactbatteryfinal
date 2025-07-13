@@ -35,7 +35,7 @@ class DynamicBundleProductTest extends AbstractBundleProductSaveTest
     /**
      * @return array
      */
-    public static function bundleProductDataProvider(): array
+    public function bundleProductDataProvider(): array
     {
         return [
             'with_dropdown_option' => [
@@ -128,7 +128,7 @@ class DynamicBundleProductTest extends AbstractBundleProductSaveTest
     /**
      * @return array
      */
-    public static function multiOptionsDataProvider(): array
+    public function multiOptionsDataProvider(): array
     {
         return [
             'with_two_options_few_selections' => [
@@ -183,7 +183,7 @@ class DynamicBundleProductTest extends AbstractBundleProductSaveTest
     /**
      * @return array
      */
-    public static function emptyOptionTitleDataProvider(): array
+    public function emptyOptionTitleDataProvider(): array
     {
         return [
             'empty_option_title' => [
@@ -227,7 +227,7 @@ class DynamicBundleProductTest extends AbstractBundleProductSaveTest
     /**
      * @return array
      */
-    public static function updateProductDataProvider(): array
+    public function updateProductDataProvider(): array
     {
         return [
             'update_existing_product' => [

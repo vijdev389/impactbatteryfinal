@@ -51,7 +51,7 @@ class EavSetupTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function addAttributeDataProvider()
+    public function addAttributeDataProvider()
     {
         return [
             ['eav_setup_test'],
@@ -81,7 +81,7 @@ class EavSetupTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function addAttributeThrowExceptionDataProvider()
+    public function addAttributeThrowExceptionDataProvider()
     {
         return [
             [null],
@@ -111,7 +111,7 @@ class EavSetupTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function addInvalidAttributeThrowExceptionDataProvider()
+    public function addInvalidAttributeThrowExceptionDataProvider()
     {
         return [
             ['1first_character_is_not_letter'],

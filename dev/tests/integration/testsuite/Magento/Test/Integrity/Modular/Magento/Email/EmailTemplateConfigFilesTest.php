@@ -28,7 +28,7 @@ class EmailTemplateConfigFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function fileFormatDataProvider()
+    public function fileFormatDataProvider()
     {
         return \Magento\Framework\App\Utility\Files::init()->getConfigFiles('email_templates.xml');
     }
@@ -62,7 +62,7 @@ class EmailTemplateConfigFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function templateReferenceDataProvider()
+    public function templateReferenceDataProvider()
     {
         $data = [];
         /** @var \Magento\Email\Model\Template\Config $emailConfig */

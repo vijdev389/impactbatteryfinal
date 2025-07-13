@@ -1,9 +1,8 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
 
 namespace Magento\Wishlist\Controller\Index;
@@ -77,7 +76,7 @@ class SendTest extends AbstractController
             MessageInterface::TYPE_SUCCESS
         );
         $this->assertNotNull($this->transportBuilder->getSentMessage());
-        $messageContent = quoted_printable_decode($this->transportBuilder->getSentMessage()->getBody()->bodyToString());
+        $messageContent = $this->transportBuilder->getSentMessage()->getBody()->getParts()[0]->getRawContent();
         $this->assertStringContainsString($shareMessage, $messageContent);
         $this->assertStringContainsString(
             sprintf(

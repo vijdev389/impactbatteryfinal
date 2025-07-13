@@ -74,14 +74,10 @@ class AbstractFileTest extends TestCase
         );
         $abstractLoaderMock
             ->method('_readFile')
-            ->willReturnCallback(function () use (&$callCount) {
-                $callCount++;
-                if ($callCount === 1) {
-                    return ['phrase1', 'translation1'];
-                } elseif ($callCount === 2) {
-                    return ['phrase2', 'translation2', 'context_type2', 'context_value2'];
-                }
-            });
+            ->willReturnOnConsecutiveCalls(
+                ['phrase1', 'translation1'],
+                ['phrase2', 'translation2', 'context_type2', 'context_value2']
+            );
 
         $phraseFirstMock = $this->createMock(Phrase::class);
         $phraseSecondMock = $this->createMock(Phrase::class);
@@ -91,35 +87,29 @@ class AbstractFileTest extends TestCase
             ->willReturn($this->_dictionaryMock);
         $this->_factoryMock
             ->method('createPhrase')
-            ->willReturnCallback(
-                function ($args) use ($phraseFirstMock, $phraseSecondMock) {
-                    if ($args == [
-                            'phrase' => 'phrase1',
-                            'translation' => 'translation1',
-                            'context_type' => '',
-                            'context_value' => ''
-                        ]) {
-                        return $phraseFirstMock;
-                    } elseif ($args == [
-                            'phrase' => 'phrase2',
-                            'translation' => 'translation2',
-                            'context_type' => 'context_type2',
-                            'context_value' => 'context_value2'
-                        ]) {
-                        return $phraseSecondMock;
-                    }
-                }
-            );
+            ->withConsecutive(
+                [
+                    [
+                        'phrase' => 'phrase1',
+                        'translation' => 'translation1',
+                        'context_type' => '',
+                        'context_value' => ''
+                    ]
+                ],
+                [
+                    [
+                        'phrase' => 'phrase2',
+                        'translation' => 'translation2',
+                        'context_type' => 'context_type2',
+                        'context_value' => 'context_value2'
+                    ]
+                ]
+            )
+            ->willReturnOnConsecutiveCalls($phraseFirstMock, $phraseSecondMock);
 
         $this->_dictionaryMock
             ->method('addPhrase')
-            ->willReturnCallback(
-                function ($arg) use ($phraseFirstMock, $phraseSecondMock) {
-                    if ($arg == $phraseFirstMock || $arg == $phraseSecondMock) {
-                        return null;
-                    }
-                }
-            );
+            ->withConsecutive([$phraseFirstMock], [$phraseSecondMock]);
 
         /** @var AbstractFile $abstractLoaderMock */
         $this->assertEquals($this->_dictionaryMock, $abstractLoaderMock->load('test.csv'));
@@ -143,11 +133,8 @@ class AbstractFileTest extends TestCase
         );
         $abstractLoaderMock
             ->method('_readFile')
-            ->willReturnCallback(
-                function () {
-                    return ['phrase1', 'translation1'];
-                }
-            );
+            ->withConsecutive()
+            ->willReturn(['phrase1', 'translation1']);
 
         $this->_factoryMock->expects($this->once())
             ->method('createDictionary')

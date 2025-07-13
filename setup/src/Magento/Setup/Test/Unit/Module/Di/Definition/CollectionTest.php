@@ -56,7 +56,7 @@ class CollectionTest extends TestCase
     protected function setUp(): void
     {
         $this->collectionMock = $this->getMockBuilder(Collection::class)
-            ->getMock();
+            ->setMethods([])->getMock();
         $this->model = new Collection();
     }
 

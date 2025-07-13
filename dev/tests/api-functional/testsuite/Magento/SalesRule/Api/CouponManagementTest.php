@@ -79,7 +79,7 @@ class CouponManagementTest extends WebapiAbstract
     /**
      * @return array
      */
-    public static function dataProviderForTestGenerate()
+    public function dataProviderForTestGenerate()
     {
         return [
             [

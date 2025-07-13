@@ -106,7 +106,7 @@ class PaypalExpressTokenTest extends PaypalExpressAbstractTest
      *
      * @return array
      */
-    public static function getPaypalCodesProvider(): array
+    public function getPaypalCodesProvider(): array
     {
         return [
             ['paypal_express'],

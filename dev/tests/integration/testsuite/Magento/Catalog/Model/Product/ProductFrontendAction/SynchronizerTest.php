@@ -175,7 +175,7 @@ class SynchronizerTest extends \PHPUnit\Framework\TestCase
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public static function getAllActionsDataProvider()
+    public function getAllActionsDataProvider()
     {
         return [
             ['visitorId' => null, 'customerEmail' => 'customer@example.com', 'expectedCollectionSize' => 2],

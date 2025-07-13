@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe.
+ * All rights reserved.
  */
 
 declare(strict_types=1);
@@ -203,9 +203,9 @@ class PublisherConsumerController
     {
         $i = 0;
         do {
-            sleep(3);
+            sleep(10);
             $assertion = call_user_func_array($condition, $params);
-        } while (!$assertion && ($i++ < 20));
+        } while (!$assertion && ($i++ < 50));
 
         if (!$assertion) {
             throw new PreconditionFailedException("No asynchronous messages were processed.");

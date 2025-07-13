@@ -78,11 +78,11 @@ class ProductUrlRewriteVisibilityTest extends AbstractUrlRewriteTest
     /**
      * @return array
      */
-    public static function invisibleProductDataProvider(): array
+    public function invisibleProductDataProvider(): array
     {
         return [
             [
-                'expectedData' => [
+                'expected_data' => [
                     [
                         'request_path' => 'simple-url-test-product%suffix%',
                         'target_path' => 'catalog/product/view/id/%id%',

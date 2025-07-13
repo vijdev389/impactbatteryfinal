@@ -243,7 +243,7 @@ class BCMultiModuleTest extends SetupTestCase
     /**
      * @return array
      */
-    public static function firstCleanInstallOneModuleDataProvider()
+    public function firstCleanInstallOneModuleDataProvider()
     {
         return [
             'Installation without db prefix' => [

@@ -292,18 +292,18 @@ QUERY;
     /**
      * @return array
      */
-    public static function sendFriendsErrorsDataProvider(): array
+    public function sendFriendsErrorsDataProvider(): array
     {
         return array_merge(
-            self::getRecipientErrors(),
-            self::getSenderErrors()
+            $this->getRecipientErrors(),
+            $this->getSenderErrors()
         );
     }
 
     /**
      * @return array
      */
-    private static function getRecipientErrors(): array
+    private function getRecipientErrors(): array
     {
         return [
             [
@@ -350,7 +350,7 @@ QUERY;
     /**
      * @return array
      */
-    private static function getSenderErrors(): array
+    private function getSenderErrors(): array
     {
         return [
             [

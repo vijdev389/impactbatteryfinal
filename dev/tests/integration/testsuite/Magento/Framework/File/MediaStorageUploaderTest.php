@@ -162,7 +162,7 @@ class MediaStorageUploaderTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function dirCodeDataProvider(): array
+    public function dirCodeDataProvider(): array
     {
         return [
             'media destination' => [DirectoryList::MEDIA],

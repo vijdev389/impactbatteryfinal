@@ -164,11 +164,11 @@ QUERY;
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      * @return array[][]
      */
-    public static function productSearchPriceDataProvider(): array
+    public function productSearchPriceDataProvider(): array
     {
         return [
             [
-                'priceFilter' => 'from: "0.01" to: "9.99"',
+                'price_filter' => 'from: "0.01" to: "9.99"',
                 'sort' => 'price: ASC',
                 'items' => [
                     [
@@ -204,7 +204,7 @@ QUERY;
                 ],
             ],
             [
-                'priceFilter' => 'from: "5.01" to: "10"',
+                'price_filter' => 'from: "5.01" to: "10"',
                 'sort' => 'price: DESC',
                 'items' => [
                     [
@@ -230,7 +230,7 @@ QUERY;
                 ],
             ],
             [
-                'priceFilter' => 'from: "5"',
+                'price_filter' => 'from: "5"',
                 'sort' => 'price: DESC',
                 'items' => [
                     [

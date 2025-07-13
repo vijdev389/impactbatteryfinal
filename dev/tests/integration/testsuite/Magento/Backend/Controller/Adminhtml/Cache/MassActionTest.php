@@ -178,7 +178,7 @@ class MassActionTest extends \Magento\TestFramework\TestCase\AbstractBackendCont
     /**
      * @return array
      */
-    public static function massActionsDataProvider()
+    public function massActionsDataProvider()
     {
         return [
             'no types' => [[]],

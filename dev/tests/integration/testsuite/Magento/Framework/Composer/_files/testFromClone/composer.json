@@ -160,7 +160,8 @@
         "components/jquery": "1.11.0",
         "blueimp/jquery-file-upload": "5.6.14",
         "components/jqueryui": "1.10.4",
-        "twbs/bootstrap": "3.1.0"
+        "twbs/bootstrap": "3.1.0",
+        "tinymce/tinymce": "3.4.7"
     },
     "extra": {
         "component_paths": {
@@ -179,7 +180,8 @@
             ],
             "twbs/bootstrap": [
                 "lib/web/jquery/jquery.tabs.js"
-            ]
+            ],
+            "tinymce/tinymce": "lib/web/tiny_mce"
         }
     },
     "config": {

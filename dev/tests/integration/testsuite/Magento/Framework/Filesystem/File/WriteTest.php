@@ -48,7 +48,7 @@ class WriteTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function fileExistProvider()
+    public function fileExistProvider()
     {
         return [['popup.csv', 'x'], ['popup.csv', 'x+']];
     }
@@ -76,7 +76,7 @@ class WriteTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function writeProvider()
+    public function writeProvider()
     {
         return [
             ['new1.csv', 'w', 'write check', 11],
@@ -112,7 +112,7 @@ class WriteTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function writeAndReadProvider()
+    public function writeAndReadProvider()
     {
         return [
             ['new2.csv', 'w+', 'write check', 11],
@@ -148,7 +148,7 @@ class WriteTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public static function csvDataProvider()
+    public function csvDataProvider()
     {
         return [
             [['field1', 'field2'], 'newcsv1.csv', ['field1', 'field2'], ',', '"'],

@@ -102,31 +102,31 @@ class ProductTest extends TestCase
      *
      * @return array
      */
-    public static function optionsFilterProvider(): array
+    public function optionsFilterProvider(): array
     {
         return [
             'filter_yes' => [
-                'filterColumn' => 'in_category=1',
-                'categoryId' => 333,
-                'storeId' => 1,
+                'filter_column' => 'in_category=1',
+                'id_category' => 333,
+                'store_id' => 1,
                 'items' => [
                     'simple333',
                     'simple2',
                 ],
             ],
             'filter_no' => [
-                'filterColumn' => 'in_category=0',
-                'categoryId' => 333,
-                'storeId' => 1,
+                'filter_column' => 'in_category=0',
+                'id_category' => 333,
+                'store_id' => 1,
                 'items' => [
                     'product_disabled',
                     'simple',
                 ],
             ],
             'filter_any' => [
-                'filterColumn' => "",
-                'categoryId' => 333,
-                'storeId' => 1,
+                'filter_column' => "",
+                'id_category' => 333,
+                'store_id' => 1,
                 'items' => [
                     'product_disabled',
                     'simple333',
@@ -135,9 +135,9 @@ class ProductTest extends TestCase
                 ],
             ],
             'flag_status' => [
-                'filterColumn' => 'status=1',
-                'categoryId' => 333,
-                'storeId' => 1,
+                'filter_column' => 'status=1',
+                'id_category' => 333,
+                'store_id' => 1,
                 'items' => [
                     'simple333',
                     'simple2',
@@ -201,21 +201,21 @@ class ProductTest extends TestCase
      *
      * @return array
      */
-    public static function sortingOptionsProvider(): array
+    public function sortingOptionsProvider(): array
     {
         return [
             'default_store_sort_name_asc' => [
-                'sortField' => 'name',
-                'sortDirection' => 'asc',
+                'sort_field' => 'name',
+                'sort_direction' => 'asc',
                 'store' => 'default',
-                'items' => [
+                'sortItems' => [
                     'ProductA',
                     'ProductB',
                 ],
             ],
             'default_store_sort_name_desc' => [
-                'sortField' => 'name',
-                'sortDirection' => 'desc',
+                'sort_field' => 'name',
+                'sort_direction' => 'desc',
                 'store' => 'default',
                 'items' => [
                     'ProductB',
@@ -223,19 +223,19 @@ class ProductTest extends TestCase
                 ],
             ],
             'second_store_sort_name_asc' => [
-                'sortField' => 'name',
-                'sortDirection' => 'asc',
+                'sort_field' => 'name',
+                'sort_direction' => 'asc',
                 'store' => 'store2',
-                'items' => [
+                'sortItems' => [
                     'SimpleProductA',
                     'SimpleProductB',
                 ],
             ],
             'second_store_sort_name_desc' => [
-                'sortField' => 'name',
-                'sortDirection' => 'desc',
+                'sort_field' => 'name',
+                'sort_direction' => 'desc',
                 'store' => 'store2',
-                'items' => [
+                'sortItems' => [
                     'SimpleProductB',
                     'SimpleProductA',
                 ],

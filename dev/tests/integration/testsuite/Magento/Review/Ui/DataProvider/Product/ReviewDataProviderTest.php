@@ -89,7 +89,7 @@ class ReviewDataProviderTest extends TestCase
      *
      * @return array
      */
-    public static function sortingDataProvider(): array
+    public function sortingDataProvider(): array
     {
         return [
             'sort by title field ascending' => [

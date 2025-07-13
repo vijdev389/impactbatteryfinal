@@ -49,7 +49,7 @@ class AclConfigFilesTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public static function aclConfigFileDataProvider()
+    public function aclConfigFileDataProvider()
     {
         return \Magento\Framework\App\Utility\Files::init()->getConfigFiles('acl.xml');
     }

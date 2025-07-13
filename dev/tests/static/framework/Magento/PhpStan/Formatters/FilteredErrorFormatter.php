@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2019 Adobe
+ * All Rights Reserved.
  */
 declare(strict_types=1);
 
@@ -66,7 +66,8 @@ class FilteredErrorFormatter implements ErrorFormatter
             return self::NO_ERRORS;
         }
 
-        $params = [
+        //@phpstan:ignore-line
+        $clearedAnalysisResult = new AnalysisResult(
             $this->clearIgnoredErrors($analysisResult->getFileSpecificErrors()),
             $analysisResult->getNotFileSpecificErrors(),
             $analysisResult->getInternalErrors(),
@@ -78,19 +79,7 @@ class FilteredErrorFormatter implements ErrorFormatter
             $analysisResult->getPeakMemoryUsageBytes(),
             $analysisResult->isResultCacheUsed(),
             $analysisResult->getChangedProjectExtensionFilesOutsideOfAnalysedPaths()
-        ];
-
-        $reflectionClass = new \ReflectionClass(AnalysisResult::class);
-        $constructor = $reflectionClass->getConstructor();
-
-        if ($constructor->getNumberOfParameters() !== count($params)
-            && $reflectionClass->hasMethod('isResultCacheUsed')
-        ) {
-            $params[] = $analysisResult->isResultCacheUsed();
-        }
-
-        //@phpstan:ignore-line
-        $clearedAnalysisResult = new AnalysisResult(...$params);
+        );
 
         return $this->tableErrorFormatter->formatErrors($clearedAnalysisResult, $output);
     }

@@ -1,13 +1,13 @@
 <?php
 /**
- * Copyright 2011 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 declare(strict_types=1);
 
 namespace Magento\Catalog\Model\Product\Type;
 
-use Magento\Framework\File\Http;
+use Laminas\File\Transfer\Adapter\Http;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Option;

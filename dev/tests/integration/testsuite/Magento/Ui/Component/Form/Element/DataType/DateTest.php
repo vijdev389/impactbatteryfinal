@@ -56,7 +56,7 @@ class DateTest extends TestCase
     /**
      * @return array
      */
-    public static function localeDataProvider(): array
+    public function localeDataProvider(): array
     {
         return [
             ['en_GB', 'dd/MM/y'], ['en_US', 'M/d/yy'],

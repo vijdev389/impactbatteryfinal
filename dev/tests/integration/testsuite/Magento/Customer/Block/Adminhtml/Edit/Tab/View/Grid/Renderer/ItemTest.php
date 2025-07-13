@@ -12,7 +12,7 @@ namespace Magento\Customer\Block\Adminhtml\Edit\Tab\View\Grid\Renderer;
  *
  * @see \Magento\Customer\Block\Adminhtml\Edit\Tab\View\Grid\Renderer\Item
  */
-class ItemTest extends AbstractItemTestCase
+class ItemTest extends AbstractItemTest
 {
     /**
      * @magentoDataFixture Magento/Checkout/_files/customer_quote_with_items_simple_product_options.php

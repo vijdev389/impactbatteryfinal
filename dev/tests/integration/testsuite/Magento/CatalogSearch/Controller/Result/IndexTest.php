@@ -41,7 +41,7 @@ class IndexTest extends AbstractController
      *
      * @return array
      */
-    public static function searchStringDataProvider(): array
+    public function searchStringDataProvider(): array
     {
         return [
             'search_product_by_name' => ['Simple product name'],

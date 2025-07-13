@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright 2015 Adobe
- * All Rights Reserved.
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magento\Customer\Controller;
@@ -25,9 +25,10 @@ use Magento\TestFramework\Request;
 use Magento\TestFramework\TestCase\AbstractController;
 use Magento\Theme\Controller\Result\MessagePlugin;
 use PHPUnit\Framework\Constraint\StringContains;
-use Symfony\Component\Mime\Message;
 
 /**
+ * Test class for account controller
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class AccountTest extends AbstractController
@@ -195,7 +196,7 @@ class AccountTest extends AbstractController
      * @param int $customerId
      * @param string|null $confirmation
      */
-    private function assertCustomerConfirmationEquals(int $customerId, ?string $confirmation = null)
+    private function assertCustomerConfirmationEquals(int $customerId, string $confirmation = null)
     {
         /** @var \Magento\Customer\Model\Customer $customer */
         $customer = Bootstrap::getObjectManager()
@@ -560,15 +561,21 @@ class AccountTest extends AbstractController
         $message = $this->transportBuilderMock->getSentMessage();
         $rawMessage = $message->getRawMessage();
 
-        /** @var Message $messageBodyPart */
-        $messageBodyPart = $message->getBody();
+        /** @var \Laminas\Mime\Part $messageBodyPart */
+        $messageBodyParts = $message->getBody()->getParts();
+        $messageBodyPart = reset($messageBodyParts);
+        $messageEncoding = $messageBodyPart->getCharset();
         $name = 'John Smith';
+
+        if (strtoupper($messageEncoding) !== 'ASCII') {
+            $name = \Laminas\Mail\Header\HeaderWrap::mimeEncodeValue($name, $messageEncoding);
+        }
 
         $nameEmail = sprintf('%s <%s>', $name, $email);
 
         $this->assertStringContainsString('To: ' . $nameEmail, $rawMessage);
 
-        $content = $messageBodyPart->getBody();
+        $content = $messageBodyPart->getRawContent();
         $confirmationUrl = $this->getConfirmationUrlFromMessageContent($content);
         $this->setRequestInfo($confirmationUrl, 'confirm');
         $this->clearCookieMessagesList();
@@ -619,7 +626,7 @@ class AccountTest extends AbstractController
         $customerData = $customerRegistry->retrieveByEmail($email);
         $token = $customerData->getRpToken();
         $customerId = $customerData->getId();
-        $this->assertForgotPasswordEmailContent($token, $customerId, $email);
+        $this->assertForgotPasswordEmailContent($token, $customerId);
 
         /* Set new email */
         /** @var CustomerRepositoryInterface $customerRepository */
@@ -696,17 +703,14 @@ class AccountTest extends AbstractController
      * Check that 'Forgot password' email contains correct data.
      *
      * @param string $token
-     * @param int $customerId
-     * @param string $email
      * @return void
      */
-    private function assertForgotPasswordEmailContent(string $token, int $customerId, string $email): void
+    private function assertForgotPasswordEmailContent(string $token, int $customerId): void
     {
         $message = $this->transportBuilderMock->getSentMessage();
-        $email = urlencode($email);
         //phpcs:ignore
-        $pattern = "/<a.+customer\/account\/createPassword\/\?email={$email}&amp;id={$customerId}&amp;token={$token}.+Set\s+a\s+New\s+Password<\/a\>/";
-        $rawMessage = quoted_printable_decode($message->getBody()->bodyToString());
+        $pattern = "/<a.+customer\/account\/createPassword\/\?id={$customerId}&amp;token={$token}.+Set\s+a\s+New\s+Password<\/a\>/";
+        $rawMessage = $message->getBody()->getParts()[0]->getRawContent();
         $messageConstraint = $this->logicalAnd(
             new StringContains('There was recently a request to change the password for your account.'),
             $this->matchesRegularExpression($pattern)

@@ -39,7 +39,7 @@ class JsonTest extends TestCase
     /**
      * @return array
      */
-    public static function dataProviderWrongOptionFilesForParse()
+    public function dataProviderWrongOptionFilesForParse()
     {
         return [
             [['files_for_parse' => []]],

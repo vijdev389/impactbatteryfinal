@@ -71,17 +71,17 @@ class ValidatorTest extends TestCase
      *
      * @return array
      */
-    public static function validateUserExpiresAtDataProvider(): array
+    public function validateUserExpiresAtDataProvider(): array
     {
         return [
             'default' => [
-                'locale' => 'en_US',
+                'locale_code' => 'en_US',
             ],
             'non_default_english_textual' => [
-                'locale' => 'de_DE',
+                'locale_code' => 'de_DE',
             ],
             'non_default_non_english_textual' => [
-                'locale' => 'uk_UA',
+                'locale_code' => 'uk_UA',
             ],
         ];
     }

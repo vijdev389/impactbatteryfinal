@@ -208,7 +208,7 @@ HTML;
     /**
      * @return array
      */
-    public static function toHtmlWithDropDownDataProvider(): array
+    public function toHtmlWithDropDownDataProvider(): array
     {
         return [
             [
@@ -253,7 +253,7 @@ HTML;
     /**
      * @return array
      */
-    public static function toHtmlWithCalendarDataProvider(): array
+    public function toHtmlWithCalendarDataProvider(): array
     {
         return [
             [

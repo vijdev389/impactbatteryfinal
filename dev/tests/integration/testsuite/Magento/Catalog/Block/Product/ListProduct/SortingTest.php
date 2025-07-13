@@ -96,7 +96,7 @@ class SortingTest extends TestCase
         string $sortBy,
         string $direction,
         array $expectation,
-        ?string $incompleteReason = null
+        string $incompleteReason = null
     ): void {
         if ($incompleteReason) {
             $this->markTestSkipped($incompleteReason);
@@ -119,7 +119,7 @@ class SortingTest extends TestCase
         string $sortBy,
         string $direction,
         array $expectation,
-        ?string $incompleteReason = null
+        string $incompleteReason = null
     ): void {
         if ($incompleteReason) {
             $this->markTestSkipped($incompleteReason);
@@ -130,51 +130,51 @@ class SortingTest extends TestCase
     /**
      * @return array
      */
-    public static function productListSortOrderDataProvider(): array
+    public function productListSortOrderDataProvider(): array
     {
         return [
             'default_order_price_asc' => [
-                'sortBy' => 'price',
+                'sort' => 'price',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple2', 'simple3'],
             ],
             'default_order_price_desc' => [
-                'sortBy' => 'price',
+                'sort' => 'price',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
             ],
             'default_order_position_asc' => [
-                'sortBy' => 'position',
+                'sort' => 'position',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple2', 'simple3'],
             ],
             'default_order_position_desc' => [
-                'sortBy' => 'position',
+                'sort' => 'position',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
             ],
             'default_order_name_asc' => [
-                'sortBy' => 'name',
+                'sort' => 'name',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple2', 'simple3'],
             ],
             'default_order_name_desc' => [
-                'sortBy' => 'name',
+                'sort' => 'name',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
             ],
             'default_order_custom_attribute_asc' => [
-                'sortBy' => 'test_configurable',
+                'sort' => 'test_configurable',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple3', 'simple2'],
-                'incompleteReason' => 'MC-33825:'
+                'incomplete_reason' => 'MC-33825:'
                     . 'Stabilize skipped test cases for Integration SortingTest with elasticsearch',
             ],
             'default_order_custom_attribute_desc' => [
-                'sortBy' => 'test_configurable',
+                'sort' => 'test_configurable',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
-                'incompleteReason' => 'MC-33825:'
+                'incomplete_reason' => 'MC-33825:'
                     . 'Stabilize skipped test cases for Integration SortingTest with elasticsearch',
             ],
         ];
@@ -196,7 +196,7 @@ class SortingTest extends TestCase
         string $direction,
         array $expectation,
         string $defaultSortBy,
-        ?string $incompleteReason = null
+        string $incompleteReason = null
     ): void {
         if ($incompleteReason) {
             $this->markTestSkipped($incompleteReason);
@@ -224,7 +224,7 @@ class SortingTest extends TestCase
         string $direction,
         array $expectation,
         string $defaultSortBy,
-        ?string $incompleteReason = null
+        string $incompleteReason = null
     ): void {
         if ($incompleteReason) {
             $this->markTestSkipped($incompleteReason);
@@ -252,59 +252,59 @@ class SortingTest extends TestCase
     /**
      * @return array
      */
-    public static function productListSortOrderDataProviderOnStoreView(): array
+    public function productListSortOrderDataProviderOnStoreView(): array
     {
         return [
             'default_order_price_asc' => [
-                'sortBy' => 'price',
+                'sort' => 'price',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple2', 'simple3'],
-                'defaultSortBy' => 'position'
+                'default_sort' => 'position'
             ],
             'default_order_price_desc' => [
-                'sortBy' => 'price',
+                'sort' => 'price',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
-                'defaultSortBy' => 'position'
+                'default_sort' => 'position'
             ],
             'default_order_position_asc' => [
-                'sortBy' => 'position',
+                'sort' => 'position',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple2', 'simple3'],
-                'defaultSortBy' => 'price'
+                'default_sort' => 'price'
             ],
             'default_order_position_desc' => [
-                'sortBy' => 'position',
+                'sort' => 'position',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
-                'defaultSortBy' => 'price'
+                'default_sort' => 'price'
             ],
             'default_order_name_asc' => [
-                'sortBy' => 'name',
+                'sort' => 'name',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple2', 'simple3'],
-                'defaultSortBy' => 'price'
+                'default_sort' => 'price'
             ],
             'default_order_name_desc' => [
-                'sortBy' => 'name',
+                'sort' => 'name',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
-                'defaultSortBy' => 'price'
+                'default_sort' => 'price'
             ],
             'default_order_custom_attribute_asc' => [
-                'sortBy' => 'test_configurable',
+                'sort' => 'test_configurable',
                 'direction' => 'asc',
                 'expectation' => ['simple1', 'simple3', 'simple2'],
-                'defaultSortBy' => 'price',
-                'incompleteReason' => 'MC-33825:'
+                'default_sort' => 'price',
+                'incomplete_reason' => 'MC-33825:'
                     . 'Stabilize skipped test cases for Integration SortingTest with elasticsearch',
             ],
             'default_order_custom_attribute_desc' => [
-                'sortBy' => 'test_configurable',
+                'sort' => 'test_configurable',
                 'direction' => 'desc',
                 'expectation' => ['simple3', 'simple2', 'simple1'],
-                'defaultSortBy' => 'price',
-                'incompleteReason' => 'MC-33825:'
+            'default_sort' => 'price',
+                'incomplete_reason' => 'MC-33825:'
                     . 'Stabilize skipped test cases for Integration SortingTest with elasticsearch',
             ],
         ];
@@ -426,18 +426,18 @@ class SortingTest extends TestCase
      *
      * @return array
      */
-    public static function productListWithOutOfStockSortOrderDataProvider(): array
+    public function productListWithOutOfStockSortOrderDataProvider(): array
     {
         return [
             'default_order_price_asc' => [
-                'sortBy' => 'price',
+                'sort' => 'price',
                 'direction' => Collection::SORT_ORDER_ASC,
-                'expected' => ['simple1', 'simple2', 'simple3', 'configurable'],
+                'expectation' => ['simple1', 'simple2', 'simple3', 'configurable'],
             ],
             'default_order_price_desc' => [
-                'sortBy' => 'price',
+                'sort' => 'price',
                 'direction' => Collection::SORT_ORDER_DESC,
-                'expected' => ['simple3', 'simple2', 'simple1', 'configurable'],
+                'expectation' => ['simple3', 'simple2', 'simple1', 'configurable'],
             ],
         ];
     }
