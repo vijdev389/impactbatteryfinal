@@ -21,6 +21,7 @@
     },
     "version": "2.4.6-p9",
     "require": {
+        "composer-runtime-api": "*",
         "amasty/base": "^1.20",
         "amasty/cron-schedule-list": "^1.0",
         "amasty/feed": "^4.1",
@@ -32,6 +33,7 @@
         "ctidigital/magento2-csp-whitelist": "^1.0",
         "cweagans/composer-patches": "^1.7",
         "doctrine/deprecations": "^1.1",
+        "elastic/transport": "^8.11",
         "extend/module-warranty": "^2.5",
         "iwd/dominate-saas": "^4.7",
         "magento/composer-dependency-version-audit-plugin": "^0.1.6",
