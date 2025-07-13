@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright 2018 Adobe.
+ * All rights reserved.
  */
 
 declare(strict_types=1);
@@ -73,7 +73,7 @@ class PublisherConsumerController
         array $consumers = [],
         array $appInitParams = [],
         ?int $maxMessages = null,
-        ClearQueueProcessor $clearQueueProcessor = null
+        ?ClearQueueProcessor $clearQueueProcessor = null
     ) {
         $this->consumers = $consumers;
         $this->publisher = $publisher;
@@ -203,7 +203,7 @@ class PublisherConsumerController
     {
         $i = 0;
         do {
-            sleep(5);
+            sleep(10);
             $assertion = call_user_func_array($condition, $params);
         } while (!$assertion && ($i++ < 50));
 

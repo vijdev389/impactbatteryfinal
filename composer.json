@@ -10,12 +10,13 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "magento/magento-composer-installer": true,
             "cweagans/composer-patches": true,
-            "magento/composer-root-update-plugin": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "magento/composer-dependency-version-audit-plugin": true,
-            "magento/inventory-composer-installer": true
+            "magento/composer-root-update-plugin": true,
+            "magento/inventory-composer-installer": true,
+            "magento/magento-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "version": "2.4.6-p9",
@@ -37,8 +38,8 @@
         "magefan/module-blog-comments-recaptcha": "^2.1",
         "magefan/module-blog-graph-ql": "^2.1",
         "magento/composer-dependency-version-audit-plugin": "~0.1",
-        "magento/composer-root-update-plugin": "^2.0",
-        "magento/product-community-edition": "2.4.6.p11",
+        "magento/composer-root-update-plugin": "^2.0.4",
+        "magento/product-community-edition": "2.4.7-p6",
         "magento/quality-patches": "^1.1",
         "mageplaza/module-delete-orders": "^4.0",
         "mageworx/module-seosuiteultimate": "^2.38",
@@ -70,26 +71,23 @@
             ]
         },
         "psr-4": {
-            "Magento\\": "app/code/Magento/",
-            "Magento\\Framework\\": "lib/internal/Magento/Framework/",
             "Magento\\Setup\\": "setup/src/Magento/Setup/"
         }
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "^2",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
         "dg/bypass-finals": "^1.4",
-        "friendsofphp/php-cs-fixer": "^3.8",
+        "friendsofphp/php-cs-fixer": "^3.22",
         "lusitanian/oauth": "^0.8",
         "magento/magento-coding-standard": "*",
-        "magento/magento2-functional-testing-framework": "^4.3.1",
+        "magento/magento2-functional-testing-framework": "^4.7",
         "pdepend/pdepend": "^2.10",
         "phpmd/phpmd": "^2.12",
         "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
-        "sebastian/comparator": "<=4.0.6",
         "sebastian/phpcpd": "^6.0",
-        "symfony/finder": "^5.4"
+        "symfony/finder": "^6.4"
     },
     "conflict": {
         "gene/bluefoot": "*"
