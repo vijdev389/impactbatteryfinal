@@ -21,7 +21,7 @@
     },
     "version": "2.4.6-p9",
     "require": {
-        "composer-runtime-api": "*",
+        "composer-runtime-api": "^2",
         "amasty/base": "^1.20",
         "amasty/cron-schedule-list": "^1.0",
         "amasty/feed": "^4.1",
