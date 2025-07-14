@@ -10,12 +10,13 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "magento/magento-composer-installer": true,
             "cweagans/composer-patches": true,
-            "magento/composer-root-update-plugin": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "magento/composer-dependency-version-audit-plugin": true,
-            "magento/inventory-composer-installer": true
+            "magento/composer-root-update-plugin": true,
+            "magento/inventory-composer-installer": true,
+            "magento/magento-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "version": "2.4.6-p9",
