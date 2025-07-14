@@ -86,7 +86,7 @@ class RedirectTest extends AbstractController
         libxml_use_internal_errors(true);
         if (!$document->loadHTML($response)) {
             throw new \InvalidArgumentException(
-                (string)__('The response format was incorrect. Should be valid HTML')
+                __('The response format was incorrect. Should be valid HTML')
             );
         }
         libxml_use_internal_errors(false);

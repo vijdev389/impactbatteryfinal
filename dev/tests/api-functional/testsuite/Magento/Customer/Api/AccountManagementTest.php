@@ -657,7 +657,6 @@ class AccountManagementTest extends WebapiAbstract
     public function testEmailAvailable()
     {
         $config = $this->objectManager->get(ScopeConfigInterface::class);
-
         $customerData = $this->_createCustomer();
 
         $serviceInfo = [
