@@ -64,6 +64,9 @@ class GetProductCategory
         if (!$this->_helper->getIsCategoryId($storeId)) {
             return is_string($primaryCategory) ? $primaryCategory : '';
         }
+        if (is_array($primaryCategory) && !empty($primaryCategory)) {
+            return $primaryCategory[$categoryAttribute] ?? "";
+        }
         if ($primaryCategory) {
             return $this->_getCategoryPath->execute($primaryCategory);
         }

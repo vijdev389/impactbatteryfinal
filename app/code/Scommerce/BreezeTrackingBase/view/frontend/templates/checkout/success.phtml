@@ -8,7 +8,7 @@ $helper = $viewModel->getHelper();
 if (!($helper->isEnabled() && $helper->isEnhancedEcommerceEnabled())) return;
 ?>
 
-<script data-breeze>
+<script data-breeze <?= $viewModel->getHelper()->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData"
@@ -18,11 +18,12 @@ if (!($helper->isEnabled() && $helper->isEnhancedEcommerceEnabled())) return;
         let data = <?php echo json_encode($viewModel->getPurchaseData())?>;
         tracking.setPurchaseData(data);
         tracking.fire('page_ready', tracking.getPageType()?.toLowerCase() || "purchase");
+
+        <?php if ($helper->isEnhancedConversionEnabled()): ?>
+        let conversionDataToSet = <?php echo json_encode($viewModel->getConversionData())?>;
+        let conversionItems = <?php echo json_encode($viewModel->getConversionItems()) ?>;
+        tracking.setData('conversion_items', conversionItems);
+        tracking.setData('conversion_pii', conversionDataToSet);
+        <?php endif; ?>
     });
 </script>
-
-<?php if ($helper->isEnhancedConversionEnabled()):?>
-    <script data-breeze>
-        var conversionData = <?php echo json_encode($viewModel->getConversionData())?>;
-    </script>
-<?php endif;?>

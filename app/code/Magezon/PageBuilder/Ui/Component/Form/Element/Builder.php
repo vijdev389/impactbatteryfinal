@@ -20,9 +20,6 @@ use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\PageBuilder\Model\Config as PageBuilderConfig;
-use Magento\PageBuilder\Model\Stage\Config as Config;
-use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 
 class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
@@ -66,17 +63,19 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         array $data = [],
         array $config = [],
         bool $overrideSnapshot = false,
-        Repository $assetRepo = null
+        ?Repository $assetRepo = null
     ) {
-        $this->registry   = $registry;
+        $this->registry = $registry;
         $this->dataHelper = $dataHelper;
 
+        $config['disableMagezonBuilder'] = false;
         if ($dataHelper->getConfig('general/enable')) {
             $config['ajax_data']['load_builder_url'] = 'mgzpagebuilder/builder/load';
             if (!isset($config['disableMagezonBuilder']) || !$config['disableMagezonBuilder']) {
                 $config['disableMagezonBuilder'] = $this->isDisableArea($context);
             }
-        } else {
+        }
+        if ($config['disableMagezonBuilder'] || !$dataHelper->getConfig('general/enable')) {
             $this->assetRepo = $assetRepo ?: ObjectManager::getInstance()->get(Repository::class);
             $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
 
@@ -86,7 +85,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
                     $attribute = $attrRepository->get($data['name']);
 
                     if ($attribute) {
-                        $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
+                        $config['wysiwyg'] = (bool) $attribute->getIsWysiwygEnabled();
                     }
                 } catch (NoSuchEntityException $e) {
                     $config['wysiwyg'] = true;
@@ -98,39 +97,43 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
                 && !$wysiwygConfigData['is_pagebuilder_enabled']
                 || false;
 
-            $pageBuilderState = ObjectManager::getInstance()->get(PageBuilderState::class);
-            if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder) && !$isShortDescription) {
-                $stageConfig = ObjectManager::getInstance()->get(Config::class);
-                // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
-                $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
+            if (class_exists('Magento\PageBuilder\Model\State', true)) {
+                $pageBuilderState = ObjectManager::getInstance()->get('\Magento\PageBuilder\Model\State');
+                $stageConfig = ObjectManager::getInstance()->get('\Magento\PageBuilder\Model\Stage\Config');
+                if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder) && !$isShortDescription) {
+                    // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
+                    $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 
-                // Override the templates to include our KnockoutJS code
-                $data['config']['template'] = 'ui/form/field';
-                $data['config']['elementTmpl'] = 'Magento_PageBuilder/form/element/wysiwyg';
-                $wysiwygConfigData = $stageConfig->getConfig();
-                $wysiwygConfigData['pagebuilder_button'] = true;
-                $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
-                $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
+                    // Override the templates to include our KnockoutJS code
+                    $data['config']['template'] = 'ui/form/field';
+                    $data['config']['elementTmpl'] = 'Magento_PageBuilder/form/element/wysiwyg';
+                    $wysiwygConfigData = $stageConfig->getConfig();
+                    $wysiwygConfigData['pagebuilder_button'] = true;
+                    $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
+                    $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
 
-                if ($overrideSnapshot) {
-                    $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
-                    $wysiwygConfigData['pagebuilder_content_snapshot'] = $pageBuilderConfig->isContentPreviewEnabled();
+                    if ($overrideSnapshot) {
+                        $pageBuilderConfig = ObjectManager::getInstance()->get('\Magento\PageBuilder\Model\Config');
+                        $wysiwygConfigData['pagebuilder_content_snapshot'] = $pageBuilderConfig->isContentPreviewEnabled();
+                    }
+
+                    // Add Classes for Page Builder Stage
+                    if (
+                        isset($wysiwygConfigData['pagebuilder_content_snapshot'])
+                        && $wysiwygConfigData['pagebuilder_content_snapshot']
+                    ) {
+                        $data['config']['additionalClasses'] = [
+                            'admin__field-wide admin__field-page-builder' => true
+                        ];
+                    }
+
+                    $data['config']['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?
+                        array_replace_recursive($config['wysiwygConfigData'], $wysiwygConfigData) :
+                        $wysiwygConfigData;
+                    $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
+
+                    $config['wysiwygConfigData'] = $wysiwygConfigData;
                 }
-
-                // Add Classes for Page Builder Stage
-                if (isset($wysiwygConfigData['pagebuilder_content_snapshot'])
-                    && $wysiwygConfigData['pagebuilder_content_snapshot']) {
-                    $data['config']['additionalClasses'] = [
-                        'admin__field-wide admin__field-page-builder' => true
-                    ];
-                }
-
-                $data['config']['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?
-                    array_replace_recursive($config['wysiwygConfigData'], $wysiwygConfigData) :
-                    $wysiwygConfigData;
-                $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
-
-                $config['wysiwygConfigData'] = $wysiwygConfigData;
             }
             $config['disableMagezonBuilder'] = true;
         }
@@ -165,7 +168,8 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         $namespace = $context->getNamespace();
         if ($excludeNamespaces = $this->dataHelper->getConfig('general/exclude_namespaces')) {
             $excludeNamespaces = explode("\n", str_replace("\r", "", $excludeNamespaces));
-            if (in_array($namespace, $excludeNamespaces)) return true;
+            if (in_array($namespace, $excludeNamespaces))
+                return true;
         }
 
         $isDisableArea = false;

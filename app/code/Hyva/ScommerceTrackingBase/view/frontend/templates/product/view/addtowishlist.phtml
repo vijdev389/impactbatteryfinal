@@ -35,6 +35,8 @@ $product = $currentProduct->get();
 if (!$product->getId() || !$wishlistViewModel->isEnabled()) {
     return;
 }
+
+$hyvaTrackingHelper = $this->helper('Hyva\ScommerceTrackingBase\Helper\Data');
 /**
  * When visiting wishlist/index/configure, the current class is Magento\Wishlist\Block\Item\Configure
  * In that case we take the form parameters from the existing wishlist item
@@ -45,21 +47,10 @@ $uniqueId = '_' . uniqid();
 <script>
     function initWishlist<?= /** @noEscape */ $uniqueId ?>() {
         return {
-            async trackAddToWishlist (productId) {
-                return fetch(BASE_URL + 'sctracking/index/addtowishlist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: "form_key=" + hyva.getFormKey() + "&itemId=" + productId + "&uenc=" + hyva.getUenc()
-                }).then((response) => response.json())
-                    .then((product) => {
-                        if (product == null) return;
-                        window.scTrackingContainer.setAddToWishlist(product);
-                    });
-            },
             addToWishlist(productId) {
-
+                <?php if ($hyvaTrackingHelper->isScommerceAjaxWishlistEnabled()): ?>
+                this.$dispatch('scom-add-product-to-wishlist', {productId: productId});
+                <?php else: ?>
                 var self = this;
                 const postParams = <?php if ($updateParams): ?>
                     <?= /* @noEscape */ $updateParams ?>
@@ -107,7 +98,7 @@ $uniqueId = '_' . uniqid();
                     "mode": "cors",
                     "credentials": "include"
                 }).then(async (response) => {
-                    let result = await self.trackAddToWishlist(productId);
+                    window.trackAddToWishlist(productId);
                     if (response.redirected) {
                         window.location.href = response.url;
                     } else if (response.ok) {
@@ -144,6 +135,7 @@ $uniqueId = '_' . uniqid();
                         }], 5000
                     );
                 });
+                <?php endif; ?>
             }
         }
     }

@@ -7,9 +7,13 @@ if (!$viewModel->isEnabled()) {
 }
 $productToWishlist = $viewModel->getProductToWishlist();
 $skipPageReady = $block->getSkipPageReady();
+$consentModeEnabled = $viewModel->isConsentModeEnabled();
+$consentModeData = $viewModel->getConsentCookiesConfiguration();
 ?>
 <script>
     let scUpdating = false, scClicked = false;
+    let consentModeConfig = <?= json_encode($consentModeData) ?>;
+    let defaultConsentSent = false;
     let ready = function (fn) {
         if (document.readyState !== 'loading') {
             fn();
@@ -17,6 +21,99 @@ $skipPageReady = $block->getSkipPageReady();
             document.addEventListener('DOMContentLoaded', fn);
         }
     };
+
+    function gtag(){dataLayer.push(arguments);}
+
+    function getCookie(name) {
+        let cookieArr = document.cookie.split(";");
+
+        for(let i = 0; i < cookieArr.length; i++) {
+            let cookiePair = cookieArr[i].split("=");
+
+            if(name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+
+        return null;
+    }
+
+    function sendConsentData() {
+        <?php if ($consentModeEnabled): ?>
+        let consentDefault = {};
+        let consentUpdate = {};
+        let instantUpdate = false;
+        for (var consent in consentModeConfig) {
+            consentDefault[consent] = consentModeConfig[consent]['default_value'];
+            consentUpdate[consent] = consentModeConfig[consent]['default_value'];
+            consentCookie = consentModeConfig[consent]['cookie_name'];
+            consentCookieValue = getCookie(consentCookie);
+            if (consentCookie === "" || consentCookieValue === undefined) {
+                consentValue = consentModeConfig[consent]['default_value'];
+            } else {
+                if (consentCookieValue == 1) {
+                    consentValue = 'granted';
+                } else {
+                    consentValue = 'denied';
+                }
+                if (consentValue !== consentModeConfig[consent]['default_value']) {
+                    instantUpdate = true;
+                    consentUpdate[consent] = consentValue;
+                }
+            }
+
+        }
+        if (sessionStorage.getItem('consentDefault') === null) {
+            //send default
+            if (!defaultConsentSent) {
+                gtag('consent', 'default', consentDefault);
+                sessionStorage.setItem('consentDefault', JSON.stringify(consentDefault));
+                defaultConsentSent = true;
+            }
+            //send update
+            if (instantUpdate) {
+                gtag('consent', 'update', consentUpdate);
+                sessionStorage.setItem('consentDefault', JSON.stringify(consentUpdate))
+            }
+        } else {
+            oldConsent = JSON.parse(sessionStorage.getItem('consentDefault'));
+            needUpdate = false;
+            consentDefault = {};
+            for (var consentConfig in consentModeConfig) {
+                consentCookie = consentModeConfig[consentConfig]['cookie_name'];
+                consentCookieValue = getCookie(consentCookie);
+                if (consentCookie === "" || consentCookieValue === undefined) {
+                    consentValue = consentModeConfig[consentConfig]['default_value'];
+                } else {
+                    if (consentCookieValue == 1) {
+                        consentValue = 'granted';
+                    } else {
+                        consentValue = 'denied';
+                    }
+                }
+                consentDefault[consentConfig] = consentValue;
+                if (oldConsent[consentConfig] == undefined) {
+                    needUpdate = true;
+                } else {
+                    if (oldConsent[consentConfig] !== consentValue) {
+                        needUpdate = true;
+                    }
+                }
+            }
+
+            if (!defaultConsentSent) {
+                gtag('consent', 'default', consentDefault);
+                sessionStorage.setItem('consentDefault', JSON.stringify(consentDefault));
+                defaultConsentSent = true;
+            } else {
+                if (needUpdate) {
+                    gtag('consent', 'update', consentDefault);
+                    sessionStorage.setItem('consentDefault', JSON.stringify(consentDefault));
+                }
+            }
+        }
+        <?php endif; ?>
+    }
 
     function _gaAddToCart() {
         if (scClicked === false) return;
@@ -39,20 +136,17 @@ $skipPageReady = $block->getSkipPageReady();
                 }).then((response) => response.json());
             }).catch(function (error) {
 
-            }).then(function () {
-                scUpdating = false;
-                scClicked = false;
-            });
+        }).then(function () {
+            scUpdating = false;
+            scClicked = false;
+        });
     }
 
-
-
     window.scTrackingContainer.setPageType('<?php echo $viewModel->getPageType($block) ?>');
+    window.scTrackingContainer.setSendDefaultList('<?php echo $viewModel->getSendDefaultList() ?>');
     window.scTrackingContainer.setDefaultList('<?php echo $viewModel->getDefaultList() ?>');
     window.scTrackingContainer.setCurrency('<?php echo $viewModel->getCurrency() ?>');
     window.scTrackingContainer.setData('isGuest', <?php echo $viewModel->isGuest() ?>);
-
-
 
     let promotions = [];
     let intCtr = 0;
@@ -62,36 +156,29 @@ $skipPageReady = $block->getSkipPageReady();
             _gaAddToCart();
         });
 
-        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/addtocart')
-            .then((response) => response.json())
-            .then((products) => {
-                if (products) {
-                    let cartData = products;
-                    if (cartData.length > 0 && Array.isArray(cartData)) {
-                        for (let i = 0; i < cartData.length; i++) {
-                            let impression = window.scTrackingContainer.getProductImpression(cartData[i].allSkus);
-                            cartData[i].list = impression;
-                            window.scTrackingContainer.sendQuoteImpression(cartData[i]['_realProductId'], impression);
-                        }
-                        window.scTrackingContainer.setAddToCart(cartData);
-                        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/unsaddtocart')
-                            .then((result) => {});
-                    }
-                }
-            });
+        document.addEventListener("scommerceCookieSaved", function () {
+            sendConsentData();
+        });
 
-        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/removefromcart')
-            .then((response) => response.json())
-            .then((product) => {
-                if (product) {
-                    let cartData = product;
-                    if (typeof cartData === 'object' && cartData.hasOwnProperty('id')) {
-                        window.scTrackingContainer.setRemoveFromCart(cartData);
-                        fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/unsremovefromcart')
-                            .then((result) => {});
-                    }
-                }
-            });
+        sendConsentData();
+
+        <?php if ($viewModel->getProductToBasket()):
+        $productToBasket = $viewModel->getProductToBasket();
+        ?>
+        let cartData = <?php echo json_encode($productToBasket) ?>;
+        <?php if (!isset($productToBasket[0]['list'])): ?>
+        for (let i = 0; i < cartData.length; i++) {
+            let impression = window.scTrackingContainer.getProductImpression(cartData[i].allSkus);
+            cartData[i].list = impression;
+            window.scTrackingContainer.sendQuoteImpression(cartData[i]['_realProductId'], impression);
+        }
+        <?php endif; ?>
+        window.scTrackingContainer.setAddToCart(cartData);
+        <?php endif; ?>
+
+        <?php if ($viewModel->getProductOutBasket()): ?>
+        window.scTrackingContainer.setRemoveFromCart(<?php echo $viewModel->getProductOutBasket() ?>);
+        <?php endif; ?>
 
         <?php if ($productToWishlist): ?>
         let wishlistData = <?php echo json_encode($productToWishlist) ?>;
@@ -136,12 +223,14 @@ $skipPageReady = $block->getSkipPageReady();
                 let name = element.dataset.name;
                 let creative = element.dataset.creative;
                 let position = element.dataset.position;
+                let slot = element.dataset.slot;
                 let promotion = {
                     'id': id,                         // Name or ID is required.
                     'name': name,
                     'creative': creative,
-                    'position': position
-                }
+                    'position': position,
+                    'slot': slot
+                };
                 promotions.push(promotion);
                 intCtr++;
                 element.addEventListener('click', function () {

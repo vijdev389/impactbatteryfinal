@@ -12,13 +12,12 @@ if (!$helper->isEnabled()) return;
 
 $viewModel = $block->getViewModel();
 $pageType = $viewModel->getPageType($block);
-$useUa = $helper->useUaEvents();
 $useGa4 = $helper->getAddGa4Events();
 ?>
 <?php echo $block->getChildHtml('scom_gtm_ga4'); ?>
 
 <!-- Scommerce Mage Google Tag Manager -->
-<script data-breeze>
+<script data-breeze <?= $helper->getNonce(); ?>>
     window.dataLayer = window.dataLayer || [];
     require([
         'jquery',
@@ -56,16 +55,12 @@ $useGa4 = $helper->getAddGa4Events();
                 }
             }
             if (needShowTag() == true && startGtm) {
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','<?php echo $helper->getAccountId() ?>');
+                <?php echo $block->getGtmScript(); ?>
             }
             <?php else: ?>
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','<?php echo $helper->getAccountId() ?>');
+                <?php echo $block->getGtmScript(); ?>
             <?php endif; ?>
-        }
+        };
         setTimeout(function () {
             window.scStartGTM();
         },1050);
@@ -85,6 +80,7 @@ $useGa4 = $helper->getAddGa4Events();
                 <?php if ($helper->getDynamicRemarketingEnabled()): ?>
                 let rdata = Remarketing(tracking, pageType, <?php echo $block->getRemarketingType() ?>, <?php echo $block->sendEcommCategoryPath() ?>);
                 let event = 'fireRemarketingTag_' + pageType;
+                dataLayer.push({ ecommerce: null });
                 dataLayer.push({
                     'event': event,
                     'google_tag_params': rdata
@@ -102,35 +98,9 @@ $useGa4 = $helper->getAddGa4Events();
                     }
                 });
                 <?php endif; ?>
-                <?php if ($useUa): ?>
-                dataLayer.push({ ecommerce: null });
-                dataLayer.push({ google_tag_params: null });
-                dataLayer.push({
-                    'ecommerce': {
-                        'promoView': {
-                            'promotions': data
-                        }
-                    }
-                });
-                <?php endif; ?>
             });
 
             tracking.subscribe('promo_click', function(data) {
-                <?php if ($useUa): ?>
-                dataLayer.push({
-                    'event': 'promotionClick',
-                    'ecommerce': {
-                        'promoClick': {
-                            'promotions': [{
-                                'id': data.id,
-                                'name': data.name,
-                                'creative': data.creative,
-                                'position': data.position
-                            }]
-                        }
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 dataLayer.push({ ecommerce: null });
                 dataLayer.push({
@@ -163,39 +133,24 @@ $useGa4 = $helper->getAddGa4Events();
                     });
                 }
                 <?php if ($useGa4): ?>
+                dataLayer.push({ ecommerce: null });
                 dataLayer.push({
                     'event': 'view_item_list',
                     'ecommerce': {
+                        'currency': tracking.getCurrency(),
                         'items': convertItemList(tracking, data)
-                    }
-                });
-                <?php endif; ?>
-                <?php if ($useUa): ?>
-                dataLayer.push({ ecommerce: null });
-                dataLayer.push({
-                    'ecommerce': {
-                        'currencyCode': tracking.getCurrency(),
-                        'impressions': impr
                     }
                 });
                 <?php endif; ?>
             });
 
             tracking.subscribe('listing_scroll', function(data) {
-                <?php if ($useUa): ?>
-                dataLayer.push({ ecommerce: null });
-                dataLayer.push({
-                    'event': 'listingScroll',
-                    'ecommerce': {
-                        'impressions': data
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 dataLayer.push({ ecommerce: null });
                 dataLayer.push({
                     'event': 'view_item_list',
                     'ecommerce': {
+                        'currency': tracking.getData('currency'),
                         'items': convertItemList(tracking, data)
                     }
                 });
@@ -203,24 +158,6 @@ $useGa4 = $helper->getAddGa4Events();
             });
 
             tracking.subscribe('item_click', function(data) {
-                <?php if ($useUa): ?>
-                dataLayer.push({
-                    'event': 'productClick',
-                    'ecommerce': {
-                        'click': {
-                            'actionField': {'list': data.list},
-                            'products': [{
-                                'name': data.name,
-                                'id': data.id,
-                                'price': tracking.formatPrice(data.price, false),
-                                'brand': data.brand,
-                                'category': data.category,
-                                'position': data.position
-                            }]
-                        }
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 dataLayer.push({ ecommerce: null });
                 let items = {
@@ -254,6 +191,7 @@ $useGa4 = $helper->getAddGa4Events();
             tracking.subscribe('view_item', function(data) {
                 let product = data;
                 <?php if ($useGa4): ?>
+                dataLayer.push({ ecommerce: null });
                 let items = {
                     item_name: product.name,
                     item_id: product.id,
@@ -276,32 +214,19 @@ $useGa4 = $helper->getAddGa4Events();
                 let content = {
                     'event': 'view_item',
                     'ecommerce': {
+                        'currency': tracking.getCurrency(),
+                        'value': tracking.formatPrice(product.price, false),
                         'items': [items]
                     }
                 };
                 dataLayer.push(content);
                 <?php endif; ?>
-                <?php if ($useUa): ?>
-                dataLayer.push({ ecommerce: null });
-                dataLayer.push({
-                    'ecommerce': {
-                        'detail': {
-                            'actionField': {'list': product.list},
-                            'products': [{
-                                name: product.name,
-                                id: product.id,
-                                price: tracking.formatPrice(product.price, false),
-                                brand: product.brand,
-                                category: product.category
-                            }]
-                        }
-                    }
-                });
-                <?php endif; ?>
             });
 
             tracking.subscribe('add_to_cart', function(data) {
                 let prods = [];
+                let currency = '';
+                let totalValue = 0;
                 for (let i = 0; i < data.length; i++) {
                     let prod = {
                         'name': data[i].name,
@@ -309,29 +234,20 @@ $useGa4 = $helper->getAddGa4Events();
                         'price': tracking.formatPrice(data[i].price, false),
                         'brand': data[i].brand,
                         'category': data[i].category,
-                        'quantity': data[i].qty
+                        'quantity': data[i].qty,
+                        'list': data[i].list
                     };
-                    if (tracking.getPageType() != 'product') {
-                        prod['list'] = data[i].list;
-                    }
+                    currency = data[i].currency;
+                    totalValue += data[i].price * data[i].qty;
                     prods.push(prod);
                 }
-                <?php if ($useUa): ?>
-                dataLayer.push({
-                    'event': 'addToCart',
-                    'ecommerce': {
-                        'currencyCode': tracking.getCurrency(),
-                        'add': {
-                            'products': prods
-                        }
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 dataLayer.push({ ecommerce: null });
                 dataLayer.push({
                     'event': 'add_to_cart',
                     'ecommerce': {
+                        'currency': currency,
+                        'value': totalValue,
                         'items': convertAddToCartItem(tracking, prods)
                     }
                 });
@@ -339,25 +255,6 @@ $useGa4 = $helper->getAddGa4Events();
             });
 
             tracking.subscribe('remove_from_cart', function(data) {
-                <?php if ($useUa): ?>
-                dataLayer.push({
-                    'event': 'removeFromCart',
-                    'ecommerce': {
-                        'currencyCode': tracking.getCurrency(),
-                        'remove': {
-                            'products': [{
-                                'name': data.name,
-                                'id': data.id,
-                                'price': tracking.formatPrice(data.price, false),
-                                'brand': data.brand,
-                                'category': data.category,
-                                'quantity': data.qty,
-                                'list': data.list
-                            }]
-                        }
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 dataLayer.push({ ecommerce: null });
                 let items = {
@@ -365,13 +262,15 @@ $useGa4 = $helper->getAddGa4Events();
                     item_id: data.id,
                     price: tracking.formatPrice(data.price, false),
                     item_brand: data.brand,
-                    quantity: data.qty
+                    quantity: data.qty,
+                    index: 1
                 };
                 if (tracking.getData('affiliation') !== '') {
                     items['affiliation'] = tracking.getData('affiliation');
                 }
                 if (tracking.getSendDefaultList() == "1" || tracking.getDefaultList() != data.list) {
                     items["item_list_name"] = data.list;
+                    items["item_list_id"] = tracking.getListId(data.list);
                 }
                 let categories = data.category.split('->');
                 items['item_category'] = categories[0];
@@ -382,9 +281,11 @@ $useGa4 = $helper->getAddGa4Events();
                 let content = {
                     'event': 'remove_from_cart',
                     'ecommerce': {
+                        'currency': tracking.getData('currency'),
+                        'value': items.price * items.quantity,
                         'items': [items]
                     }
-                }
+                };
                 dataLayer.push(content);
                 <?php endif; ?>
             });
@@ -423,6 +324,8 @@ $useGa4 = $helper->getAddGa4Events();
                 dataLayer.push({
                     'event': 'begin_checkout',
                     'ecommerce': {
+                        'currency': tracking.getData('currency'),
+                        'value': tracking.getData('total'),
                         'items': convertCheckoutItems(tracking, data)
                     }
                 });
@@ -430,18 +333,6 @@ $useGa4 = $helper->getAddGa4Events();
             <?php endif; ?>
 
             tracking.subscribe('checkout_step', function(data) {
-                <?php if ($useUa): ?>
-                dataLayer.push({ ecommerce: null });
-                dataLayer.push({
-                    'event': 'checkout',
-                    'ecommerce': {
-                        'checkout': {
-                            'actionField': {step: data.step, option: data.option},
-                            'products': data.products
-                        }
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 if (data.stepType == 'shipment') {
                     dataLayer.push({ecommerce: null});
@@ -473,17 +364,6 @@ $useGa4 = $helper->getAddGa4Events();
             });
 
             tracking.subscribe('checkout_option', function(data) {
-                <?php if ($useUa): ?>
-                dataLayer.push({ ecommerce: null });
-                dataLayer.push({
-                    'event': 'checkoutOption',
-                    'ecommerce': {
-                        'checkout_option': {
-                            'actionField': {step: data.step, option: data.option},
-                        }
-                    }
-                });
-                <?php endif; ?>
                 <?php if ($useGa4): ?>
                 if (data.stepType == 'shipment') {
                     dataLayer.push({ecommerce: null});
@@ -517,6 +397,7 @@ $useGa4 = $helper->getAddGa4Events();
             <?php if ($pageType === "purchase"): ?>
             let purchaseData = tracking.getPurchaseData();
             <?php if ($useGa4): ?>
+            dataLayer.push({ ecommerce: null });
             dataLayer.push({
                 'event': 'purchase',
                 'ecommerce': {
@@ -531,24 +412,19 @@ $useGa4 = $helper->getAddGa4Events();
                 }
             });
             <?php endif; ?>
-            <?php if ($useUa): ?>
-            dataLayer.push({ ecommerce: null });
+
+            <?php if ($block->isEnhancedConversionEnabled()): ?>
+            let conversionDataToSend = tracking.getData('conversion_pii');
+            let conversionItems = tracking.getData('conversion_items');
+
+            dataLayer.push({ecommerce: null});
             dataLayer.push({
-                'ecommerce': {
-                    'currencyCode': tracking.getCurrency(),
-                    'purchase': {
-                        'actionField': {
-                            'id': purchaseData.id,
-                            'affiliation': tracking.getData('affiliation'),
-                            'revenue': tracking.formatPrice(purchaseData.revenue, false),
-                            'tax': tracking.formatPrice(purchaseData.tax, false),
-                            'shipping': tracking.formatPrice(purchaseData.shipping, false),
-                            'coupon': purchaseData.coupon
-                        },
-                        'products': purchaseData.products
-                    }
-                }
+                'event': 'conversion_pii',
+                'items': conversionItems,
+                'conversionData': conversionDataToSend
             });
+
+            window.conversionData = conversionDataToSend;
             <?php endif; ?>
             <?php endif; ?>
 

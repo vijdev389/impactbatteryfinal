@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="quote_item" resource="default">
+    <column xsi:type="varchar" name="google_category" nullable="false" length="255" comment="Google Category Google Tag Manager Enhanced Ecommerce"/>
+    <column xsi:type="text" name="sc_tracking_data" nullable="false" comment="Tracking info"/>
+  </table>
+  <table name="sales_order_item" resource="default">
+    <column xsi:type="varchar" name="google_category" nullable="false" length="255" comment="Google Category Google Tag Manager Enhanced Ecommerce"/>
+  </table>
+</schema>

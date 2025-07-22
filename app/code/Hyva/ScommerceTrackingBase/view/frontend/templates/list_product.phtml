@@ -15,7 +15,7 @@ $_PICText = $helper->getPICText();
 $cats = $viewModel->getRemarketingCategories();
 ?>
 
-<script>
+<script <?= $viewModel->getNonce(); ?>>
     let intCtr2 = 0;
     let lastCtr = 0;
     let documentReady = function (fn) {
@@ -52,49 +52,27 @@ $cats = $viewModel->getRemarketingCategories();
         }
     };
     let scrollTop = function (el, value) {
-            if (value === undefined) {
-                return el.pageYOffset;
+        if (value === undefined) {
+            return el.pageYOffset;
+        } else {
+            if (el === window || el.nodeType === 9) {
+                el.scrollTo(el.pageXOffset, value);
             } else {
-                if (el === window || el.nodeType === 9) {
-                    el.scrollTo(el.pageXOffset, value);
-                } else {
-                    el.pageYOffset = value;
-                }
+                el.pageYOffset = value;
             }
         }
-    ;
-
-    let inviewport = function (element) {
-        var threshold = <?php echo $helper->getScrollThreshold(); ?>,
-            changed = false,
-            isVisible = function () {
-                var c = 'in-view',
-                    min = (threshold || 100) / 100,
-                    xMin = element.offsetWidth * min,
-                    yMin = element.offsetHeight * min,
-                    winPosX = scrollLeft(window) + window.innerWidth,
-                    winPosY = scrollTop(window) + window.innerHeight,
-                    elPosX = offset(element).left + xMin,
-                    elPosY = offset(element).top + yMin;
-                if (winPosX > elPosX && winPosY > elPosY) {
-                    element.classList.add(c);
-                }
-            };
-        windowReady(isVisible);
-        window.addEventListener('resize', function () {
-            changed = true;
-        });
-        window.addEventListener('scroll', function () {
-            changed = true;
-        });
-        setInterval(function () {
-            if (changed) {
-                changed = false;
-                isVisible();
-            }
-        }, 250);
     };
 
+    let isElementInViewport = function (element) {
+        const rect = element.getBoundingClientRect();
+        const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+        const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+        const vertInView = (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
+        const horInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
+
+        return (vertInView && horInView);
+    };
 
     window.scTrackingContainer.setData('category', '<?php echo $block->escapeJs($viewModel->getCategoryName()) ?>');
     window.scTrackingContainer.setData('category_full', '<?php echo $block->escapeJs($cats['full']) ?>');
@@ -110,38 +88,33 @@ $cats = $viewModel->getRemarketingCategories();
     documentReady(function () {
         let productItemsArray = Array.from(document.querySelectorAll('<?php echo $productItemClass?>'));
         productItemsArray.forEach(element => {
-            inviewport(element);
+            element.classList.add('in-view');
         });
     });
 
     let updateImpressions = function() {
-        let scrollImpressions = [];
-        intCtr2 = 0;
-        lastCtr = 0;
-        document.querySelectorAll('.in-view').forEach(element => {
-            let classNames = element.getAttribute('class');
-            window.scTrackingContainer.getData('productList').forEach(function (product, index) {
-                let pos = classNames.indexOf('impressionSent');
-                if (pos < 0 && index >= intCtr2) {
-                    element.classList.add('impressionSent');
-                    let impression = {
-                        'id': product.id,
-                        'name': product.name,
-                        'price': product.price,
-                        'category': product.category,
-                        'brand': product.brand,
-                        'list': product.list,
-                        'position': product.position
-                    }
-                    scrollImpressions.push(impression);
-                    intCtr2++;
-                    return false;
-                }
-            });
-        });
-        if (intCtr2 > 0 && lastCtr < intCtr2) {
+        notSentItems = document.querySelectorAll('.in-view:not(.impressionSent)');
+        sentItems = document.querySelectorAll('.impressionSent');
+        products = window.scTrackingContainer.getData('productList');
+        scrollImpressions = [];
+        for (let i = 0; i < notSentItems.length; i++) {
+            if (isElementInViewport(notSentItems[i])) {
+                product = products[sentItems.length + i];
+                let impression = {
+                    'id': product.id,
+                    'name': product.name,
+                    'price': product.price,
+                    'category': product.category,
+                    'brand': product.brand,
+                    'list': product.list,
+                    'position': product.position
+                };
+                scrollImpressions.push(impression);
+                notSentItems[i].classList.add('impressionSent');
+            }
+        }
+        if (scrollImpressions.length !== 0) {
             window.scTrackingContainer.fire('listing_scroll', scrollImpressions);
-            lastCtr = intCtr2;
         }
     };
     window.addEventListener('scroll', updateImpressions);

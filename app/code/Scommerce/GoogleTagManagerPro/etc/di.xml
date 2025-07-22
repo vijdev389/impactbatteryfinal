@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2020 Scommerce Mage. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-	<type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
-		<plugin name="convert_from_quote_item_to_order_item" type="Scommerce\GoogleTagManagerPro\Model\Plugin\QuoteItemToOrderItem"/>
-	</type>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="scommerce_gtm_set_primary_category" xsi:type="object">Scommerce\GoogleTagManagerPro\Console\Command\SetPrimaryCategory</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

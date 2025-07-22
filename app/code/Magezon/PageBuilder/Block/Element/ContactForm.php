@@ -22,17 +22,25 @@ class ContactForm extends \Magezon\Builder\Block\Element
      */
     public function getContactFormHtml()
     {
+        $uniqId = uniqid('contactForm', true);
+        $sanitizedUniqId = str_replace([',', '.'], ['', ''], $uniqId);
+
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $viewModel = $objectManager->get(\Magento\Contact\ViewModel\UserDataProvider::class);
+        $buttonLockManager = null;
+        if (class_exists('\Magento\Framework\View\Element\ButtonLockManager')) {
+            $buttonLockManager = $objectManager->get(\Magento\Framework\View\Element\ButtonLockManager::class);
+        }
         $contactForm = $this->getLayout()->createBlock(
             \Magento\Contact\Block\ContactForm::class,
-            'contactForm',
+            $sanitizedUniqId,
             [
                 'data' => [
-                    'view_model' => $viewModel
+                    'view_model' => $viewModel,
+                    'button_lock_manager' => $buttonLockManager
                 ]
             ]
-        )->setTemplate('Magento_Contact::form.phtml');
+        )->setTemplate('Magezon_Builder::contact/form.phtml');
 
         return $contactForm->toHtml();
     }
@@ -43,7 +51,7 @@ class ContactForm extends \Magezon\Builder\Block\Element
     public function getAdditionalStyleHtml()
     {
         $styleHtml = '';
-        $element   = $this->getElement();
+        $element = $this->getElement();
 
         $styles = [];
         $styles['width'] = $this->getStyleProperty($element->getData('form_width'), true);

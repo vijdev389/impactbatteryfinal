@@ -73,7 +73,7 @@ if ($hoverEffect) $classes[] = 'mgz-image-hovers';
 			<a href="<?= $slideLink['url'] ?>" class="overlay-link" title="<?= $block->escapeHtml($slideLink['title']) ?>" <?= $slideLink['blank'] ? 'target="_blank"' : '' ?> <?= $slideLink['nofollow'] ? 'rel="nofollow"' : '' ?>></a>
 			<?php } ?>
 			<?php if ($backgroundType == 'local' && $localLink) { ?>
-				<video <?= $controls ? 'controls' : '' ?>  <?= $autoPlay ? 'data-autoplay="true"' : '' ?> <?= $loop ? 'loop' : '' ?> <?= $autoPlay ? 'muted' : '' ?>>
+				<video <?= $controls ? 'controls' : '' ?>  <?= $autoPlay ? 'autoplay' : '' ?> <?= $loop ? 'loop' : '' ?> <?= $autoPlay ? 'muted' : '' ?> playsinline>
 					<source src="<?=  $localLink ?>" type="video/mp4">
 					<?= __('Your browser does not support the video tag.') ?>
 				</video>
@@ -171,6 +171,6 @@ if ($hoverEffect) $classes[] = 'mgz-image-hovers';
 </div>
 <script>
 	require(['jquery', 'Magezon_PageBuilder/js/slider'], function($) {
-		$('#<?= $id ?>').slider(<?= $coreHelper->serialize($carouselOptions) ?>);
+		$('#<?= $id ?>').sliders(<?= $coreHelper->serialize($carouselOptions) ?>);
 	})
 </script>

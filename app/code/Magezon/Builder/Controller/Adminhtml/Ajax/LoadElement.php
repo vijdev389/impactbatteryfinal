@@ -47,6 +47,11 @@ class LoadElement extends \Magento\Backend\App\Action
     protected $elements;
 
     /**
+     * @var \Magezon\Core\Helper\Data
+     */
+    protected $coreHelper;
+
+    /**
      * @param \Magento\Backend\App\Action\Context             $context          
      * @param \Magento\Framework\Controller\Result\RawFactory $resultRawFactory 
      * @param \Magento\Store\Model\App\Emulation              $appEmulation     

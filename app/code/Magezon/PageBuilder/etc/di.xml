@@ -266,7 +266,7 @@
 					<item name="builder_description" xsi:type="string">{{ 'Show Pin counts: ' + element.show_pin_counts }}</item>
 					<item name="demo_link" xsi:type="string">http://192.168.1.107/magezon/pagebuilder/pinterest</item>
 				</item>
-				<item name="instagram" xsi:type="array">
+				<!-- <item name="instagram" xsi:type="array">
 					<item name="name" xsi:type="string" translate="true">Instagram</item>
 					<item name="class" xsi:type="string">Magezon\PageBuilder\Data\Element\Instagram</item>
 					<item name="block" xsi:type="string">Magezon\PageBuilder\Block\Element\Instagram</item>
@@ -280,7 +280,7 @@
 					</item>
 					<item name="description" xsi:type="string">Image feed from usename or hashtag</item>
 					<item name="demo_link" xsi:type="string">http://192.168.1.107/magezon/pagebuilder/instagram</item>
-				</item>
+				</item> -->
 				<item name="flickr" xsi:type="array">
 					<item name="name" xsi:type="string" translate="true">Flickr Widget</item>
 					<item name="class" xsi:type="string">Magezon\PageBuilder\Data\Element\Flickr</item>

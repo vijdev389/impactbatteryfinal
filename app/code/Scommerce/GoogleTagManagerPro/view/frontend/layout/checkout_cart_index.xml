@@ -7,16 +7,6 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="head.additional">
-            <block class="Scommerce\GoogleTagManagerPro\Block\Script" name="scommerce.gtm.cart" template="script.phtml">
-                <action method="setPageType">
-                    <argument name="prefix" xsi:type="string">cart</argument>
-                </action>
-            </block>
-			<referenceBlock name="scommerce.gtm.other" remove="true"/>
-        </referenceContainer>
-        <referenceContainer name="before.body.end">
-            <block class="Magento\Framework\View\Element\Template" name="scommerce.gtm.cart.crosssell" template="Scommerce_GoogleTagManagerPro::crosssell.phtml" />
-        </referenceContainer>
+        <move element="google_tag_manager_pro_js" destination="head.additional" after="scommerce_tracking_base_cart" />
     </body>
 </page>

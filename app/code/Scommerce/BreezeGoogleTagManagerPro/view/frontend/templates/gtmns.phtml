@@ -6,6 +6,10 @@
 <?php
 $helper = $this->getHelper();?>
 <!-- Scommerce Mage Google Tag Manager -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo $helper->getAccountId() ?>"
-				  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<?php if ($helper->isServerSideEnabled()): ?>
+    <?php echo $helper->getServerSideScriptNoScript() ?>
+<?php else: ?>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo $helper->getAccountId() ?>"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<?php endif; ?>
 <!-- Scommerce Mage End Google Tag Manager -->

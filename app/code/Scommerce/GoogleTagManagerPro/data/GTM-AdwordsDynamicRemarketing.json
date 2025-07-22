@@ -11,7 +11,7 @@
       "accountId": "565186682",
       "containerId": "2739889",
       "name": "magento2.scommerce-mage.co.uk",
-      "publicId": "GTM-PTN7FN",
+      "publicId": "GTM-XXXXX",
       "usageContext": [
         "WEB"
       ],
@@ -49,6 +49,41 @@
         "tagFiringOption": "ONCE_PER_EVENT"
       },
       {
+        "accountId": "565186682",
+        "containerId": "2739889",
+        "tagId": "188",
+        "name": "Conversion Linker Tag",
+        "type": "gclidw",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "enableCrossDomain",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableUrlPassthrough",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableCookieOverrides",
+            "value": "false"
+          }
+        ],
+        "fingerprint": "1649331828311",
+        "firingTriggerId": [
+          "2147479553"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        }
+      },
+      {
         "accountId": "164412618",
         "containerId": "1892935",
         "tagId": "13",
@@ -76,6 +111,61 @@
           "16"
         ],
         "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "565186682",
+        "containerId": "2739889",
+        "tagId": "396",
+        "name": "AdWords Dynamic Remarketing Checkout",
+        "type": "sp",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "enableConversionLinker",
+            "value": "true"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableDynamicRemarketing",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVariable",
+            "value": "{{google_tag_params}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "conversionCookiePrefix",
+            "value": "_gcl"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "conversionId",
+            "value": "{{conversionID}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "customParamsFormat",
+            "value": "DATA_LAYER"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "rdp",
+            "value": "false"
+          }
+        ],
+        "fingerprint": "1682088221960",
+        "firingTriggerId": [
+          "235"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        }
       },
       {
         "accountId": "164412618",
@@ -404,6 +494,48 @@
           }
         ],
         "fingerprint": "1470859507415"
+      },
+      {
+        "accountId": "565186682",
+        "containerId": "2739889",
+        "triggerId": "235",
+        "name": "Remarketing Tag Checkout",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "fireRemarketingTag_checkout"
+              }
+            ]
+          }
+        ],
+        "filter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "fireRemarketingTag_checkout"
+              }
+            ]
+          }
+        ],
+        "fingerprint": "1676558553653"
       },
       {
         "accountId": "164412618",

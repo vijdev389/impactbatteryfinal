@@ -28,6 +28,8 @@ use Scommerce\TrackingBase\Model\GetProductPrice;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Quote\Model\QuoteRepository;
 use Scommerce\TrackingBase\Model\GetProductVariant;
+use Magento\SalesRule\Model\Coupon;
+use Magento\SalesRule\Model\Rule;
 
 /**
  * Class Cart
@@ -95,6 +97,9 @@ class Success extends DataObject implements ArgumentInterface
      */
     protected $_getProductVariant;
 
+    protected $coupon;
+    protected $salesRule;
+
     /**
      * @param Data $helper
      * @param GetProductCategory $getCategory
@@ -124,6 +129,8 @@ class Success extends DataObject implements ArgumentInterface
         QuoteRepository $quoteRepository,
         GetProductId $getProductId,
         GetProductVariant $getProductVariant,
+        Coupon $coupon,
+        Rule $salesRule,
         array $data = []
     ) {
         $this->_helper = $helper;
@@ -137,6 +144,8 @@ class Success extends DataObject implements ArgumentInterface
         $this->_quoteRepository = $quoteRepository;
         $this->_getProductId = $getProductId;
         $this->_getProductVariant = $getProductVariant;
+        $this->coupon = $coupon;
+        $this->salesRule = $salesRule;
         parent::__construct($data);
     }
 
@@ -167,7 +176,13 @@ class Success extends DataObject implements ArgumentInterface
     {
         $_products = [];
         $order = $this->getOrder();
-        foreach ($order->getAllItems() as $item) {
+        $itemsDiscounted = false;
+        $salesRule = false;
+        if ($order->getCouponCode()) {
+            $salesRule = $this->getSalesRuleByCode($order->getCouponCode());
+            $itemsDiscounted = true;
+        }
+        foreach ($order->getAllVisibleItems() as $item) {
             if ($item->getParentItemId()) {
                 continue;
             }
@@ -177,10 +192,18 @@ class Success extends DataObject implements ArgumentInterface
             $category = $this->_getProductCategory->execute($item->getProduct());
             $quoteItem = $this->getQuoteItem($item->getQuoteItemId(), $order->getQuoteId());
             $list = $this->_helper->getImpressionListFromQuoteItem($quoteItem);
+            $price = $this->_getProductPrice->executeByItem($quoteItem);
+            if ($item->getDiscountAmount() <> 0) {
+                if ($this->_helper->sendBaseData()) {
+                    $price = $item->getBasePrice() - $item->getBaseDiscountAmount() / $item->getQtyOrdered();
+                } else {
+                    $price = $item->getPrice() - $item->getDiscountAmount() / $item->getQtyOrdered();
+                }
+            }
             $_products[] = [
                 'name' => $this->_helper->escapeJsQuote(trim($name)),
                 'id' => $this->_helper->escapeJsQuote($id),
-                'price' => $this->_getProductPrice->execute($item),
+                'price' => $price,
                 'brand' => $this->_helper->escapeJsQuote($brand),
                 'category' => $this->_helper->escapeJsQuote($category),
                 'quantity' => $item->getQtyOrdered(),
@@ -191,7 +214,73 @@ class Success extends DataObject implements ArgumentInterface
         }
         $result = $this->getBasicData();
         $result['products'] = $_products;
+        if ($itemsDiscounted) {
+            $shippingAmount = $order->getShippingAmount();
+            $baseShippingAmount = $order->getBaseShippingAmount();
+            $taxAmount = $order->getTaxAmount() + $order->getDiscountTaxCompensationAmount();
+            $baseTaxAmount = $order->getBaseTaxAmount() + $order->getBaseDiscountTaxCompensationAmount();
+            if ($salesRule && $salesRule->getApplyToShipping()) {
+                $shippingAmount = $shippingAmount - $order->getShippingDiscountAmount();
+                $baseShippingAmount = $baseShippingAmount - $order->getBaseShippingDiscountAmount();
+            }
+            $orderAmount = $order->getGrandTotal() - $shippingAmount;
+            $baseOrderAmount = $order->getBaseGrandTotal() - $baseShippingAmount;
+
+            $orderAmount = $this->_helper->isOrderTotalIncludedVAT() ? $orderAmount : $orderAmount - $taxAmount;
+            $baseOrderAmount = $this->_helper->isOrderTotalIncludedVAT() ? $baseOrderAmount : $baseOrderAmount - $baseTaxAmount;
+
+            $result['revenue'] = $this->_helper->sendBaseData() ? $baseOrderAmount : $orderAmount;
+            $result['shipping'] = $this->_helper->sendBaseData() ? $baseShippingAmount : $shippingAmount;
+        }
         return $result;
+    }
+
+    protected function getSalesRuleByCode($couponCode)
+    {
+        $ruleId = $this->coupon->loadByCode($couponCode)->getRuleId();
+        $salesRule = $this->salesRule->load($ruleId);
+        return $salesRule;
+    }
+
+    public function getConversionItems()
+    {
+        $order = $this->getOrder();
+        $conversionItems = [];
+
+        foreach ($order->getAllVisibleItems() as $item) {
+            $id = $this->_getProductId->execute($item);
+            $qty = (int)$item->getQtyOrdered();
+            if ($item->getDiscountAmount() <> 0) {
+                if ($this->_helper->sendBaseData()) {
+                    $baseDiscountCompensation = $item->getBaseDiscountTaxCompensationAmount();
+                    $price = $item->getBasePriceInclTax() - ($item->getBaseDiscountAmount() + ($baseDiscountCompensation ?? 0))  / $qty;
+                    $priceExclTax = $item->getBasePrice() - $item->getBaseDiscountAmount() / $qty;
+                } else {
+                    $discountCompensation = $item->getDiscountTaxCompensationAmount();
+                    $price = $item->getPriceInclTax() - ($item->getDiscountAmount() + ($discountCompensation ?? 0)) / $qty;
+                    $priceExclTax = $item->getPrice() - $item->getDiscountAmount() / $qty;
+                }
+            } else {
+                if ($this->_helper->sendBaseData()) {
+                    $price = $item->getBasePriceInclTax();
+                    $priceExclTax = $item->getBasePrice();
+                } else {
+                    $price = $item->getPriceInclTax();
+                    $priceExclTax = $item->getPrice();
+                }
+            }
+            $price = number_format((float)$price,2, '.', '');
+            $priceExclTax = number_format((float)$priceExclTax, 2, '.', '');
+
+            $conversionItems[] = [
+                'id' => $id,
+                'price' => $price,
+                'price_excl_tax' => $priceExclTax,
+                'qty' => $qty
+            ];
+        }
+
+        return $conversionItems;
     }
 
     /**
@@ -202,12 +291,18 @@ class Success extends DataObject implements ArgumentInterface
         $order = $this->getOrder();
         if ($this->_helper->sendBaseData()) {
             $orderCurrency = $order->getBaseCurrencyCode();
-            $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getBaseGrandTotal() : $order->getBaseGrandTotal() - $order->getBaseTaxAmount();
+            $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getBaseGrandTotal() - $order->getBaseShippingAmount() : $order->getBaseGrandTotal() - $order->getBaseTaxAmount() - $order->getBaseShippingAmount();
+            if ($order->getBaseDiscountAmount() <> 0) {
+                $orderGrandTotal = $order->getBaseGrandTotal();
+            }
             $orderShippingTotal = $order->getBaseShippingAmount();
             $orderTax = $order->getBaseTaxAmount();
         } else {
             $orderCurrency = $order->getOrderCurrencyCode();
-            $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getGrandTotal() : $order->getGrandTotal() - $order->getTaxAmount();
+            $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getGrandTotal() - $order->getShippingAmount() : $order->getGrandTotal() - $order->getTaxAmount() - $order->getShippingAmount();
+            if ($order->getDiscountAmount() <> 0) {
+                $orderGrandTotal = $order->getGrandTotal();
+            }
             $orderShippingTotal = $order->getShippingAmount();
             $orderTax = $order->getTaxAmount();
         }
@@ -234,15 +329,15 @@ class Success extends DataObject implements ArgumentInterface
         $firstnamehash =  hash('sha256', $firstname);
         $lastname = $order->getBillingAddress()->getLastname();
         $lastnamehash =  hash('sha256', $lastname);
-        
+
         $resultArray = [
             'email' => $email,
-            'emailhash' => $emailhash,
+            'sha256_email_address' => $emailhash,
             'address' => [
                 'first_name' => $firstname,
-                'first_namehash' => $firstnamehash,
+                'sha256_first_name' => $firstnamehash,
                 'last_name' => $lastname,
-                'last_namehash' => $lastnamehash,
+                'sha256_last_name' => $lastnamehash,
                 'street' => implode(', ', $order->getBillingAddress()->getStreet()),
                 'city' => $order->getBillingAddress()->getCity(),
                 'postal_code' => $order->getBillingAddress()->getPostcode(),
@@ -255,8 +350,42 @@ class Success extends DataObject implements ArgumentInterface
         if ($phone = $order->getBillingAddress()->getTelephone()) {
             $phonehash =  hash('sha256', $phone);
             $resultArray['phone_number'] = $phone;
-            $resultArray['phone_numberhash'] = $phonehash;
+            $resultArray['sha256_phone_number'] = $phonehash;
         }
+        $resultArray['currency'] = $this->_helper->sendBaseData() ? $order->getBaseCurrencyCode() : $order->getOrderCurrencyCode();
+        $resultArray['transaction_id'] = $order->getIncrementId();
+
+        if ($order->getCouponCode()) {
+            $salesRule = $this->getSalesRuleByCode($order->getCouponCode());
+            $shippingAmount = $order->getShippingAmount();
+            $baseShippingAmount = $order->getBaseShippingAmount();
+            $taxAmount = $order->getTaxAmount() + $order->getDiscountTaxCompensationAmount();
+            $baseTaxAmount = $order->getBaseTaxAmount() + $order->getBaseDiscountTaxCompensationAmount();
+            if ($salesRule && $salesRule->getApplyToShipping()) {
+                $shippingAmount = $shippingAmount - $order->getShippingDiscountAmount();
+                $baseShippingAmount = $baseShippingAmount - $order->getBaseShippingDiscountAmount();
+            }
+            if ($this->_helper->sendBaseData()) {
+                $resultArray['revenue_with_vat_and_shipping'] = number_format((float)$order->getBaseGrandTotal(), 2, '.','');
+                $resultArray['revenue_without_vat_and_shipping'] = number_format(
+                    (float)$order->getBaseGrandTotal() - $baseTaxAmount - $baseShippingAmount,
+                    2, '.','');
+            } else {
+                $resultArray['revenue_with_vat_and_shipping'] = number_format((float)$order->getGrandTotal(), 2, '.','');;
+                $resultArray['revenue_without_vat_and_shipping'] = number_format(
+                    (float)$order->getGrandTotal() - $taxAmount - $shippingAmount,
+                    2, '.','');
+            }
+        } else {
+            if ($this->_helper->sendBaseData()) {
+                $resultArray['revenue_with_vat_and_shipping'] = number_format((float)$order->getBaseGrandTotal(), 2, '.', '');
+                $resultArray['revenue_without_vat_and_shipping'] = number_format((float)$order->getBaseSubtotal(), 2, '.', '');
+            } else {
+                $resultArray['revenue_with_vat_and_shipping'] = number_format((float)$order->getGrandTotal(), 2, '.', '');
+                $resultArray['revenue_without_vat_and_shipping'] = number_format((float)$order->getSubtotal(), 2, '.', '');
+            }
+        }
+
         return $resultArray;
     }
 

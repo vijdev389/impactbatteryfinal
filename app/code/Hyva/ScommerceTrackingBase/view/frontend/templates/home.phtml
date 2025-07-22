@@ -8,6 +8,6 @@ $viewModel = $block->getData('view_model');
 if (!$viewModel->isEnabled()) return;
 ?>
 
-<script>
+<script <?= $viewModel->getNonce(); ?>>
     window.scTrackingContainer.fire('home_page', window.scTrackingContainer.getPageType().toLowerCase());
 </script>

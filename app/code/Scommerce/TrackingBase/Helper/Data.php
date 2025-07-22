@@ -17,7 +17,8 @@ use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
-
+use Magento\Framework\Serialize\SerializerInterface;
+use Scommerce\CspHelper\Helper\CspHelper;
 /**
  * Class Data
  * @package Scommerce\TrackingBase\Helper
@@ -29,6 +30,8 @@ class Data extends AbstractHelper
     /** Admin configuration paths */
     const XML_PATH_ENABLED                  = 'scommerce_trackingbase/general/active';
     const XML_PATH_BASE                     = 'scommerce_trackingbase/general/base';
+    const XML_PATH_CONSENT_MODE             = 'scommerce_trackingbase/general/consent_mode';
+    const XML_PATH_CONSENT_MODE_COOKIES     = 'scommerce_trackingbase/general/consent_mode_configuration';
     const XML_PATH_ENHANCED_ECOMMERCE       = 'scommerce_trackingbase/general/enhanced_ecommerce_enabled';
     const XML_PATH_ENHANCED_CONVERSION       = 'scommerce_trackingbase/general/enhanced_conversion_enabled';
     const XML_PATH_PRODUCT_ID_ATTRIBUTE     = 'scommerce_trackingbase/general/attribute_key';
@@ -44,6 +47,7 @@ class Data extends AbstractHelper
     const XML_PATH_FULL_LIST                = 'scommerce_trackingbase/general/full_list_name';
     const XML_PATH_SEND_DEFAULT_LIST        = 'scommerce_trackingbase/general/send_default_list';
     const XML_PATH_SEND_ADMIN_ORDERS        = 'scommerce_trackingbase/general/send_admin_orders';
+    const XML_PATH_SEND_REFUND_ON_ORDER_CANCELLATION = 'scommerce_trackingbase/general/send_refund_on_order_cancellation';
     const XML_PATH_ADMIN_SOURCE             = 'scommerce_trackingbase/general/admin_source';
     const XML_PATH_ADMIN_MEDIUM             = 'scommerce_trackingbase/general/admin_medium';
     const XML_PATH_ENHANCED_SIOS            = 'scommerce_trackingbase/general/send_impression_on_scroll';
@@ -55,7 +59,6 @@ class Data extends AbstractHelper
 
     const XML_PATH_CHECKOUT_ADD_CARRIER_TITLE   = 'scommerce_trackingbase/checkout/add_carrier_title';
     const XML_PATH_CHECKOUT_ADD_PAYMENT_TITLE   = 'scommerce_trackingbase/checkout/add_payment_title';
-    const XML_PATH_CHECKOUT_STEPS               = 'scommerce_trackingbase/checkout/steps';
 
     /**
      * @var StoreManagerInterface
@@ -72,6 +75,10 @@ class Data extends AbstractHelper
      */
     protected $_block;
 
+    protected $_serializer;
+
+    protected $cspHelper;
+
     /**
      * Data constructor.
      * @param Context $context
@@ -83,12 +90,16 @@ class Data extends AbstractHelper
         Context $context,
         StoreManagerInterface $storeManager,
         PriceCurrencyInterface $priceCurrency,
-        Template $block
+        Template $block,
+        SerializerInterface $serializer,
+        CspHelper $cspHelper
     ) {
         parent::__construct($context);
         $this->_storeManager = $storeManager;
         $this->_priceCurrency = $priceCurrency;
         $this->_block = $block;
+        $this->_serializer = $serializer;
+        $this->cspHelper = $cspHelper;
     }
 
     /**
@@ -104,6 +115,40 @@ class Data extends AbstractHelper
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    public function getNonce()
+    {
+        return $this->cspHelper->generateNonce();
+    }
+
+    public function isConsentModeEnabled($storeId = null)
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_CONSENT_MODE,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    public function getConsentCookiesConfiguration($storeId = null)
+    {
+        $raw = $this->scopeConfig->getValue(
+            self::XML_PATH_CONSENT_MODE_COOKIES,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        if (empty($raw)) {
+            return [];
+        }
+        if (!$values = $this->_serializer->unserialize($raw)) {
+            return [];
+        }
+        $data = [];
+        foreach ($values as $value) {
+            $data[$value['consent_param']] = ['default_value' => $value['default_value'], 'cookie_name' => $value['cookie_name']];
+        }
+        return $data;
     }
 
     public function getSliderText($storeId = null)
@@ -144,6 +189,13 @@ class Data extends AbstractHelper
             $storeId
         );
     }
+
+    /**
+     * Returns whether enhanced conversion is enabled or not
+     *
+     * @param null $storeId
+     * @return bool
+     */
 
     /**
      * Returns whether base order data is enabled or not
@@ -200,7 +252,7 @@ class Data extends AbstractHelper
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
-        if (trim($value) == '') {
+        if (is_null($value) || trim($value) == '') {
             return 'sku';
         }
         return $value;
@@ -218,7 +270,7 @@ class Data extends AbstractHelper
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
-        if (trim($value) == '') {
+        if ($value && trim($value) == '') {
             return 'product_primary_category';
         }
         return $value;
@@ -302,9 +354,9 @@ class Data extends AbstractHelper
      * Returns default category list name
      *
      * @param null $storeId
-     * @return string
+     * @return mixed
      */
-    public function getDefaultList($storeId = null): string
+    public function getDefaultList($storeId = null)
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_DEFAULT_LIST,
@@ -315,9 +367,9 @@ class Data extends AbstractHelper
 
     /**
      * @param $storeId
-     * @return string
+     * @return mixed
      */
-    public function getSendFullList($storeId = null): string
+    public function getSendFullList($storeId = null)
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_FULL_LIST,
@@ -328,9 +380,9 @@ class Data extends AbstractHelper
 
     /**
      * @param $storeId
-     * @return string
+     * @return mixed
      */
-    public function getSendDefaultList($storeId = null): string
+    public function getSendDefaultList($storeId = null)
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_SEND_DEFAULT_LIST,
@@ -347,8 +399,8 @@ class Data extends AbstractHelper
      */
     public function getCurrency($storeId = null): string
     {
-        if ($this->sendBaseData($storeId)) {
-            return $this->_priceCurrency->getCurrency($this->_storeManager->getStore()->getId())->getCode();
+        if ($this->sendBaseData()) {
+            return $this->_storeManager->getStore()->getBaseCurrency()->getCode();
         }
         return $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
     }
@@ -408,6 +460,21 @@ class Data extends AbstractHelper
             }
             return $this->getDefaultList();
         }
+    }
+
+    /**
+     * returns if sending refund on order cancellation
+     *
+     * @param null $storeId
+     * @return boolean
+     */
+    public function getSendRefundOnOrderCancellation($storeId = null)
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_SEND_REFUND_ON_ORDER_CANCELLATION,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
     }
 
     /**
@@ -545,18 +612,6 @@ class Data extends AbstractHelper
         );
     }
 
-    /**
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getCheckoutStepsConfiguration($storeId = null)
-    {
-        return $this->scopeConfig->getValue(
-            self::XML_PATH_CHECKOUT_STEPS,
-            ScopeInterface::SCOPE_STORE,
-            $storeId
-        );
-    }
 
     /**
      * Get Affiliation

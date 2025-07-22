@@ -47,6 +47,7 @@ define([
 
 					if ($element.video_type == 'vimeo') {
 						$params['muted']     = $element.mute ? 1 : 0;
+						$params['controls']       = $element.controls ? 1 : 0;
 						$params['title']     = $element.vimeo_title ? 1 : 0;
 						$params['portrait']  = $element.vimeo_portrait ? 1 : 0;
 						$params['byline']    = $element.vimeo_byline ? 1 : 0;
@@ -55,6 +56,7 @@ define([
 						}
 						$params['api']       = 1;
 						$params['player_id'] = 'player';
+						$params['autopause'] = 'false';
 					}
 
 					return $params;

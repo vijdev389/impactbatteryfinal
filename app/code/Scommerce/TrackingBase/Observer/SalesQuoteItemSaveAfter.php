@@ -10,6 +10,7 @@ use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Session\SessionManagerInterface;
 use Scommerce\TrackingBase\Helper\Data;
+use Scommerce\TrackingBase\Model\GetProductPrice;
 
 
 class SalesQuoteItemSaveAfter implements ObserverInterface
@@ -24,16 +25,20 @@ class SalesQuoteItemSaveAfter implements ObserverInterface
      */
     protected $_coreSession;
 
+    protected $getProductPrice;
+
     /**
      * @param Data $helper
      * @param SessionManagerInterface $coreSession
      */
     public function __construct(
         Data $helper,
-        SessionManagerInterface $coreSession
+        SessionManagerInterface $coreSession,
+        GetProductPrice $getProductPrice
     ) {
         $this->_helper = $helper;
         $this->_coreSession = $coreSession;
+        $this->getProductPrice = $getProductPrice;
     }
 
     public function execute(EventObserver $observer)
@@ -58,7 +63,7 @@ class SalesQuoteItemSaveAfter implements ObserverInterface
                         $allSkus = $product['allSkus'];
                         foreach ($allSkus as $sku) {
                             if ($item->getProduct()->getData($this->_helper->getProductIdAttribute()) == $sku || $item->getProductId() == $product['_realProductId']) {
-                                $product['price'] = $this->_helper->isPriceIncludedTax() ? $item->getPriceInclTax() : $item->getPrice();
+                                $product['price'] = $this->getProductPrice->executeByItem($item);
                                 $found = true;
                                 break;
                             }

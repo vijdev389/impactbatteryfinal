@@ -82,7 +82,7 @@ class GetBrand
                 return '';
             }
         }
-        return $this->_helper->getBrandText();
+        return $this->_helper->getBrandText() ?? "";
     }
 
     /**
@@ -97,7 +97,7 @@ class GetBrand
             return $id;
         }
         if ($attr->getSource()) {
-            return $this->getValueByOption($id);
+            return $this->getValueByOption($id, $attr->getName());
         }
         return $id;
     }
@@ -119,9 +119,17 @@ class GetBrand
      * @return string
      * @throws NoSuchEntityException
      */
-    protected function getValueByOption($id)
+    protected function getValueByOption($id, $attrName)
     {
         $options = $this->getOptions();
+        if (count($options) == 1) {
+            $option = reset($options);
+            if (isset($option['value']) && $option['value'] == $id) {
+                return $option['label'] ?? "";
+            } else {
+                return $id[$attrName] ?? "";
+            }
+        }
         foreach ($options as $option)
         {
             if ($option['value'] == $id) {

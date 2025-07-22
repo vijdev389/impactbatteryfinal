@@ -1,0 +1,1083 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2024-07-24 13:08:47",
+    "containerVersion": {
+        "path": "accounts/6069528144/containers/100632518/versions/0",
+        "accountId": "6069528144",
+        "containerId": "100632518",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/6069528144/containers/100632518",
+            "accountId": "6069528144",
+            "containerId": "100632518",
+            "name": "Test",
+            "publicId": "GTM-XXXXXXX",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1674130842551",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6069528144/containers/100632518/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-XXXXXXX"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "430",
+                "name": "Microsoft UET (Base)",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_em",
+                        "value": "{{Enhanced Conversion Email hash}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_ph",
+                        "value": "{{Enhanced Conversion Phone hash}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "c_navTimingApi",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "123456789"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "c_storeConvTrackCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "c_removeQueryFromUrls",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "c_disableAutoPageView",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "c_enhancedConversion",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "PAGE_LOAD"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "c_enableAutoSpaTracking",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1721826442704",
+                "firingTriggerId": [
+                    "2147479573"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "431",
+                "name": "Microsoft UET View Item",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "View Item"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "{{addedPName}}"
+                    }
+                ],
+                "fingerprint": "1721826508292",
+                "firingTriggerId": [
+                    "399"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "432",
+                "name": "Microsoft UET Begin Checkout",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "Begin Checkout"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "Begin Checkout"
+                    }
+                ],
+                "fingerprint": "1721826490597",
+                "firingTriggerId": [
+                    "408"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "435",
+                "name": "Microsoft UET Add Shipping Info",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "Add Shipping Info"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "{{Ecommerce Shipping Tier}}"
+                    }
+                ],
+                "fingerprint": "1721826462947",
+                "firingTriggerId": [
+                    "414"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "437",
+                "name": "Microsoft UET Add to Wishlist",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "Add To Wishlist"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "{{addedPName}}"
+                    }
+                ],
+                "fingerprint": "1721826481642",
+                "firingTriggerId": [
+                    "410"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "438",
+                "name": "Microsoft UET Add to Cart",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "Add To Cart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "{{addedPName}}"
+                    }
+                ],
+                "fingerprint": "1721826472969",
+                "firingTriggerId": [
+                    "390"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "439",
+                "name": "Microsoft UET Add Payment Info",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "Add Payment Info"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "{{Ecommerce Payment Type}}"
+                    }
+                ],
+                "fingerprint": "1721826453685",
+                "firingTriggerId": [
+                    "380"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "441",
+                "name": "Microsoft UET Purchase",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "goalValue",
+                        "value": "{{Conversion Data Revenue}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Conversion Data Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "VARIABLE_REVENUE"
+                    }
+                ],
+                "fingerprint": "1721826499630",
+                "firingTriggerId": [
+                    "436"
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "tagId": "442",
+                "name": "Microsoft UET Remove From Cart",
+                "type": "baut",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "p_currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventCategory",
+                        "value": "Ecommerce"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "uetqName",
+                        "value": "uetq"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "customEventAction",
+                        "value": "Remove From Cart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "CUSTOM"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventLabel",
+                        "value": "{{addedPName}}"
+                    }
+                ],
+                "fingerprint": "1721826415026",
+                "firingTriggerId": [
+                    "392"
+                ],
+                "setupTag": [
+                    {
+                        "tagName": "Microsoft UET (Base)",
+                        "stopOnSetupFailure": true
+                    }
+                ],
+                "parentFolderId": "426",
+                "tagFiringOption": "ONCE_PER_LOAD",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "380",
+                "name": "add_payment_info",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "add_payment_info"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822126"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "390",
+                "name": "add_to_cart",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "add_to_cart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822131"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "392",
+                "name": "remove_from_cart",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "remove_from_cart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822132"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "399",
+                "name": "view_item",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "view_item"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822136"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "408",
+                "name": "begin_checkout",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "begin_checkout"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822140"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "410",
+                "name": "add_to_wishlist",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "add_to_wishlist"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822141"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "414",
+                "name": "add_shipping_info",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "add_shipping_info"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721396822143"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "433",
+                "name": "conversion_pii",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "conversion_pii"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721826415023"
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "triggerId": "436",
+                "name": "Remarketing Tag Purchase",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "fireRemarketingTag_purchase"
+                            }
+                        ]
+                    }
+                ],
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "fireRemarketingTag_purchase"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721826415024"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "383",
+                "name": "Ecommerce Currency",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.currency"
+                    }
+                ],
+                "fingerprint": "1721396822128",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "386",
+                "name": "Ecommerce Value",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.value"
+                    }
+                ],
+                "fingerprint": "1721396822129",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "413",
+                "name": "Ecommerce Shipping Tier",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.shipping_tier"
+                    }
+                ],
+                "fingerprint": "1721396822142",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "418",
+                "name": "Ecommerce Payment Type",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.payment_type"
+                    }
+                ],
+                "fingerprint": "1721396822145",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "425",
+                "name": "addedPPrice",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.items.0.price"
+                    }
+                ],
+                "fingerprint": "1721826415019",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "427",
+                "name": "addedPName",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.items.0.item_name"
+                    }
+                ],
+                "fingerprint": "1721826415021",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "428",
+                "name": "Enhanced Conversion Email hash",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "conversionData.sha256_email_address"
+                    }
+                ],
+                "fingerprint": "1721826415021",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "429",
+                "name": "Enhanced Conversion Phone hash",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "conversionData.sha256_phone_number"
+                    }
+                ],
+                "fingerprint": "1721826415021",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "434",
+                "name": "Conversion Data Revenue",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "conversionData.revenue_with_vat_and_shipping"
+                    }
+                ],
+                "fingerprint": "1721826415023",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "variableId": "440",
+                "name": "Conversion Data Currency",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "conversionData.currency"
+                    }
+                ],
+                "fingerprint": "1721826415025",
+                "formatValue": {}
+            }
+        ],
+        "folder": [
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "folderId": "426",
+                "name": "Bing Ads",
+                "fingerprint": "1721826415020"
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "6069528144",
+                "containerId": "100632518",
+                "type": "EVENT",
+                "name": "Event"
+            }
+        ],
+        "fingerprint": "1721826527698",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6069528144/containers/100632518/versions/0?apiLink=version"
+    }
+}

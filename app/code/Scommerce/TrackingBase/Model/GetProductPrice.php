@@ -19,6 +19,8 @@ use Magento\Catalog\Model\Product;
 use Scommerce\TrackingBase\Helper\Data;
 use Magento\Tax\Api\TaxCalculationInterface;
 use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
+use Magento\Catalog\Model\ProductRepository;
+use Magento\Catalog\Helper\Data as TaxHelper;
 
 /**
  * Class GetProductPrice
@@ -61,6 +63,14 @@ class GetProductPrice
      */
     protected $_resource;
 
+    /** @var TaxHelper */
+    protected $taxHelper;
+
+    /** @var ProductRepository */
+    protected $productRepository;
+
+    protected $simpleProductTypes = ['simple', 'downloadable', 'virtual'];
+
     /**
      * GetProductPrice constructor.
      * @param ProductHelper $productHelper
@@ -78,7 +88,9 @@ class GetProductPrice
         StoreManagerInterface $storeManager,
         CurrencyFactory $currencyFactory,
         TaxCalculationInterface $taxCalculation,
-        ProductResource $resource
+        ProductResource $resource,
+        TaxHelper $taxHelper,
+        ProductRepository $productRepository
     ) {
         $this->_productHelper = $productHelper;
         $this->_priceHelper = $priceHelper;
@@ -87,6 +99,8 @@ class GetProductPrice
         $this->_currencyFactory = $currencyFactory;
         $this->_taxCalculation = $taxCalculation;
         $this->_resource = $resource;
+        $this->taxHelper = $taxHelper;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -95,48 +109,68 @@ class GetProductPrice
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function execute($product)
+    public function execute($item, $refundCurrency = false)
     {
-        $includeTax = $this->_helper->isPriceIncludedTax();
+        try {
+            $product = $this->productRepository->get($item->getSku());
+        } catch (\Exception $e) {
+            $product = $this->productRepository->get($item->getData('sku'));
+        }
         if ($this->_helper->sendBaseData()) {
-            if ($product instanceof Product) {
-                $price = $this->_getPrice($product);
-                if (!$price) {
-                    $price = $product->getMinimalPrice();
-                }
-                $this->_priceHelper->currencyByStore($price);
-                $currencyCodeTo = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
-                $currencyCodeFrom = $this->_storeManager->getStore()->getBaseCurrency()->getCode();
-                if ($currencyCodeTo !== $currencyCodeFrom) {
-                    $rate = $this->_currencyFactory->create()->load($currencyCodeTo)->getAnyRate($currencyCodeFrom);
-                    $price = $price * $rate;
-                }
-            } else {
-                $price = $product->getPrice();
-                if ($includeTax) {
-                    $price = $product->getPriceInclTax();
-                }
-            }
-        } else {
-            if ($product instanceof Product) {
-                $price = $this->_getPrice($product);
-            } else {
-                $price = $product->getPrice();
-                if ($includeTax) {
-                    $price = $product->getPriceInclTax();
-                }
+            $price = $this->_getPrice($product);
+            if ($product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
                 $currencyCodeFrom = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
                 $currencyCodeTo = $this->_storeManager->getStore()->getBaseCurrency()->getCode();
                 if ($currencyCodeFrom !== $currencyCodeTo) {
-                    $rate = $this->_currencyFactory->create()->load($currencyCodeTo)->getAnyRate($currencyCodeFrom);
+                    $rate = $this->_currencyFactory->create()->load($currencyCodeFrom)->getAnyRate($currencyCodeTo);
                     $price = $price * $rate;
                 }
             }
+        } else {
+            $price = $this->_getPrice($product);
+            if ($refundCurrency) {
+                $currencyCodeFrom = $this->_storeManager->getStore()->getBaseCurrency()->getCode();
+                if ($currencyCodeFrom !== $refundCurrency) {
+                    $rate = $this->_currencyFactory->create()->load($currencyCodeFrom)->getAnyRate($refundCurrency);
+                    $price = $price * $rate;
+                }
+            } elseif (in_array($product->getTypeId(), $this->simpleProductTypes)) {
+                $price = $this->_priceHelper->currencyByStore($price, null, false);
+            }
         }
-        if ($price === null) {
-            return number_format(0, 2);
+        return $price === null ? number_format(0, 2) : number_format($price, 2);
+    }
+
+    public function executeBySku($sku, $refundCurrency = false)
+    {
+        try {
+            $product = $this->productRepository->get($sku);
+            return $this->execute($product, $refundCurrency);
+        } catch (\Exception $e) {
+            return false;
         }
-        return number_format($price, 2);
+    }
+
+    public function executeByItem($item, $refundCurrency = false)
+    {
+        if ($refundCurrency) {
+            $price = $this->executeBySku($item->getSku(), $refundCurrency);
+            if ($price === false) {
+                $price = $this->executeBySku($item->getData('sku'), $refundCurrency);
+            }
+        } else {
+            $product = $item->getProduct();
+            if ($product->getTypeId() == 'configurable') {
+                $price = $this->executeBySku($product->getSku(), $refundCurrency);
+                if ($price === false) {
+                    $price = $this->executeBySku($product->getData('sku'), $refundCurrency);
+                }
+            } else {
+                $price = $this->executeBySku($product->getData('sku'), $refundCurrency);
+            }
+        }
+
+        return $price;
     }
 
     /**
@@ -145,23 +179,6 @@ class GetProductPrice
      */
     private function _getPrice($product)
     {
-        $includeTax = $this->_helper->isPriceIncludedTax();
-        if ($productRateId = $this->_resource->getAttributeRawValue($product->getId(), 'tax_class_id', $product->getStoreId())) {
-            // First get base price (=price excluding tax)
-            $rate = $this->_taxCalculation->getCalculatedRate($productRateId);
-            $price = $product->getPriceInfo()->getPrice('final_price')->getValue();
-            if ((int) $this->_helper->isSetFlag('tax/calculation/price_includes_tax')) {
-                // Product price in catalog is including tax.
-                $priceExcludingTax = $price / (1 + ($rate / 100));
-            } else {
-                // Product price in catalog is excluding tax.
-                $priceExcludingTax = $price;
-            }
-
-            $priceIncludingTax = $priceExcludingTax + ($priceExcludingTax * ($rate / 100));
-
-            return $includeTax ? $priceIncludingTax : $priceExcludingTax;
-        }
-        return $product->getPrice();
+        return $this->taxHelper->getTaxPrice($product, $product->getFinalPrice(), $this->_helper->isPriceIncludedTax());
     }
 }

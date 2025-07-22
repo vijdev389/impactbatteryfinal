@@ -8,14 +8,17 @@ $helper = $viewModel->getHelper();
 if (!($helper->isEnabled() && $helper->isEnhancedEcommerceEnabled())) return;
 ?>
 
-<script>
+<script <?= $viewModel->getHelper()->getNonce(); ?>>
     let data = <?php echo json_encode($viewModel->getPurchaseData())?>;
     window.scTrackingContainer.setPurchaseData(data);
     window.scTrackingContainer.fire('page_ready', window.scTrackingContainer.getPageType().toLowerCase());
 </script>
 
 <?php if ($helper->isEnhancedConversionEnabled()):?>
-    <script>
-        var conversionData = <?php echo json_encode($viewModel->getConversionData())?>;
+    <script <?= $viewModel->getHelper()->getNonce(); ?>>
+        let conversionData = <?php echo json_encode($viewModel->getConversionData())?>;
+        let conversionItems = <?php echo json_encode($viewModel->getConversionItems()) ?>;
+        window.scTrackingContainer.setData('conversion_items', conversionItems);
+        window.scTrackingContainer.setData('conversion_pii', conversionData);
     </script>
 <?php endif;?>

@@ -124,6 +124,11 @@ class ListProduct extends DataObject implements ArgumentInterface
         return $this->_block->getLayout();
     }
 
+    public function getNonce()
+    {
+        return $this->_helper->getNonce();
+    }
+
     /**
      * @return mixed
      * @throws LocalizedException

@@ -9,7 +9,7 @@ $cats = $viewModel->getRemarketingCategories();
 if (!$viewModel->getHelper()->isEnabled()) return;
 ?>
 
-<script>
+<script <?= $viewModel->getHelper()->getNonce(); ?>>
     window.scTrackingContainer.setData('category_full', '<?php echo $block->escapeJs($cats['full']) ?>');
     window.scTrackingContainer.setData('category_plain', '<?php echo $block->escapeJs($cats['plain']) ?>');
 

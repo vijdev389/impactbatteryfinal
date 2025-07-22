@@ -60,8 +60,6 @@ class Steps extends AbstractFieldArray
      */
     protected function _prepareToRender()
     {
-        $this->addColumn('step', ['label' => __('Step'), 'class' => 'required-entry step',
-            'renderer' => $this->getStepRenderer()]);
         $this->addColumn('selector', ['label' => __('Selector'), 'class' => 'required-entry selector']);
         $this->addColumn('type', ['label' => __('Type'), 'class' => 'required-entry type',
             'renderer' => $this->getTypeRenderer()]);

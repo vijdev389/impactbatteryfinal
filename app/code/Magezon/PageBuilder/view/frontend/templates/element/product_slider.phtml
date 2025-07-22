@@ -41,9 +41,7 @@ $classes              = $this->getOwlCarouselClasses();
 	<?php } ?>
 	<div class="mgz-block-content">
 		<?php if (count($items)) { ?>
-			<div id="<?= $id ?>" class="mgz-carousel owl-carousel mgz-product-items <?= implode(' ', $classes) ?>" data-mage-init='{
-					"Magezon_Builder/js/carousel": <?= $coreHelper->serialize($carouselOptions) ?>
-				}'>
+			<div id="<?= $id ?>" class="mgz-carousel owl-carousel mgz-product-items <?= implode(' ', $classes) ?>">
 				<?php foreach ($items as $_items) { ?>
 					<div class="item product product-item <?= (count($_items) > 1) ? 'mgz-carousel-multirow' : '' ?>">
 						<?php foreach ($_items as $_product) { ?>

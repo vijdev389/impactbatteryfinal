@@ -118,13 +118,14 @@ class CheckoutRemoveItemAfter implements ObserverInterface
                     }
                 }
             }
+            $price = $this->_getProductPrice->executeByItem($quoteItem);
 
             $productOutBasket = [
                 'id' => $this->_helper->escapeJsQuote($id),
                 'name' => $this->_helper->escapeJsQuote(trim($product->getName())),
                 'category' => $this->_helper->escapeJsQuote($this->_getProductCategory->execute($product)),
                 'brand' => $this->_helper->escapeJsQuote($this->_getBrand->execute($product, true)),
-                'price' => $this->_getProductPrice->execute($quoteItem),
+                'price' => $price,
                 'qty'=> $quoteItem->getQty(),
                 'allSkus' => $allSkus,
                 'list' => $this->_helper->getImpressionListFromQuoteItem($quoteItem),

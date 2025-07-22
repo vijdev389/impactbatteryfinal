@@ -28,6 +28,35 @@
                     <comment><![CDATA[Enable enhanced conversion to send PII data to Google Adwords to target actual customers. You need to turn on enhanced conversions in Google Adwords.
 				<a href="https://support.google.com/google-ads/answer/10172785" target="_blank">Click here for more information</a>]]></comment>
                 </field>
+
+                <field id="consent_mode" translate="label" type="select" sortOrder="42" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Consent mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[
+                        This setting activates <a href="https://developers.google.com/tag-platform/security/guides/consent" target="_blank">Google Consent Mode v2</a>. It lets us control how Google tags use user consent and protect user data
+                        ]]>
+                    </comment>
+                    <depends>
+                        <field id="*/*/active">1</field>
+                    </depends>
+                </field>
+                <field id="consent_mode_configuration" translate="label" type="text" sortOrder="43" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cookie mapping</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <frontend_model>Scommerce\TrackingBase\Block\Adminhtml\Form\Field\CookieMapping</frontend_model>
+                    <comment>
+                        <![CDATA[
+                        This setting defines the mapping between user preference cookies  and the corresponding Google Consent Mode parameters <strong>ad_storage, ad_user_data, ad_personalization, analytics_storage</strong>
+                        <br>Cookie preference cookie could be set using our <a href="https://www.scommerce-mage.com/magento-2-gdpr.html" target="_blank">GDPR extension</a> or any Consent Management Platform (CMP).
+                        ]]>
+                    </comment>
+                    <depends>
+                        <field id="*/*/active">1</field>
+                        <field id="*/*/consent_mode">1</field>
+                    </depends>
+                </field>
+
                 <field id="attribute_key" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Product ID Attribute</label>
                     <source_model>Scommerce\TrackingBase\Model\Source\Attributes</source_model>
@@ -53,15 +82,6 @@
                         <field id="*/*/enhanced_ecommerce_enabled">1</field>
                     </depends>
                     <comment><![CDATA[This will take effect only if "Brand Attribute" not selected]]></comment>
-                </field>
-                <field id="category_dropdown" translate="label" type="select" sortOrder="63" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Primary Category Attribute</label>
-                    <source_model>Scommerce\TrackingBase\Model\Source\Brand</source_model>
-                    <depends>
-                        <field id="*/*/active">1</field>
-                        <field id="*/*/enhanced_ecommerce_enabled">1</field>
-                    </depends>
-                    <comment><![CDATA[Please select primary category attribute which can be sent to Google in case a product is in more than one category.]]></comment>
                 </field>
                 <field id="slider_text" translate="label" type="text" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Sliders name</label>
@@ -115,7 +135,7 @@
                     <depends>
                         <field id="*/*/active">1</field>
                     </depends>
-                    <comment><![CDATA[Please select category attribute if you have one otherwise put your brand name in the below input box. <strong>Attribute should be available for product listing 'Storefront Properties -> Used in Product Listing = Yes'</strong>]]></comment>
+                    <comment><![CDATA[Please select primary category attribute which can be sent to Google in case a product is in more than one category. <strong>Attribute should be available for product listing 'Storefront Properties -> Used in Product Listing = Yes'</strong>]]></comment>
                 </field>
                 <field id="is_category_id" translate="label" type="select" sortOrder="107" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Is Category ID</label>
@@ -169,6 +189,15 @@
                     <depends>
                         <field id="*/*/active">1</field>
                         <field id="*/*/enhanced_ecommerce_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="send_refund_on_order_cancellation" translate="label" type="select" sortOrder="135" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Send Refund On Order Cancellation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/active">1</field>
+                        <field id="*/*/enhanced_ecommerce_enabled">1</field>
+                        <field id="*/*/send_admin_orders">1</field>
                     </depends>
                 </field>
                 <field id="admin_source" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
@@ -238,19 +267,6 @@
                     <label>Add Payment Title</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Add payment method title to payment step. If "Yes" it will send <i>method::title</i>. Ex. checkmo::Check / Money Order]]></comment>
-                </field>
-                <field id="steps"
-                       type="text"
-                       translate="label comment"
-                       sortOrder="20"
-                       showInDefault="1"
-                       showInWebsite="1"
-                       showInStore="1">
-                    <label>Steps Configuration</label>
-                    <frontend_model>Scommerce\TrackingBase\Block\System\Form\Steps</frontend_model>
-                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
-                    <comment><![CDATA[Configuration of the checkout steps. Selectors for payment and shipment steps can be arbitrary they are not used.<br/>
-                    For additional steps you can use format "selector[/event[/value]]". Where event and value are optional. Default event "change", if value is not set then it will send element value. So basic selector could be '#customer-email' this is equals to '#customer-email/change' and will send customer email itself.]]></comment>
                 </field>
             </group>
 		</section>

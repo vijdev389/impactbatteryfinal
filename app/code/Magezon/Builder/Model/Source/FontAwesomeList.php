@@ -21,6 +21,7 @@ class FontAwesomeList
 			'fab mgz-fa-500px'                               => '500px',
 			'fab mgz-fa-accessible-icon'                     => 'accessible-icon',
 			'fab mgz-fa-accusoft'                            => 'accusoft',
+			'fab mgz-fa-acquisitions-incorporated'			 => 'acquisitions-incorporated',
 			'fas mgz-fa-address-book'                        => 'address-book',
 			'far mgz-fa-address-book'                        => 'address-book',
 			'fas mgz-fa-address-card'                        => 'address-card',

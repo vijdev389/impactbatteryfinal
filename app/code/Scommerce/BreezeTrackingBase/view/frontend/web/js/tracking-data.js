@@ -64,8 +64,14 @@ define([
         },
 
         getListId: function(listName) {
-            if (listName !== undefined && listName !== "undefined")
-                return listName.trim().replace(/[^\w ]/g,' ').replace(/\s\s+/g, ' ').replace(/\s/g, '_').toLowerCase();
+            if ((listName == undefined || listName == "undefined" || listName == null || listName == "null")) {
+                if (this.getSendDefaultList()) {
+                    listName = this.getDefaultList();
+                } else {
+                    listName = '';
+                }
+            }
+            return listName.trim().replace(/[^\w ]/g,' ').replace(/\s\s+/g, ' ').replace(/\s/g, '_').toLowerCase();
         },
 
         startEvents: function() {
@@ -157,7 +163,6 @@ define([
         setAddToWishlist: function(data) {
             this._logData(data);
             this.setData('addToWishlist', data);
-            console.log('SET ADD TO WISHLIST');
             this.fire('add_to_wishlist', data);
         },
 
@@ -395,7 +400,6 @@ define([
         },
 
         fire: function(eventName, data) {
-            console.log(this._internalData._fireEvents);
             if (this._internalData._fireEvents === false) {
                 this._internalData._eventsQueue.push({
                     'eventName': eventName,

@@ -1,0 +1,165 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+$helper = $this->helper('Scommerce\TrackingBase\Helper\Data');
+?>
+
+<script type="text/javascript"<?= $helper->getNonce(); ?>>
+    function convertPromotions(trackingData, data) {
+        if (data instanceof Array) {
+            let result = [];
+            for (let i=0; i < data.length; i++) {
+                let promo = data[i];
+                result.push({
+                    promotion_name: promo.name,
+                    promotion_id: promo.id,
+                    location_id: promo.position,
+                    creative_name: promo.creative,
+                    creative_slot: promo.slot
+                });
+            }
+            return result;
+        }
+        return [];
+    }
+    function convertItemList(trackingData, data) {
+        let impr = [];
+        var affiliation;
+        for (let i = 0; i < data.length; i++) {
+            let product = data[i];
+            impr.push({
+                item_id: product.id,
+                item_name: product.name,
+                price: trackingData.formatPrice(product.price, false),
+                item_brand: product.brand,
+                item_list_name: product.list,
+                item_list_id: trackingData.getListId(product.list),
+                index: product.position,
+                quantity: 1
+            });
+            affiliation = trackingData.getData('affiliation')
+            if (affiliation !== '') {
+                impr[i]['affiliation'] = affiliation;
+            }
+            let categories = product.category.split('->');
+            impr[i]['item_category'] = categories[0];
+            for (let j = 1; j < categories.length; j++) {
+                key = 'item_category' + (j + 1);
+                impr[i][key] = categories[j];
+            }
+        }
+        return impr;
+    }
+    function convertAddToCartItem(trackingData, data) {
+        let prods = [];
+        for (let i = 0; i < data.length; i++) {
+            prods.push({
+                item_name: data[i].name,
+                item_id: data[i].id,
+                price: trackingData.formatPrice(data[i].price, false),
+                item_brand: data[i].brand,
+                quantity: data[i].quantity,
+                index: i + 1
+            });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
+            if (trackingData.getData('affiliation') !== '') {
+                prods[i]['affiliation'] = trackingData.getData('affiliation');
+            }
+            let categories = data[i].category.split('->');
+            prods[i]['item_category'] = categories[0];
+            for (let j = 1; j < categories.length; j++) {
+                key = 'item_category' + (j + 1);
+                prods[i][key] = categories[j];
+            }
+        }
+        return prods;
+    }
+    function convertCheckoutItems(trackingData, data) {
+        let prods = [];
+        for (let i = 0; i < data.length; i++) {
+            prods.push({
+                item_name: data[i].name,
+                item_id: data[i].id,
+                price: trackingData.formatPrice(data[i].price, false),
+                item_brand: data[i].brand,
+                item_category: data[i].category,
+                quantity: data[i].quantity,
+                index: i + 1
+            });
+            if (trackingData.getDefaultList() == data[i].list) {
+                prodList = trackingData._getProductFromStorage(data[i].id);
+                if (prodList) {
+                    data[i].list = prodList.list;
+                }
+            }
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
+            if (trackingData.getData('affiliation') !== '') {
+                prods[i]['affiliation'] = trackingData.getData('affiliation');
+            }
+            let categories = data[i].category.split('->');
+            prods[i]['item_category'] = categories[0];
+            for (let j = 1; j < categories.length; j++) {
+                key = 'item_category' + (j + 1);
+                prods[i][key] = categories[j];
+            }
+        }
+        return prods;
+    }
+    function convertPurchaseItems(trackingData, data) {
+        let prods = [];
+        for (let i = 0; i < data.length; i++) {
+            prods.push({
+                item_name: data[i].name,
+                item_id: data[i].id,
+                price: trackingData.formatPrice(data[i].price, false),
+                item_brand: data[i].brand,
+                quantity: data[i].quantity,
+                affiliation: trackingData.getData('affiliation'),
+                index: i + 1
+            });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
+            let categories = data[i].category.split('->');
+            prods[i]['item_category'] = categories[0];
+            for (let j = 1; j < categories.length; j++) {
+                key = 'item_category' + (j + 1);
+                prods[i][key] = categories[j];
+            }
+        }
+        return prods;
+    }
+    function convertWishlistItems(trackingData, data) {
+        data = data.item;
+        let prods = [];
+        prods.push({
+            item_name: data.name,
+            item_id: data.id,
+            price: trackingData.formatPrice(data.price, false),
+            item_brand: data.brand,
+            item_category: data.category,
+            quantity: Number(data.quantity),
+            index: 1
+        });
+        if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data.list) {
+            prods[0]["item_list_name"] = data.list;
+            prods[0]["item_list_id"] = trackingData.getListId(data.list);
+        }
+        if (trackingData.getData('affiliation') !== '') {
+            prods[0]['affiliation'] = trackingData.getData('affiliation');
+        }
+        let categories = data.category.split('->');
+        prods[0]['item_category'] = categories[0];
+        for (let j = 1; j < categories.length; j++) {
+            key = 'item_category' + (j + 1);
+            prods[0][key] = categories[j];
+        }
+        return prods;
+    }
+</script>

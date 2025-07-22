@@ -128,7 +128,7 @@ define([
 })(window.Zepto || window.jQuery, window, document);
 
 
-    $.widget('magezon.slider', {
+    $.widget('magezon.sliders', {
         options: {
             item_xs: 1,
             item_sm: 1,
@@ -288,5 +288,5 @@ define([
         }
     });
 
-    return $.magezon.slider;
+    return $.magezon.sliders;
 });

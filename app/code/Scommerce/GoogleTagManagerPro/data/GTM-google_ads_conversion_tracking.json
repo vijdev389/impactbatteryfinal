@@ -11,7 +11,7 @@
       "accountId": "565186682",
       "containerId": "2739889",
       "name": "magento2.scommerce-mage.co.uk",
-      "publicId": "GTM-PTN7FN",
+      "publicId": "GTM-XXXXX",
       "usageContext": [
         "WEB"
       ],
@@ -34,7 +34,7 @@
           {
             "type": "TEMPLATE",
             "key": "orderId",
-            "value": "{{Order Id}}"
+            "value": "{{Ecommerce Transaction ID}}"
           },
           {
             "type": "BOOLEAN",
@@ -44,7 +44,7 @@
           {
             "type": "TEMPLATE",
             "key": "conversionValue",
-            "value": "{{Order Value}}"
+            "value": "{{Ecommerce Value}}"
           },
           {
             "type": "TEMPLATE",
@@ -59,7 +59,7 @@
           {
             "type": "TEMPLATE",
             "key": "currencyCode",
-            "value": "{{Order Currency Code}}"
+            "value": "{{Ecommerce Currency}}"
           },
           {
             "type": "TEMPLATE",
@@ -74,11 +74,46 @@
         ],
         "fingerprint": "1585059149189",
         "firingTriggerId": [
-          "15"
+          "223"
         ],
         "tagFiringOption": "ONCE_PER_EVENT",
         "monitoringMetadata": {
           "type": "MAP"
+        }
+      },
+      {
+        "accountId": "565186682",
+        "containerId": "2739889",
+        "tagId": "188",
+        "name": "Conversion Linker Tag",
+        "type": "gclidw",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "enableCrossDomain",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableUrlPassthrough",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "enableCookieOverrides",
+            "value": "false"
+          }
+        ],
+        "fingerprint": "1649331828311",
+        "firingTriggerId": [
+          "2147479553"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
         }
       }
     ],
@@ -86,8 +121,8 @@
       {
         "accountId": "565186682",
         "containerId": "2739889",
-        "triggerId": "15",
-        "name": "Remarketing Tag Purchase",
+        "triggerId": "223",
+        "name": "purchase",
         "type": "CUSTOM_EVENT",
         "customEventFilter": [
           {
@@ -101,37 +136,20 @@
               {
                 "type": "TEMPLATE",
                 "key": "arg1",
-                "value": "fireRemarketingTag_purchase"
+                "value": "purchase"
               }
             ]
           }
         ],
-        "filter": [
-          {
-            "type": "EQUALS",
-            "parameter": [
-              {
-                "type": "TEMPLATE",
-                "key": "arg0",
-                "value": "{{Event}}"
-              },
-              {
-                "type": "TEMPLATE",
-                "key": "arg1",
-                "value": "fireRemarketingTag_purchase"
-              }
-            ]
-          }
-        ],
-        "fingerprint": "1505394327144"
+        "fingerprint": "1661243829907"
       }
     ],
     "variable": [
       {
         "accountId": "565186682",
         "containerId": "2739889",
-        "variableId": "88",
-        "name": "Order Id",
+        "variableId": "194",
+        "name": "Ecommerce Currency",
         "type": "v",
         "parameter": [
           {
@@ -147,17 +165,17 @@
           {
             "type": "TEMPLATE",
             "key": "name",
-            "value": "ecommerce.purchase.actionField.id"
+            "value": "ecommerce.currency"
           }
         ],
-        "fingerprint": "1585058304193",
+        "fingerprint": "1661243829815",
         "formatValue": {}
       },
       {
         "accountId": "565186682",
         "containerId": "2739889",
-        "variableId": "89",
-        "name": "Order Value",
+        "variableId": "195",
+        "name": "Ecommerce Value",
         "type": "v",
         "parameter": [
           {
@@ -173,17 +191,17 @@
           {
             "type": "TEMPLATE",
             "key": "name",
-            "value": "ecommerce.purchase.actionField.revenue"
+            "value": "ecommerce.value"
           }
         ],
-        "fingerprint": "1585058340516",
+        "fingerprint": "1661243829816",
         "formatValue": {}
       },
       {
         "accountId": "565186682",
         "containerId": "2739889",
-        "variableId": "90",
-        "name": "Order Currency Code",
+        "variableId": "204",
+        "name": "Ecommerce Transaction ID",
         "type": "v",
         "parameter": [
           {
@@ -199,10 +217,10 @@
           {
             "type": "TEMPLATE",
             "key": "name",
-            "value": "ecommerce.currencyCode"
+            "value": "ecommerce.transaction_id"
           }
         ],
-        "fingerprint": "1585059106317",
+        "fingerprint": "1661243829820",
         "formatValue": {}
       }
     ],

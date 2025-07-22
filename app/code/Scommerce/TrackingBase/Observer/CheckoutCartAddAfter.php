@@ -158,7 +158,7 @@ class CheckoutCartAddAfter implements ObserverInterface
                     $productToBasket = $additionalItems;
                 }
             } else {
-                $price = $this->_getProductPrice->execute($quoteItem);
+                $price = $this->_getProductPrice->executeByItem($quoteItem);
                 $productToBasket = [
                     'id' => $this->_helper->escapeJsQuote($id),
                     'name' => $this->_helper->escapeJsQuote(trim($product->getName())),

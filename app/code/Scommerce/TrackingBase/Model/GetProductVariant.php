@@ -36,7 +36,16 @@ class GetProductVariant
             return '';
         }
         $result = array();
-        $itemSKU = $itemProduct->getSku();
+        $children = $itemProduct->getChildren();
+        if (!is_array($children)) {
+            $children = $itemProduct->getChildrenItems();
+        }
+        if (empty($children)) {
+            $itemSKU = $itemProduct->getSku();
+        } else {
+            $firstChild = reset($children);
+            $itemSKU = $firstChild->getSku();
+        }
         $item = $this->productRepository->get($itemSKU);
 
         /** @var Configurable $type */

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "856f3ca3698753d81bf6639f960624f2",
+    "content-hash": "3f17c6bec02c8ffcb5b1c1d762a5f56a",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -346,16 +346,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.349.3",
+            "version": "3.351.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "b2d4718786398f47626add9c29840fc416175ef2"
+                "reference": "7c58f4a8acd2230daad1ef23bceb9972e62bdf94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b2d4718786398f47626add9c29840fc416175ef2",
-                "reference": "b2d4718786398f47626add9c29840fc416175ef2",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7c58f4a8acd2230daad1ef23bceb9972e62bdf94",
+                "reference": "7c58f4a8acd2230daad1ef23bceb9972e62bdf94",
                 "shasum": ""
             },
             "require": {
@@ -437,9 +437,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.349.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.351.3"
             },
-            "time": "2025-07-09T18:10:17+00:00"
+            "time": "2025-07-21T18:04:02+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -2583,10 +2583,16 @@
         {
             "name": "iwd/dominate-saas",
             "version": "4.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hi-iwd/checkout-suite-saas-connector-m2.git",
+                "reference": "0cfe76b45236581af8ab9f23008035215f76cd87"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/iwd/dominate-saas/iwd-dominate-saas-4.4.2.0.zip",
-                "shasum": "8f1ea16071f4aa3484a84d9b21859257742ca045"
+                "url": "https://api.github.com/repos/hi-iwd/checkout-suite-saas-connector-m2/zipball/0cfe76b45236581af8ab9f23008035215f76cd87",
+                "reference": "0cfe76b45236581af8ab9f23008035215f76cd87",
+                "shasum": ""
             },
             "require": {
                 "magento/module-checkout": "100.*|101.*|102.*|103.*",
@@ -2604,10 +2610,16 @@
                     "IWD\\CheckoutConnector\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
-            "description": "Dominate Checkout Connector"
+            "description": "Dominate Checkout Connector",
+            "support": {
+                "issues": "https://github.com/hi-iwd/checkout-suite-saas-connector-m2/issues",
+                "source": "https://github.com/hi-iwd/checkout-suite-saas-connector-m2/tree/4.4.2"
+            },
+            "time": "2023-09-26T10:05:14+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -5311,22 +5323,22 @@
         },
         {
             "name": "magefan/module-blog",
-            "version": "2.11.0",
+            "version": "2.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magefan/module-blog.git",
-                "reference": "d1df2ff775cc97fc153418307f96f2d46a082431"
+                "reference": "8103588be4edaf801171064ae4f54b7a6043dbf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-blog/zipball/d1df2ff775cc97fc153418307f96f2d46a082431",
-                "reference": "d1df2ff775cc97fc153418307f96f2d46a082431",
+                "url": "https://api.github.com/repos/magefan/module-blog/zipball/8103588be4edaf801171064ae4f54b7a6043dbf6",
+                "reference": "8103588be4edaf801171064ae4f54b7a6043dbf6",
                 "shasum": ""
             },
             "require": {
-                "magefan/module-blog-graph-ql": ">=2.1.9",
-                "magefan/module-community": ">=2.1.16",
-                "magefan/module-wysiwyg-advanced": ">=2.0.15"
+                "magefan/module-blog-graph-ql": ">=2.1.10",
+                "magefan/module-community": ">=2.2.15",
+                "magefan/module-wysiwyg-advanced": ">=2.0.18"
             },
             "suggest": {
                 "magefan/module-amp-blog": "Install this module to activate Blog integration with the Plumrocket AMP extension."
@@ -5344,9 +5356,30 @@
             "description": "Implements Blog functionality on Magento 2 store",
             "support": {
                 "issues": "https://github.com/magefan/module-blog/issues",
-                "source": "https://github.com/magefan/module-blog/tree/2.11.0"
+                "source": "https://github.com/magefan/module-blog/tree/2.13.1"
             },
-            "time": "2023-08-28T11:37:45+00:00"
+            "time": "2025-06-23T09:52:03+00:00"
+        },
+        {
+            "name": "magefan/module-blog-author",
+            "version": "2.13.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://magefan.com/repo/packages/download/user/n43LOtUKgeXaMB9HjpJxCBL5cAV60jm5/pw/SfgUOpW3lgF078rpHTzvrU19X289Rf7n/package/magefan-module-blog-author/version/2.13.1/"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Magefan\\BlogAuthor\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "license": [
+                "EULA"
+            ],
+            "description": "Magefan Blog Author for Magento 2"
         },
         {
             "name": "magefan/module-blog-comments-recaptcha",
@@ -5384,6 +5417,40 @@
             "time": "2024-02-22T14:11:01+00:00"
         },
         {
+            "name": "magefan/module-blog-extra",
+            "version": "2.13.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://magefan.com/repo/packages/download/user/n43LOtUKgeXaMB9HjpJxCBL5cAV60jm5/pw/SfgUOpW3lgF078rpHTzvrU19X289Rf7n/package/magefan-module-blog-extra/version/2.13.1/"
+            },
+            "require": {
+                "magefan/module-blog-author": "2.13.1",
+                "magefan/module-blog-import": "2.13.1",
+                "magefan/module-blog-plus": "2.13.1",
+                "magefan/module-productwidget": ">=2.0.14",
+                "magefan/module-youtube-widget": ">=2.0.20"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Magefan\\BlogExtra\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "license": [
+                "EULA"
+            ],
+            "authors": [
+                {
+                    "name": "Magefan",
+                    "email": "support@magefan.com"
+                }
+            ],
+            "description": "Magefan Blog Extra for Magento 2"
+        },
+        {
             "name": "magefan/module-blog-graph-ql",
             "version": "2.1.10",
             "source": {
@@ -5413,6 +5480,51 @@
                 "source": "https://github.com/magefan/module-blog-graph-ql/tree/2.1.10"
             },
             "time": "2025-05-16T13:23:53+00:00"
+        },
+        {
+            "name": "magefan/module-blog-import",
+            "version": "2.13.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://magefan.com/repo/packages/download/user/n43LOtUKgeXaMB9HjpJxCBL5cAV60jm5/pw/SfgUOpW3lgF078rpHTzvrU19X289Rf7n/package/magefan-module-blog-import/version/2.13.1/"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Magefan\\BlogImport\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "license": [
+                "EULA"
+            ],
+            "description": "Magefan Blog Import for Magento 2"
+        },
+        {
+            "name": "magefan/module-blog-plus",
+            "version": "2.13.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://magefan.com/repo/packages/download/user/n43LOtUKgeXaMB9HjpJxCBL5cAV60jm5/pw/SfgUOpW3lgF078rpHTzvrU19X289Rf7n/package/magefan-module-blog-plus/version/2.13.1/"
+            },
+            "require": {
+                "magefan/module-blog": "2.13.1"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magefan\\BlogPlus\\": ""
+                }
+            },
+            "license": [
+                "EULA"
+            ],
+            "description": "Implements Additional Blog functionality on Magento 2 store"
         },
         {
             "name": "magefan/module-community",
@@ -5447,6 +5559,31 @@
                 "source": "https://github.com/magefan/module-community/tree/2.2.17"
             },
             "time": "2025-07-02T17:12:53+00:00"
+        },
+        {
+            "name": "magefan/module-productwidget",
+            "version": "2.0.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://magefan.com/repo/packages/download/user/n43LOtUKgeXaMB9HjpJxCBL5cAV60jm5/pw/SfgUOpW3lgF078rpHTzvrU19X289Rf7n/package/magefan-module-productwidget/version/2.0.14/"
+            },
+            "require": {
+                "magefan/module-community": ">=2.1.29",
+                "magefan/module-wysiwyg-advanced": ">=2.0.15"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Magefan\\ProductWidget\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "license": [
+                "EULA"
+            ],
+            "description": "Advanced Product Widget for Magento 2"
         },
         {
             "name": "magefan/module-wysiwyg-advanced",
@@ -5485,6 +5622,29 @@
                 "source": "https://github.com/magefan/module-wysiwyg-advanced/tree/2.0.18"
             },
             "time": "2025-05-08T11:31:56+00:00"
+        },
+        {
+            "name": "magefan/module-youtube-widget",
+            "version": "2.0.20",
+            "dist": {
+                "type": "zip",
+                "url": "https://magefan.com/repo/packages/download/user/n43LOtUKgeXaMB9HjpJxCBL5cAV60jm5/pw/SfgUOpW3lgF078rpHTzvrU19X289Rf7n/package/magefan-module-youtube-widget/version/2.0.20/"
+            },
+            "require": {
+                "magefan/module-community": ">=2.2.8"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Magefan\\YouTubeWidget\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "license": [
+                "EULA"
+            ]
         },
         {
             "name": "magento/adobe-stock-integration",
@@ -19379,20 +19539,20 @@
         },
         {
             "name": "mageplaza/module-delete-orders",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mageplaza/magento-2-delete-orders.git",
-                "reference": "583fd33980f8796aa4ec52de176ad5ecc32ad3b9"
+                "reference": "91c19c7c6e9decae7ec0896ca290092c757c7b6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-delete-orders/zipball/583fd33980f8796aa4ec52de176ad5ecc32ad3b9",
-                "reference": "583fd33980f8796aa4ec52de176ad5ecc32ad3b9",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-delete-orders/zipball/91c19c7c6e9decae7ec0896ca290092c757c7b6e",
+                "reference": "91c19c7c6e9decae7ec0896ca290092c757c7b6e",
                 "shasum": ""
             },
             "require": {
-                "mageplaza/module-core": "^1.5.3"
+                "mageplaza/module-core": "^1.5.13"
             },
             "type": "magento2-module",
             "autoload": {
@@ -19417,10 +19577,9 @@
             ],
             "description": "Magento 2 Delete Orders extension",
             "support": {
-                "issues": "https://github.com/mageplaza/magento-2-delete-orders/issues",
-                "source": "https://github.com/mageplaza/magento-2-delete-orders/tree/v4.0.2"
+                "source": "https://github.com/mageplaza/magento-2-delete-orders/tree/v4.0.3"
             },
-            "time": "2023-07-17T04:11:06+00:00"
+            "time": "2025-07-15T10:45:09+00:00"
         },
         {
             "name": "mageworx/module-google-ai",
@@ -20449,10 +20608,16 @@
         {
             "name": "paradoxlabs/authnetcim",
             "version": "4.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ParadoxLabs-Inc/authnetcim.git",
+                "reference": "264f8bc237771fa7f1b389acbb0644b0ebe98bf7"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/paradoxlabs/authnetcim/paradoxlabs-authnetcim-4.5.3.0.zip",
-                "shasum": "6a5ffc8877acc9d720278d6968baa98845d88a0d"
+                "url": "https://api.github.com/repos/ParadoxLabs-Inc/authnetcim/zipball/264f8bc237771fa7f1b389acbb0644b0ebe98bf7",
+                "reference": "264f8bc237771fa7f1b389acbb0644b0ebe98bf7",
+                "shasum": ""
             },
             "require": {
                 "paradoxlabs/tokenbase": "~4.5.6"
@@ -20466,6 +20631,7 @@
                     "ParadoxLabs\\Authnetcim\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -20481,15 +20647,31 @@
                 "payment",
                 "tokenization"
             ],
-            "time": "2023-11-09T00:00:00-06:00"
+            "support": {
+                "issues": "https://github.com/ParadoxLabs-Inc/authnetcim/issues",
+                "source": "https://github.com/ParadoxLabs-Inc/authnetcim/tree/4.5.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ParadoxLabs-Inc",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-11-09T00:00:00+00:00"
         },
         {
             "name": "paradoxlabs/tokenbase",
             "version": "4.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ParadoxLabs-Inc/tokenbase.git",
+                "reference": "974638ce1f5ffd3408a0abddc61427e2ded8c85d"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/paradoxlabs/tokenbase/paradoxlabs-tokenbase-4.5.6.0.zip",
-                "shasum": "4bd3b719639d43e4b5bee1d568ca2308b1c71388"
+                "url": "https://api.github.com/repos/ParadoxLabs-Inc/tokenbase/zipball/974638ce1f5ffd3408a0abddc61427e2ded8c85d",
+                "reference": "974638ce1f5ffd3408a0abddc61427e2ded8c85d",
+                "shasum": ""
             },
             "require": {
                 "ext-json": "*",
@@ -20515,6 +20697,7 @@
                     "ParadoxLabs\\TokenBase\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -20525,7 +20708,17 @@
                 }
             ],
             "description": "Base module for ParadoxLabs tokenization payment methods.",
-            "time": "2023-11-09T00:00:00-06:00"
+            "support": {
+                "issues": "https://github.com/ParadoxLabs-Inc/tokenbase/issues",
+                "source": "https://github.com/ParadoxLabs-Inc/tokenbase/tree/4.5.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ParadoxLabs-Inc",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-11-09T00:00:00+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -22335,49 +22528,6 @@
             "time": "2025-07-11T13:20:48+00:00"
         },
         {
-            "name": "scommerce/core",
-            "version": "2.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/scommercemage/m2_core.git",
-                "reference": "ead3399cf2a8f61966148b4d5c409d697dea99b0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/scommercemage/m2_core/zipball/ead3399cf2a8f61966148b4d5c409d697dea99b0",
-                "reference": "ead3399cf2a8f61966148b4d5c409d697dea99b0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Scommerce\\Core\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Scommerce Mage",
-                    "email": "core@scommerce-mage.com"
-                }
-            ],
-            "description": "Scommerce Core Module for Magento 2.0",
-            "support": {
-                "issues": "https://github.com/scommercemage/m2_core/issues",
-                "source": "https://github.com/scommercemage/m2_core/tree/2.0.9"
-            },
-            "time": "2025-05-22T06:41:03+00:00"
-        },
-        {
             "name": "seld/jsonlint",
             "version": "1.11.0",
             "source": {
@@ -22553,10 +22703,10 @@
         {
             "name": "signifyd/module-connect",
             "version": "5.8.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.magento.com/archives/signifyd/module-connect/signifyd-module-connect-5.8.2.0.zip",
-                "shasum": "37f10b47feae6d3e0f92bf9b31ef9714982f5f10"
+            "source": {
+                "type": "git",
+                "url": "https://github.com/signifyd/magento2.git",
+                "reference": "22b508174cf7b1753d3fc7a0bf341affcd42cb5e"
             },
             "require": {
                 "monolog/monolog": ">=1.16.0",
@@ -22572,7 +22722,8 @@
                     "Signifyd\\Connect\\": ""
                 }
             },
-            "description": "Signifyd integration for Magento"
+            "description": "Signifyd integration for Magento",
+            "time": "2025-04-02T22:27:55+00:00"
         },
         {
             "name": "signifyd/signifyd-php",
@@ -26710,16 +26861,16 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/composer-installer.git",
-                "reference": "6e0fa428497bf560152ee73ffbb8af5c6a56b0dd"
+                "reference": "e9cf5e4bbf7eeaf9ef5db34938942602838fc2b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/6e0fa428497bf560152ee73ffbb8af5c6a56b0dd",
-                "reference": "6e0fa428497bf560152ee73ffbb8af5c6a56b0dd",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/e9cf5e4bbf7eeaf9ef5db34938942602838fc2b1",
+                "reference": "e9cf5e4bbf7eeaf9ef5db34938942602838fc2b1",
                 "shasum": ""
             },
             "require": {
@@ -26802,7 +26953,7 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-06-27T17:24:01+00:00"
+            "time": "2025-07-17T20:45:56+00:00"
         },
         {
             "name": "dg/bypass-finals",
@@ -27190,16 +27341,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.83.0",
+            "version": "v3.84.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "b83916e79a6386a1ec43fdd72391aeb13b63282f"
+                "reference": "38dad0767bf2a9b516b976852200ae722fe984ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/b83916e79a6386a1ec43fdd72391aeb13b63282f",
-                "reference": "b83916e79a6386a1ec43fdd72391aeb13b63282f",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/38dad0767bf2a9b516b976852200ae722fe984ca",
+                "reference": "38dad0767bf2a9b516b976852200ae722fe984ca",
                 "shasum": ""
             },
             "require": {
@@ -27283,7 +27434,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.83.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.84.0"
             },
             "funding": [
                 {
@@ -27291,7 +27442,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-14T15:41:41+00:00"
+            "time": "2025-07-15T18:21:57+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -28205,16 +28356,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.27",
+            "version": "1.12.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3a6e423c076ab39dfedc307e2ac627ef579db162"
+                "reference": "fcf8b71aeab4e1a1131d1783cef97b23a51b87a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3a6e423c076ab39dfedc307e2ac627ef579db162",
-                "reference": "3a6e423c076ab39dfedc307e2ac627ef579db162",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fcf8b71aeab4e1a1131d1783cef97b23a51b87a9",
+                "reference": "fcf8b71aeab4e1a1131d1783cef97b23a51b87a9",
                 "shasum": ""
             },
             "require": {
@@ -28259,7 +28410,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-21T20:51:45+00:00"
+            "time": "2025-07-17T17:15:39+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

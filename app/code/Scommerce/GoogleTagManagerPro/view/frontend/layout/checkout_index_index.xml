@@ -7,14 +7,6 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="head.additional">
-            <block class="Scommerce\GoogleTagManagerPro\Block\Checkout\Onepage" name="google_tag_manager_pro_checkout_onepage" template="Scommerce_GoogleTagManagerPro::checkout/onepage.phtml"/>
-            <block class="Scommerce\GoogleTagManagerPro\Block\Script" name="scommerce.gtm.checkout" template="script.phtml">
-                <action method="setPageType">
-                    <argument name="prefix" xsi:type="string">checkout</argument>
-                </action>
-            </block>
-            <referenceBlock name="scommerce.gtm.other" remove="true"/>
-        </referenceContainer>
+        <move element="google_tag_manager_pro_js" destination="head.additional" after="scommerce_tracking_base_checkout_onepage" />
     </body>
 </page>

@@ -15,7 +15,7 @@ $_PICText = $helper->getPICText();
 $cats = $viewModel->getRemarketingCategories();
 ?>
 
-<script>
+<script type="text/javascript"<?= $viewModel->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData",

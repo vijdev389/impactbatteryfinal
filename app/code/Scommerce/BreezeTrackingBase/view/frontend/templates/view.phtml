@@ -9,28 +9,34 @@ $cats = $viewModel->getRemarketingCategories();
 if (!$viewModel->getHelper()->isEnabled()) return;
 ?>
 
-<script data-breeze>
+<script data-breeze <?= $viewModel->getHelper()->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData"
     ], function($, Tracking) {
-        let tracking = Tracking;
-        tracking.setData('category_full', '<?php echo $block->escapeJs($cats['full']) ?>');
-        tracking.setData('category_plain', '<?php echo $block->escapeJs($cats['plain']) ?>');
 
-        let data = <?php echo json_encode($viewModel->getProductData())?>;
-        tracking.setProductData(data);
-        let relatedData = <?php echo json_encode($viewModel->getRelatedProducts())?>;
-        if (relatedData && relatedData.length > 0) {
-            tracking.setImpressionListData(relatedData);
-        }
-        let upsellData = <?php echo json_encode($viewModel->getUpsellProducts())?>;
-        if (upsellData && upsellData.length > 0) {
-            tracking.setImpressionListData(upsellData);
-        }
+        var prodLocation = '';
+        $(document).on('breeze:load', function () {
+            let tracking = Tracking;
 
-        $(document).one('breeze:load', function () {
-            tracking.fire('page_ready', tracking.getPageType()?.toLowerCase() || "product");
+            if (prodLocation == '' || prodLocation == window.location.pathname) {
+                tracking.setData('category_full', '<?php echo $block->escapeJs($cats['full']) ?>');
+                tracking.setData('category_plain', '<?php echo $block->escapeJs($cats['plain']) ?>');
+
+                let data = <?php echo json_encode($viewModel->getProductData())?>;
+                tracking.setProductData(data);
+                let relatedData = <?php echo json_encode($viewModel->getRelatedProducts())?>;
+                if (relatedData && relatedData.length > 0) {
+                    tracking.setImpressionListData(relatedData);
+                }
+                let upsellData = <?php echo json_encode($viewModel->getUpsellProducts())?>;
+                if (upsellData && upsellData.length > 0) {
+                    tracking.setImpressionListData(upsellData);
+                }
+                tracking.fire('page_ready', tracking.getPageType()?.toLowerCase() || "product");
+
+                prodLocation = window.location.pathname;
+            }
         });
     });
 </script>

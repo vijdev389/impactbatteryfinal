@@ -16,25 +16,16 @@ use Magento\Framework\Escaper;
 
 /** @var Wishlist $wishlistViewModel */
 $wishlistViewModel = $viewModels->require(Wishlist::class);
+$hyvaTrackingHelper = $this->helper('Hyva\ScommerceTrackingBase\Helper\Data');
 ?>
 <?php if ($wishlistViewModel->isEnabled()): ?>
 <script>
     function initWishlist() {
         return {
-            async trackAddToWishlist (productId) {
-                return fetch(BASE_URL + 'sctracking/index/addtowishlist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: "form_key=" + hyva.getFormKey() + "&itemId=" + productId + "&uenc=" + hyva.getUenc()
-                }).then((response) => response.json())
-                    .then((product) => {
-                        if (product == null) return;
-                        window.scTrackingContainer.setAddToWishlist(product);
-                    });
-            },
             addToWishlist(productId) {
+                <?php if ($hyvaTrackingHelper->isScommerceAjaxWishlistEnabled()): ?>
+                this.$dispatch('scom-add-product-to-wishlist', {productId: productId});
+                <?php else: ?>
                 var self = this;
                 const formKey = hyva.getFormKey();
                 const postUrl = BASE_URL + 'wishlist/index/add/';
@@ -48,7 +39,7 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                     "mode": "cors",
                     "credentials": "include"
                 }).then(async function (response) {
-                    let result = await self.trackAddToWishlist(productId);
+                    window.trackAddToWishlist(productId);
                     if (response.redirected) {
                         window.location.href = response.url;
                     } else if (response.ok) {
@@ -84,6 +75,7 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                         }], 5000
                     );
                 });
+                <?php endif; ?>
             }
         }
     }

@@ -8,7 +8,7 @@ if (!$viewModel->isEnabled() || !count($cookiesToSet)) {
 }
 ?>
 
-<script data-breeze>
+<script data-breeze <?= $viewModel->getNonce(); ?>>
     require([
         'jquery',
         'domReady!'

@@ -1,18 +1,20 @@
 <?php
 /** @var \Magento\Framework\View\Element\Template $block */
+$helper = $this->helper('Scommerce\TrackingBase\Helper\Data');
 ?>
 
-<script>
+<script <?= $helper->getNonce(); ?>>
     function convertPromotions(trackingData, data) {
         if (data instanceof Array) {
             let result = [];
             for (let i=0; i < data.length; i++) {
                 let promo = data[i];
                 result.push({
-                    item_name: promo.name,
-                    item_id: promo.id,
-                    index: promo.position,
-                    creative_name: promo.creative
+                    promotion_name: promo.name,
+                    promotion_id: promo.id,
+                    location_id: promo.position,
+                    creative_name: promo.creative,
+                    creative_slot: promo.slot
                 });
             }
             return result;
@@ -31,10 +33,11 @@
                 item_list_name: product.list,
                 item_list_id: trackingData.getListId(product.list),
                 index: product.position,
-                quantity: 1,
-                affiliation: trackingData.getData('affiliation'),
-                currency: trackingData.getData('currency')
+                quantity: 1
             });
+            if (trackingData.getData('affiliation') !== '') {
+                impr[i]['affiliation'] = trackingData.getData('affiliation');
+            }
             let categories = product.category.split('->');
             impr[i]['item_category'] = categories[0];
             for (let j = 1; j < categories.length; j++) {
@@ -53,11 +56,15 @@
                 price: trackingData.formatPrice(data[i].price, false),
                 item_brand: data[i].brand,
                 quantity: data[i].quantity,
-                item_list_name: data[i].list,
-                item_list_id: trackingData.getListId(data[i].list),
-                affiliation: trackingData.getData('affiliation'),
-                currency: trackingData.getData('currency')
+                index: i + 1
             });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
+            if (trackingData.getData('affiliation') !== '') {
+                prods[i]['affiliation'] = trackingData.getData('affiliation');
+            }
             let categories = data[i].category.split('->');
             prods[i]['item_category'] = categories[0];
             for (let j = 1; j < categories.length; j++) {
@@ -77,11 +84,15 @@
                 item_brand: data[i].brand,
                 item_category: data[i].category,
                 quantity: data[i].quantity,
-                item_list_name: data[i].list,
-                item_list_id: trackingData.getListId(data[i].list),
-                affiliation: trackingData.getData('affiliation'),
-                currency: trackingData.getData('currency')
+                index: i + 1
             });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
+            if (trackingData.getData('affiliation') !== '') {
+                prods[i]['affiliation'] = trackingData.getData('affiliation');
+            }
             let categories = data[i].category.split('->');
             prods[i]['item_category'] = categories[0];
             for (let j = 1; j < categories.length; j++) {
@@ -99,13 +110,14 @@
                 item_id: data[i].id,
                 price: trackingData.formatPrice(data[i].price, false),
                 item_brand: data[i].brand,
-                item_list_name: data[i].list,
-                item_list_id: trackingData.getListId(data[i].list),
                 quantity: data[i].quantity,
                 affiliation: trackingData.getData('affiliation'),
-                currency: trackingData.getData('currency'),
                 index: i + 1
             });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
             let categories = data[i].category.split('->');
             prods[i]['item_category'] = categories[0];
             for (let j = 1; j < categories.length; j++) {
@@ -126,11 +138,16 @@
             item_category: data.category,
             item_list_name: data.list,
             item_list_id: trackingData.getListId(data.list),
-            quantity: data.quantity,
-            affiliation: trackingData.getData('affiliation'),
-            currency: trackingData.getData('currency'),
+            quantity: Number(data.quantity),
             index: 1
         });
+        if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data.list) {
+            prods["item_list_name"] = data.list;
+            prods["item_list_id"] = trackingData.getListId(data.list);
+        }
+        if (trackingData.getData('affiliation') !== '') {
+            prods['affiliation'] = trackingData.getData('affiliation');
+        }
         let categories = data.category.split('->');
         prods[0]['item_category'] = categories[0];
         for (let j = 1; j < categories.length; j++) {

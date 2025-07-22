@@ -8,7 +8,7 @@ $viewModel = $block->getData('view_model');
 if (!$viewModel->isEnabled()) return;
 ?>
 
-<script>
+<script type="text/javascript"<?= $viewModel->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData"

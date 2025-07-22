@@ -8,8 +8,10 @@ if (!$viewModel->isEnabled()) {
 $productToBasket = $viewModel->getProductToBasket();
 $productToWishlist = $viewModel->getProductToWishlist();
 $skipPageReady = $block->getSkipPageReady();
+$consentModeEnabled = $viewModel->isConsentModeEnabled();
+$consentModeData = $viewModel->getConsentCookiesConfiguration();
 ?>
-<script>
+<script type="text/javascript"<?= $viewModel->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData",
@@ -18,6 +20,105 @@ $skipPageReady = $block->getSkipPageReady();
     ], function($, Tracking, url) {
         let tracking = Tracking();
         let scUpdating = false, scClicked = false;
+        let consentModeConfig = <?= json_encode($consentModeData) ?>;
+        let defaultConsentSent = false;
+        function gtag(){dataLayer.push(arguments);}
+
+        $(document).on("scommerceCookieSaved", function () {
+            sendConsentData();
+        });
+        sendConsentData();
+
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+
+            for(let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            return null;
+        }
+
+        function sendConsentData() {
+            <?php if ($consentModeEnabled): ?>
+            let consentDefault = {};
+            let consentUpdate = {};
+            let instantUpdate = false;
+            for (var consent in consentModeConfig) {
+                consentDefault[consent] = consentModeConfig[consent]['default_value'];
+                consentUpdate[consent] = consentModeConfig[consent]['default_value'];
+                consentCookie = consentModeConfig[consent]['cookie_name'];
+                consentCookieValue = getCookie(consentCookie);
+                if (consentCookie === "" || consentCookieValue === undefined) {
+                    consentValue = consentModeConfig[consent]['default_value'];
+                } else {
+                    if (consentCookieValue == 1) {
+                        consentValue = 'granted';
+                    } else {
+                        consentValue = 'denied';
+                    }
+                    if (consentValue !== consentModeConfig[consent]['default_value']) {
+                        instantUpdate = true;
+                        consentUpdate[consent] = consentValue;
+                    }
+                }
+
+            }
+            if (sessionStorage.getItem('consentDefault') === null) {
+                //send default
+                if (!defaultConsentSent) {
+                    gtag('consent', 'default', consentDefault);
+                    sessionStorage.setItem('consentDefault', JSON.stringify(consentDefault));
+                    defaultConsentSent = true;
+                }
+                //send update
+                if (instantUpdate) {
+                    gtag('consent', 'update', consentUpdate);
+                    sessionStorage.setItem('consentDefault', JSON.stringify(consentUpdate))
+                }
+            } else {
+                oldConsent = JSON.parse(sessionStorage.getItem('consentDefault'));
+                needUpdate = false;
+                consentDefault = {};
+                for (var consentConfig in consentModeConfig) {
+                    consentCookie = consentModeConfig[consentConfig]['cookie_name'];
+                    consentCookieValue = getCookie(consentCookie);
+                    if (consentCookie === "" || consentCookieValue === undefined) {
+                        consentValue = consentModeConfig[consentConfig]['default_value'];
+                    } else {
+                        if (consentCookieValue == 1) {
+                            consentValue = 'granted';
+                        } else {
+                            consentValue = 'denied';
+                        }
+                    }
+                    consentDefault[consentConfig] = consentValue;
+                    if (oldConsent[consentConfig] == undefined) {
+                        needUpdate = true;
+                    } else {
+                        if (oldConsent[consentConfig] !== consentValue) {
+                            needUpdate = true;
+                        }
+                    }
+                }
+
+                if (!defaultConsentSent) {
+                    gtag('consent', 'default', consentDefault);
+                    sessionStorage.setItem('consentDefault', JSON.stringify(consentDefault));
+                    defaultConsentSent = true;
+                } else {
+                    if (needUpdate) {
+                        gtag('consent', 'update', consentDefault);
+                        sessionStorage.setItem('consentDefault', JSON.stringify(consentDefault));
+                    }
+                }
+            }
+            <?php endif; ?>
+        }
 
         function _gaAddToCart($) {
             if (scClicked === false) return;
@@ -80,20 +181,18 @@ $skipPageReady = $block->getSkipPageReady();
         wishlistData.item.list = tracking.getProductImpression(wishlistData.item.allSkus);
         tracking.setAddToWishlist(wishlistData);
         <?php else: ?>
-        $('a.towishlist').click(function () {
-            var wishlistData = $(this).data('post');
-            var itemId = wishlistData.data.product;
-            setTimeout(function () {
-                $.ajax({
-                    url: url.build('sctracking/index/addtowishlist'),
-                    type: 'post',
-                    dataType: 'json',
-                    data: {itemId: itemId}
-                }).success(function (product) {
-                    if (product == null) return;
-                    tracking.setAddToWishlist(product);
-                });
-            }, 1000);
+        $(document).on('ajax:addToWishlist', function (e, data) {
+            var itemId = data.productId;
+            $.ajax({
+                url: url.build('sctracking/index/addtowishlist'),
+                type: 'post',
+                dataType: 'json',
+                data: {itemId: itemId}
+            }).done(function (product) {
+                if (product == null) return;
+                product.item.list = tracking.getProductImpression(product.item.allSkus);
+                tracking.setAddToWishlist(product);
+            });
         });
         <?php endif; ?>
 

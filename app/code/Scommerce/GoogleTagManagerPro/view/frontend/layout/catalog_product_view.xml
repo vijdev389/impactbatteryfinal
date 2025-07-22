@@ -7,14 +7,6 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="head.additional">
-            <block class="Scommerce\GoogleTagManagerPro\Block\View" name="google_tag_manager_pro_view" template="view.phtml" after="google_tag_manager_pro"/>
-            <block class="Scommerce\GoogleTagManagerPro\Block\Script" name="scommerce.gtm.product" template="script.phtml">
-                <action method="setPageType">
-                    <argument name="prefix" xsi:type="string">product</argument>
-                </action>
-            </block>
-			<referenceBlock name="scommerce.gtm.other" remove="true"/>
-        </referenceContainer>
+        <move element="google_tag_manager_pro_js" destination="head.additional" after="scommerce_tracking_base_product_view" />
     </body>
 </page>

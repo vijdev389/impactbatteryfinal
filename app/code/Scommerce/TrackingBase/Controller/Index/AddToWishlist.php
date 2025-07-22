@@ -2,6 +2,7 @@
 
 namespace Scommerce\TrackingBase\Controller\Index;
 
+use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json;
@@ -37,6 +38,8 @@ class AddToWishlist extends Action
 
     private $wishlist;
 
+    private $customerSession;
+
     /**
      * AddToCart constructor.
      * @param Context $context
@@ -51,7 +54,8 @@ class AddToWishlist extends Action
         GetProductCategory $getProductCategory,
         GetProductPrice $getProductPrice,
         GetProductId $getProductId,
-        Wishlist $wishlist
+        Wishlist $wishlist,
+        Session $customerSession
     ) {
         $this->_coreSession = $coreSession;
         $this->_jsonFactory = $jsonFactory;
@@ -60,6 +64,7 @@ class AddToWishlist extends Action
         $this->getProductPrice = $getProductPrice;
         $this->getProductId = $getProductId;
         $this->wishlist = $wishlist;
+        $this->customerSession = $customerSession;
         parent::__construct($context);
     }
 
@@ -71,7 +76,7 @@ class AddToWishlist extends Action
         $result = $this->_jsonFactory->create();
         $data = [];
         $itemId = $this->_request->getParam('itemId');
-        $customerId = $this->_coreSession->getVisitorData()['customer_id'];
+        $customerId = $this->getCustomerId();
         $wishlist = $this->wishlist->create();
         $wishlist = $wishlist->loadByCustomerId($customerId);
         $wishlistItems = $wishlist->getItemCollection()->getItems();
@@ -104,5 +109,14 @@ class AddToWishlist extends Action
         ];
 
         return $result->setData($data);
+    }
+
+    private function getCustomerId()
+    {
+        $visitor = $this->_coreSession->getVisitorData();
+        if (isset($visitor['customer_id'])) {
+            return $visitor['customer_id'];
+        }
+        return $this->customerSession->getCustomerId();
     }
 }

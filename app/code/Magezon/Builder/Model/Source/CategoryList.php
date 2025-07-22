@@ -54,7 +54,6 @@ class CategoryList implements \Magezon\Builder\Model\Source\ListInterface
 	public function getList($q = '', $field = '') {
 		$list = [];
 		$collection = $this->collectionFactory->create();
-        $collection->addIsActiveFilter();
 		$collection->addFieldToSelect('name');
 		$collection->setOrder('name', 'ASC');
 		if ($q) {

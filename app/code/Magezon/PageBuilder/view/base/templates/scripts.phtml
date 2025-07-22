@@ -1,1 +1,2 @@
-<script>require(['Magezon_PageBuilder/js/common']);</script>
+<?php $jsContent = "require(['Magezon_PageBuilder/js/common']);";
+echo $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $jsContent, false);

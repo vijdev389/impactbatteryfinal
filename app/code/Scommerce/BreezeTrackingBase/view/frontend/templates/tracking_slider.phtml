@@ -7,7 +7,7 @@ $viewModel = $block->getData('view_model');
 $collection  = $viewModel->getSlidersCollection();
 ?>
 <?php if ($collection): ?>
-    <script data-breeze>
+    <script data-breeze <?= $viewModel->getNonce(); ?>>
         require([
             "jquery",
             "scTrackingData"

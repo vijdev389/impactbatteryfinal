@@ -89,10 +89,10 @@ class CreditMemoSaveAfter implements ObserverInterface
         /** @var CreditmemoInterface $creditMemo */
         $creditMemo = $observer->getEvent()->getCreditmemo();
         $order = $creditMemo->getOrder();
+        $refundCurrency = $order->getOrderCurrencyCode();
         $storeId= $order->getStoreId();
         if ($this->_helper->isEnabled($storeId)
             && $this->_helper->isEnhancedEcommerceEnabled($storeId)
-            && $this->_helper->getSendAdminOrdersEnabled($storeId)
         ) {
             $orderId = $order->getIncrementId();
             $products = array();
@@ -112,35 +112,59 @@ class CreditMemoSaveAfter implements ObserverInterface
                 $fullRefund = true;
             }
 
-            if ($fullRefund == false) {
-                foreach ($creditMemo->getAllItems() as $item) {
-                    if($item->getBasePrice() <= 0) continue;
-                    $sku = $this->_helper->sendParentSKU() && $item->getParentItemId() ?
-                        $this->_getProductId->execute($item->getParentItem()) :
-                        $item->getProductId();
-                    $prod = $item->getOrderItem()->getProduct();
-                    $products[] = [
-                        'id' => $sku,
-                        'qty' => $item->getQty(),
-                        'name' => trim($item->getName()),
-                        'brand' => $this->_getBrand->execute($prod),
-                        'category' => $this->_getProductCategory->execute($prod),
-                        'price' => $this->_getProductPrice->execute($prod),
-                        'quantity' => $item->getQty(),
-                        'variant' => $this->_getProductVariant->execute($prod, $item)
-                    ];
-                }
-            }
 
+            foreach ($creditMemo->getAllItems() as $item) {
+                if($item->getBasePrice() <= 0) continue;
+                $sku = $this->_helper->sendParentSKU() && $item->getParentItemId() ?
+                    $this->_getProductId->execute($item->getParentItem()) :
+                    $item->getProductId();
+                $prod = $item->getOrderItem()->getProduct();
+                if ($item->getDiscountAmount() <> 0) {
+                    if ($this->_helper->sendBaseData()) {
+                        $price = $item->getBasePrice() - $item->getBaseDiscountAmount() / $item->getQty();
+                    } else {
+                        $price = $item->getPrice() - $item->getDiscountAmount() / $item->getQty();
+                    }
+                } else {
+                    $price = $this->_getProductPrice->executeBySku($item->getSku(), $refundCurrency);
+                    if ($price === false) {
+                        $price = (int)$this->_getProductPrice->executeBySku($item->getData('sku'), $refundCurrency);
+                    }
+                }
+                $products[] = [
+                    'id' => $sku,
+                    'qty' => $item->getQty(),
+                    'name' => trim($item->getName()),
+                    'brand' => $this->_getBrand->execute($prod),
+                    'category' => $this->_getProductCategory->execute($prod),
+                    'price' => $price,
+                    'quantity' => $item->getQty(),
+                    'variant' => $this->_getProductVariant->execute($prod, $item)
+                ];
+            }
+            if ($this->_helper->sendBaseData()) {
+                $creditMemoTax = $creditMemo->getBaseTaxAmount() + $creditMemo->getBaseDiscountTaxCompensationAmount();
+                $creditMemoShipping = $creditMemo->getBaseShippingAmount() - $creditMemo->getBaseShippingDiscountAmount();
+                $creditMemoGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $creditMemo->getBaseGrandTotal() : $creditMemo->getBaseGrandTotal() - $creditMemoTax;
+            } else {
+                $creditMemoTax = $creditMemo->getTaxAmount() + $creditMemo->getDiscountTaxCompensationAmount();
+                $creditMemoShipping = $creditMemo->getShippingAmount() - $creditMemo->getShippingDiscountAmount();
+                $creditMemoGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $creditMemo->getGrandTotal() : $creditMemo->getGrandTotal() - $creditMemoTax;
+            }
+            if ($creditMemo->getShippingAmount() <> 0) {
+                $creditMemoGrandTotal = $creditMemoGrandTotal - $creditMemoShipping;
+            } else {
+                $creditMemoShipping = $this->_helper->sendBaseData() ? $creditMemo->getBaseShippingAmount() : $creditMemo->getShippingAmount();
+            }
             $response = [
                 'orderId'   => $orderId,
                 'storeId'   => $storeId,
                 'products'  => $products,
                 'fullRefund'=> $fullRefund,
-                'value'     => $this->_helper->sendBaseData() ? $creditMemo->getBaseGrandTotal() : $creditMemo->getGrandTotal(),
-                'currency'  => $creditMemo->getOrderCurrencyCode(),
-                'tax'       => $this->_helper->sendBaseData() ? $creditMemo->getBaseTaxAmount() : $creditMemo->getTaxAmount(),
-                'shipping'  => $this->_helper->sendBaseData() ? $creditMemo->getBaseShippingAmount() : $creditMemo->getShippingAmount(),
+                'value'     => number_format((float)$creditMemoGrandTotal, 2,'.',''),
+                'currency'  => $this->_helper->sendBaseData() ? $creditMemo->getBaseCurrencyCode() : $creditMemo->getOrderCurrencyCode(),
+                'tax'       => number_format((float)$creditMemoTax, 2,'.',''),
+                'shipping'  => number_format((float)$creditMemoShipping, 2,'.',''),
                 'affiliation' => $this->_helper->getAffiliation($creditMemo->getStoreId()),
                 'coupon' => $order->getCouponCode()
             ];

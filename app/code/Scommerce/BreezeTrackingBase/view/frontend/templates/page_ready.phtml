@@ -9,7 +9,7 @@ $productToBasket = $viewModel->getProductToBasket();
 $productToWishlist = $viewModel->getProductToWishlist();
 $skipPageReady = $block->getSkipPageReady();
 ?>
-<script data-breeze>
+<script data-breeze <?= $viewModel->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData"

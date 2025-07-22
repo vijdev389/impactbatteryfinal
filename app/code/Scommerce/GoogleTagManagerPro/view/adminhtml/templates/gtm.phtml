@@ -1,124 +1,132 @@
 <?php
-/**
- * @var $block \Scommerce\GoogleTagManagerPro\Block\Adminhtml\Order\View
- */
-$helper = $block->getHelper();
+/** @var $block Magento\Framework\View\Element\Template */
 
-$refundOrder = $block->getRefundOrder();
-$bGTM = false;
-if ($refundOrder):
-    $result = $refundOrder;
-    $storeId =  $result["storeId"];
-    if ($helper->isEnabled($storeId) && $helper->isEnhancedEcommerceEnabled($storeId)):
-        $products = $result['products'];
+use Scommerce\TrackingBase\ViewModel\Adminhtml\ViewOrder;
 
-        $intCtr = 0;
-        $bGTM = true;
-        ?>
-        <script type="text/javascript">
-            //<![CDATA[
+/** @var ViewOrder $viewModel */
+$viewModel = $block->getData('view_model');
+$gtm = $block->getData('gtm');
 
-            window.dataLayer = window.dataLayer || [];
-            <?php if(!$result['fullRefund']):?>
-            dataLayer.push({
-                'event': 'refund',
-                'ecommerce': {
-                    'refund': {
-                        'actionField': {'id': '<?php echo $result['orderId']?>'},        // Transaction ID.
-                        'products': [
-                            <?php foreach($products as $product):
-                            $intCtr++;?>
-                            {'id': '<?php echo $product['id']?>', 'quantity': <?php echo $product['qty']?>}<?php if ($intCtr != count($products)) echo ','?>
-                            <?php endforeach;?>
-                        ]
-                    }
-                }
-            });
-            <?php else:?>
-            dataLayer.push({
-                'event': 'refund',
-                'ecommerce': {
-                    'refund': {
-                        'actionField': {'id': '<?php echo $result['orderId']?>'}         // Transaction ID. Required for purchases and refunds.
-                    }
-                }
-            });
-            <?php endif;
-            $block->removeRefundOrderData();
-            ?>
-            //]]>
-        </script>
-    <?php endif;?>
-<?php endif;?>
+if (!$viewModel->hasTrackingData()) return;
+
+/** @var \Scommerce\GoogleTagManagerPro\Helper\Data $gtmHelper */
+$gtmHelper = $gtm->getGtmHelper();
+
+$storeId = null;
+?>
+
+<script type="text/javascript"<?= $gtmHelper->getNonce(); ?>>
+    function formatPrice(priceValue) {
+        let val = priceValue;
+        if (typeof val === 'string')
+        {
+            val = val.replace(/,/g, '');
+        }
+        return parseFloat(parseFloat(val).toFixed(2));
+    }
+</script>
 
 <?php
-$orderData = $block->getOrderData();
-if ($orderData):
-    $result = $orderData;
+if ($viewModel->getDataType() == ViewOrder::DATA_TYPE_REFUND): ?>
+<?php
+    $result = $viewModel->getTrackingData();
     $storeId = $result['storeId'];
-    if ($helper->isEnabled($storeId)
-        && $helper->isEnhancedEcommerceEnabled($storeId)
-        && $orderData
-        && $helper->getSendAdminOrdersEnabled($storeId)):
-        $products = $result['products'];
-
-        $intCtr = 0;
-        $bGTM = true;
-        ?>
-        <script type="text/javascript">
-            //<![CDATA[
-            window.dataLayer = window.dataLayer || [];
-            <?php $intCtr=0;?>
-            dataLayer.push({
-                'event': 'purchase',
-                'ecommerce': {
-                    'currencyCode': '<?php echo $result['currency']?>',
-                    'purchase': {
-                        'actionField': {
-                            'id': '<?php echo $result['id']?>',                         // Transaction ID. Required for purchases and refunds.
-                            'affiliation': '<?php echo $result['affiliation'] ?>',
-                            'revenue': '<?php echo $result['revenue']?>',                     // Total transaction value (incl. tax and shipping)
-                            'tax': '<?php echo $result['tax']?>',
-                            'shipping': '<?php echo $result['shipping']?>',
-                            'coupon': '<?php echo $result['coupon']?>',
-                            'source': '<?php echo $helper->getAdminSource($storeId) ?>',
-                            'medium': '<?php echo $helper->getAdminMedium($storeId) ?>'
-                        },
-                        'products': [
-                            <?php foreach($products as $item): ?>
-                            <?php $intCtr++;?>
-                            {
-                                'name': '<?php echo $block->escapeHtml($item['name']) ?>',     // Name or ID is required.
-                                'id': '<?php echo $block->escapeHtml($item['id']) ?>',
-                                'price': '<?php echo $item['price']?>',
-                                'brand': '<?php echo $block->escapeHtml($item['brand']) ?>',
-                                'category': '<?php echo $block->escapeHtml($item['category']) ?>',
-                                'quantity': <?php echo $item['quantity']?>
-                                <?php if ($intCtr == count($products)):?>
-                            }]
-                        <?php else:?>
-                    },
-                    <?php endif;?>
-                    <?php endforeach;?>
-                }
-            }
-            });
-            //]]>
-        </script>
-    <?php endif;
-    $block->removeOrderData();
     ?>
+    <script type="text/javascript"<?= $gtmHelper->getNonce(); ?>>
+        //<![CDATA[
+        window.dataLayer = window.dataLayer || [];
+
+        <?php if ($gtmHelper->getAddGa4Events()): ?>
+        let prods = <?php echo json_encode($result['products']) ?>;
+        let res = [];
+        for (let i=0; i<prods.length; i++) {
+            let prod = prods[i];
+            res.push({
+                item_name: prod.name,
+                item_id: prod.id,
+                item_brand: prod.brand,
+                quantity: prod.quantity,
+                price: formatPrice(prod.price)
+            });
+            let categories = prod.category.split('->');
+            res[i]['item_category'] = categories[0];
+            for (let j = 1; j < categories.length; j++) {
+                key = 'item_category' + (j + 1);
+                res[i][key] = categories[j];
+            }
+        }
+        dataLayer.push({
+            event: 'refund',
+            ecommerce: {
+                currency: "<?php echo $result['currency']?>",
+                value: <?php echo $result['value']?>,
+                affiliation: "<?php echo $result['affiliation']?>",
+                coupon: "<?php echo $result['coupon']?>",
+                shipping: <?php echo $result['shipping']?>,
+                tax: <?php echo $result['tax']?>,
+                transaction_id: '<?php echo $result['orderId']?>',
+                items: res
+            }
+        });
+        <?php endif; ?>
+        //]]>
+    </script>
+<?php endif;?>
+
+<?php if ($viewModel->getDataType() == ViewOrder::DATA_TYPE_PURCHASE):
+    $result = $viewModel->getTrackingData();
+
+    $storeId = $result['storeId'];
+    $products = $result['products']; ?>
+
+    <script type="text/javascript"<?= $gtmHelper->getNonce(); ?>>
+        //<![CDATA[
+        window.dataLayer = window.dataLayer || [];
+        <?php if ($gtmHelper->getAddGa4Events()): ?>
+        let prods = <?php echo json_encode($result['products']) ?>;
+        let items = [];
+        for (let i=0; i<prods.length; i++) {
+            let prod = prods[i];
+            items.push({
+                item_name: prod.name,
+                item_id: prod.id,
+                price: formatPrice(prod.price),
+                item_brand: prod.brand,
+                quantity: prod.quantity
+            });
+            let categories = prod.category.split('->');
+            items[i]['item_category'] = categories[0];
+            for (let j = 1; j < categories.length; j++) {
+                key = 'item_category' + (j + 1);
+                items[i][key] = categories[j];
+            }
+        }
+        dataLayer.push({
+            'event': 'purchase',
+            'ecommerce': {
+                transaction_id: '<?php echo $result['id']?>',
+                affiliation: '<?php echo $result['affiliation'] ?>',
+                value: formatPrice('<?php echo $result['revenue']?>'),
+                tax: formatPrice('<?php echo $result['tax']?>'),
+                shipping: formatPrice('<?php echo $result['shipping']?>'),
+                currency: '<?php echo $result['currency']?>',
+                coupon: '<?php echo $result['coupon']?>',
+                campaign_source: '<?php echo $viewModel->getAdminSource($storeId) ?>',
+                campaign_medium: '<?php echo $viewModel->getAdminMedium($storeId) ?>',
+                items: items
+            }
+        });
+        <?php endif; ?>
+        //]]>
+    </script>
 <?php endif; ?>
 
-
-<?php if ($bGTM): ?>
-    <!-- Google Tag Manager -->
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=<?php echo $helper->getAccountId($storeId) ?>"
-                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','<?php echo $helper->getAccountId($storeId) ?>');</script>
-    <!-- End Google Tag Manager -->
-<?php endif; ?>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=<?php echo $gtm->getAccountId($storeId) ?>"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script type="text/javascript"<?= $gtmHelper->getNonce(); ?>>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','<?php echo $gtm->getAccountId($storeId) ?>');</script>
+<!-- End Google Tag Manager -->

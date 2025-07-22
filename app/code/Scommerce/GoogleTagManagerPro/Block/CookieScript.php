@@ -33,7 +33,12 @@ class CookieScript implements ArgumentInterface
      */
     public function isEnabled()
     {
-        return $this->helper->isEnabled();
+        return $this->helper->isEnabled() && $this->helper->getCookiesEnabled();
+    }
+
+    public function getNonce()
+    {
+        return $this->helper->getNonce();
     }
 
     /**

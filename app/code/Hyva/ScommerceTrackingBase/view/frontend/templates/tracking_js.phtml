@@ -6,7 +6,7 @@ if (!$viewModel->isEnabled()) {
     return;
 }
 ?>
-<script>
+<script <?= $viewModel->getNonce(); ?>>
     function initTrackingData()
     {
         if (window.scTrackingContainer !== undefined) {
@@ -69,8 +69,14 @@ if (!$viewModel->isEnabled()) {
             },
 
             getListId: function(listName) {
-                if (listName !== undefined && listName !== "undefined")
-                    return listName.trim().replace(/[^\w ]/g,' ').replace(/\s\s+/g, ' ').replace(/\s/g, '_').toLowerCase();
+                if ((listName == undefined || listName == "undefined" || listName == null || listName == "null")) {
+                    if (this.getSendDefaultList() == 1) {
+                        listName = this.getDefaultList();
+                    } else {
+                        return undefined;
+                    }
+                }
+                return listName.trim().replace(/[^\w ]/g,' ').replace(/\s\s+/g, ' ').replace(/\s/g, '_').toLowerCase();
             },
 
             startEvents: function() {
@@ -93,6 +99,15 @@ if (!$viewModel->isEnabled()) {
                 this._logData(pageType);
                 this._internalData.pageType = pageType;
                 this.fire('page_view', pageType);
+            },
+
+            setSendDefaultList: function (sendDefaultList) {
+                this._logData(sendDefaultList);
+                this._internalData.sendDefaultList = sendDefaultList;
+            },
+
+            getSendDefaultList: function () {
+                return this.getData('sendDefaultList');
             },
 
             setDefaultList: function(list) {
@@ -390,7 +405,8 @@ if (!$viewModel->isEnabled()) {
             },
 
             sendQuoteImpression: async function(productId, list) {
-                await fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/saveimpression', {
+                await fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>sctracking/index/saveimpression' + '?form_key='
+                    + hyva.getFormKey() + '&id=' + productId + '&list=' + list, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -406,4 +422,19 @@ if (!$viewModel->isEnabled()) {
         return window.scTrackingContainer;
     }
     initTrackingData();
+</script>
+<script>
+    window.trackAddToWishlist = function (productId) {
+        fetch(BASE_URL + 'sctracking/index/addtowishlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: "form_key=" + hyva.getFormKey() + "&itemId=" + productId + "&uenc=" + hyva.getUenc()
+        }).then((response) => response.json())
+            .then((product) => {
+                if (product == null || product.length === 0) return;
+                window.scTrackingContainer.setAddToWishlist(product);
+            });
+    }
 </script>

@@ -8,7 +8,7 @@ if (!$viewModel->isEnabled() || !count($cookiesToSet)) {
 }
 ?>
 
-<script>
+<script type="text/javascript"<?= $viewModel->getNonce(); ?>>
     require([
         'jquery',
         'jquery/jquery.cookie',

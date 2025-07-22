@@ -6,7 +6,6 @@
  * @package Scommerce_TrackingBase
  * @author Scommerce Mage <core@scommerce-mage.com>
  */
-
 namespace Scommerce\TrackingBase\ViewModel;
 
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
@@ -24,7 +23,6 @@ use Scommerce\TrackingBase\Model\GetParentProduct;
 use Scommerce\TrackingBase\Model\GetProductCategory;
 use Scommerce\TrackingBase\Model\GetProductId;
 use Scommerce\TrackingBase\Model\GetProductPrice;
-
 /**
  * Class ListProduct
  * @package Scommerce\TrackingBase\ViewModel
@@ -35,57 +33,46 @@ class ViewProduct extends DataObject implements ArgumentInterface
      * @var Data
      */
     protected $_helper;
-
     /**
      * @var Template
      */
     protected $_block;
-
     /**
      * @var GetProductCategory
      */
     protected $_getCategory;
-
     /**
      * @var GetBrand
      */
     protected $_getBrand;
-
     /**
      * @var GetProductPrice
      */
     protected $_getProductPrice;
-
     /**
      * @var GetCategoryPath
      */
     protected $_getCategoryPath;
-
     /**
      * @var GetProductCategory
      */
     protected $_getProductCategory;
-
     /**
      * @var Registry
      */
     protected $_registry;
-
     /**
      * @var ProductCollectionFactory
      */
     protected $_productCollection;
-
     /**
      * @var GetParentProduct
      */
     protected $_getParentProduct;
-
     /**
      * @var GetProductId
      */
     protected $_getProductId;
-
     /**
      * ViewProduct constructor.
      * @param Data $helper
@@ -123,7 +110,6 @@ class ViewProduct extends DataObject implements ArgumentInterface
         $this->_getParentProduct = $getParentProduct;
         parent::__construct($data);
     }
-
     /**
      * @param $block
      */
@@ -131,7 +117,6 @@ class ViewProduct extends DataObject implements ArgumentInterface
     {
         $this->_block = $block;
     }
-
     /**
      * Return helper object
      *
@@ -141,55 +126,59 @@ class ViewProduct extends DataObject implements ArgumentInterface
     {
         return $this->_helper;
     }
-
     /**
-     * Return catalog product collection
-     *
-     * @param $_productIds
-     * @return ProductCollection
-     */
-    public function getProducts($_productIds)
-    {
-        $idAttribute = $this->_helper->getProductIdAttribute();
-        $attributes = ['name', 'sku', 'price'];
-        $attributes = array_merge($attributes, [$idAttribute]);
-        $collection = $this->_productCollection->create();
-        return $collection
-            ->addAttributeToSelect($attributes)
-            ->addAttributeToFilter('entity_id', ['in' => $_productIds])
-            ->addUrlRewrite();
-    }
-
-    /**
+     *  outer/edge patch function refactored to use correct Magento functionality to retrieve related products
      * @return array
      */
     public function getRelatedProducts()
     {
-        $ids = $this->getProduct()->getRelatedProductIds();
-        return $this->getProductsCollection($ids, 'Related Products');
+        $product = $this->getProduct();
+        $collection = $product->getRelatedProductCollection()
+            ->addAttributeToSelect('required_options')
+            ->addAttributeToSelect('price')
+            ->addAttributeToSelect('name')
+            ->setPositionOrder()
+            ->addStoreFilter();
+        $collection->setVisibility([
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG,
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH
+        ]);
+        $collection->load();
+        return $this->getProductsCollection($collection, 'Related Products');
     }
-
     /**
+     *  outer/edge patch function refactored to use correct Magento functionality to retrieve upsells
      * @return array
      */
     public function getUpsellProducts()
     {
-        $ids = $this->getProduct()->getUpSellProductIds();
-        return $this->getProductsCollection($ids, 'Upsell Products');
+        $product = $this->getProduct();
+        $collection = $product->getUpSellProductCollection()
+            ->addAttributeToSelect('price')
+            ->addAttributeToSelect('required_options')
+            ->addAttributeToSelect('name')
+            ->setPositionOrder()
+            ->addStoreFilter();
+        $collection->setVisibility([
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG,
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH
+        ]);
+        $collection->load();
+        return $this->getProductsCollection($collection, 'Upsell Products');
     }
-
     /**
+     *  outer/edge patch function refactored to use correct Magento functionality to retrieve upsells and related products
+     *
      * @param $ids
      * @param $listName
      * @return array
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function getProductsCollection($ids, $listName)
+    public function getProductsCollection($_productCollection, $listName)
     {
         $idAttribute = $this->_helper->getProductIdAttribute();
         $_loop = 1;
-        $_productCollection = $this->getProducts($ids);
         $_products = [];
         foreach ($_productCollection as $_product) {
             $_products[] = [
@@ -206,7 +195,6 @@ class ViewProduct extends DataObject implements ArgumentInterface
         }
         return $_products;
     }
-
     /**
      * @return mixed|null
      */
@@ -214,7 +202,6 @@ class ViewProduct extends DataObject implements ArgumentInterface
     {
         return $this->_registry->registry('product');
     }
-
     /**
      * @return array
      * @throws LocalizedException
@@ -231,7 +218,6 @@ class ViewProduct extends DataObject implements ArgumentInterface
             'category' => $this->_helper->escapeJsQuote($this->_getProductCategory->execute($_product))
         ];
     }
-
     /**
      * @return bool
      */
@@ -239,7 +225,6 @@ class ViewProduct extends DataObject implements ArgumentInterface
     {
         return $this->_helper->isEnabled() && $this->_helper->isEnhancedEcommerceEnabled();
     }
-
     /**
      * @return array|string|string[]|null
      * @throws NoSuchEntityException

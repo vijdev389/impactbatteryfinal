@@ -15,7 +15,7 @@ $_PICText = $helper->getPICText();
 $cats = $viewModel->getRemarketingCategories();
 ?>
 
-<script data-breeze>
+<script data-breeze <?= $viewModel->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData"
@@ -57,7 +57,7 @@ $cats = $viewModel->getRemarketingCategories();
                             'brand': product.brand,
                             'list': product.list,
                             'position': product.position
-                        }
+                        };
                         scrollImpressions.push(impression);
                         intCtr++;
                         return false;

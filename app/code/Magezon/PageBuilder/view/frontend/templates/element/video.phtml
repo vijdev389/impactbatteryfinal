@@ -46,7 +46,7 @@ if ($autoPlay) $mute = false;
 				<?php } ?>
 				<?php if (!$showPreviewImage || !$lightBox) { ?>
 					<?php if ((strpos($link, '.mp4')!==FALSE) || ($lazyLink && strpos($lazyLink, '.mp4')!==FALSE)) { ?>
-						<video <?= $controls ? 'controls' : '' ?> <?= $autoPlay ? 'autoplay' : '' ?> <?= $loop ? 'loop' : '' ?> <?= $autoPlay ? 'muted' : '' ?>>
+						<video <?= $controls ? 'controls' : '' ?> <?= $autoPlay ? 'autoplay' : '' ?> <?= $loop ? 'loop' : '' ?> <?= $autoPlay ? 'muted' : '' ?> playsinline>
 							<source src="<?= $lazyLink ? $lazyLink : $link ?>" type="video/mp4">
 							<?= __('Your browser does not support the video tag.') ?>
 						</video>

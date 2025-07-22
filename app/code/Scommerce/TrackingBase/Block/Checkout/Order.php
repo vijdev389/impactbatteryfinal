@@ -108,6 +108,6 @@ class Order extends Template
      */
     public function getToken($id, $incId)
     {
-        return substr(hash('md5' ,$id . $incId), 0, 10);
+        return substr(hash('SHA512' ,$id . $incId), 0, 10);
     }
 }

@@ -64,8 +64,16 @@ define([
 									$('.' + $rootScope.rootId).removeClass('mgz-active-builder');
 								}
 							}
-						} else {
+						} else if (magezonBuilderService.isJSON(profileManager.getContent())) {
 							$rootScope.$broadcast('importShortcode');
+						} else {
+							if (profileManager.getContent()) {
+								$('.' + $rootScope.rootId).addClass('mgz-active-builder');
+								$('.' + $rootScope.rootId).removeClass('mgz-deactive-builder');
+							} else {
+								$('.' + $rootScope.rootId).addClass('mgz-deactive-builder');
+								$('.' + $rootScope.rootId).removeClass('mgz-active-builder');
+							}
 						}
 			        }, 100);
 		        });

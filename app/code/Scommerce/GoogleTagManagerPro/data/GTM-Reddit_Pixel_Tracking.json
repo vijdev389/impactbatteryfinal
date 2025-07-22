@@ -1,0 +1,970 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2024-08-02 10:47:56",
+    "containerVersion": {
+        "path": "accounts/6001469504/containers/178989073/versions/0",
+        "accountId": "6001469504",
+        "containerId": "178989073",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/6001469504/containers/178989073",
+            "accountId": "6001469504",
+            "containerId": "178989073",
+            "name": "Scommerce Web Container",
+            "publicId": "GTM-XXXXXXX",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1709894887442",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6001469504/containers/178989073/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-XXXXXXX"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "tagId": "281",
+                "name": "Reddit Page View",
+                "type": "cvt_178989073_278",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableFirstPartyCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "dataProcessingOptions",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "PageVisit"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "id",
+                        "value": "{{Reddit Pixel ID}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "advancedMatching",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productInputType",
+                        "value": "entryManual"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "conversionId",
+                        "value": "{{Reddit Conversion ID}}"
+                    }
+                ],
+                "fingerprint": "1721304414386",
+                "firingTriggerId": [
+                    "2147479553"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "tagId": "282",
+                "name": "Reddit View Content",
+                "type": "cvt_178989073_278",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableFirstPartyCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productsJSON",
+                        "value": "{{Return Reddit Products}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "dataProcessingOptions",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "ViewContent"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "id",
+                        "value": "{{Reddit Pixel ID}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "advancedMatching",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productInputType",
+                        "value": "entryJSON"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "conversionId",
+                        "value": "{{Reddit Conversion ID}}"
+                    }
+                ],
+                "fingerprint": "1721304398353",
+                "firingTriggerId": [
+                    "112"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "tagId": "285",
+                "name": "Reddit Add to Cart",
+                "type": "cvt_178989073_278",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableFirstPartyCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productsJSON",
+                        "value": "{{Return Reddit Products}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "dataProcessingOptions",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "AddToCart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "id",
+                        "value": "{{Reddit Pixel ID}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "advancedMatching",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "transactionValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productInputType",
+                        "value": "entryJSON"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "conversionId",
+                        "value": "{{Reddit Conversion ID}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "itemCount",
+                        "value": "{{Reddit Item Quantity}}"
+                    }
+                ],
+                "fingerprint": "1721304424913",
+                "firingTriggerId": [
+                    "148"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "tagId": "287",
+                "name": "Reddit Search",
+                "type": "cvt_178989073_278",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableFirstPartyCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productsJSON",
+                        "value": "{{Return Reddit Products}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "dataProcessingOptions",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "Search"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "id",
+                        "value": "{{Reddit Pixel ID}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "advancedMatching",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productInputType",
+                        "value": "entryJSON"
+                    }
+                ],
+                "fingerprint": "1721302869419",
+                "firingTriggerId": [
+                    "268"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "tagId": "289",
+                "name": "Reddit Purchase",
+                "type": "cvt_178989073_278",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "Purchase"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productInputType",
+                        "value": "entryJSON"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "transactionId",
+                        "value": "{{Ecommerce Transaction ID}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "itemCount",
+                        "value": "{{Reddit quantity sum}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableFirstPartyCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "dataProcessingParams",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "country"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{Reddit Country}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productsJSON",
+                        "value": "{{Return Reddit Products}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "dataProcessingOptions",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "id",
+                        "value": "{{Reddit Pixel ID}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "advancedMatching",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "transactionValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "conversionId",
+                        "value": "{{Reddit Conversion ID}}"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "advancedMatchingParams",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "email"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{Reddit Hashed Email Address}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721304676768",
+                "firingTriggerId": [
+                    "127"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "tagId": "296",
+                "name": "Reddit Add to Wishlist",
+                "type": "cvt_178989073_278",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableFirstPartyCookies",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productsJSON",
+                        "value": "{{Return Reddit Products}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "dataProcessingOptions",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "currency",
+                        "value": "{{Ecommerce Currency}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventType",
+                        "value": "AddToWishlist"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "id",
+                        "value": "{{Reddit Pixel ID}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "advancedMatching",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "transactionValue",
+                        "value": "{{Ecommerce Value}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "productInputType",
+                        "value": "entryJSON"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "conversionId",
+                        "value": "{{Reddit Conversion ID}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "itemCount",
+                        "value": "{{Reddit Item Quantity}}"
+                    }
+                ],
+                "fingerprint": "1721819969691",
+                "firingTriggerId": [
+                    "277"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "112",
+                "name": "view_item",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "view_item"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1709287715257"
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "127",
+                "name": "purchase",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "purchase"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1710259364272"
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "145",
+                "name": "view_item_list",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "view_item_list"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1709287715268"
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "148",
+                "name": "add_to_cart",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "add_to_cart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1709287715269"
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "267",
+                "name": "Search Page",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Page URL}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "result"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721138583082"
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "268",
+                "name": "Search Trigger",
+                "type": "TRIGGER_GROUP",
+                "fingerprint": "1721305753142",
+                "parameter": [
+                    {
+                        "type": "LIST",
+                        "key": "triggerIds",
+                        "list": [
+                            {
+                                "type": "TRIGGER_REFERENCE",
+                                "value": "267"
+                            },
+                            {
+                                "type": "TRIGGER_REFERENCE",
+                                "value": "145"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "triggerId": "277",
+                "name": "add_to_wishlist",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "add_to_wishlist"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1721286683495"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "113",
+                "name": "Ecommerce Items",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.items"
+                    }
+                ],
+                "fingerprint": "1709287715258",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "115",
+                "name": "Ecommerce Value",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.value"
+                    }
+                ],
+                "fingerprint": "1709287715259",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "118",
+                "name": "Ecommerce Currency",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.currency"
+                    }
+                ],
+                "fingerprint": "1709287715259",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "128",
+                "name": "Ecommerce Transaction ID",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.transaction_id"
+                    }
+                ],
+                "fingerprint": "1709287715262",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "279",
+                "name": "Reddit Pixel ID",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "XXXXXXX"
+                    }
+                ],
+                "fingerprint": "1721299647939",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "283",
+                "name": "Reddit Map Products",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n    return function(products) {\n        if (!Array.isArray(products)) {\n            return products;\n        }\n        var prodsForReddit = products.map(function(prod) {\n            var prodObj = new Object();\n            if (prod.item_id) {prodObj.id = prod.item_id.toString()};\n            if (prod.item_name) {prodObj.name = prod.item_name.toString()};\n            if (prod.item_category) {prodObj.category = prod.item_category};\n            return prodObj;\n        })\n        return prodsForReddit;\n    }\n}"
+                    }
+                ],
+                "fingerprint": "1721302598752",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "284",
+                "name": "Return Reddit Products",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() { \n    var products = {{Ecommerce Items}};\n    return {{Reddit Map Products}}(products);\n}"
+                    }
+                ],
+                "fingerprint": "1721302569699",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "286",
+                "name": "Reddit Item Quantity",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.items.0.quantity"
+                    }
+                ],
+                "fingerprint": "1721302755836",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "288",
+                "name": "Reddit Conversion ID",
+                "type": "cvt_178989073_280",
+                "fingerprint": "1721302938755",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "291",
+                "name": "Reddit quantity sum",
+                "type": "cvt_178989073_290",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "input",
+                        "value": "{{Ecommerce Items}}"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "parameter",
+                        "value": "quantity"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "format",
+                        "value": "sum"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "switchDecimalSymbol",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1721304051568",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "292",
+                "name": "Reddit Hashed Email Address",
+                "type": "j",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "conversionData.sha256_email_address"
+                    }
+                ],
+                "fingerprint": "1721304119889",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "variableId": "293",
+                "name": "Reddit Country",
+                "type": "j",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "conversionData.address.country"
+                    }
+                ],
+                "fingerprint": "1721304653421",
+                "formatValue": {}
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "type": "PAGE_URL",
+                "name": "Page URL"
+            }
+        ],
+        "fingerprint": "1722595676326",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6001469504/containers/178989073/versions/0?apiLink=version",
+        "customTemplate": [
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "templateId": "278",
+                "name": "Reddit Pixel",
+                "fingerprint": "1721296295476",
+                "templateData": "___TERMS_OF_SERVICE___\n\nBy creating or modifying this file you agree to Google Tag Manager's Community\nTemplate Gallery Developer Terms of Service available at\nhttps://developers.google.com/tag-manager/gallery-tos (or such other URL as\nGoogle may provide), as modified from time to time.\n\n\n___INFO___\n\n{\n  \"displayName\": \"Reddit Pixel\",\n  \"description\": \"By using the Reddit Conversion Pixel you agree to comply with and to be bound by the Reddit Advertiser Measurement Program Terms\\n\\nhttps://www.reddithelp.com/en/categories/advertising/policy-guideline\",\n  \"securityGroups\": [],\n  \"id\": \"cvt_temp_public_id\",\n  \"type\": \"TAG\",\n  \"version\": 1,\n  \"brand\": {\n    \"thumbnail\": \"data:image/png;base64,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\\u003d\",\n    \"displayName\": \"reddit\",\n    \"id\": \"github.com_reddit\"\n  },\n  \"containerContexts\": [\n    \"WEB\"\n  ]\n}\n\n\n___TEMPLATE_PARAMETERS___\n\n[\n  {\n    \"help\": \"You can find your pixel ID at \\u003ca href\\u003d\\\"https://ads.reddit.com/events-manager#pixel-onboarding/gtm\\\"\\u003ehttps://ads.reddit.com/events-manager#pixel-onboarding/gtm\\u003c/a\\u003e\",\n    \"valueValidators\": [\n      {\n        \"type\": \"NON_EMPTY\"\n      },\n      {\n        \"args\": [\n          3,\n          100\n        ],\n        \"type\": \"STRING_LENGTH\"\n      },\n      {\n        \"args\": [\n          \"(t2_|a2_)[a-z0-9]+\"\n        ],\n        \"type\": \"REGEX\"\n      }\n    ],\n    \"displayName\": \"Pixel ID\",\n    \"simpleValueType\": true,\n    \"name\": \"id\",\n    \"type\": \"TEXT\",\n    \"valueHint\": \"t2_***** or a2_*****\"\n  },\n  {\n    \"macrosInSelect\": false,\n    \"selectItems\": [\n      {\n        \"displayValue\": \"Page Visit\",\n        \"value\": \"PageVisit\"\n      },\n      {\n        \"displayValue\": \"View Content\",\n        \"value\": \"ViewContent\"\n      },\n      {\n        \"displayValue\": \"Search\",\n        \"value\": \"Search\"\n      },\n      {\n        \"displayValue\": \"Add to Cart\",\n        \"value\": \"AddToCart\"\n      },\n      {\n        \"displayValue\": \"Add To Wishlist\",\n        \"value\": \"AddToWishlist\"\n      },\n      {\n        \"displayValue\": \"Purchase\",\n        \"value\": \"Purchase\"\n      },\n      {\n        \"displayValue\": \"Lead\",\n        \"value\": \"Lead\"\n      },\n      {\n        \"displayValue\": \"Sign Up\",\n        \"value\": \"SignUp\"\n      },\n      {\n        \"value\": \"Custom\",\n        \"displayValue\": \"Custom\"\n      }\n    ],\n    \"displayName\": \"Event to Fire\",\n    \"simpleValueType\": true,\n    \"name\": \"eventType\",\n    \"type\": \"SELECT\"\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"customEventName\",\n    \"displayName\": \"CustomEventName\",\n    \"simpleValueType\": true,\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Custom\",\n        \"type\": \"EQUALS\"\n      }\n    ]\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"currency\",\n    \"displayName\": \"Currency\",\n    \"simpleValueType\": true,\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"AddToCart\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"AddToWishlist\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Purchase\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"SignUp\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Lead\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Custom\",\n        \"type\": \"EQUALS\"\n      }\n    ],\n    \"help\": \"Currency should follow the ISO 4217 standard\"\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"transactionValue\",\n    \"displayName\": \"Transaction Value\",\n    \"simpleValueType\": true,\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"AddToCart\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"AddToWishlist\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Purchase\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"SignUp\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Lead\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Custom\",\n        \"type\": \"EQUALS\"\n      }\n    ],\n    \"help\": \"The value of the transaction as a decimal value of currency.  For example, a value of $10.99 USD should be entered as \\\"10.99\\\".\"\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"itemCount\",\n    \"displayName\": \"Item Count\",\n    \"simpleValueType\": true,\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"AddToCart\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"AddToWishlist\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Purchase\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Custom\",\n        \"type\": \"EQUALS\"\n      }\n    ]\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"transactionId\",\n    \"displayName\": \"Transaction ID\",\n    \"simpleValueType\": true,\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Purchase\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"SignUp\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Lead\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"eventType\",\n        \"paramValue\": \"Custom\",\n        \"type\": \"EQUALS\"\n      }\n    ]\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"conversionId\",\n    \"displayName\": \"Conversion ID\",\n    \"simpleValueType\": true,\n    \"help\": \"Unique Conversion ID that corresponds to a distinct conversion event. Conversion ID is used for deduplication and prevents the same conversion event from being processed more than once if it is sent multiple times.\"\n  },\n  {\n    \"type\": \"CHECKBOX\",\n    \"name\": \"enableFirstPartyCookies\",\n    \"checkboxText\": \"Enable First Party Cookies\",\n    \"simpleValueType\": true,\n    \"defaultValue\": true\n  },\n  {\n    \"type\": \"CHECKBOX\",\n    \"name\": \"advancedMatching\",\n    \"checkboxText\": \"Enable Advanced Matching\",\n    \"simpleValueType\": true\n  },\n  {\n    \"type\": \"GROUP\",\n    \"name\": \"advancedMatchingGroup\",\n    \"displayName\": \"Advanced Matching Parameters\",\n    \"groupStyle\": \"ZIPPY_OPEN\",\n    \"subParams\": [\n      {\n        \"type\": \"SIMPLE_TABLE\",\n        \"name\": \"advancedMatchingParams\",\n        \"displayName\": \"\",\n        \"simpleTableColumns\": [\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Parameter Name\",\n            \"name\": \"name\",\n            \"type\": \"SELECT\",\n            \"selectItems\": [\n              {\n                \"value\": \"email\",\n                \"displayValue\": \"Email\"\n              },\n              {\n                \"value\": \"aaid\",\n                \"displayValue\": \"AAID\"\n              },\n              {\n                \"value\": \"idfa\",\n                \"displayValue\": \"IDFA\"\n              },\n              {\n                \"value\": \"externalId\",\n                \"displayValue\": \"External ID\"\n              }\n            ],\n            \"isUnique\": true,\n            \"macrosInSelect\": false\n          },\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Parameter Value\",\n            \"name\": \"value\",\n            \"type\": \"TEXT\",\n            \"valueValidators\": [\n              {\n                \"type\": \"NON_EMPTY\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"advancedMatching\",\n        \"paramValue\": true,\n        \"type\": \"EQUALS\"\n      }\n    ]\n  },\n  {\n    \"type\": \"CHECKBOX\",\n    \"name\": \"dataProcessingOptions\",\n    \"checkboxText\": \"Add Data Processing Options\",\n    \"simpleValueType\": true\n  },\n  {\n    \"type\": \"GROUP\",\n    \"name\": \"dataProcessingOptionsGroup\",\n    \"displayName\": \"Data Processing Parameters\",\n    \"groupStyle\": \"ZIPPY_OPEN\",\n    \"subParams\": [\n      {\n        \"type\": \"SIMPLE_TABLE\",\n        \"name\": \"dataProcessingParams\",\n        \"displayName\": \"\",\n        \"simpleTableColumns\": [\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Parameter Name\",\n            \"name\": \"name\",\n            \"type\": \"SELECT\",\n            \"selectItems\": [\n              {\n                \"value\": \"mode\",\n                \"displayValue\": \"Mode\"\n              },\n              {\n                \"value\": \"country\",\n                \"displayValue\": \"Country\"\n              },\n              {\n                \"value\": \"region\",\n                \"displayValue\": \"Region\"\n              }\n            ],\n            \"isUnique\": true,\n            \"macrosInSelect\": false\n          },\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Parameter Value\",\n            \"name\": \"value\",\n            \"type\": \"TEXT\",\n            \"valueValidators\": [\n              {\n                \"type\": \"NON_EMPTY\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"dataProcessingOptions\",\n        \"paramValue\": true,\n        \"type\": \"EQUALS\"\n      }\n    ]\n  },\n  {\n    \"type\": \"GROUP\",\n    \"name\": \"products\",\n    \"displayName\": \"Product Information\",\n    \"subParams\": [\n      {\n        \"type\": \"RADIO\",\n        \"name\": \"productInputType\",\n        \"displayName\": \"Input Type\",\n        \"radioItems\": [\n          {\n            \"value\": \"entryManual\",\n            \"displayValue\": \"Individual Entry\",\n            \"help\": \"Configure product-level information using one row per unique product.\"\n          },\n          {\n            \"value\": \"entryJSON\",\n            \"displayValue\": \"JSON Payload\",\n            \"help\": \"Configure product-level information by submitting an array of unique products in JSON format.\"\n          }\n        ],\n        \"simpleValueType\": true\n      },\n      {\n        \"type\": \"SIMPLE_TABLE\",\n        \"name\": \"productsRows\",\n        \"displayName\": \"Individual Entry\",\n        \"simpleTableColumns\": [\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Product ID\",\n            \"name\": \"id\",\n            \"type\": \"TEXT\",\n            \"valueHint\": \"The item\\u0027s ID in the catalog\",\n            \"isUnique\": false\n          },\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Product Name\",\n            \"name\": \"name\",\n            \"type\": \"TEXT\",\n            \"valueHint\": \"\"\n          },\n          {\n            \"defaultValue\": \"\",\n            \"displayName\": \"Product Category\",\n            \"name\": \"category\",\n            \"type\": \"TEXT\",\n            \"valueHint\": \"For example, Google\\u0027s product taxonomy\",\n            \"isUnique\": false\n          }\n        ],\n        \"help\": \"The Product ID and Product Category are required, but the Product Name is optional.\",\n        \"enablingConditions\": [\n          {\n            \"paramName\": \"productInputType\",\n            \"paramValue\": \"entryManual\",\n            \"type\": \"EQUALS\"\n          }\n        ]\n      },\n      {\n        \"type\": \"TEXT\",\n        \"name\": \"productsJSON\",\n        \"displayName\": \"JSON Payload\",\n        \"simpleValueType\": true,\n        \"enablingConditions\": [\n          {\n            \"paramName\": \"productInputType\",\n            \"paramValue\": \"entryJSON\",\n            \"type\": \"EQUALS\"\n          }\n        ],\n        \"help\": \"The Product ID and Product Category are required, but the Product Name is optional. Format: [ { \\\"id\\\": \\\"Product_ID\\\", \\\"name\\\": \\\"Product_Name\\\",  \\\"category\\\": \\\"Product_Category\\\" }, ... ]\"\n      }\n    ],\n    \"groupStyle\": \"ZIPPY_CLOSED\"\n  }\n]\n\n\n___SANDBOXED_JS_FOR_WEB_TEMPLATE___\n\nvar injectScript = require('injectScript');\nvar copyFromWindow = require('copyFromWindow');\nvar setInWindow = require('setInWindow');\nvar callInWindow = require('callInWindow');\nvar createQueue = require('createQueue');\nvar makeTableMap = require('makeTableMap');\nvar JSON = require('JSON');\n\nvar getRdt = function() {\n  var _rdt = copyFromWindow('rdt');\n  if (_rdt) {\n    return _rdt;\n  }\n\n  var queue;\n  setInWindow('rdt', function() {\n    var sendEvent = copyFromWindow('rdt.sendEvent');\n    if (sendEvent) {\n      callInWindow('rdt.sendEvent.apply', _rdt, arguments);\n    } else {\n      queue(arguments);\n    }\n  });\n  queue = createQueue('rdt.callQueue');\n  return copyFromWindow('rdt');\n};\n\nvar eventMetadata = data.advancedMatchingParams && data.advancedMatchingParams.length ? makeTableMap(data.advancedMatchingParams, 'name', 'value') : {};\n// copy advanced matching parameters\nvar initData = JSON.parse(JSON.stringify(eventMetadata));\n\ninitData.integration = 'gtm';\ninitData.useDecimalCurrencyValues = true;\n\nvar dataProcessingOptions = data.dataProcessingParams && data.dataProcessingParams.length ? makeTableMap(data.dataProcessingParams, 'name', 'value') : {};\nif (dataProcessingOptions && dataProcessingOptions.mode) {\n  initData.dpm = dataProcessingOptions.mode;\n}\nif (dataProcessingOptions.country) {\n  initData.dpcc = dataProcessingOptions.country;\n}\nif (dataProcessingOptions.region) {\n  initData.dprc = dataProcessingOptions.region;\n}\n\n\nvar _rdt = getRdt();\nif (!_rdt.pixelId) {\n  _rdt('init', data.id, initData);\n}\n\nif (!data.enableFirstPartyCookies) {\n  _rdt('disableFirstPartyCookies');\n}\n\neventMetadata.currency = data.currency;\neventMetadata.value = data.transactionValue;\n\n// If there is product information, add it to the eventMetadata.\nif (data.productInputType == \"entryManual\" && data.productsRows && data.productsRows.length) {\n  // The simple table is of the correct format - an array of objects.\n  // We can assign it directly.\n  eventMetadata.products = data.productsRows;\n} else if (data.productInputType == \"entryJSON\" && data.productsJSON && data.productsJSON.length) {\n  // The text input should be stringified JSON. The Pixel handles validation/normalization.\n  // We can assign it directly.\n  eventMetadata.products = data.productsJSON;\n}\n\n// Certain events don't support certain params, so we conditionally set them\nif (data.eventType != \"AddToCart\" && data.eventType != \"AddToWishlist\") {\n  eventMetadata.transactionId = data.transactionId;\n}\n\nif (data.eventType != \"SignUp\" && data.eventType != \"Lead\") {\n  eventMetadata.itemCount = data.itemCount;\n}\n\nif (data.eventType == \"Custom\" && data.customEventName) {\n  eventMetadata.customEventName = data.customEventName;\n}\n\nif (data.conversionId) {\n  eventMetadata.conversionId = data.conversionId;\n}\n\n_rdt('track', data.eventType, eventMetadata);\n\ninjectScript('https://www.redditstatic.com/ads/pixel.js', data.gtmOnSuccess, data.gtmOnFailure, 'rdtPixel');\n\n\n___WEB_PERMISSIONS___\n\n[\n  {\n    \"instance\": {\n      \"key\": {\n        \"publicId\": \"inject_script\",\n        \"versionId\": \"1\"\n      },\n      \"param\": [\n        {\n          \"key\": \"urls\",\n          \"value\": {\n            \"type\": 2,\n            \"listItem\": [\n              {\n                \"type\": 1,\n                \"string\": \"https://www.redditstatic.com/ads/pixel.js\"\n              }\n            ]\n          }\n        }\n      ]\n    },\n    \"clientAnnotations\": {\n      \"isEditedByUser\": true\n    },\n    \"isRequired\": true\n  },\n  {\n    \"instance\": {\n      \"key\": {\n        \"publicId\": \"access_globals\",\n        \"versionId\": \"1\"\n      },\n      \"param\": [\n        {\n          \"key\": \"keys\",\n          \"value\": {\n            \"type\": 2,\n            \"listItem\": [\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"rdt\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  }\n                ]\n              },\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"rdt.callQueue\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  }\n                ]\n              },\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"rdt.sendEvent.apply\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  }\n                ]\n              },\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"rdt.callQueue.push\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  }\n                ]\n              },\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"rdt.sendEvent\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  }\n                ]\n              },\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"rdt.pixelId\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  }\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    },\n    \"clientAnnotations\": {\n      \"isEditedByUser\": true\n    },\n    \"isRequired\": true\n  }\n]\n\n\n___TESTS___\n\nscenarios:\n- name: Test injectScript\n  code: |-\n    var success, failure;\n    mock('injectScript', (url, onSuccess, onFailure) => {\n      success = onSuccess;\n      failure = onFailure;\n      assertThat(url).isEqualTo('https://www.redditstatic.com/ads/pixel.js');\n      onSuccess();\n    });\n\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('injectScript').wasCalledWith(url, success, failure, 'rdtPixel');\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test rdt exists\n  code: |\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return () => {};\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test rdt doesn't exist\n  code: |-\n    let rdt;\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return rdt;\n    });\n\n    mock('createQueue', function(name) {\n      assertThat(name).isEqualTo('rdt.callQueue');\n      return function(item) {\n        assertThat(item).isNotNull();\n      };\n    });\n\n    mock('setInWindow', (key, val) => {\n      if (key === 'rdt') rdt = val;\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('setInWindow').wasCalled();\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test enabledFirstPartyCookies false\n  code: |-\n    mockData.enableFirstPartyCookies = false;\n\n    let isSet = false;\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n         if (arguments[0] === 'disableFirstPartyCookies') {\n           isSet = true;\n         }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertThat(isSet, 'disableFirstPartyCookies not set even though first party cookies are disabled').isTrue();\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test enabledFirstPartyCookies true\n  code: |-\n    mockData.enableFirstPartyCookies = true;\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n         if (arguments[0] === 'disableFirstPartyCookies') fail('disableFirstPartyCookies called even though first party cookies are enabled');\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Advanced Matching\n  code: |\n    mockData = {\n      id: \"t2_123\",\n      event_type: \"PageVisit\",\n      enableFirstPartyCookies: true,\n      advancedMatching: true,\n      advancedMatchingParams: [\n        {name: 'email', value: 'alice@example.com'},\n        {name: 'aaid', value: 'cdda802e-fb9c-47ad-9866-0794d394c912'},\n        {name: 'idfa', value: 'EA7583CD-A667-48BC-B806-42ECB2B48606'}\n      ],\n    };\n\n    const expected = {\n      useDecimalCurrencyValues: true,\n      email: 'alice@example.com',\n      aaid: 'cdda802e-fb9c-47ad-9866-0794d394c912',\n      idfa: 'EA7583CD-A667-48BC-B806-42ECB2B48606',\n      integration: 'gtm'\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n         if (arguments[0] === 'init') {\n          assertThat(arguments[2], 'Advanced matching parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('makeTableMap').wasCalledWith(mockData.advancedMatchingParams, 'name', 'value');\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Event Metadata Purchase\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"Purchase\",\n      enableFirstPartyCookies: true,\n      itemCount: 1,\n      transactionValue: 1000,\n      currency: \"USD\",\n      transactionId: \"123456789\",\n    };\n\n    const expected = {\n      itemCount: 1,\n      value: 1000,\n      currency: 'USD',\n      transactionId: '123456789'\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Event Metadata TransactionId Omission\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      itemCount: 1,\n      transactionValue: 1000,\n      currency: \"USD\",\n      transactionId: \"123456789\",\n    };\n\n    const expected = {\n      itemCount: 1,\n      value: 1000,\n      currency: 'USD',\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Event Metadata ItemCount Omission\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      itemCount: 1,\n      transactionValue: 1000,\n      currency: \"USD\",\n      transactionId: \"123456789\",\n    };\n\n    const expected = {\n      itemCount: 1,\n      value: 1000,\n      currency: 'USD',\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test pixel init - set Pixel ID and integration type\n  code: |-\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'init') {\n          assertThat(arguments[1], 'Incorrect Pixel ID').isEqualTo(mockData.id);\n          assertThat(arguments[2].integration, 'Integration type not set').isEqualTo('gtm');\n        }\n      };\n    });\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test pixel init - set a2_ pixel ID and integration type\n  code: |-\n    mockData = {\n      id: 'a2_123',\n      eventType: 'PageVisit',\n      enableFirstPartyCookies: true,\n      advancedMatching: false,\n      advancedMatchingParams: [],\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'init') {\n          assertThat(arguments[1], 'Incorrect Pixel ID').isEqualTo(mockData.id);\n          assertThat(arguments[2].integration, 'Integration type not set').isEqualTo('gtm');\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Tracking Event Type\n  code: |-\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[1], 'Incorrect Tracking Event Type').isEqualTo(mockData.eventType);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Custom Event\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"Custom\",\n      enableFirstPartyCookies: true,\n      itemCount: 1,\n      transactionValue: 1000,\n      currency: \"USD\",\n      transactionId: \"123456789\",\n      customEventName: \"Subscribe\",\n    };\n\n    const expected = {\n      itemCount: 1,\n      value: 1000,\n      currency: 'USD',\n      transactionId: \"123456789\",\n      customEventName: \"Subscribe\",\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Custom Event Name Omission\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      itemCount: 1,\n      transactionValue: 1000,\n      currency: \"USD\",\n      transactionId: \"123456789\",\n      customEventName: \"Subscribe\",\n    };\n\n    const expected = {\n      itemCount: 1,\n      value: 1000,\n      currency: 'USD',\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Products Rows\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      productInputType: \"entryManual\",\n      productsRows: [{'id':'123456789','category':'Food','name':'Carne Asada Burrito'}]\n    };\n\n    const expected = {\n      currency: undefined,\n      value: undefined,\n      itemCount: undefined,\n      products: [{'id':'123456789','category':'Food','name':'Carne Asada Burrito'}]\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata product parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Products Empty Rows\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      productInputType: \"entryManual\",\n      productsRows: []\n    };\n\n    const expected = {\n      currency: undefined,\n      value: undefined,\n      itemCount: undefined,\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata product parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Products Mismatched Inputs\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      productInputType: \"entryJSON\",\n      productsRows: []\n    };\n\n    const expected = {\n      currency: undefined,\n      value: undefined,\n      itemCount: undefined,\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata product parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Products JSON\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"AddToCart\",\n      enableFirstPartyCookies: true,\n      productInputType: \"entryJSON\",\n      productsJSON: '[{\"id\":\"123456789\",\"category\":\"Food\",\"name\":\"Carne Asada Burrito\"}]',\n    };\n\n    const expected = {\n      currency: undefined,\n      value: undefined,\n      itemCount: undefined,\n      products: '[{\"id\":\"123456789\",\"category\":\"Food\",\"name\":\"Carne Asada Burrito\"}]'\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata product parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Event Metadata ConversionId\n  code: |-\n    mockData = {\n      id: \"t2_potato\",\n      eventType: \"PageVisit\",\n      conversionId: \"conversion-id\",\n    };\n\n    const expected = {\n      itemCount: undefined,\n      value: undefined,\n      currency: undefined,\n      transactionId: undefined,\n      conversionId: \"conversion-id\",\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          assertThat(arguments[2], 'Event metadata parameters incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Data Processing Options\n  code: |\n    mockData = {\n      id: \"t2_123\",\n      event_type: \"PageVisit\",\n      enableFirstPartyCookies: true,\n      advancedMatching: true,\n      advancedMatchingParams: [\n        {name: 'email', value: 'alice@example.com'},\n        {name: 'aaid', value: 'cdda802e-fb9c-47ad-9866-0794d394c912'},\n        {name: 'idfa', value: 'EA7583CD-A667-48BC-B806-42ECB2B48606'}\n      ],\n      dataProcessingParams: [\n        {name: 'mode', value: 'LDU'},\n        {name: 'country', value: 'US'},\n        {name: 'region', value: 'US_CA'}\n      ]\n    };\n\n    const expected = {\n      useDecimalCurrencyValues: true,\n      email: 'alice@example.com',\n      aaid: 'cdda802e-fb9c-47ad-9866-0794d394c912',\n      idfa: 'EA7583CD-A667-48BC-B806-42ECB2B48606',\n      integration: 'gtm',\n      dpm: 'LDU',\n      dpcc: 'US',\n      dprc: 'US_CA'\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n         if (arguments[0] === 'init') {\n          assertThat(arguments[2], 'Data Processing params incorrect').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('makeTableMap').wasCalledWith(mockData.advancedMatchingParams, 'name', 'value');\n    assertApi('makeTableMap').wasCalledWith(mockData.dataProcessingParams, 'name', 'value');\n    assertApi('gtmOnSuccess').wasCalled();\n\n    mockData.dataProcessingParams = [\n      {name: 'country', value: 'US'}\n    ];\n    const expectedWithoutDPM = {\n      useDecimalCurrencyValues: true,\n      email: 'alice@example.com',\n      aaid: 'cdda802e-fb9c-47ad-9866-0794d394c912',\n      idfa: 'EA7583CD-A667-48BC-B806-42ECB2B48606',\n      integration: 'gtm',\n      dpcc: 'US'\n    };\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n         if (arguments[0] === 'init') {\n          assertThat(arguments[2], 'Data Processing params are partially filled').isEqualTo(expectedWithoutDPM);\n        }\n      };\n    });\n\n    // Call runCode to run the template's code.\n    runCode(mockData);\n\n    // Verify that the tag finished successfully.\n    assertApi('makeTableMap').wasCalledWith(mockData.advancedMatchingParams, 'name', 'value');\n    assertApi('gtmOnSuccess').wasCalled();\n- name: Test Track Advanced Matching Parameters\n  code: |-\n    let templateExecutionCount = 0;\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'init') {\n          templateExecutionCount++;\n          assertThat(arguments[2].email, 'Email should not be set in init').isUndefined();\n          assertThat(arguments[2].aaid, 'AAID should not be set in init').isUndefined();\n          assertThat(arguments[2].idfa, 'IDFA should not be set in init').isUndefined();\n          assertThat(arguments[2].externalId, 'ExternalID should not be set in init').isUndefined();\n        }\n      };\n    });\n    // First call has no advanced matching parameters\n    runCode(mockData);\n    assertApi('gtmOnSuccess').wasCalled();\n\n    mockData = {\n      id: \"t2_123\",\n      event_type: \"PageVisit\",\n      enableFirstPartyCookies: true,\n      advancedMatching: true,\n      advancedMatchingParams: [\n        {name: 'email', value: 'alice@example.com'},\n        {name: 'aaid', value: 'cdda802e-fb9c-47ad-9866-0794d394c912'},\n        {name: 'idfa', value: 'EA7583CD-A667-48BC-B806-42ECB2B48606'},\n        {name: 'externalId', value: '999-4RE-DDIT'}\n      ],\n    };\n\n    const expected = {\n      itemCount: undefined,\n      value: undefined,\n      currency: undefined,\n      transactionId: undefined,\n      email: 'alice@example.com',\n      aaid: 'cdda802e-fb9c-47ad-9866-0794d394c912',\n      idfa: 'EA7583CD-A667-48BC-B806-42ECB2B48606',\n      externalId: '999-4RE-DDIT',\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          templateExecutionCount++;\n          assertThat(arguments[2], 'AdvancedMatching parameters not overwriting').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Second call has advancedMatchingParams set in the data layer\n    runCode(mockData);\n    assertApi('gtmOnSuccess').wasCalled();\n\n    assertThat(templateExecutionCount, 'GTM not invoked twice').isEqualTo(2);\n- name: Test Overwrite Advanced Matching Parameters\n  code: |-\n    let templateExecutionCount = 0;\n\n    mockData = {\n      id: \"t2_123\",\n      event_type: \"PageVisit\",\n      enableFirstPartyCookies: true,\n      advancedMatching: true,\n      advancedMatchingParams: [\n        {name: 'email', value: 'bob@example.com'},\n        {name: 'aaid', value: '11111111-1111-1111-1111-111111111111'},\n        {name: 'idfa', value: '22222222-2222-2222-2222-222222222222'},\n        {name: 'externalId', value: '222-222-2222'}\n      ],\n    };\n\n    let expected = {\n      itemCount: undefined,\n      value: undefined,\n      currency: undefined,\n      transactionId: undefined,\n      email: 'bob@example.com',\n      aaid: '11111111-1111-1111-1111-111111111111',\n      idfa: '22222222-2222-2222-2222-222222222222',\n      externalId: '222-222-2222',\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          templateExecutionCount++;\n          assertThat(arguments[2], 'AdvancedMatching parameters not set correctly initially').isEqualTo(expected);\n        }\n      };\n    });\n    // First call has advancedMatchingParams set in data layer\n    runCode(mockData);\n    assertApi('gtmOnSuccess').wasCalled();\n\n    mockData = {\n      id: \"t2_123\",\n      event_type: \"PageVisit\",\n      enableFirstPartyCookies: true,\n      advancedMatching: true,\n      advancedMatchingParams: [\n        {name: 'email', value: 'alice@example.com'},\n        {name: 'aaid', value: 'cdda802e-fb9c-47ad-9866-0794d394c912'},\n        {name: 'idfa', value: 'EA7583CD-A667-48BC-B806-42ECB2B48606'},\n        {name: 'externalId', value: '999-4RE-DDIT'}\n      ],\n    };\n\n    expected = {\n      itemCount: undefined,\n      value: undefined,\n      currency: undefined,\n      transactionId: undefined,\n      email: 'alice@example.com',\n      aaid: 'cdda802e-fb9c-47ad-9866-0794d394c912',\n      idfa: 'EA7583CD-A667-48BC-B806-42ECB2B48606',\n      externalId: '999-4RE-DDIT',\n    };\n\n    mock('copyFromWindow', key => {\n      if (key === 'rdt') return function() {\n        if (arguments[0] === 'track') {\n          templateExecutionCount++;\n          assertThat(arguments[2], 'AdvancedMatching parameters not overwriting').isEqualTo(expected);\n        }\n      };\n    });\n\n    // Second call has advancedMatchingParams set in the data layer\n    runCode(mockData);\n    assertApi('gtmOnSuccess').wasCalled();\n\n    assertThat(templateExecutionCount, 'GTM not invoked twice').isEqualTo(2);\nsetup: |-\n  let mockData = {\n    id: 't2_123',\n    eventType: 'PageVisit',\n    enableFirstPartyCookies: true,\n    advancedMatching: false,\n    advancedMatchingParams: [],\n  };\n\n  const url = 'https://www.redditstatic.com/ads/pixel.js';\n\n  mock('injectScript', (url, onSuccess, onFailure) => {\n    onSuccess();\n  });\n\n\n___NOTES___\n\nCreated on 1/13/2020, 9:31:41 AM\n\n\n",
+                "galleryReference": {
+                    "host": "github.com",
+                    "owner": "reddit",
+                    "repository": "reddit-gtm-template",
+                    "version": "9f63eadfe49c5fc11caa0de1371cc835c6311c72",
+                    "signature": "35475c1adb09ec6e30662a736727a686706578be5c70b72d7a9b0e0a9fbcac1a"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "templateId": "280",
+                "name": "Unique Event ID",
+                "fingerprint": "1721299698318",
+                "templateData": "___TERMS_OF_SERVICE___\n\nBy creating or modifying this file you agree to Google Tag Manager's Community\nTemplate Gallery Developer Terms of Service available at\nhttps://developers.google.com/tag-manager/gallery-tos (or such other URL as\nGoogle may provide), as modified from time to time.\n\n\n___INFO___\n\n{\n  \"type\": \"MACRO\",\n  \"id\": \"cvt_temp_public_id\",\n  \"version\": 1,\n  \"securityGroups\": [],\n  \"displayName\": \"Unique Event ID\",\n  \"description\": \"Generates unique event id\",\n  \"categories\": [\n    \"UTILITY\"\n  ],\n  \"containerContexts\": [\n    \"WEB\"\n  ],\n  \"brand\": {\n    \"displayName\": \"stape-io\",\n    \"id\": \"github.com_stape-io\"\n  }\n}\n\n\n___TEMPLATE_PARAMETERS___\n\n[]\n\n\n___SANDBOXED_JS_FOR_WEB_TEMPLATE___\n\nconst copyFromDataLayer = require('copyFromDataLayer');\nconst setInWindow = require('setInWindow');\nconst copyFromWindow = require('copyFromWindow');\nconst getTimestampMillis = require('getTimestampMillis');\nconst generateRandom = require('generateRandom');\nconst localStorage = require('localStorage');\n\nreturn getBrowserId() + '_' + getPageLoadId() + getGtmUniqueEventId();\n\nfunction getGtmUniqueEventId() {\n    return copyFromDataLayer('gtm.uniqueEventId') || '0';\n}\n\nfunction getBrowserId() {\n    let gtmBrowserId = localStorage.getItem('gtmBrowserId');\n\n    if (!gtmBrowserId) {\n        gtmBrowserId = getTimestampMillis() + generateRandom(100000, 999999);\n        localStorage.setItem('gtmBrowserId', gtmBrowserId);\n    }\n\n    return gtmBrowserId;\n}\n\nfunction getPageLoadId() {\n  let eventId = copyFromWindow('gtmPageLoadId');\n\n  if (!eventId) {\n    eventId = getTimestampMillis() + generateRandom(100000, 999999);\n    setInWindow('gtmPageLoadId', eventId, false);\n  }\n\n  return eventId;\n}\n\n\n___WEB_PERMISSIONS___\n\n[\n  {\n    \"instance\": {\n      \"key\": {\n        \"publicId\": \"read_data_layer\",\n        \"versionId\": \"1\"\n      },\n      \"param\": [\n        {\n          \"key\": \"keyPatterns\",\n          \"value\": {\n            \"type\": 2,\n            \"listItem\": [\n              {\n                \"type\": 1,\n                \"string\": \"gtm.uniqueEventId\"\n              }\n            ]\n          }\n        }\n      ]\n    },\n    \"clientAnnotations\": {\n      \"isEditedByUser\": true\n    },\n    \"isRequired\": true\n  },\n  {\n    \"instance\": {\n      \"key\": {\n        \"publicId\": \"access_globals\",\n        \"versionId\": \"1\"\n      },\n      \"param\": [\n        {\n          \"key\": \"keys\",\n          \"value\": {\n            \"type\": 2,\n            \"listItem\": [\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"execute\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"gtmPageLoadId\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": false\n                  }\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    },\n    \"clientAnnotations\": {\n      \"isEditedByUser\": true\n    },\n    \"isRequired\": true\n  },\n  {\n    \"instance\": {\n      \"key\": {\n        \"publicId\": \"access_local_storage\",\n        \"versionId\": \"1\"\n      },\n      \"param\": [\n        {\n          \"key\": \"keys\",\n          \"value\": {\n            \"type\": 2,\n            \"listItem\": [\n              {\n                \"type\": 3,\n                \"mapKey\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"key\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"read\"\n                  },\n                  {\n                    \"type\": 1,\n                    \"string\": \"write\"\n                  }\n                ],\n                \"mapValue\": [\n                  {\n                    \"type\": 1,\n                    \"string\": \"gtmBrowserId\"\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  },\n                  {\n                    \"type\": 8,\n                    \"boolean\": true\n                  }\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    },\n    \"clientAnnotations\": {\n      \"isEditedByUser\": true\n    },\n    \"isRequired\": true\n  }\n]\n\n\n___TESTS___\n\nscenarios: []\n\n\n___NOTES___\n\nCreated on 11/03/2021, 11:05:32\n\n\n",
+                "galleryReference": {
+                    "host": "github.com",
+                    "owner": "stape-io",
+                    "repository": "unique-event-id-variable",
+                    "version": "df7bc964739af2ec09a49bb48df1c20ef6ef37c2",
+                    "signature": "90f36a55b09280b9be35541fff3820a359daa7a5b59a20a72691a9ffebf63a20"
+                }
+            },
+            {
+                "accountId": "6001469504",
+                "containerId": "178989073",
+                "templateId": "290",
+                "name": "Array to string, sum or array",
+                "fingerprint": "1721303948895",
+                "templateData": "___TERMS_OF_SERVICE___\n\nBy creating or modifying this file you agree to Google Tag Manager's Community\nTemplate Gallery Developer Terms of Service available at\nhttps://developers.google.com/tag-manager/gallery-tos (or such other URL as\nGoogle may provide), as modified from time to time.\n\n\n___INFO___\n\n{\n  \"type\": \"MACRO\",\n  \"id\": \"cvt_temp_public_id\",\n  \"version\": 1,\n  \"securityGroups\": [],\n  \"displayName\": \"Array to string, sum or array\",\n  \"categories\": [\n    \"UTILITY\"\n  ],\n  \"description\": \"Convert an array of objects (eg. ecommerce items) to a single string with all the chosen sub-parameters, a sum of the values of a sub-parameter, or a new array of the chosen sub-parameters.\",\n  \"containerContexts\": [\n    \"WEB\"\n  ],\n  \"brand\": {\n    \"displayName\": \"Adsmurai-Google-Tag-Manager-Templates\",\n    \"id\": \"github.com_Adsmurai-Google-Tag-Manager-Templates\"\n  }\n}\n\n\n___TEMPLATE_PARAMETERS___\n\n[\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"input\",\n    \"displayName\": \"Input array\",\n    \"simpleValueType\": true,\n    \"alwaysInSummary\": true,\n    \"notSetText\": \"This value must be set\",\n    \"valueValidators\": [\n      {\n        \"type\": \"NON_EMPTY\"\n      }\n    ]\n  },\n  {\n    \"type\": \"TEXT\",\n    \"name\": \"parameter\",\n    \"displayName\": \"Parameter to format\",\n    \"simpleValueType\": true,\n    \"alwaysInSummary\": true,\n    \"notSetText\": \"This value must be set\"\n  },\n  {\n    \"type\": \"RADIO\",\n    \"name\": \"format\",\n    \"displayName\": \"Format as...\",\n    \"radioItems\": [\n      {\n        \"value\": \"string\",\n        \"displayValue\": \"Text (string)\"\n      },\n      {\n        \"value\": \"sum\",\n        \"displayValue\": \"Sum\"\n      },\n      {\n        \"value\": \"array\",\n        \"displayValue\": \"List (array)\"\n      }\n    ],\n    \"simpleValueType\": true,\n    \"defaultValue\": \"string\"\n  },\n  {\n    \"type\": \"GROUP\",\n    \"name\": \"formatOptions\",\n    \"displayName\": \"Format options\",\n    \"groupStyle\": \"NO_ZIPPY\",\n    \"subParams\": [\n      {\n        \"type\": \"TEXT\",\n        \"name\": \"stringDelimiter\",\n        \"displayName\": \"Text delimiter\",\n        \"simpleValueType\": true,\n        \"canBeEmptyString\": true,\n        \"alwaysInSummary\": true,\n        \"enablingConditions\": [\n          {\n            \"paramName\": \"format\",\n            \"paramValue\": \"string\",\n            \"type\": \"EQUALS\"\n          }\n        ],\n        \"defaultValue\": \"|\",\n        \"valueHint\": \"|\",\n        \"help\": \"This will be put between each value on the resulting string.\"\n      },\n      {\n        \"type\": \"CHECKBOX\",\n        \"name\": \"switchDecimalSymbol\",\n        \"checkboxText\": \"Change decimal symbol from comma to dot\",\n        \"simpleValueType\": true,\n        \"alwaysInSummary\": true,\n        \"defaultValue\": false,\n        \"help\": \"In order for the sum to work, decimal separator on the numbers must be a dot. Check this box if you need this tag to convert the comma to dot before adding the numbers.\",\n        \"enablingConditions\": [\n          {\n            \"paramName\": \"format\",\n            \"paramValue\": \"sum\",\n            \"type\": \"EQUALS\"\n          }\n        ]\n      }\n    ],\n    \"enablingConditions\": [\n      {\n        \"paramName\": \"format\",\n        \"paramValue\": \"string\",\n        \"type\": \"EQUALS\"\n      },\n      {\n        \"paramName\": \"format\",\n        \"paramValue\": \"sum\",\n        \"type\": \"EQUALS\"\n      }\n    ]\n  }\n]\n\n\n___SANDBOXED_JS_FOR_WEB_TEMPLATE___\n\nconst getType = require(\"getType\");\nconst makeNumber = require(\"makeNumber\");\n\nif (getType(data.input) !== \"array\") {\n  return undefined;\n}\n\nif (data.format === \"string\") {\n  return data.input.map(item => item[data.parameter]).filter(item => item).join(data.stringDelimiter); \n}\n\nif (data.format === \"sum\") {\n  return data.input.reduce((current, next) => {\n    let nextValue = next[data.parameter];\n    const nextValueType = getType(nextValue);\n    \n    if (nextValueType !== \"string\" && nextValueType !== \"number\") {\n      return current + 0;\n    } else {\n      if (nextValueType === \"string\") nextValue = nextValue.replace(\",\", \".\"); // we switch the decimal comma by a dot\n      return current + makeNumber(nextValue);\n    }\n  }, 0); \n}\n\nif (data.format === \"array\") {\n  return data.input.map(item => item[data.parameter]).filter(item => item);\n}\n\nreturn undefined;\n\n\n___TESTS___\n\nscenarios: []\n\n\n___NOTES___\n\nv1.0\n\n\n",
+                "galleryReference": {
+                    "host": "github.com",
+                    "owner": "Adsmurai-Google-Tag-Manager-Templates",
+                    "repository": "array-to-string-sum-or-array",
+                    "version": "bd529813a890578d7fbef53e74dc02d4be08ae34",
+                    "signature": "959ef9912636b1b70855cfcddb4aac8ab8b5b7c0c9769bf1cdda28300086fcc6"
+                }
+            }
+        ]
+    }
+}

@@ -145,6 +145,11 @@ button.mgz-btn {
 .mgz-btn.mgz-btn-delete:hover {
     background-color: #ca1c1c;
 }
+.parallax-wrapper {
+    position: relative !important;
+    overflow: hidden;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
 .mgz-icon,
 .tabs-opener:before {
     font-family: "Magezon-Icons" !important;

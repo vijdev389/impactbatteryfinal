@@ -20,7 +20,7 @@
 		<css src="Magezon_Core::css/fontawesome5.css"/>
 		<css src="Magezon_Core::css/mgz_font.css"/>
 		<css src="Magezon_Core::css/mgz_bootstrap.css"/>
-		<css src="Magezon_Builder::vendor/codemirror/lib/codemirror.css"/>
+		<css src="Magezon_Builder::libs/codemirror/lib/codemirror.css"/>
 		<css src="Magezon_Builder::css/bootstrap.css"/>
 		<css src="Magezon_Builder::css/openiconic.min.css"/>
 		<css src="Magezon_Builder::css/builder.css" media="all"/>

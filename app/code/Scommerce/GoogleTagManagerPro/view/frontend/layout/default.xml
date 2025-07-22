@@ -6,17 +6,16 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <head>
-       <script src="Scommerce_GoogleTagManagerPro::js/promotion.js"/>
-	</head>
 	<body>
         <referenceContainer name="head.additional">
-            <block class="Scommerce\GoogleTagManagerPro\Block\ImpressionList" name="google_tag_manager_pro_js" template="js.phtml" before="google_tag_manager_pro" />
-            <block class="Scommerce\GoogleTagManagerPro\Block\Gtm" name="google_tag_manager_pro" as="google_tag_manager_pro" template="gtm.phtml" after="-"/>
-			<block class="Scommerce\GoogleTagManagerPro\Block\Script" name="scommerce.gtm.other" template="script.phtml">
-                <action method="setPageType">
-                    <argument name="prefix" xsi:type="string">other</argument>
-                </action>
+            <block class="Scommerce\GoogleTagManagerPro\Block\Gtm"
+                   name="google_tag_manager_pro_js" template="Scommerce_GoogleTagManagerPro::gtm.phtml" after="scommerce_tracking_data">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Scommerce\GoogleTagManagerPro\ViewModel\Gtm</argument>
+                </arguments>
+                <block class="Magento\Framework\View\Element\Template"
+                       name="scom_gtm_ga4"
+                       template="Scommerce_GoogleTagManagerPro::ga4.phtml" />
             </block>
             <block class="Magento\Framework\View\Element\Template" name="google_tag_manager_pro_cookies" template="Scommerce_GoogleTagManagerPro::cookiescript.phtml">
                 <arguments>
@@ -25,7 +24,8 @@
             </block>
         </referenceContainer>
 		<referenceContainer name="after.body.start">
-            <block class="Scommerce\GoogleTagManagerPro\Block\Gtm" name="google_tag_manager_pro_ns" as="google_tag_manager_pro_ns" template="gtmns.phtml" before="-"/>
+            <block class="Scommerce\GoogleTagManagerPro\Block\Gtm" name="google_tag_manager_pro_ns" as="google_tag_manager_pro_ns"
+                   template="Scommerce_GoogleTagManagerPro::gtmns.phtml" before="-"/>
         </referenceContainer>
     </body>
 </page>

@@ -7,19 +7,20 @@ $_mode = $block->getMode();
 $viewModel->setBlock($block);
 
 $helper = $viewModel->getHelper();
-if (!($helper->isEnabled() && $helper->isEnhancedEcommerceEnabled())) return;
-$shipmentStep = $viewModel->getShippingStep();
-$paymentStep = $viewModel->getPaymentStep();
-$userTypeStep = $viewModel->getUserTypeStep();
-$billingCheckStep = $viewModel->getBillingCheckStep();
+if (!($helper->isEnabled() && $helper->isEnhancedEcommerceEnabled())) {
+    return;
+}
+$shipmentStep = "shipment";
+$paymentStep = "payment";
 ?>
 
-<script>
+<script type="text/javascript"<?= $helper->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData",
         'Magento_Checkout/js/model/quote',
-        'Magento_Customer/js/model/customer'
+        'Magento_Customer/js/model/customer',
+        'domReady!'
     ], function($, Tracking, quote, customer) {
         let tracking = Tracking();
 
@@ -27,9 +28,9 @@ $billingCheckStep = $viewModel->getBillingCheckStep();
         let sentSteps = [];
         let old_shipping = '', old_payment = '';
 
-        tracking.setCartData(data);
         tracking.setData('total', <?php echo $viewModel->getTotalValue() ?>);
         tracking.setData('coupon', '<?php echo $viewModel->getCoupon() ?>');
+        tracking.setCartData(data);
         tracking.fire('page_ready', tracking.getPageType()?.toLowerCase() || "checkout");
 
         <?php if ($helper->getAddPaymentTitle()): ?>
@@ -68,48 +69,13 @@ $billingCheckStep = $viewModel->getBillingCheckStep();
             if (value != undefined) {
                 if (stepSent(pos) === false) {
                     sentSteps.push(pos);
-                    tracking.setCheckoutStep({step: pos, option: value, products: tracking.getCartData(), stepType: getStepType(pos)});
+                    tracking.setCheckoutStep({step: pos, option: value, products: tracking.getCartData(), stepType: pos});
                 } else {
-                    tracking.setCheckoutOption({step: pos, option: value, products: tracking.getCartData(), stepType: getStepType(pos)});
+                    tracking.setCheckoutOption({step: pos, option: value, products: tracking.getCartData(), stepType: pos});
                 }
             }
         }
 
-        <?php if ($userTypeStep): ?>
-        if (customer.isLoggedIn()) {
-            steps('<?php echo 'Registered' ?>', <?php echo $userTypeStep ?>);
-        } else {
-            steps('<?php echo 'Guest' ?>', <?php echo $userTypeStep ?>);
-        }
-        <?php endif; ?>
-
-        <?php if ($billingCheckStep): ?>
-        <?php
-        $billingConfig = $viewModel->getBillingConfig();
-        ?>
-        function setBillingStep(check) {
-            if (check.is(':checked')) {
-                steps('<?php echo $billingConfig[1] ?>', <?php echo $billingCheckStep ?>);
-            } else {
-                steps('<?php echo $billingConfig[0] ?>', <?php echo $billingCheckStep ?>);
-            }
-        }
-
-        var initBilling = false;
-        initBilling = setInterval(function() {
-            var check = $('#checkout input[name=billing-address-same-as-shipping]');
-            if (check.length) {
-                clearInterval(initBilling);
-                setBillingStep(check);
-            }
-        }, 500);
-
-        $(document).on('click', 'input[name=billing-address-same-as-shipping]', function() {
-            setBillingStep($(this));
-        });
-        <?php endif; ?>
-
-        <?php if ($shipmentStep): ?>
         quote.shippingMethod.subscribe(function(newVal) {
             if (newVal == undefined) {
                 return;
@@ -122,12 +88,10 @@ $billingCheckStep = $viewModel->getBillingCheckStep();
             <?php endif; ?>
             if (shipping != undefined && old_shipping != shipping) {
                 old_shipping = shipping;
-                steps(shipping, <?php echo $shipmentStep ?>);
+                steps(shipping, '<?php echo $shipmentStep ?>');
             }
         });
-        <?php endif; ?>
 
-        <?php if ($paymentStep): ?>
         quote.paymentMethod.subscribe(function(newVal) {
             if (newVal == undefined) {
                 return;
@@ -140,16 +104,9 @@ $billingCheckStep = $viewModel->getBillingCheckStep();
             <?php endif; ?>
             if (payment != undefined && old_payment != payment) {
                 old_payment = payment;
-                steps(payment, <?php echo $paymentStep ?>);
+                steps(payment, '<?php echo $paymentStep ?>');
             }
         });
-        <?php endif; ?>
 
-        <?php foreach ($viewModel->getAdditionalSteps() as $step => $config): ?>
-        jQuery(document).on('<?php echo $config['event'] ?>', '<?php echo $config['selector'] ?>', function(e) {
-            var value = <?php if ($config['value'] !== false): ?>'<?php echo $config['value'] ?>'<?php else: ?>jQuery(this).val();<?php endif; ?>;
-            steps(value, <?php echo $step ?>);
-        });
-        <?php endforeach; ?>
     });
 </script>

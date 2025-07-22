@@ -1,8 +1,9 @@
 <?php
 /** @var \Magento\Framework\View\Element\Template $block */
+$cspHelper = $this->helper('Scommerce\CspHelper\Helper\CspHelper');
 ?>
 
-<script data-breeze>
+<script data-breeze <?= $cspHelper->generateNonce(); ?>>
     function convertPromotions(trackingData, data) {
         if (data instanceof Array) {
             let result = [];
@@ -35,7 +36,7 @@
                 index: product.position,
                 quantity: 1
             });
-            affiliation = trackingData.getData('affiliation')
+            affiliation = trackingData.getData('affiliation');
             if (affiliation !== '') {
                 impr[i]['affiliation'] = affiliation;
             }
@@ -57,9 +58,11 @@
                 price: trackingData.formatPrice(data[i].price, false),
                 item_brand: data[i].brand,
                 quantity: data[i].quantity,
-                item_list_name: data[i].list,
-                item_list_id: trackingData.getListId(data[i].list)
             });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
             if (trackingData.getData('affiliation') !== '') {
                 prods[i]['affiliation'] = trackingData.getData('affiliation');
             }
@@ -82,9 +85,12 @@
                 item_brand: data[i].brand,
                 item_category: data[i].category,
                 quantity: data[i].quantity,
-                item_list_name: data[i].list,
-                item_list_id: trackingData.getListId(data[i].list)
+                index: i + 1
             });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
             if (trackingData.getData('affiliation') !== '') {
                 prods[i]['affiliation'] = trackingData.getData('affiliation');
             }
@@ -105,12 +111,14 @@
                 item_id: data[i].id,
                 price: trackingData.formatPrice(data[i].price, false),
                 item_brand: data[i].brand,
-                item_list_name: data[i].list,
-                item_list_id: trackingData.getListId(data[i].list),
                 quantity: data[i].quantity,
                 affiliation: trackingData.getData('affiliation'),
                 index: i + 1
             });
+            if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data[i].list) {
+                prods[i]["item_list_name"] = data[i].list;
+                prods[i]["item_list_id"] = trackingData.getListId(data[i].list);
+            }
             let categories = data[i].category.split('->');
             prods[i]['item_category'] = categories[0];
             for (let j = 1; j < categories.length; j++) {
@@ -129,13 +137,15 @@
             price: trackingData.formatPrice(data.price, false),
             item_brand: data.brand,
             item_category: data.category,
-            item_list_name: data.list,
-            item_list_id: trackingData.getListId(data.list),
             quantity: data.quantity,
             index: 1
         });
+        if (trackingData.getSendDefaultList() == "1" || trackingData.getDefaultList() != data.list) {
+            prods[0]["item_list_name"] = data.list;
+            prods[0]["item_list_id"] = trackingData.getListId(data.list);
+        }
         if (trackingData.getData('affiliation') !== '') {
-            prods['affiliation'] = trackingData.getData('affiliation');
+            prods[0]['affiliation'] = trackingData.getData('affiliation');
         }
         let categories = data.category.split('->');
         prods[0]['item_category'] = categories[0];

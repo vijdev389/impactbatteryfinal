@@ -1,0 +1,13 @@
+{
+    "quote_item": {
+        "column": {
+            "google_category": true,
+            "sc_tracking_data": true
+        }
+    },
+    "sales_order_item": {
+        "column": {
+            "google_category": true
+        }
+    }
+}

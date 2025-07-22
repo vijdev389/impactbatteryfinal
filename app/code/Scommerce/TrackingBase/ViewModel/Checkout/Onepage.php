@@ -30,6 +30,8 @@ use Scommerce\TrackingBase\Model\GetProductPrice;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Scommerce\TrackingBase\Model\GetProductVariant;
 use Scommerce\TrackingBase\Model\Source\StepType;
+use Magento\SalesRule\Model\Coupon;
+use Magento\SalesRule\Model\Rule;
 
 /**
  * Class Cart
@@ -104,6 +106,9 @@ class Onepage extends DataObject implements ArgumentInterface
 
     protected $_paymentMethods;
 
+    protected $coupon;
+    protected $salesRule;
+
     private $_stepsConfiguration = null;
 
     /**
@@ -132,6 +137,8 @@ class Onepage extends DataObject implements ArgumentInterface
         GetProductVariant $getProductVariant,
         Json $serializer,
         MethodList $paymentMethods,
+        Coupon $coupon,
+        Rule $salesRule,
         array $data = []
     ) {
         $this->_helper = $helper;
@@ -147,6 +154,8 @@ class Onepage extends DataObject implements ArgumentInterface
         $this->_getProductVariant = $getProductVariant;
         $this->_serializer = $serializer;
         $this->_paymentMethods = $paymentMethods;
+        $this->coupon = $coupon;
+        $this->salesRule = $salesRule;
         parent::__construct($data);
     }
 
@@ -178,6 +187,7 @@ class Onepage extends DataObject implements ArgumentInterface
     public function getProductsData()
     {
         $_products = [];
+        $index = 1;
         foreach ($this->getCartItems() as $_quoteItem) {
             /** @var $_quoteItem Item */
             if ($_quoteItem->getParentItemId()) {
@@ -187,7 +197,14 @@ class Onepage extends DataObject implements ArgumentInterface
             $brand = $this->_getBrand->execute($_quoteItem->getProduct(), true);
             $name = $_quoteItem->getProduct()->getName();
             $category = $this->_getProductCategory->execute($_quoteItem->getProduct());
-            $price = $this->_getProductPrice->execute($_quoteItem);
+            $price = $this->_getProductPrice->executeByItem($_quoteItem);
+            if ($_quoteItem->getDiscountAmount() <> 0) {
+                if ($this->_helper->sendBaseData()) {
+                    $price = $_quoteItem->getBasePrice() - $_quoteItem->getBaseDiscountAmount() / $_quoteItem->getQty();
+                } else {
+                    $price = ($_quoteItem->getRowTotal() - $_quoteItem->getDiscountAmount()) / $_quoteItem->getQty();
+                }
+            }
             $list = $this->_helper->getImpressionListFromQuoteItem($_quoteItem);
             $_products[] = [
                 'name' => $this->_helper->escapeJsQuote(trim($name)),
@@ -197,9 +214,11 @@ class Onepage extends DataObject implements ArgumentInterface
                 'category' => $this->_helper->escapeJsQuote($category),
                 'quantity' => $_quoteItem->getQty(),
                 'allSkus' => $allSkus,
+                'index' => $index,
                 'list' => $list,
                 'variant' => $this->_getProductVariant->execute($_quoteItem->getProduct(), $_quoteItem)
             ];
+            $index++;
         }
         return $_products;
     }
@@ -235,12 +254,39 @@ class Onepage extends DataObject implements ArgumentInterface
     public function getTotalValue()
     {
         $quote = $this->getQuote();
-        if ($this->_helper->sendBaseData()) {
-            $total = $this->_helper->isOrderTotalIncludedVAT() ? $quote->getBaseGrandTotal() : $quote->getBaseGrandTotal() - $quote->getBaseTaxAmount();
+        if ($quote->getCouponCode()) {
+            $salesRule = $this->getSalesRuleByCode($quote->getCouponCode());
+            $shippingAmount = $quote->getShippingAddress()->getShippingAmount();
+            $baseShippingAmount = $quote->getShippingAddress()->getBaseShippingAmount();
+            $taxAmount = $quote->getShippingAddress()->getTaxAmount() + $quote->getShippingAddress()->getDiscountTaxCompensationAmount();
+            $baseTaxAmount = $quote->getShippingAddress()->getBaseTaxAmount() + $quote->getShippingAddress()->getBaseDiscountTaxCompensationAmount();
+
+            if ($salesRule && $salesRule->getApplyToShipping()) {
+                $shippingAmount = $shippingAmount - $quote->getShippingAddress()->getShippingDiscountAmount();
+                $baseShippingAmount = $baseShippingAmount - $quote->getShippingAddress()->getBaseShippingDiscountAmount();
+            }
+            $orderAmount = $quote->getGrandTotal() - $shippingAmount;
+            $baseOrderAmount = $quote->getBaseGrandTotal() - $baseShippingAmount;
+
+            $orderAmount = $this->_helper->isOrderTotalIncludedVAT() ? $orderAmount : $orderAmount - $taxAmount;
+            $baseOrderAmount = $this->_helper->isOrderTotalIncludedVAT() ? $baseOrderAmount : $baseOrderAmount - $baseTaxAmount;
+
+            $total = $this->_helper->sendBaseData() ? $baseOrderAmount : $orderAmount;
         } else {
-            $total = $this->_helper->isOrderTotalIncludedVAT() ? $quote->getGrandTotal() : $quote->getGrandTotal() - $quote->getTaxAmount();
+            if ($this->_helper->sendBaseData()) {
+                $total = $this->_helper->isOrderTotalIncludedVAT() ? $quote->getBaseGrandTotal() : $quote->getBaseSubtotal();
+            } else {
+                $total = $this->_helper->isOrderTotalIncludedVAT() ? $quote->getGrandTotal() : $quote->getSubtotal();
+            }
         }
         return $total;
+    }
+
+    protected function getSalesRuleByCode($couponCode)
+    {
+        $ruleId = $this->coupon->loadByCode($couponCode)->getRuleId();
+        $salesRule = $this->salesRule->load($ruleId);
+        return $salesRule;
     }
 
     /**
@@ -252,121 +298,6 @@ class Onepage extends DataObject implements ArgumentInterface
     {
         $quote = $this->getQuote();
         return $quote->getCouponCode();
-    }
-
-    public function getCheckoutStepsConfiguration()
-    {
-        if ($this->_stepsConfiguration == null) {
-            $stepsConfig = $this->_helper->getCheckoutStepsConfiguration();
-            if ($stepsConfig == null) {
-                $this->_stepsConfiguration = [];
-            } else {
-                $values = $this->_serializer->unserialize($stepsConfig);
-                $result = [];
-                foreach ($values as $step) {
-                    $result[$step['step']] = [
-                        'type' => $step['type'],
-                        'selector' => $step['selector']
-                    ];
-                }
-                $this->_stepsConfiguration = $result;
-            }
-        }
-        return $this->_stepsConfiguration;
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getShippingStep()
-    {
-        return $this->getStepByType(StepType::STEP_SHIPMENT);
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getPaymentStep()
-    {
-        return $this->getStepByType(StepType::STEP_PAYMENT);
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getUserTypeStep()
-    {
-        return $this->getStepByType(StepType::STEP_USER_TYPE);
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getBillingCheckStep()
-    {
-        return $this->getStepByType(StepType::STEP_BILLING_CHECK);
-    }
-
-    /**
-     * @return array
-     */
-    public function getBillingConfig()
-    {
-        $result = [
-            __('Use Different Billing Address'),
-            __('Billing Same as Shipping')
-        ];
-        $config = $this->getCheckoutStepsConfiguration();
-        foreach ($config as $key => $step) {
-            if ($step['type'] == StepType::STEP_BILLING_CHECK) {
-                $params = explode('|', $step['selector']);
-                if (count($params) > 1) {
-                    $result[1] = $params[1];
-                }
-                if (count($params) > 0) {
-                    $result[0] = $params[0];
-                }
-                return $result;
-            }
-        }
-    }
-
-    /**
-     * @param $type
-     * @return int|string
-     */
-    protected function getStepByType($type)
-    {
-        $config = $this->getCheckoutStepsConfiguration();
-        foreach ($config as $key => $step) {
-            if ($step['type'] == $type) {
-                return $key;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAdditionalSteps()
-    {
-        $result = [];
-        $config = $this->getCheckoutStepsConfiguration();
-        foreach ($config as $key => $step) {
-            if ($step['type'] == StepType::STEP_OTHER) {
-                $params = explode('/', $step['selector']);
-                if (count($params) == 0 || trim($params[0]) == '') {
-                    continue;
-                }
-                $result[$key] = [
-                    'selector' => $params[0],
-                    'event' => count($params) > 1 && trim($params[1]) !== '' ? $params[1] : 'change',
-                    'value' => count($params) > 2 && trim($params[2]) !== '' ? $params[2] : false,
-                ];
-            }
-        }
-        return $result;
     }
 
     /**

@@ -2,11 +2,11 @@
   "name": "magezon/module-page-builder-icon-box",
   "description": "N/A",
   "require": {
-    "php": "~7.1.0||~7.2.0||~7.3.0||~7.4.0||~8.1.0",
+    "php": "~7.1.0 || ^8.1",
     "magezon/module-page-builder": "*"
   },
   "type": "magento2-module",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "license": [
     "OSL-3.0",
     "AFL-3.0"

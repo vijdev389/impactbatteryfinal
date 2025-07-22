@@ -101,26 +101,38 @@ class OrderPlaceAfter implements ObserverInterface
             $products = array();
 
             if ($this->_helper->sendBaseData($storeId)) {
-                $orderCurrency = $order->getBaseCurrencyCode();
-                $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getBaseGrandTotal() : $order->getBaseGrandTotal() - $order->getBaseTaxAmount();
-                $orderShippingTotal = $order->getBaseShippingAmount();
-                $orderTax = $order->getBaseTaxAmount();
+                $orderTax = $order->getBaseTaxAmount() + $order->getBaseDiscountTaxCompensationAmount();
+                $orderShippingTotal = $order->getBaseShippingAmount() - $order->getBaseShippingDiscountAmount();
+                $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getBaseGrandTotal() : $order->getBaseGrandTotal() - $orderTax;
             } else {
-                $orderCurrency = $order->getOrderCurrencyCode();
-                $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getGrandTotal() : $order->getGrandTotal() - $order->getTaxAmount();
-                $orderShippingTotal = $order->getShippingAmount();
-                $orderTax = $order->getTaxAmount();
+                $orderTax = $order->getTaxAmount() + $order->getDiscountTaxCompensationAmount();
+                $orderShippingTotal = $order->getShippingAmount() - $order->getShippingDiscountAmount();
+                $orderGrandTotal = $this->_helper->isOrderTotalIncludedVAT() ? $order->getGrandTotal() : $order->getGrandTotal() - $orderTax;
             }
 
+            $orderGrandTotal = $orderGrandTotal - $orderShippingTotal;
             foreach ($order->getAllItems() as $item) {
                 /** @var $item Item */
                 if ($item->getParentItem()) continue;
+                if ($item->getDiscountAmount() <> 0) {
+                    if ($this->_helper->sendBaseData()) {
+                        $price = $item->getBasePrice() - $item->getBaseDiscountAmount() / $item->getQtyOrdered();
+                    } else {
+                        $price = $item->getPrice() - $item->getDiscountAmount() / $item->getQtyOrdered();
+                    }
+                } else {
+                    $price = $this->_getProductPrice->executeBySku($item->getSku());
+                    if ($price === false) {
+                        $price = (int)$this->_getProductPrice->executeBySku($item->getData('sku'));
+                    }
+                }
+
                 $products[] = [
                     'name'	=> trim($item->getName()),
                     'id' 	=> $this->_helper->escapeJsQuote(
                         $this->_getProductId->execute($item)
                     ),
-                    'price'	=> $this->_getProductPrice->execute($item),
+                    'price'	=> $price,
                     'brand' => $this->_getBrand->execute($item->getProduct()),
                     'category' => $this->_getProductCategory->execute($item->getProduct()),
                     'quantity' 	=> $item->getQtyOrdered(),
@@ -136,7 +148,7 @@ class OrderPlaceAfter implements ObserverInterface
                 'shipping'   	=> $orderShippingTotal,
                 'coupon'   		=> $order->getCouponCode(),
                 'storeId'   	=> $storeId,
-                'currency'      => $orderCurrency,
+                'currency'      => $this->_helper->sendBaseData() ? $order->getBaseCurrencyCode() : $order->getOrderCurrencyCode(),
                 'products'  	=> $products,
             ];
 

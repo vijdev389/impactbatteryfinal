@@ -11,7 +11,7 @@
             "accountId": "6004001995",
             "containerId": "45874067",
             "name": "magento2.scommerce-mage.co.uk",
-            "publicId": "GTM-PTN7FN",
+            "publicId": "GTM-XXXXX",
             "usageContext": [
                 "WEB"
             ],
@@ -29,7 +29,7 @@
                     {
                         "type": "TEMPLATE",
                         "key": "html",
-                        "value": "<script>\n  var src='https://prf.hn/conversion/';\n  var dataString=\"\";\n  var i;\n  var productList={{ecommerce-purchase-products}};\n  var voucherCheck= {{purchase-coupon}};\n  var voucherData= \"\";\n  var clickrefCheck= {{Clickref}};\n  var ctr=0;\n  if(clickrefCheck.length > 0 ){\n    for(i in productList){\n      if(productList[i].id!=undefined){\n        if(ctr!=0){\n        dataString= dataString+ \"/\";\n        }\n      dataString= dataString + \"[category:\" + productList[i].category + \"/sku:\" + productList[i].id + \"/value:\" + productList[i].price + \"/quantity:\" + productList[i].quantity + \"]\";\n      }\n    ctr++;\n    }\n  if(voucherCheck !== \"\"){\n    voucherData= '/voucher:' + voucherCheck;\n  }\n    document.write('<img src=\"'+ src + 'campaign:' + {{Campaign_id}} + '/clickref:' + {{Clickref}} + '/conversionref:'+ {{Order Id}} +'/currency:' + {{Order Currency Code}} + voucherData + '/' + dataString + '\"' + 'height=\"2\"' + 'width=\"2\"' + '/>');\n  }\n\n</script>\n"
+                        "value": "<script>\n  var src='https://prf.hn/conversion/';\n  var dataString=\"\";\n  var i;\n  var productList={{Ecommerce Items}};\n  var voucherCheck= {{Ecommerce Coupon}};\n  var voucherData= \"\";\n  var clickrefCheck= {{Clickref}};\n  var ctr=0;\n  if(clickrefCheck!=undefined && clickrefCheck!='undefined' ){\n    for(i in productList){\n      if(productList[i].id!=undefined){\n        if(ctr!=0){\n        dataString= dataString+ \"/\";\n        }\n      dataString= dataString + \"[category:\" + productList[i].category + \"/sku:\" + productList[i].id + \"/value:\" + productList[i].price + \"/quantity:\" + productList[i].quantity + \"]\";\n      }\n    ctr++;\n    }\n  if(voucherCheck !== \"\"){\n    voucherData= '/voucher:' + voucherCheck;\n  }\n    document.write('<img src=\"'+ src + 'campaign:' + {{Campaign_id}} + '/clickref:' + {{Clickref}} + '/conversionref:'+ {{Ecommerce Transaction ID}} +'/currency:' + {{Ecommerce Currency}} + voucherData + '/' + dataString + '\"' + 'height=\"2\"' + 'width=\"2\"' + '/>');\n  }\n\n</script>\n"
                     },
                     {
                         "type": "BOOLEAN",
@@ -130,10 +130,10 @@
                 "formatValue": {}
             },
             {
-                "accountId": "6004001995",
-                "containerId": "45874067",
-                "variableId": "5",
-                "name": "Order Id",
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "191",
+                "name": "Ecommerce Items",
                 "type": "v",
                 "parameter": [
                     {
@@ -149,17 +149,17 @@
                     {
                         "type": "TEMPLATE",
                         "key": "name",
-                        "value": "ecommerce.purchase.actionField.id"
+                        "value": "ecommerce.items"
                     }
                 ],
-                "fingerprint": "1622008524395",
+                "fingerprint": "1661243829814",
                 "formatValue": {}
             },
             {
-                "accountId": "6004001995",
-                "containerId": "45874067",
-                "variableId": "6",
-                "name": "Order Currency Code",
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "194",
+                "name": "Ecommerce Currency",
                 "type": "v",
                 "parameter": [
                     {
@@ -175,17 +175,17 @@
                     {
                         "type": "TEMPLATE",
                         "key": "name",
-                        "value": "ecommerce.currencyCode"
+                        "value": "ecommerce.currency"
                     }
                 ],
-                "fingerprint": "1622008553086",
+                "fingerprint": "1661243829815",
                 "formatValue": {}
             },
             {
-                "accountId": "6004001995",
-                "containerId": "45874067",
-                "variableId": "7",
-                "name": "purchase-coupon",
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "196",
+                "name": "Ecommerce Coupon",
                 "type": "v",
                 "parameter": [
                     {
@@ -201,17 +201,17 @@
                     {
                         "type": "TEMPLATE",
                         "key": "name",
-                        "value": "ecommerce.purchase.actionField.coupon"
+                        "value": "ecommerce.coupon"
                     }
                 ],
-                "fingerprint": "1622008592949",
+                "fingerprint": "1661243829816",
                 "formatValue": {}
             },
             {
-                "accountId": "6004001995",
-                "containerId": "45874067",
-                "variableId": "10",
-                "name": "ecommerce-purchase-products",
+                "accountId": "565186682",
+                "containerId": "2739889",
+                "variableId": "204",
+                "name": "Ecommerce Transaction ID",
                 "type": "v",
                 "parameter": [
                     {
@@ -227,10 +227,10 @@
                     {
                         "type": "TEMPLATE",
                         "key": "name",
-                        "value": "ecommerce.purchase.products"
+                        "value": "ecommerce.transaction_id"
                     }
                 ],
-                "fingerprint": "1622008836647",
+                "fingerprint": "1661243829820",
                 "formatValue": {}
             }
         ],

@@ -5,6 +5,7 @@
 			<general>
 				<active>0</active>
 				<enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled>
+                <conversion_pii_data_layer>0</conversion_pii_data_layer>
 				<base>1</base>
 				<attribute_key>sku</attribute_key>
 				<category_attribute>product_primary_category</category_attribute>
@@ -18,6 +19,7 @@
 				<default_list>Default List</default_list>
                 <send_admin_orders>0</send_admin_orders>
 				<admin_source>phone</admin_source>
+                <consent_mode>0</consent_mode>
 				<admin_medium>admin</admin_medium>
                 <scroll_threshold>50</scroll_threshold>
                 <product_item_class>div.products ol.product-items li.product-item</product_item_class>

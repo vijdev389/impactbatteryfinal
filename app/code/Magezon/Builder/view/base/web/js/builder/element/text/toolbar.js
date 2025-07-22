@@ -5,7 +5,7 @@ define([
 	var directive = function(magezonBuilderUrl) {
 		return {
 			replace: true,
-			controller: function($scope, $controller) {
+			controller: function($scope, $rootScope, $controller) {
 				var parent = $controller('toolbarController', {$scope: $scope});
 				angular.extend(this, parent);
 				var self = this;

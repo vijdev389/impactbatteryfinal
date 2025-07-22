@@ -97,6 +97,11 @@ class TrackingDataContainer extends DataObject implements ArgumentInterface
         return 'other';
     }
 
+    public function getNonce()
+    {
+        return $this->_helper->getNonce();
+    }
+
     /**
      * @return mixed
      */
@@ -119,6 +124,16 @@ class TrackingDataContainer extends DataObject implements ArgumentInterface
     public function getSendDefaultList()
     {
         return $this->_helper->getSendDefaultList();
+    }
+
+    public function isConsentModeEnabled()
+    {
+        return $this->_helper->isConsentModeEnabled();
+    }
+
+    public function getConsentCookiesConfiguration()
+    {
+        return $this->_helper->getConsentCookiesConfiguration();
     }
 
     /**

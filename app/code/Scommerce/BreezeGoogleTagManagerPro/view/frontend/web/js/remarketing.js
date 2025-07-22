@@ -57,11 +57,11 @@ define([
         this.getCartData = function(data) {
             let total = tracking.getData('total');
             let tmp = tracking.getCartData();
-            let qtys = [];
+            let qtys = 0;
             let products = [];
             for (let i = 0; i < tmp.length; i++) {
                 products.push(tmp[i].id);
-                qtys.push(tmp[i].quantity);
+                qtys = qtys + tmp[i].quantity;
             }
             total = this.formatPrice(total);
             if (remarketingType === 1) {
@@ -81,12 +81,12 @@ define([
             let purchaseData = tracking.getPurchaseData();
             let total = purchaseData.revenue;
             let tmp = purchaseData.products;
-            let qtys = [];
+            let qtys = 0;
             let products = [];
             let prices = [];
             for (let i = 0; i < tmp.length; i++) {
                 products.push(tmp[i].id);
-                qtys.push(parseFloat(tmp[i].quantity));
+                qtys = qtys + tmp[i].quantity;
                 let val = tmp[i].price;
                 if (typeof val === 'string')
                 {
@@ -123,6 +123,9 @@ define([
             case 'product':
                 result = this.getProductData(result);
                 break;
+            case 'home':
+            case 'other':
+            case 'searchresults':
             case 'category':
                 result = this.getCategoryData(result);
                 break;

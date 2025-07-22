@@ -2,12 +2,11 @@
   "name": "scommerce/breeze-tracking-base",
   "description": "Breeze Tracking Base Module for Magento 2.0",
   "require": {
-    "php": ">=7.2.0",
-    "scommerce/trackingbase": "2.0.*"
+    "php": ">=7.2.0"
   },
   "type": "magento2-module",
   "license": "Commercial",
-  "version": "2.0.0",
+  "version": "2.0.5",
   "authors": [
     {
       "name": "Scommerce Mage",

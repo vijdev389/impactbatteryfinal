@@ -44,6 +44,8 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
 
 /** @var HeroiconsSolid $heroiconsSolid */
 $heroiconsSolid = $viewModels->require(HeroiconsSolid::class);
+
+$hyvaTrackingHelper = $this->helper('Hyva\ScommerceTrackingBase\Helper\Data');
 ?>
 <?php $total = $block->getItems()->getSize(); ?>
 <?php if ($total): ?>
@@ -117,20 +119,10 @@ function initCompareOnCompareList() {
 
 function initWishlist() {
     return {
-        async trackAddToWishlist (productId) {
-            return fetch(BASE_URL + 'sctracking/index/addtowishlist', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8"
-                },
-                body: "form_key=" + hyva.getFormKey() + "&itemId=" + productId + "&uenc=" + hyva.getUenc()
-            }).then((response) => response.json())
-                .then((product) => {
-                    if (product == null) return;
-                    window.scTrackingContainer.setAddToWishlist(product);
-                });
-        },
         addToWishlist(productId) {
+            <?php if ($hyvaTrackingHelper->isScommerceAjaxWishlistEnabled()): ?>
+            this.$dispatch('scom-add-product-to-wishlist', {productId: productId});
+            <?php else: ?>
             var self = this;
             const formKey = hyva.getFormKey();
             const postUrl = BASE_URL + 'wishlist/index/add/';
@@ -144,7 +136,8 @@ function initWishlist() {
                 "mode": "cors",
                 "credentials": "include"
             }).then(async function (response) {
-                let result = await self.trackAddToWishlist(productId);
+                window.trackAddToWishlist(productId);
+
                 if (response.redirected) {
                     window.location.href = response.url;
                 } else if (response.ok) {
@@ -177,6 +170,7 @@ function initWishlist() {
                     }], 5000
                 );
             });
+            <?php endif; ?>
         }
     }
 }
@@ -316,7 +310,7 @@ function initWishlist() {
                                                     $attributeData = $attributesViewModel->getAttributeData(
                                                         $attribute,
                                                         $product
-                                                    )
+                                                    );
                                                     ?>
                                                     <?= /* @noEscape */ $attributeData['value'] ?>
                                                 <?php break;
@@ -325,7 +319,7 @@ function initWishlist() {
                                                     $attributeData = $attributesViewModel->getAttributeData(
                                                         $attribute,
                                                         $product
-                                                    )
+                                                    );
                                                     ?>
                                                     <?= $escaper->escapeHtml($attributeData['value'], ['p', 'br']) ?>
                                                 <?php break;

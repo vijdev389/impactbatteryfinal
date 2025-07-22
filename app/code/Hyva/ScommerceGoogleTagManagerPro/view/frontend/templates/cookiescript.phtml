@@ -8,7 +8,7 @@ if (!$viewModel->isEnabled() || !count($cookiesToSet)) {
 }
 ?>
 
-<script>
+<script <?= $viewModel->getNonce(); ?>>
     document.addEventListener('DOMContentLoaded', function() {
         var lifetime = <?php echo $viewModel->cookieLifeTime(); ?>;
         <?php foreach ($cookiesToSet as $cookie => $value) : ?>

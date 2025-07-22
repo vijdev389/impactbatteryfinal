@@ -7,7 +7,7 @@ $viewModel = $block->getData('view_model');
 $collection  = $viewModel->getSlidersCollection();
     ?>
 <?php if ($collection): ?>
-<script>
+<script type="text/javascript"<?= $viewModel->getNonce(); ?>>
     require([
         "jquery",
         "scTrackingData"
