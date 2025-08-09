@@ -18,7 +18,7 @@ set('git_tty', true);
 // [Optional] Allocate timeout value for commands. Default value is 300.
 set('default_timeout', 1200);
 
-set('http_user', 'ae05e2da');
+set('http_user', 'a245ed97');
 
 add('shared_files', [
     'auth.json',
@@ -42,7 +42,12 @@ add('shared_dirs', [
     'pub/media',
     'pub/sitemaps'
 ]);
-
+add('writable_dirs', [
+    'var',
+    'pub/static',
+    'pub/media',
+    'generated'
+]);
 
 add('clear_paths', [
     'generated/*',
