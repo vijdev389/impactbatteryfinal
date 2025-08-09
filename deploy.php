@@ -42,12 +42,7 @@ add('shared_dirs', [
     'pub/media',
     'pub/sitemaps'
 ]);
-add('writable_dirs', [
-    'var',
-    'pub/static',
-    'pub/media',
-    'generated'
-]);
+
 
 add('clear_paths', [
     'generated/*',
