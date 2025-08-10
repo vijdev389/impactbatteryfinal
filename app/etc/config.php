@@ -76,7 +76,7 @@ return [
         'Magento_Downloadable' => 1,
         'Magento_Newsletter' => 1,
         'Magento_CustomerImportExport' => 1,
-        'Magento_DataExporter' => ,
+        'Magento_DataExporter' => 1,
         'Magento_Deploy' => 1,
         'Magento_Developer' => 1,
         'Magento_Dhl' => 1,
