@@ -3,7 +3,7 @@ namespace Deployer;
 
 require 'recipe/magento2.php';
 
-set('keep_releases', 11);
+set('keep_releases', 30);
 set('cleanup_use_sudo', false);
 set('writable_mode', 'chown');
 
@@ -60,9 +60,9 @@ add('clear_paths', [
 
 // Hosts Nexcess Dev Server 
 //host('fef55b1fbd.nxcli.net')
-    //->set('labels', ['stage' => 'nexcessdev'])
-    //->set('remote_user', 'ae05e2da_8')
-    //->set('deploy_path', '/chroot/home/ae05e2da/deploy');
+  //  ->set('labels', ['stage' => 'nexcessdev'])
+  //  ->set('remote_user', 'ae05e2da_8')
+  //  ->set('deploy_path', '/chroot/home/ae05e2da/deploy');
 
 // Hosts Nexcess Live Server 
 
