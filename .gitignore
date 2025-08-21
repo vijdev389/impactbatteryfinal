@@ -10,6 +10,7 @@ atlassian*
 /robots.txt
 /pub/robots.txt
 /sitemap
+/deploy.php
 /sitemap.xml
 /pub/sitemap
 /pub/sitemap.xml
