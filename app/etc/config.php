@@ -420,8 +420,6 @@ return [
         'Rock_StockStatus' => 1,
         'Rocktechnolabs_MetaDescription' => 1,
         'Rocktechnolabs_MiniCartPopup' => 1,
-        'Scommerce_BreezeTrackingBase' => 1,
-        'Scommerce_BreezeGoogleTagManagerPro' => 1,
         'Scommerce_Core' => 1,
         'Scommerce_CspHelper' => 1,
         'Hyva_ScommerceTrackingBase' => 1,

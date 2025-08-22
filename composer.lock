@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "898ff8d39ac641dc07469e480834c0fb",
+    "content-hash": "db582091bd601dfef25e4676e83777e2",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -346,16 +346,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.356.1",
+            "version": "3.356.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "ba92ad336ab18052a51b1294e1b1e75df601eb13"
+                "reference": "d4c61078d5f371c9a8a844946e96e12d6fa18080"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ba92ad336ab18052a51b1294e1b1e75df601eb13",
-                "reference": "ba92ad336ab18052a51b1294e1b1e75df601eb13",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d4c61078d5f371c9a8a844946e96e12d6fa18080",
+                "reference": "d4c61078d5f371c9a8a844946e96e12d6fa18080",
                 "shasum": ""
             },
             "require": {
@@ -437,9 +437,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.356.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.356.2"
             },
-            "time": "2025-08-20T18:11:31+00:00"
+            "time": "2025-08-21T18:09:26+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -2368,16 +2368,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "7c69f28996b0a6920945dd20b3857e499d9ca96c"
+                "reference": "481557b130ef3790cf82b713667b43030dc9c957"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/7c69f28996b0a6920945dd20b3857e499d9ca96c",
-                "reference": "7c69f28996b0a6920945dd20b3857e499d9ca96c",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/481557b130ef3790cf82b713667b43030dc9c957",
+                "reference": "481557b130ef3790cf82b713667b43030dc9c957",
                 "shasum": ""
             },
             "require": {
@@ -2385,7 +2385,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "type": "library",
             "extra": {
@@ -2431,7 +2431,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.2.0"
+                "source": "https://github.com/guzzle/promises/tree/2.3.0"
             },
             "funding": [
                 {
@@ -2447,7 +2447,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-27T13:27:01+00:00"
+            "time": "2025-08-22T14:34:08+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -22517,6 +22517,185 @@
                 "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.9.0"
             },
             "time": "2025-07-11T13:20:48+00:00"
+        },
+        {
+            "name": "scommerce/core",
+            "version": "2.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scommercemage/m2_core.git",
+                "reference": "10683b847ec269510069e6dbd8adacd6b0df6674"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scommercemage/m2_core/zipball/10683b847ec269510069e6dbd8adacd6b0df6674",
+                "reference": "10683b847ec269510069e6dbd8adacd6b0df6674",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Scommerce\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Scommerce Mage",
+                    "email": "core@scommerce-mage.com"
+                }
+            ],
+            "description": "Scommerce Core Module for Magento 2.0",
+            "support": {
+                "issues": "https://github.com/scommercemage/m2_core/issues",
+                "source": "https://github.com/scommercemage/m2_core/tree/2.0.10"
+            },
+            "time": "2025-07-31T08:13:03+00:00"
+        },
+        {
+            "name": "scommerce/csp-helper",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scommercemage/m2-csp-helper",
+                "reference": "121b482aebad4e6c69cd94cefa9ac3d2dd53b94d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packeton.scommerce-mage.com/zipball/scommerce/csp-helper/121b482aebad4e6c69cd94cefa9ac3d2dd53b94d.zip",
+                "reference": "121b482aebad4e6c69cd94cefa9ac3d2dd53b94d",
+                "mirrors": [
+                    {
+                        "url": "https://packeton.scommerce-mage.com/zipball/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Scommerce\\CspHelper\\": ""
+                }
+            },
+            "notification-url": "https://packeton.scommerce-mage.com/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Scommerce Mage",
+                    "email": "core@scommerce-mage.com"
+                }
+            ],
+            "description": "Scommerce CSP Helper Module for Magento 2.0",
+            "time": "2024-07-15T14:50:16+00:00"
+        },
+        {
+            "name": "scommerce/googletagmanagerpro",
+            "version": "3.0.44",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scommercemage/m2-google-tag-manager-pro",
+                "reference": "9d1302e6a12f149fb7dd4073e37c5072005742dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packeton.scommerce-mage.com/zipball/scommerce/googletagmanagerpro/9d1302e6a12f149fb7dd4073e37c5072005742dc.zip",
+                "reference": "9d1302e6a12f149fb7dd4073e37c5072005742dc",
+                "mirrors": [
+                    {
+                        "url": "https://packeton.scommerce-mage.com/zipball/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.2.0",
+                "scommerce/core": "2.0.*",
+                "scommerce/csp-helper": "2.0.*",
+                "scommerce/trackingbase": "2.0.37"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Scommerce\\GoogleTagManagerPro\\": ""
+                }
+            },
+            "notification-url": "https://packeton.scommerce-mage.com/downloads/",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "Scommerce Mage",
+                    "email": "core@scommerce-mage.com"
+                }
+            ],
+            "description": "Google Tag Manager Pro Module for Magento 2.0",
+            "time": "2025-08-04T11:37:27+00:00"
+        },
+        {
+            "name": "scommerce/trackingbase",
+            "version": "2.0.37",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scommercemage/m2-tracking-base",
+                "reference": "a07c1ed36e0bd6e98f154c83c66e63d8e14308f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packeton.scommerce-mage.com/zipball/scommerce/trackingbase/a07c1ed36e0bd6e98f154c83c66e63d8e14308f9.zip",
+                "reference": "a07c1ed36e0bd6e98f154c83c66e63d8e14308f9",
+                "mirrors": [
+                    {
+                        "url": "https://packeton.scommerce-mage.com/zipball/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.2.0",
+                "scommerce/core": "2.0.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Scommerce\\TrackingBase\\": ""
+                }
+            },
+            "notification-url": "https://packeton.scommerce-mage.com/downloads/",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "Scommerce Mage",
+                    "email": "core@scommerce-mage.com"
+                }
+            ],
+            "description": "Tracking Base Module for Magento 2.0",
+            "time": "2025-08-04T11:39:34+00:00"
         },
         {
             "name": "seld/jsonlint",
